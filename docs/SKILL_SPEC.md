@@ -50,9 +50,9 @@ REQUESTED
 
 ## 当前限制
 
-- Runtime 尚未实现跨进程取消和超时；
+- Runtime 已实现调用级超时和取消结果，尚未实现 ROS 2 跨进程抢占；
 - Registry 尚未从配置自动加载实现类；
-- Verifier 目前只有确定性规则；
+- Verifier 目前由确定性规则与可信模拟证据组成，尚未接学习模型；
 - 状态快照为内存对象，尚未加入 TTL 和失效条件；
 - Resource Lock 只适用于单进程；
 - ROS 2、G1、视觉和 Codex 均为待接适配器。

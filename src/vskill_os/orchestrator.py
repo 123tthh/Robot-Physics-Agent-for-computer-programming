@@ -14,6 +14,7 @@ class WorkflowStep:
     skill: str
     arguments: Mapping[str, Any] = field(default_factory=dict)
     required_postconditions: tuple[str, ...] = ()
+    timeout_seconds: float = 30.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -99,6 +100,7 @@ class SupervisorAgent:
                 skill=step.skill,
                 arguments=step.arguments,
                 required_postconditions=step.required_postconditions,
+                timeout_seconds=step.timeout_seconds,
             ),
             state,
         )

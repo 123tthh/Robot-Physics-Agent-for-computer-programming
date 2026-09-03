@@ -49,12 +49,31 @@ class StateSnapshot:
 
     facts: set[str] = field(default_factory=set)
     values: dict[str, Any] = field(default_factory=dict)
+    revision: int = 0
 
     def has_all(self, required: tuple[str, ...] | list[str] | set[str]) -> bool:
         return set(required).issubset(self.facts)
 
     def missing(self, required: tuple[str, ...] | list[str] | set[str]) -> set[str]:
         return set(required) - self.facts
+
+    def copy(self) -> "StateSnapshot":
+        return StateSnapshot(set(self.facts), dict(self.values), self.revision)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "facts": sorted(self.facts),
+            "values": dict(self.values),
+            "revision": self.revision,
+        }
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Any]) -> "StateSnapshot":
+        return cls(
+            facts=set(data.get("facts", ())),
+            values=dict(data.get("values", {})),
+            revision=int(data.get("revision", 0)),
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,6 +82,12 @@ class SkillRequest:
     skill: str
     arguments: Mapping[str, Any] = field(default_factory=dict)
     required_postconditions: tuple[str, ...] = ()
+    timeout_seconds: float = 30.0
+    metadata: Mapping[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if self.timeout_seconds <= 0:
+            raise ValueError("skill timeout_seconds must be positive")
 
 
 @dataclass(frozen=True, slots=True)
@@ -71,6 +96,7 @@ class SkillExecution:
 
     status: SkillStatus
     claimed_states: tuple[str, ...] = ()
+    invalidated_states: tuple[str, ...] = ()
     evidence: tuple[Evidence, ...] = ()
     failure_code: str | None = None
     message: str = ""
@@ -88,6 +114,7 @@ class SkillResult:
     recommended_recovery: str | None = None
     evidence: tuple[Evidence, ...] = ()
     message: str = ""
+    duration_seconds: float = 0.0
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -101,4 +128,5 @@ class SkillResult:
             "recommended_recovery": self.recommended_recovery,
             "evidence": [item.to_dict() for item in self.evidence],
             "message": self.message,
+            "duration_seconds": self.duration_seconds,
         }

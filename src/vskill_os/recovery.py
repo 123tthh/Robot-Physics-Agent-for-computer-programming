@@ -19,9 +19,16 @@ class RecoveryManager:
 def build_default_recovery_manager() -> RecoveryManager:
     return RecoveryManager(
         {
+            "NAVIGATION_BLOCKED": "clear_navigation_path",
+            "CHAIR_NOT_FOUND": "realign_with_chair",
+            "CHAIR_SHIFTED": "realign_with_chair",
+            "POSTURE_UNSTABLE": "stabilize_work_pose",
+            "KEYBOARD_NOT_FOUND": "recalibrate_keyboard",
             "ALT_MISSED": "recalibrate_keyboard",
             "TERMINAL_NOT_FOCUSED": "restore_terminal_focus",
+            "NETWORK_INTERRUPTED": "restore_code_agent_session",
             "TEST_FAILED": "request_fix",
+            "TEST_TIMEOUT": "request_fix",
             "PRECONDITION_FAILED": "replan",
         }
     )

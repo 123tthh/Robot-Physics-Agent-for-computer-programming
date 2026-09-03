@@ -1,0 +1,7 @@
+{
+  "name": "software_recovery",
+  "expected_output": "hello, world",
+  "buggy_first_draft": true,
+  "max_recovery_attempts": 2,
+  "faults": {}
+}

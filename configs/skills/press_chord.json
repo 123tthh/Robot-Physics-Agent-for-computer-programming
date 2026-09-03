@@ -1,11 +1,11 @@
 {
   "name": "press_chord",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "arguments": {
     "keys": ["ctrl", "alt", "t"]
   },
   "preconditions": [
-    "work_pose_stable",
+    "work_pose_ready",
     "keyboard_calibrated",
     "target_keys_reachable",
     "screen_visible"
@@ -19,7 +19,8 @@
     "type": "hybrid_geometric_residual_policy"
   },
   "local_postconditions": [
-    "commanded_keys_pressed"
+    "commanded_keys_pressed",
+    "fingers_released"
   ],
   "next_skill_readiness": [
     "terminal_ready"
@@ -27,7 +28,7 @@
   "failure_codes": [
     "ALT_MISSED",
     "WRONG_KEY",
-    "POSTURE_UNSTABLE"
+    "TERMINAL_NOT_FOCUSED"
   ],
   "recoveries": [
     "recalibrate_keyboard",

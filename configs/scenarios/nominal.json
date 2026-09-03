@@ -1,0 +1,7 @@
+{
+  "name": "nominal",
+  "expected_output": "hello, world",
+  "buggy_first_draft": false,
+  "max_recovery_attempts": 2,
+  "faults": {}
+}

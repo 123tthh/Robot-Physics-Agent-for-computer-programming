@@ -35,12 +35,6 @@ class SkillRegistry:
 
     def contracts(self) -> list[dict[str, object]]:
         return [
-            {
-                "name": skill.contract.name,
-                "version": skill.contract.version,
-                "preconditions": skill.contract.preconditions,
-                "local_postconditions": skill.contract.local_postconditions,
-                "next_skill_readiness": skill.contract.next_skill_readiness,
-            }
+            skill.contract.to_dict()
             for skill in sorted(self._skills.values(), key=lambda item: item.contract.name)
         ]

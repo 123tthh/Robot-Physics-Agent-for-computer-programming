@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import unittest
 
+from vskill_os.config import load_skill_contract, validate_contract_matches
 from vskill_os.contracts import SkillContract
 from vskill_os.registry import SkillRegistry
 from vskill_os.skills.mock_computer import PressChordSkill
+from vskill_os.skills.simulation import PressChord
+from vskill_os.simulation.app import project_root
 
 
 class ContractAndRegistryTests(unittest.TestCase):
@@ -28,6 +31,12 @@ class ContractAndRegistryTests(unittest.TestCase):
         contracts = registry.contracts()
         self.assertEqual(contracts[0]["name"], "press_chord")
         self.assertIn("terminal_ready", contracts[0]["next_skill_readiness"])
+
+    def test_configured_press_chord_matches_simulation_contract(self) -> None:
+        configured = load_skill_contract(
+            project_root() / "configs/skills/press_chord.json"
+        )
+        validate_contract_matches(PressChord.contract, configured)
 
 
 if __name__ == "__main__":

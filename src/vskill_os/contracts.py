@@ -40,6 +40,31 @@ class SkillContract:
     def expected_states(self) -> tuple[str, ...]:
         return tuple(dict.fromkeys(self.local_postconditions + self.next_skill_readiness))
 
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "name": self.name,
+            "version": self.version,
+            "preconditions": list(self.preconditions),
+            "local_postconditions": list(self.local_postconditions),
+            "next_skill_readiness": list(self.next_skill_readiness),
+            "resources": list(self.resources),
+            "failure_codes": list(self.failure_codes),
+            "recoveries": list(self.recoveries),
+        }
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Any]) -> "SkillContract":
+        return cls(
+            name=str(data["name"]),
+            version=str(data["version"]),
+            preconditions=tuple(data.get("preconditions", ())),
+            local_postconditions=tuple(data.get("local_postconditions", ())),
+            next_skill_readiness=tuple(data.get("next_skill_readiness", ())),
+            resources=tuple(data.get("resources", ())),
+            failure_codes=tuple(data.get("failure_codes", ())),
+            recoveries=tuple(data.get("recoveries", ())),
+        )
+
 
 class Skill(Protocol):
     contract: SkillContract

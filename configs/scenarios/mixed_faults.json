@@ -1,0 +1,12 @@
+{
+  "name": "mixed_faults",
+  "expected_output": "hello, world",
+  "buggy_first_draft": true,
+  "max_recovery_attempts": 2,
+  "faults": {
+    "navigate_to_workstation": ["NAVIGATION_BLOCKED"],
+    "sit_and_prepare_for_typing": ["CHAIR_SHIFTED"],
+    "press_chord": ["ALT_MISSED"],
+    "launch_code_agent": ["NETWORK_INTERRUPTED"]
+  }
+}

@@ -9,6 +9,23 @@ from ..domain import Evidence, EvidenceDomain, SkillExecution, SkillStatus, Stat
 from ..registry import SkillRegistry
 
 
+def _state_evidence(
+    states: tuple[str, ...],
+    *,
+    domain: EvidenceDomain,
+    source: str,
+) -> tuple[Evidence, ...]:
+    return tuple(
+        Evidence(
+            domain=domain,
+            kind="state_observation",
+            value={"state": state, "present": True},
+            source=source,
+        )
+        for state in states
+    )
+
+
 class PressChordSkill:
     contract = SkillContract(
         name="press_chord",
@@ -63,10 +80,22 @@ class PressChordSkill:
                 "fingers_released",
             }
         )
+        claimed = (
+            "commanded_keys_pressed",
+            "terminal_visible",
+            "terminal_focused",
+            "fingers_released",
+            "terminal_ready",
+        )
         return SkillExecution(
             status=SkillStatus.SUCCEEDED,
-            claimed_states=("commanded_keys_pressed", "terminal_ready"),
-            evidence=(
+            claimed_states=claimed,
+            evidence=_state_evidence(
+                claimed,
+                domain=EvidenceDomain.GUI,
+                source="mock_screen_verifier",
+            )
+            + (
                 Evidence(
                     domain=EvidenceDomain.PHYSICAL,
                     kind="key_event",
@@ -104,7 +133,12 @@ class RecalibrateKeyboardSkill:
         return SkillExecution(
             status=SkillStatus.SUCCEEDED,
             claimed_states=("keyboard_calibrated",),
-            evidence=(
+            evidence=_state_evidence(
+                ("keyboard_calibrated",),
+                domain=EvidenceDomain.PHYSICAL,
+                source="mock_keyboard",
+            )
+            + (
                 Evidence(
                     domain=EvidenceDomain.PHYSICAL,
                     kind="keyboard_pose",
@@ -135,7 +169,12 @@ class LaunchCodeAgentSkill:
         return SkillExecution(
             status=SkillStatus.SUCCEEDED,
             claimed_states=("code_agent_ready",),
-            evidence=(
+            evidence=_state_evidence(
+                ("code_agent_ready",),
+                domain=EvidenceDomain.GUI,
+                source="mock_screen_verifier",
+            )
+            + (
                 Evidence(
                     domain=EvidenceDomain.GUI,
                     kind="code_agent_prompt_visible",
@@ -172,7 +211,12 @@ class SubmitTaskSkill:
         return SkillExecution(
             status=SkillStatus.SUCCEEDED,
             claimed_states=("artifact_generated",),
-            evidence=(
+            evidence=_state_evidence(
+                ("artifact_generated",),
+                domain=EvidenceDomain.SOFTWARE,
+                source="mock_code_agent",
+            )
+            + (
                 Evidence(
                     domain=EvidenceDomain.SOFTWARE,
                     kind="artifact_path",
@@ -254,8 +298,13 @@ class RequestFixSkill:
         state.facts.add("artifact_fixed")
         return SkillExecution(
             status=SkillStatus.SUCCEEDED,
-            claimed_states=("artifact_fixed",),
-            evidence=(
+            claimed_states=("artifact_fixed", "artifact_generated"),
+            evidence=_state_evidence(
+                ("artifact_fixed", "artifact_generated"),
+                domain=EvidenceDomain.SOFTWARE,
+                source="mock_code_agent",
+            )
+            + (
                 Evidence(
                     domain=EvidenceDomain.SOFTWARE,
                     kind="patch_applied",

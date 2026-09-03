@@ -1,0 +1,62 @@
+{
+  "name": "create_and_verify_hello",
+  "nodes": [
+    {
+      "id": "navigate",
+      "skill": "navigate_to_workstation",
+      "required_postconditions": ["workstation_reached"]
+    },
+    {
+      "id": "align_chair",
+      "skill": "align_with_chair",
+      "depends_on": ["navigate"],
+      "required_postconditions": ["chair_aligned"]
+    },
+    {
+      "id": "prepare_pose",
+      "skill": "sit_and_prepare_for_typing",
+      "depends_on": ["align_chair"],
+      "required_postconditions": ["work_pose_ready"]
+    },
+    {
+      "id": "calibrate_keyboard",
+      "skill": "calibrate_keyboard",
+      "depends_on": ["prepare_pose"],
+      "required_postconditions": ["keyboard_calibrated", "target_keys_reachable"]
+    },
+    {
+      "id": "open_terminal",
+      "skill": "press_chord",
+      "arguments": {"keys": ["ctrl", "alt", "t"]},
+      "depends_on": ["calibrate_keyboard"],
+      "required_postconditions": ["terminal_ready"]
+    },
+    {
+      "id": "launch_agent",
+      "skill": "launch_code_agent",
+      "depends_on": ["open_terminal"],
+      "required_postconditions": ["code_agent_ready"]
+    },
+    {
+      "id": "submit_task",
+      "skill": "submit_task",
+      "arguments": {
+        "prompt": "Create hello.py that prints exactly: hello, world"
+      },
+      "depends_on": ["launch_agent"],
+      "required_postconditions": ["artifact_generated"]
+    },
+    {
+      "id": "verify_artifact",
+      "skill": "run_test",
+      "depends_on": ["submit_task"],
+      "required_postconditions": ["test_passed"]
+    },
+    {
+      "id": "report",
+      "skill": "report_task",
+      "depends_on": ["verify_artifact"],
+      "required_postconditions": ["task_reported"]
+    }
+  ]
+}
