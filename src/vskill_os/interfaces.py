@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Protocol
 
-from .control import RiskAssessment, RootVelocityCommand, SitObjective
+from .control import RootVelocityCommand, SitObjective
 from .domain import Evidence, StateSnapshot
 from .typing import Keystroke, KeyboardCalibration
 
@@ -45,15 +45,6 @@ class LocomotionPolicyAdapter(Protocol):
 
     async def stop(self) -> None:
         """Issue a bounded zero/hold command through the controller backend."""
-
-
-class TerrainRiskAdapter(Protocol):
-    async def assess(
-        self,
-        command: RootVelocityCommand,
-        observation: Mapping[str, Any],
-    ) -> RiskAssessment:
-        """Evaluate a candidate command before locomotion policy execution."""
 
 
 class WholeBodyPolicyAdapter(Protocol):

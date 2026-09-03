@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
-
 from ..robot.g1 import G1HardwareProfile
-from .commands import RiskAssessment, RiskGate, RiskGatedCommand, RootVelocityCommand
+from .commands import RootVelocityCommand
 from .phases import ControlPhase, PhaseController
 from .sitting import SitObservation, StagedSitController
 
@@ -17,13 +15,17 @@ class G1ControlStack:
         self,
         profile: G1HardwareProfile,
         *,
-        risk_gate: RiskGate | None = None,
+        max_linear_mps: float = 0.8,
+        max_yaw_rate_rps: float = 1.2,
     ) -> None:
+        if max_linear_mps <= 0 or max_yaw_rate_rps <= 0:
+            raise ValueError("locomotion limits must be positive")
         self.profile = profile
         self.phases = PhaseController()
-        self.risk_gate = risk_gate or RiskGate()
+        self.max_linear_mps = max_linear_mps
+        self.max_yaw_rate_rps = max_yaw_rate_rps
         self.sitting = StagedSitController()
-        self.last_locomotion: RiskGatedCommand | None = None
+        self.last_locomotion: RootVelocityCommand | None = None
 
     @property
     def phase(self) -> ControlPhase:
@@ -32,23 +34,23 @@ class G1ControlStack:
     def issue_locomotion(
         self,
         command: RootVelocityCommand,
-        risk: RiskAssessment,
-    ) -> RiskGatedCommand:
+    ) -> RootVelocityCommand:
         if self.phase is ControlPhase.RECOVERY:
             self.phases.recover(
                 target=ControlPhase.LOCOMOTION,
-                reason="resume risk-gated locomotion after recovery",
+                reason="resume locomotion after recovery",
             )
         elif self.phase is not ControlPhase.LOCOMOTION:
             self.phases.transition(
                 ControlPhase.LOCOMOTION,
-                reason="activate terrain-safe velocity executor",
+                reason="activate velocity executor",
             )
-        gated = self.risk_gate.apply(command, risk)
-        self.last_locomotion = gated
-        if gated.emergency_stop:
-            self.phases.fail(reason=gated.reason)
-        return gated
+        bounded = command.bounded(
+            max_linear_mps=self.max_linear_mps,
+            max_yaw_rate_rps=self.max_yaw_rate_rps,
+        )
+        self.last_locomotion = bounded
+        return bounded
 
     def reach_station(self) -> None:
         if self.phase is ControlPhase.RECOVERY:
@@ -195,7 +197,13 @@ class G1ControlStack:
             "g1_profile": self.profile.compatibility_key,
             "sit_stage": self.sitting.stage.value,
             "last_locomotion": (
-                None if self.last_locomotion is None else asdict(self.last_locomotion)
+                None
+                if self.last_locomotion is None
+                else {
+                    "vx_mps": self.last_locomotion.vx_mps,
+                    "vy_mps": self.last_locomotion.vy_mps,
+                    "yaw_rate_rps": self.last_locomotion.yaw_rate_rps,
+                }
             ),
             "transition_count": len(self.phases.history),
         }

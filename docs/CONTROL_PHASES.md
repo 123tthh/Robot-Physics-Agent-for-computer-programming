@@ -27,7 +27,7 @@ flowchart TD
 | 阶段 | 控制器插槽 | 主要输入 | 必须满足的交接条件 |
 |---|---|---|---|
 | `stand_ready` | 站立保持 | IMU、关节、足底接触 | 安全状态、策略兼容性已确认 |
-| `locomotion` | G1 velocity policy | `{vx, vy, yaw_rate}`、本体状态、地形表征 | 到站位姿、双脚稳定、风险低于阈值 |
+| `locomotion` | G1 velocity policy | `{vx, vy, yaw_rate}`、本体状态 | 到站位姿、双脚稳定、速度在安全范围 |
 | `station_alignment` | 几何足步/视觉伺服 | 椅子/桌子相对位姿 | 骨盆和双脚落入坐下入口域 |
 | `sit_transition` | 运动模仿 + 接触策略 | 参考动作、座椅、足/臀接触 | 负载转移完成，无滑动/冲击超限 |
 | `seated_stabilization` | 坐姿稳定器 | IMU、座椅压力、足底、躯干速度 | 骨盆和躯干速度持续低于阈值 |
@@ -37,19 +37,18 @@ flowchart TD
 | `recovery` | 局部恢复 Skill | 失败码和证据 | 恢复后重新通过原阶段入口守卫 |
 | `safe_stop` | 独立安全控制器 | 急停/越限信号 | 只能由外部复位离开 |
 
-## 地形安全步态
+## 步态接口
 
 现有/后续的 Unitree RL Lab ONNX 速度策略保持低维命令接口：
 
 ```text
-高维遥操作/Agent 意图
-→ intent projector
-→ {vx, vy, yaw_rate}
-→ TISA 风险 critic + authority allocator
-→ terrain-safe locomotion executor
+Agent 的导航目标
+→ 导航 Skill
+→ 限幅后的 {vx, vy, yaw_rate}
+→ G1 locomotion executor
 ```
 
-`RiskGate` 使用直接 rollout 风险和不确定性之和进行保守决策：低风险保留全部执行权，中风险连续缩放，高风险输出零速度并进入 `recovery`。风险 critic 后续输入应包括 robot-centric 41×41 局部高度图、机体状态、候选意图和未来 H 步直接 rollout 标签；同一地形应采样不同意图，避免模型把“地形”误当作“动作风险”。
+核心层只负责命令维度、数值范围和控制阶段校验。避障、定位和普通防跌倒由导航、步态策略与独立 Safety Supervisor 负责，不引入额外地形风险模型。
 
 优先参考：
 

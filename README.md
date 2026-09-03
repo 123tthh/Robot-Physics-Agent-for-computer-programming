@@ -18,7 +18,7 @@
 - CLI、示例和标准库自动化测试。
 - G1 29DOF/5010 `mode_machine` 13/14/15/16/18 硬件身份与策略兼容性强校验；
 - `stand → locomotion → align → sit → stabilize → keyboard → typing` 控制状态机；
-- `{vx, vy, yaw_rate}` 地形风险门控与独立控制权分配；
+- `{vx, vy, yaw_rate}` 步态命令接口与独立速度限幅；
 - 六段坐下接触守卫，以及 WBC-AGILE/BeyondMimic 策略插槽；
 - Dex3 键盘几何、左右手/手指分配、组合键和最长正确前缀纠错；
 - 本地 VAD/ASR/LLM/TTS 配置、loopback LLM adapter 和 L2/L3 工具白名单；

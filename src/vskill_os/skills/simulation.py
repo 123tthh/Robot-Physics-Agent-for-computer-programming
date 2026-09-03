@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from ..control import ControlPhase, RiskAssessment, RootVelocityCommand
+from ..control import ControlPhase, RootVelocityCommand
 from ..contracts import SkillContract
 from ..domain import Evidence, EvidenceDomain, SkillExecution, SkillStatus, StateSnapshot
 from ..registry import SkillRegistry
@@ -73,7 +73,7 @@ class NavigateToWorkstation(SimulationSkill):
         preconditions=("task_received", "robot_safe"),
         local_postconditions=("workstation_reached",),
         resources=("locomotion", "head_camera"),
-        failure_codes=("NAVIGATION_BLOCKED", "TERRAIN_RISK_EXCEEDED"),
+        failure_codes=("NAVIGATION_BLOCKED",),
         recoveries=("clear_navigation_path",),
     )
 
@@ -86,47 +86,30 @@ class NavigateToWorkstation(SimulationSkill):
             vy_mps=float(arguments.get("vy_mps", 0.0)),
             yaw_rate_rps=float(arguments.get("yaw_rate_rps", 0.0)),
         )
-        gated = self.world.control.issue_locomotion(
-            command,
-            RiskAssessment(
-                probability_of_failure=float(arguments.get("terrain_risk", 0.05)),
-                uncertainty=float(arguments.get("risk_uncertainty", 0.02)),
-                source="sim_tisa_risk_critic",
-            ),
-        )
-        risk_evidence = Evidence(
+        issued = self.world.control.issue_locomotion(command)
+        command_evidence = Evidence(
             domain=EvidenceDomain.PHYSICAL,
-            kind="risk_gated_velocity",
+            kind="bounded_root_velocity",
             value={
-                "authority": gated.authority,
-                "emergency_stop": gated.emergency_stop,
-                "issued": {
-                    "vx_mps": gated.issued.vx_mps,
-                    "vy_mps": gated.issued.vy_mps,
-                    "yaw_rate_rps": gated.issued.yaw_rate_rps,
-                },
+                "vx_mps": issued.vx_mps,
+                "vy_mps": issued.vy_mps,
+                "yaw_rate_rps": issued.yaw_rate_rps,
             },
-            source="sim_tisa_risk_critic",
+            source="sim_robot",
         )
-        if gated.emergency_stop:
-            return self.failure(
-                "TERRAIN_RISK_EXCEEDED",
-                gated.reason,
-                evidence=(risk_evidence, self.control_evidence()),
-            )
         if self.fault() == "NAVIGATION_BLOCKED":
             self.world.control.fail("path to workstation is blocked")
             return self.failure(
                 "NAVIGATION_BLOCKED",
                 "path to workstation is blocked",
-                evidence=(risk_evidence, self.control_evidence()),
+                evidence=(command_evidence, self.control_evidence()),
             )
         self.world.control.reach_station()
         return self.success(
             ("workstation_reached",),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
-            extra_evidence=(risk_evidence, self.control_evidence()),
+            extra_evidence=(command_evidence, self.control_evidence()),
         )
 
 

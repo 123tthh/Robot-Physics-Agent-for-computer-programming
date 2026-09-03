@@ -5,8 +5,6 @@ import unittest
 from vskill_os.control import (
     ControlPhase,
     PhaseController,
-    RiskAssessment,
-    RiskGate,
     RootVelocityCommand,
     SitObservation,
     SitStage,
@@ -29,15 +27,10 @@ class ControlTests(unittest.TestCase):
         phases.recover(target=ControlPhase.LOCOMOTION, reason="path clear")
         self.assertEqual(phases.phase, ControlPhase.LOCOMOTION)
 
-    def test_risk_gate_scales_then_stops_root_intent(self) -> None:
-        gate = RiskGate(slow_threshold=0.2, stop_threshold=0.6)
-        requested = RootVelocityCommand(1.5, 0.0, 0.0)
-        scaled = gate.apply(requested, RiskAssessment(0.4))
-        stopped = gate.apply(requested, RiskAssessment(0.55, uncertainty=0.1))
-        self.assertAlmostEqual(scaled.authority, 0.5)
-        self.assertAlmostEqual(scaled.issued.vx_mps, 0.4)
-        self.assertTrue(stopped.emergency_stop)
-        self.assertTrue(stopped.issued.stopped)
+    def test_root_velocity_command_is_limited_before_policy_execution(self) -> None:
+        requested = RootVelocityCommand(1.5, -1.1, 2.0)
+        issued = requested.bounded(max_linear_mps=0.8, max_yaw_rate_rps=1.2)
+        self.assertEqual(issued, RootVelocityCommand(0.8, -0.8, 1.2))
 
     def test_sit_stages_require_contact_and_work_readiness(self) -> None:
         controller = StagedSitController(target_seat_height_m=0.48)
