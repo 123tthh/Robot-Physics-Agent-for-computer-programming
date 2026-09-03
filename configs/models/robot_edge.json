@@ -1,0 +1,28 @@
+{
+  "name": "g1_edge_lightweight",
+  "vad": {
+    "runtime": "sherpa-onnx",
+    "model_id": "silero-vad",
+    "device": "cpu",
+    "options": {"sample_rate": 16000, "endpointing": true}
+  },
+  "asr": {
+    "runtime": "sensevoice.cpp",
+    "model_id": "FunAudioLLM/SenseVoiceSmall-GGUF-q8",
+    "device": "cpu",
+    "options": {"languages": ["zh", "en"], "streaming": false}
+  },
+  "llm": {
+    "runtime": "llama.cpp",
+    "model_id": "Qwen/Qwen3-1.7B-GGUF",
+    "device": "cuda_or_cpu",
+    "endpoint": "http://127.0.0.1:8080",
+    "options": {"temperature": 0, "reasoning": false, "structured_tools": true}
+  },
+  "tts": {
+    "runtime": "sherpa-onnx",
+    "model_id": "vits-melo-tts-zh_en",
+    "device": "cpu",
+    "options": {"optional": true}
+  }
+}

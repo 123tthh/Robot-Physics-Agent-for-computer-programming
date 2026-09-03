@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Protocol
 
+from .control import RiskAssessment, RootVelocityCommand, SitObjective
 from .domain import Evidence, StateSnapshot
+from .typing import Keystroke, KeyboardCalibration
 
 
 class RobotAdapter(Protocol):
@@ -31,3 +33,45 @@ class CodeAgentAdapter(Protocol):
 class TestRunnerAdapter(Protocol):
     async def run(self, specification: Mapping[str, Any]) -> tuple[Evidence, ...]:
         """Run an isolated test specification and return observable evidence."""
+
+
+class LocomotionPolicyAdapter(Protocol):
+    async def infer(
+        self,
+        command: RootVelocityCommand,
+        observation: Mapping[str, Any],
+    ) -> Mapping[str, float]:
+        """Map safe root intent to controller-internal action targets."""
+
+    async def stop(self) -> None:
+        """Issue a bounded zero/hold command through the controller backend."""
+
+
+class TerrainRiskAdapter(Protocol):
+    async def assess(
+        self,
+        command: RootVelocityCommand,
+        observation: Mapping[str, Any],
+    ) -> RiskAssessment:
+        """Evaluate a candidate command before locomotion policy execution."""
+
+
+class WholeBodyPolicyAdapter(Protocol):
+    async def track(
+        self,
+        objective: SitObjective,
+        observation: Mapping[str, Any],
+    ) -> tuple[Evidence, ...]:
+        """Execute one guarded sit/work-pose objective."""
+
+
+class DexterousHandAdapter(Protocol):
+    async def calibrate_keyboard(self) -> KeyboardCalibration:
+        """Estimate the keyboard frame from close-range perception."""
+
+    async def execute_keystroke(
+        self,
+        stroke: Keystroke,
+        calibration: KeyboardCalibration,
+    ) -> tuple[Evidence, ...]:
+        """Execute one physical key objective and return contact evidence."""

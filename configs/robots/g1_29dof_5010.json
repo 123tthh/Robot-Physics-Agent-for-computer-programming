@@ -1,0 +1,11 @@
+{
+  "robot": "unitree_g1",
+  "body_dof": 29,
+  "wrist_motor": "5010",
+  "selected_mode_machine": null,
+  "simulation_mode_machine": 15,
+  "require_hardware_confirmation": true,
+  "expected_body_dof": 29,
+  "expected_wrist_motor": "5010",
+  "notes": "Set selected_mode_machine only after checking Device > Data > Robot > Machine Type in the Unitree app. Supported 5010 modes: 13, 14, 15, 16, 18."
+}

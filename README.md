@@ -1,6 +1,6 @@
 # V-Skill OS
 
-面向人形机器人实体计算机操作的 Verifier-Grounded Agent–Skill 系统。目前提供完整、无需真机的仿真实现；ROS 2、Unitree G1、视觉模型和真实 Codex 接口通过适配层后续接入。
+面向人形机器人实体计算机操作的 Verifier-Grounded Agent–Skill 系统。目前提供完整、无需真机的仿真实现，并已建立 Unitree G1 29DOF/5010、分阶段全身控制、Dex3 实体打字与本地语音—LLM 的可测试适配边界；ROS 2、仿真策略权重、视觉模型和真实代码 Agent 仍通过可选 adapter 接入。
 
 ## 已实现
 
@@ -16,6 +16,13 @@
 - nominal、软件故障、混合故障场景；
 - 可复现的随机故障 Benchmark；
 - CLI、示例和标准库自动化测试。
+- G1 29DOF/5010 `mode_machine` 13/14/15/16/18 硬件身份与策略兼容性强校验；
+- `stand → locomotion → align → sit → stabilize → keyboard → typing` 控制状态机；
+- `{vx, vy, yaw_rate}` 地形风险门控与独立控制权分配；
+- 六段坐下接触守卫，以及 WBC-AGILE/BeyondMimic 策略插槽；
+- Dex3 键盘几何、左右手/手指分配、组合键和最长正确前缀纠错；
+- 本地 VAD/ASR/LLM/TTS 配置、loopback LLM adapter 和 L2/L3 工具白名单；
+- 相关上游项目的机器可读调研目录与明确集成决策。
 
 ## 系统闭环
 
@@ -38,6 +45,7 @@ make check
 make demo
 make demo-mixed
 make benchmark
+make inspect
 ```
 
 也可以直接使用 CLI：
@@ -53,6 +61,13 @@ PYTHONPATH=src python3 -m vskill_os.cli benchmark \
   --output artifacts/benchmark.json
 
 PYTHONPATH=src python3 -m vskill_os.cli list-skills
+
+PYTHONPATH=src python3 -m vskill_os.cli inspect-robot
+
+PYTHONPATH=src python3 -m vskill_os.cli list-projects --subsystem sitting
+
+PYTHONPATH=src python3 -m vskill_os.cli voice-plan \
+  "创建一个 Python 程序并独立测试"
 ```
 
 可编辑安装后可直接使用 `vskill`：
@@ -90,6 +105,7 @@ vskill run --scenario configs/scenarios/software_recovery.json
 | `nominal.json` | 无故障、首稿正确 |
 | `software_recovery.json` | 首稿错误，验证软件恢复闭环 |
 | `mixed_faults.json` | 路径、椅子、键盘、网络和代码多域故障 |
+| `posture_recovery.json` | 坐姿不稳后由稳定 Skill 恢复，避免重复接触转换 |
 
 故障由场景配置注入并在首次触发后消费，因此恢复后重试可得到确定性结果。
 
@@ -99,6 +115,9 @@ vskill run --scenario configs/scenarios/software_recovery.json
 configs/skills/       Skill 契约配置
 configs/workflows/    V-SkillGraph 任务图
 configs/scenarios/    故障场景
+configs/robots/       G1 29DOF/5010 身份与部署防错配置
+configs/models/       本地语音和轻量 LLM 候选配置
+configs/research/     已评估上游项目的机器可读目录
 docs/                 架构、规范、仿真和评测说明
 src/vskill_os/        核心包
 tests/                单元、集成、恢复和 Benchmark 测试
@@ -134,3 +153,7 @@ PYTHONPATH=src python3 -m vskill_os.cli run \
 - [Benchmark 设计](docs/BENCHMARK.md)
 - [构建顺序](docs/BUILD_ORDER.md)
 - [参考工作与设计映射](docs/REFERENCES.md)
+- [G1 29DOF/5010 配置基线](docs/G1_29DOF_5010.md)
+- [分阶段运控、坐下与实体打字](docs/CONTROL_PHASES.md)
+- [本地轻量语音—LLM](docs/VOICE_LLM.md)
+- [相关项目与集成决策](docs/RELATED_PROJECTS.md)

@@ -1,0 +1,9 @@
+{
+  "name": "posture_recovery",
+  "expected_output": "hello, world",
+  "buggy_first_draft": false,
+  "max_recovery_attempts": 2,
+  "faults": {
+    "sit_and_prepare_for_typing": ["POSTURE_UNSTABLE"]
+  }
+}

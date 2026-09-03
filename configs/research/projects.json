@@ -1,0 +1,167 @@
+{
+  "reviewed_at": "2026-09-03",
+  "projects": [
+    {
+      "name": "Unitree G1 description",
+      "url": "https://github.com/unitreerobotics/unitree_ros/blob/master/robots/g1_description/README.md",
+      "subsystem": "robot_model",
+      "maturity": "official",
+      "integration": "adopt",
+      "use_for": ["mode_machine identity", "URDF/MJCF selection", "5010 compatibility"],
+      "constraints": ["29DoF/5010 spans modes 13, 14, 15, 16, and 18"]
+    },
+    {
+      "name": "Unitree RL Lab",
+      "url": "https://github.com/unitreerobotics/unitree_rl_lab",
+      "subsystem": "locomotion",
+      "maturity": "official",
+      "integration": "adapter",
+      "use_for": ["G1 29DoF velocity executor", "motion imitation", "ONNX policy export"],
+      "constraints": ["pin the robot asset and Isaac Lab version used for training"]
+    },
+    {
+      "name": "Unitree Sim IsaacLab",
+      "url": "https://github.com/unitreerobotics/unitree_sim_isaaclab",
+      "subsystem": "simulation",
+      "maturity": "official",
+      "integration": "adapter",
+      "use_for": ["DDS-equivalent simulator boundary", "G1 Dex3 task assets", "data collection"],
+      "constraints": ["official README currently recommends Isaac Sim 5.0 for RTX 50 series"]
+    },
+    {
+      "name": "Unitree MuJoCo",
+      "url": "https://github.com/unitreerobotics/unitree_mujoco",
+      "subsystem": "simulation",
+      "maturity": "official",
+      "integration": "baseline",
+      "use_for": ["fast sim-to-sim checks", "SDK2 low-level interface regression"],
+      "constraints": ["primarily a low-level controller validation environment"]
+    },
+    {
+      "name": "WBC-AGILE",
+      "url": "https://github.com/nvidia-isaac/WBC-AGILE",
+      "subsystem": "sitting",
+      "maturity": "research_release",
+      "integration": "adapter",
+      "use_for": ["G1 sit-down/stand-up", "motion tracking", "Dex3 whole-body baseline"],
+      "constraints": ["pin Isaac Lab 3.0.0-beta2, Isaac Sim 6.0, Python 3.12, and its RSL-RL patch"]
+    },
+    {
+      "name": "BeyondMimic",
+      "url": "https://github.com/HybridRobotics/whole_body_tracking",
+      "subsystem": "whole_body_control",
+      "maturity": "research_release",
+      "integration": "baseline",
+      "use_for": ["motion tracking prior", "G1 ONNX deployment", "reference retargeting"],
+      "constraints": ["typing precision still requires a task residual/controller"]
+    },
+    {
+      "name": "BeyondMimic deployment",
+      "url": "https://github.com/HybridRobotics/motion_tracking_controller",
+      "subsystem": "whole_body_control",
+      "maturity": "research_release",
+      "integration": "adapter",
+      "use_for": ["C++ ONNX inference", "joint-order metadata", "real-time policy wrapper"],
+      "constraints": ["policy/profile compatibility must be checked before loading"]
+    },
+    {
+      "name": "GR00T Whole-Body Control",
+      "url": "https://github.com/NVlabs/GR00T-WholeBodyControl",
+      "subsystem": "whole_body_control",
+      "maturity": "official_research_release",
+      "integration": "adapter",
+      "use_for": ["G1 decoupled WBC", "teleoperation", "data export", "policy deployment"],
+      "constraints": ["monitor joint temperature and validate the exact G1/hand asset before any real deployment"]
+    },
+    {
+      "name": "HoST",
+      "url": "https://github.com/InternRobotics/HoST",
+      "subsystem": "recovery",
+      "maturity": "research_release",
+      "integration": "baseline",
+      "use_for": ["stand-up recovery", "multi-critic and curriculum design"],
+      "constraints": ["not a seated-work controller"]
+    },
+    {
+      "name": "Unitree XR Teleoperate",
+      "url": "https://github.com/unitreerobotics/xr_teleoperate",
+      "subsystem": "dexterous_hand",
+      "maturity": "official",
+      "integration": "adapter",
+      "use_for": ["G1 29DoF + Dex3 teleoperation", "demonstration collection", "retargeting"],
+      "constraints": ["collect keyboard-specific contact and screen evidence in addition to joint trajectories"]
+    },
+    {
+      "name": "Unitree LeRobot",
+      "url": "https://github.com/unitreerobotics/unitree_lerobot",
+      "subsystem": "dexterous_hand",
+      "maturity": "official",
+      "integration": "baseline",
+      "use_for": ["Dex3 dataset schema", "ACT/Diffusion Policy training baseline"],
+      "constraints": ["retain body/hand/profile metadata in every episode"]
+    },
+    {
+      "name": "LeRobot G1 integration",
+      "url": "https://huggingface.co/docs/lerobot/en/unitree_g1",
+      "subsystem": "agent_skill",
+      "maturity": "official",
+      "integration": "reference",
+      "use_for": ["G1 robot interface", "teleoperation", "locomanipulation workflow"],
+      "constraints": ["do not bypass V-Skill safety and verification contracts"]
+    },
+    {
+      "name": "G1 Piano Play",
+      "url": "https://github.com/meetsitaram/g1-piano-play",
+      "subsystem": "typing",
+      "maturity": "experimental",
+      "integration": "reference",
+      "use_for": ["seated G1 key-reaching scene", "piano-key contact rewards"],
+      "constraints": ["not yet a complete learned typing system; validate before reuse"]
+    },
+    {
+      "name": "Sherpa ONNX",
+      "url": "https://github.com/k2-fsa/sherpa-onnx",
+      "subsystem": "speech",
+      "maturity": "upstream",
+      "integration": "adapter",
+      "use_for": ["offline VAD", "streaming Chinese-English ASR", "optional TTS"],
+      "constraints": ["benchmark microphone noise and endpoint latency on target compute"]
+    },
+    {
+      "name": "SenseVoiceSmall",
+      "url": "https://github.com/QwenAudio/SenseVoice",
+      "subsystem": "speech",
+      "maturity": "upstream",
+      "integration": "baseline",
+      "use_for": ["Mandarin/Cantonese/English ASR", "language and audio-event tags"],
+      "constraints": ["released checkpoint language scope is narrower than the research model; follow model license"]
+    },
+    {
+      "name": "whisper.cpp",
+      "url": "https://github.com/ggml-org/whisper.cpp",
+      "subsystem": "speech",
+      "maturity": "upstream",
+      "integration": "baseline",
+      "use_for": ["portable offline ASR fallback", "CPU/CUDA quantized inference"],
+      "constraints": ["compare Chinese command latency with SenseVoice/sherpa before selection"]
+    },
+    {
+      "name": "Qwen3",
+      "url": "https://github.com/QwenLM/Qwen3",
+      "subsystem": "local_llm",
+      "maturity": "upstream",
+      "integration": "adapter",
+      "use_for": ["local Chinese tool planning", "structured Skill selection", "SFT baseline"],
+      "constraints": ["Agent output remains untrusted and must pass tool policy plus Verifier"]
+    },
+    {
+      "name": "llama.cpp",
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "subsystem": "local_llm",
+      "maturity": "upstream",
+      "integration": "adapter",
+      "use_for": ["local GGUF runtime", "OpenAI-compatible loopback endpoint"],
+      "constraints": ["pin runtime and chat template; regression-test tool calls on every upgrade"]
+    }
+  ]
+}

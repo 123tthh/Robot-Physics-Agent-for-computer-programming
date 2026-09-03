@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from vskill_os.domain import SkillStatus
+from vskill_os.control import ControlPhase
 from vskill_os.simulation.app import build_simulation_app, project_root
 
 
@@ -25,6 +26,7 @@ class SimulationTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.status, SkillStatus.SUCCEEDED)
         self.assertFalse(recovery_events)
         self.assertIn("task_reported", result.final_state.facts)
+        self.assertEqual(app.world.control.phase, ControlPhase.TYPING)
 
     async def test_checkpoint_can_resume_in_a_new_app(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -76,6 +78,24 @@ class SimulationTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("recalibrate_keyboard", recovery_events)
         self.assertIn("request_fix", recovery_events)
         self.assertNotIn("code_agent_claimed_complete", result.final_state.facts)
+
+    async def test_posture_recovery_does_not_repeat_the_contact_transition(self) -> None:
+        scenario = project_root() / "configs/scenarios/posture_recovery.json"
+        app = build_simulation_app(scenario_path=scenario)
+        try:
+            result = await app.run(task_id="posture-recovery")
+            sit_calls = [
+                item
+                for item in result.skill_results
+                if item.skill == "sit_and_prepare_for_typing"
+            ]
+        finally:
+            app.close()
+
+        self.assertEqual(result.status, SkillStatus.SUCCEEDED)
+        self.assertEqual(len(sit_calls), 2)
+        self.assertIn("already restored", sit_calls[-1].message)
+        self.assertEqual(app.world.control.phase, ControlPhase.TYPING)
 
 
 if __name__ == "__main__":

@@ -8,7 +8,9 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from ..config import load_json
+from ..control import G1ControlStack
 from ..domain import Evidence, EvidenceDomain, StateSnapshot
+from ..robot.g1 import G1HardwareProfile
 from .sandbox import LocalCodeSandbox
 
 
@@ -72,6 +74,7 @@ class SimulatedWorld:
         scenario: SimulationScenario,
         *,
         workspace: str | Path | None = None,
+        robot_profile: G1HardwareProfile,
     ) -> None:
         self.scenario = scenario
         self.faults = FaultInjector(scenario.faults)
@@ -79,7 +82,9 @@ class SimulatedWorld:
         self.values: dict[str, Any] = {
             "expected_output": scenario.expected_output,
             "scenario": scenario.name,
+            "g1_profile": robot_profile.compatibility_key,
         }
+        self.control = G1ControlStack(robot_profile)
         self.sandbox = LocalCodeSandbox(workspace)
         self.action_count = 0
 
@@ -128,6 +133,7 @@ class SimulatedWorld:
 
         self.truth.update(state.facts)
         self.values.update(state.values)
+        self.control.synchronize(state.facts)
 
     def close(self) -> None:
         self.sandbox.close()

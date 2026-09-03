@@ -36,6 +36,7 @@ async def run_demo(*, scenario_name: str = "software_recovery") -> dict[str, obj
             ],
             "final_facts": sorted(result.final_state.facts),
             "event_count": len(app.ledger.list_events(result.task_id)),
+            "control_stack": app.world.control.snapshot(),
         }
     finally:
         app.close()

@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
+from ..control import ControlPhase, RiskAssessment, RootVelocityCommand
 from ..contracts import SkillContract
 from ..domain import Evidence, EvidenceDomain, SkillExecution, SkillStatus, StateSnapshot
 from ..registry import SkillRegistry
 from ..simulation.environment import SimulatedWorld
+from ..typing import TypingPlanner
 
 
 class SimulationSkill:
@@ -18,6 +20,14 @@ class SimulationSkill:
 
     def fault(self) -> str | None:
         return self.world.inject_for(self.contract.name)
+
+    def control_evidence(self) -> Evidence:
+        return Evidence(
+            domain=EvidenceDomain.PHYSICAL,
+            kind="control_stack",
+            value=self.world.control.snapshot(),
+            source="sim_robot",
+        )
 
     def success(
         self,
@@ -63,20 +73,60 @@ class NavigateToWorkstation(SimulationSkill):
         preconditions=("task_received", "robot_safe"),
         local_postconditions=("workstation_reached",),
         resources=("locomotion", "head_camera"),
-        failure_codes=("NAVIGATION_BLOCKED",),
+        failure_codes=("NAVIGATION_BLOCKED", "TERRAIN_RISK_EXCEEDED"),
         recoveries=("clear_navigation_path",),
     )
 
     async def execute(
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
-        del state, arguments
+        del state
+        command = RootVelocityCommand(
+            vx_mps=float(arguments.get("vx_mps", 0.35)),
+            vy_mps=float(arguments.get("vy_mps", 0.0)),
+            yaw_rate_rps=float(arguments.get("yaw_rate_rps", 0.0)),
+        )
+        gated = self.world.control.issue_locomotion(
+            command,
+            RiskAssessment(
+                probability_of_failure=float(arguments.get("terrain_risk", 0.05)),
+                uncertainty=float(arguments.get("risk_uncertainty", 0.02)),
+                source="sim_tisa_risk_critic",
+            ),
+        )
+        risk_evidence = Evidence(
+            domain=EvidenceDomain.PHYSICAL,
+            kind="risk_gated_velocity",
+            value={
+                "authority": gated.authority,
+                "emergency_stop": gated.emergency_stop,
+                "issued": {
+                    "vx_mps": gated.issued.vx_mps,
+                    "vy_mps": gated.issued.vy_mps,
+                    "yaw_rate_rps": gated.issued.yaw_rate_rps,
+                },
+            },
+            source="sim_tisa_risk_critic",
+        )
+        if gated.emergency_stop:
+            return self.failure(
+                "TERRAIN_RISK_EXCEEDED",
+                gated.reason,
+                evidence=(risk_evidence, self.control_evidence()),
+            )
         if self.fault() == "NAVIGATION_BLOCKED":
-            return self.failure("NAVIGATION_BLOCKED", "path to workstation is blocked")
+            self.world.control.fail("path to workstation is blocked")
+            return self.failure(
+                "NAVIGATION_BLOCKED",
+                "path to workstation is blocked",
+                evidence=(risk_evidence, self.control_evidence()),
+            )
+        self.world.control.reach_station()
         return self.success(
             ("workstation_reached",),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
+            extra_evidence=(risk_evidence, self.control_evidence()),
         )
 
 
@@ -93,11 +143,15 @@ class ClearNavigationPath(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state, arguments
+        self.world.control.recover(
+            ControlPhase.LOCOMOTION, "navigation obstruction cleared"
+        )
         return self.success(
             ("navigation_path_clear",),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
             message="simulated obstacle cleared",
+            extra_evidence=(self.control_evidence(),),
         )
 
 
@@ -116,12 +170,19 @@ class AlignWithChair(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state, arguments
+        self.world.control.begin_alignment()
         if self.fault() == "CHAIR_NOT_FOUND":
-            return self.failure("CHAIR_NOT_FOUND", "chair pose is not observable")
+            self.world.control.fail("chair pose is not observable")
+            return self.failure(
+                "CHAIR_NOT_FOUND",
+                "chair pose is not observable",
+                evidence=(self.control_evidence(),),
+            )
         return self.success(
             ("chair_aligned",),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
+            extra_evidence=(self.control_evidence(),),
         )
 
 
@@ -138,10 +199,15 @@ class RealignWithChair(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state, arguments
+        self.world.control.recover(
+            ControlPhase.STATION_ALIGNMENT, "chair pose reacquired"
+        )
+        self.world.control.begin_alignment()
         return self.success(
             ("chair_aligned",),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
+            extra_evidence=(self.control_evidence(),),
         )
 
 
@@ -164,21 +230,41 @@ class SitAndPrepareForTyping(SimulationSkill):
     async def execute(
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
-        del state, arguments
+        del arguments
+        if state.has_all(
+            {"seated_stable", "screen_visible", "hands_reachable", "work_pose_ready"}
+        ) and self.world.control.phase is ControlPhase.UPPER_BODY_OPERATION:
+            return self.success(
+                ("seated_stable", "screen_visible", "hands_reachable", "work_pose_ready"),
+                domain=EvidenceDomain.PHYSICAL,
+                source="sim_robot",
+                message="recovery skill already restored the verified work pose",
+                extra_evidence=(self.control_evidence(),),
+            )
+        self.world.control.begin_sit_transition()
         fault = self.fault()
         if fault == "CHAIR_SHIFTED":
+            self.world.control.fail("chair moved during contact transition")
             self.world.clear_states("chair_aligned")
             return self.failure(
                 "CHAIR_SHIFTED",
                 "chair moved during contact transition",
+                evidence=(self.control_evidence(),),
                 invalidated_states=("chair_aligned",),
             )
         if fault == "POSTURE_UNSTABLE":
-            return self.failure("POSTURE_UNSTABLE", "seated posture did not stabilize")
+            self.world.control.fail("seated posture did not stabilize")
+            return self.failure(
+                "POSTURE_UNSTABLE",
+                "seated posture did not stabilize",
+                evidence=(self.control_evidence(),),
+            )
+        self.world.control.run_nominal_sit()
         return self.success(
             ("seated_stable", "screen_visible", "hands_reachable", "work_pose_ready"),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
+            extra_evidence=(self.control_evidence(),),
         )
 
 
@@ -196,10 +282,12 @@ class StabilizeWorkPose(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state, arguments
+        self.world.control.restore_work_pose()
         return self.success(
             ("seated_stable", "screen_visible", "hands_reachable", "work_pose_ready"),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_robot",
+            extra_evidence=(self.control_evidence(),),
         )
 
 
@@ -218,8 +306,14 @@ class CalibrateKeyboard(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state, arguments
+        self.world.control.begin_keyboard_calibration()
         if self.fault() == "KEYBOARD_NOT_FOUND":
-            return self.failure("KEYBOARD_NOT_FOUND", "keyboard detector returned no pose")
+            self.world.control.fail("keyboard detector returned no pose")
+            return self.failure(
+                "KEYBOARD_NOT_FOUND",
+                "keyboard detector returned no pose",
+                evidence=(self.control_evidence(),),
+            )
         pose = Evidence(
             domain=EvidenceDomain.PHYSICAL,
             kind="keyboard_pose",
@@ -231,7 +325,7 @@ class CalibrateKeyboard(SimulationSkill):
             ("keyboard_calibrated", "target_keys_reachable"),
             domain=EvidenceDomain.PHYSICAL,
             source="sim_keyboard",
-            extra_evidence=(pose,),
+            extra_evidence=(pose, self.control_evidence()),
         )
 
 
@@ -243,6 +337,14 @@ class RecalibrateKeyboard(CalibrateKeyboard):
         local_postconditions=("keyboard_calibrated", "target_keys_reachable"),
         resources=("keyboard_camera",),
     )
+
+    async def execute(
+        self, state: StateSnapshot, arguments: Mapping[str, Any]
+    ) -> SkillExecution:
+        self.world.control.recover(
+            ControlPhase.UPPER_BODY_OPERATION, "keyboard pose reacquisition requested"
+        )
+        return await super().execute(state, arguments)
 
 
 class PressChord(SimulationSkill):
@@ -270,8 +372,25 @@ class PressChord(SimulationSkill):
         if keys != ("ctrl", "alt", "t"):
             return self.failure("WRONG_KEY", f"unsupported chord: {keys!r}")
 
+        self.world.control.begin_typing()
+        planned = TypingPlanner().plan_chord(list(keys))
+        plan_evidence = Evidence(
+            domain=EvidenceDomain.PHYSICAL,
+            kind="dex3_key_objective",
+            value=[
+                {
+                    "key": stroke.key,
+                    "modifiers": list(stroke.modifiers),
+                    "hand": stroke.hand.value,
+                    "finger": stroke.finger.value,
+                }
+                for stroke in planned
+            ],
+            source="sim_keyboard",
+        )
         fault = self.fault()
         if fault == "ALT_MISSED":
+            self.world.control.fail("left alt contact was not registered")
             return self.failure(
                 "ALT_MISSED",
                 "left alt contact was not registered",
@@ -282,11 +401,19 @@ class PressChord(SimulationSkill):
                         value=["ctrl", "t"],
                         source="sim_keyboard",
                     ),
+                    plan_evidence,
+                    self.control_evidence(),
                 ),
             )
         if fault == "WRONG_KEY":
-            return self.failure("WRONG_KEY", "an adjacent key was triggered")
+            self.world.control.fail("an adjacent key was triggered")
+            return self.failure(
+                "WRONG_KEY",
+                "an adjacent key was triggered",
+                evidence=(plan_evidence, self.control_evidence()),
+            )
         if fault == "TERMINAL_NOT_FOCUSED":
+            self.world.control.fail("terminal opened without keyboard focus")
             self.world.set_states("terminal_visible", "fingers_released")
             self.world.clear_states("terminal_focused", "terminal_ready")
             return self.failure(
@@ -296,7 +423,8 @@ class PressChord(SimulationSkill):
                     ["terminal_visible", "fingers_released"],
                     domain=EvidenceDomain.GUI,
                     source="sim_screen",
-                ),
+                )
+                + (plan_evidence, self.control_evidence()),
                 invalidated_states=("terminal_focused", "terminal_ready"),
             )
 
@@ -317,7 +445,7 @@ class PressChord(SimulationSkill):
             states,
             domain=EvidenceDomain.GUI,
             source="sim_screen",
-            extra_evidence=(key_event,),
+            extra_evidence=(key_event, plan_evidence, self.control_evidence()),
         )
 
 
@@ -335,10 +463,14 @@ class RestoreTerminalFocus(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state, arguments
+        self.world.control.recover(
+            ControlPhase.TYPING, "terminal focus restored without leaving typing pose"
+        )
         return self.success(
             ("terminal_visible", "terminal_focused", "fingers_released", "terminal_ready"),
             domain=EvidenceDomain.GUI,
             source="sim_screen",
+            extra_evidence=(self.control_evidence(),),
         )
 
 

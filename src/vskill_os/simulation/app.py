@@ -11,6 +11,7 @@ from ..graph import SkillGraph
 from ..graph_executor import GraphRunResult, GraphSupervisor
 from ..ledger import EventLedger
 from ..recovery import build_default_recovery_manager
+from ..robot.g1 import G1DeploymentConfig
 from ..runtime import SkillRuntime
 from ..skills.simulation import build_simulation_registry
 from ..verifier import RuleBasedVerifier, build_default_verifier
@@ -78,12 +79,23 @@ def build_simulation_app(
     workflow_path: str | Path | None = None,
     ledger_path: str | Path = ":memory:",
     workspace: str | Path | None = None,
+    robot_config_path: str | Path | None = None,
 ) -> SimulationApp:
     root = project_root()
     scenario_file = Path(scenario_path) if scenario_path else root / "configs/scenarios/software_recovery.json"
     workflow_file = Path(workflow_path) if workflow_path else root / "configs/workflows/create_hello.json"
+    robot_config_file = (
+        Path(robot_config_path)
+        if robot_config_path
+        else root / "configs/robots/g1_29dof_5010.json"
+    )
     scenario = SimulationScenario.from_json(scenario_file)
-    world = SimulatedWorld(scenario, workspace=workspace)
+    robot_config = G1DeploymentConfig.from_json(robot_config_file)
+    world = SimulatedWorld(
+        scenario,
+        workspace=workspace,
+        robot_profile=robot_config.simulation_profile(),
+    )
     graph = load_skill_graph(workflow_file)
     ledger = EventLedger(ledger_path)
     registry = build_simulation_registry(world)
@@ -104,6 +116,7 @@ def build_simulation_app(
         values={
             "scenario": scenario.name,
             "expected_output": scenario.expected_output,
+            "g1_profile": world.control.profile.compatibility_key,
         },
     )
     return SimulationApp(
