@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "name": "p1_simple_room_three_workstations",
+  "meters_per_unit": 1.0,
+  "up_axis": "Z",
+  "room": {
+    "size_m": [8.0, 6.0, 2.8],
+    "wall_thickness_m": 0.12,
+    "floor_thickness_m": 0.05,
+    "entry_wall": "west",
+    "door_center_y_m": 0.0,
+    "door_width_m": 1.2,
+    "door_height_m": 2.2,
+    "logical_wall_count": 4,
+    "wall_collider_count": 6
+  },
+  "robot_clearance_radius_m": 0.40,
+  "workstations": [
+    {
+      "id": "A",
+      "offset_m": [0.0, 0.0, 0.0],
+      "target": true,
+      "detail_level": "full_interaction",
+      "approach_xy_yaw": [-1.05, 0.0, 0.0],
+      "chair_alignment_xy_yaw": [-0.38, 0.0, 0.0],
+      "work_pose_xy_yaw": [0.0, 0.0, 0.0]
+    },
+    {
+      "id": "B",
+      "offset_m": [0.0, -1.75, 0.0],
+      "target": false,
+      "detail_level": "navigation_static",
+      "approach_xy_yaw": [-1.05, -1.75, 0.0],
+      "chair_alignment_xy_yaw": [-0.38, -1.75, 0.0],
+      "work_pose_xy_yaw": [0.0, -1.75, 0.0]
+    },
+    {
+      "id": "C",
+      "offset_m": [0.0, 1.75, 0.0],
+      "target": false,
+      "detail_level": "navigation_static",
+      "approach_xy_yaw": [-1.05, 1.75, 0.0],
+      "chair_alignment_xy_yaw": [-0.38, 1.75, 0.0],
+      "work_pose_xy_yaw": [0.0, 1.75, 0.0]
+    }
+  ],
+  "spawn_points": [
+    {"id": "entry_center", "xy_yaw": [-3.25, 0.0, 0.0]},
+    {"id": "entry_south", "xy_yaw": [-3.10, -1.25, 0.0]},
+    {"id": "entry_north", "xy_yaw": [-3.10, 1.25, 0.0]}
+  ],
+  "static_obstacles": [
+    {
+      "id": "filing_cabinet",
+      "center_m": [-1.55, 0.85, 0.55],
+      "size_m": [0.45, 0.65, 1.10]
+    }
+  ],
+  "validation": {
+    "required_prim_paths": [
+      "/World/Ground",
+      "/World/Navigation/Room/WallWestSouth",
+      "/World/Navigation/Room/WallWestNorth",
+      "/World/Navigation/Room/WallWestHeader",
+      "/World/Navigation/Room/WallEast",
+      "/World/Navigation/Room/WallSouth",
+      "/World/Navigation/Room/WallNorth",
+      "/World/Navigation/Workstations/Workstation_A",
+      "/World/Navigation/Workstations/Workstation_B",
+      "/World/Navigation/Workstations/Workstation_C",
+      "/World/Navigation/Anchors/Spawn_entry_center",
+      "/World/Navigation/Anchors/Workstation_A_Approach",
+      "/World/Navigation/Obstacles/filing_cabinet"
+    ]
+  }
+}

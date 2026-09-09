@@ -97,6 +97,24 @@ class SimulationTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("already restored", sit_calls[-1].message)
         self.assertEqual(app.world.control.phase, ControlPhase.TYPING)
 
+    async def test_seated_contact_loss_uses_local_recovery_and_retries(self) -> None:
+        scenario = project_root() / "configs/scenarios/seated_locomotion_recovery.json"
+        app = build_simulation_app(scenario_path=scenario)
+        try:
+            result = await app.run(task_id="seated-recovery")
+            recovery_events = [
+                event.payload["recovery_skill"]
+                for event in app.ledger.list_events("seated-recovery")
+                if event.kind == "recovery_selected"
+            ]
+        finally:
+            app.close()
+
+        self.assertEqual(result.status, SkillStatus.SUCCEEDED)
+        self.assertIn("recover_seated_contact", recovery_events)
+        self.assertIn("seated_reposition_verified", result.final_state.facts)
+        self.assertFalse(app.world.control.snapshot()["seated_locomotion_active"])
+
 
 if __name__ == "__main__":
     unittest.main()

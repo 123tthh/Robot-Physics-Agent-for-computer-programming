@@ -32,6 +32,9 @@ PYTHONPATH=src python3 -m vskill_os.cli benchmark \
 - `mean_recoveries`：每个任务的平均恢复 Skill 数；
 - `mean_duration_seconds`：单任务平均墙钟时间；
 - `failure_codes`：所有结构化失败码计数；
+- `seated_reposition_verified_count`：通过独立坐姿移动验证的轮数；
+- `mean_seated_path_length_m`、`mean_seated_planar_tracking_rmse_mps`：坐姿移动进度与平移跟踪误差；
+- `mean_minimum_seat_contact_confidence`：每轮坐姿移动中的最低座面接触置信度均值；
 - 每轮注入故障数、调用数、恢复数和失败节点。
 
 ## 论文实验扩展
@@ -45,4 +48,5 @@ PYTHONPATH=src python3 -m vskill_os.cli benchmark \
 - 平铺历史与结构化恢复记忆；
 - 数字 API Oracle；
 - 不同 Agent/规划器；
+- 坐姿移动 SY/FS/CC 全因子消融、分方向 CoT、接触力和静止局部最优计数；
 - Isaac Lab 全身控制场景与真机结果。

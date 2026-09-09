@@ -14,6 +14,8 @@ class BenchmarkTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(summary["success_rate"], 1.0)
         self.assertEqual(summary["false_completion_count"], 0)
         self.assertEqual(summary["mean_recoveries"], 0.0)
+        self.assertEqual(summary["seated_reposition_verified_count"], 3)
+        self.assertGreater(summary["mean_seated_path_length_m"], 0.1)
 
     async def test_recovery_benchmark_is_reproducible(self) -> None:
         config = BenchmarkConfig(episodes=3, seed=19, profile="recovery")

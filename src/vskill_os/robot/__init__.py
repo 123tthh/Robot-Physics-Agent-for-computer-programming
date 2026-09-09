@@ -15,3 +15,14 @@ __all__ = [
     "G1PolicyManifest",
     "G1_5010_PROFILES",
 ]
+from .seated_policy import (
+    EXPECTED_ACTOR_OBSERVATIONS,
+    EXPECTED_CRITIC_ONLY_OBSERVATIONS,
+    SeatedLocomotionPolicyManifest,
+)
+
+__all__ = [
+    "EXPECTED_ACTOR_OBSERVATIONS",
+    "EXPECTED_CRITIC_ONLY_OBSERVATIONS",
+    "SeatedLocomotionPolicyManifest",
+]

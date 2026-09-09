@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "phase": "P1",
+  "validator": "vskill_openusd_workstation_topology",
+  "status": "passed",
+  "generated_at_unix": 1788522735.389061,
+  "scene_usd": "/home/descfly/humanoid-computer-agent/artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda",
+  "asset_chain_config": "/home/descfly/humanoid-computer-agent/configs/simulation/p0_p1_workstation_asset_chain.json",
+  "navigation_room_config": "/home/descfly/humanoid-computer-agent/configs/simulation/p1_navigation_room.json",
+  "checks": {
+    "scene_exists": true,
+    "stage_opens": true,
+    "default_prim_world": true,
+    "z_up": true,
+    "meters_per_unit": true,
+    "required_prims_present": true,
+    "chair_rigid_body_count": true,
+    "chair_revolute_joint_count": true,
+    "chair_swivel_joint_count": true,
+    "chair_rolling_joint_count": true,
+    "joint_relationships_resolve": true,
+    "stage_markers_complete": true,
+    "chair_contact_surfaces_complete": true,
+    "chair_root_free": true,
+    "chair_seat_height_matches_config": true,
+    "chair_sliding_dominant_configuration": true,
+    "desk_supports_present": true,
+    "display_stand_present": true,
+    "navigation_required_prims_present": true,
+    "navigation_four_wall_shell": true,
+    "navigation_workstations_unique": true,
+    "navigation_target_workstation": true,
+    "navigation_anchors_complete": true,
+    "navigation_obstacles_collidable": true
+  },
+  "details": {
+    "default_prim": "/World",
+    "up_axis": "Z",
+    "meters_per_unit": 1.0,
+    "prim_count": 1095,
+    "used_layer_count": 7,
+    "chair_rigid_body_paths": [
+      "/World/MobileChair/Bodies/Frame",
+      "/World/MobileChair/Bodies/Caster_0_Fork",
+      "/World/MobileChair/Bodies/Caster_0_Wheel",
+      "/World/MobileChair/Bodies/Caster_1_Fork",
+      "/World/MobileChair/Bodies/Caster_1_Wheel",
+      "/World/MobileChair/Bodies/Caster_2_Fork",
+      "/World/MobileChair/Bodies/Caster_2_Wheel",
+      "/World/MobileChair/Bodies/Caster_3_Fork",
+      "/World/MobileChair/Bodies/Caster_3_Wheel",
+      "/World/MobileChair/Bodies/Caster_4_Fork",
+      "/World/MobileChair/Bodies/Caster_4_Wheel"
+    ],
+    "chair_joint_paths": [
+      "/World/MobileChair/Joints/Caster_0_Swivel",
+      "/World/MobileChair/Joints/Caster_0_Rolling",
+      "/World/MobileChair/Joints/Caster_1_Swivel",
+      "/World/MobileChair/Joints/Caster_1_Rolling",
+      "/World/MobileChair/Joints/Caster_2_Swivel",
+      "/World/MobileChair/Joints/Caster_2_Rolling",
+      "/World/MobileChair/Joints/Caster_3_Swivel",
+      "/World/MobileChair/Joints/Caster_3_Rolling",
+      "/World/MobileChair/Joints/Caster_4_Swivel",
+      "/World/MobileChair/Joints/Caster_4_Rolling"
+    ],
+    "chair_contact_paths": [
+      "/World/MobileChair/Bodies/Frame/Seat",
+      "/World/MobileChair/Bodies/Frame/Backrest",
+      "/World/MobileChair/Bodies/Caster_0_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_1_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_2_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_3_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_4_Wheel/WheelVisual"
+    ],
+    "stage_order": [
+      "room_entry",
+      "workstation_approach",
+      "chair_alignment",
+      "pre_sit",
+      "seated_stabilization",
+      "work_pose"
+    ],
+    "missing_required_paths": [],
+    "broken_joint_relationships": [],
+    "chair_fixed_joint_paths": [],
+    "chair_seat_top_height_m": 0.4775,
+    "chair_swivel_joint_friction": [
+      0.009999999776482582,
+      0.009999999776482582,
+      0.009999999776482582,
+      0.009999999776482582,
+      0.009999999776482582
+    ],
+    "chair_rolling_joint_friction": [
+      0.07999999821186066,
+      0.07999999821186066,
+      0.07999999821186066,
+      0.07999999821186066,
+      0.07999999821186066
+    ],
+    "chair_rolling_joint_max_velocity_deg_s": [
+      20.0,
+      20.0,
+      20.0,
+      20.0,
+      20.0
+    ],
+    "navigation_wall_paths": [
+      "/World/Navigation/Room/WallWestSouth",
+      "/World/Navigation/Room/WallWestNorth",
+      "/World/Navigation/Room/WallWestHeader",
+      "/World/Navigation/Room/WallEast",
+      "/World/Navigation/Room/WallSouth",
+      "/World/Navigation/Room/WallNorth"
+    ],
+    "navigation_workstation_ids": [
+      "A",
+      "B",
+      "C"
+    ],
+    "navigation_anchor_paths": [
+      "/World/Navigation/Anchors/Spawn_entry_center",
+      "/World/Navigation/Anchors/Spawn_entry_south",
+      "/World/Navigation/Anchors/Spawn_entry_north",
+      "/World/Navigation/Anchors/Workstation_A_Approach",
+      "/World/Navigation/Anchors/Workstation_A_ChairAlignment",
+      "/World/Navigation/Anchors/Workstation_A_WorkPose",
+      "/World/Navigation/Anchors/Workstation_B_Approach",
+      "/World/Navigation/Anchors/Workstation_B_ChairAlignment",
+      "/World/Navigation/Anchors/Workstation_B_WorkPose",
+      "/World/Navigation/Anchors/Workstation_C_Approach",
+      "/World/Navigation/Anchors/Workstation_C_ChairAlignment",
+      "/World/Navigation/Anchors/Workstation_C_WorkPose"
+    ],
+    "navigation_obstacle_paths": [
+      "/World/Navigation/Obstacles/filing_cabinet"
+    ],
+    "missing_navigation_paths": []
+  },
+  "errors": [],
+  "formal_simready_conformance": "not_claimed"
+}

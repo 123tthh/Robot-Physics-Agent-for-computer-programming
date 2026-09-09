@@ -2,9 +2,12 @@
 
 机器可读目录位于 `configs/research/projects.json`，可运行：
 
+人工审阅的项目快照、许可证、固定 commit 和适配笔记按阶段存放在 [`references/`](../references/README.md)；机器可读清单和本地资料索引应相互引用，但职责保持分离。
+
 ```bash
 PYTHONPATH=src python3 -m vskill_os.cli list-projects
 PYTHONPATH=src python3 -m vskill_os.cli list-projects --subsystem sitting
+PYTHONPATH=src python3 -m vskill_os.cli list-projects --subsystem seated_locomotion
 ```
 
 ## 直接采用或实现 Adapter
@@ -32,6 +35,7 @@ PYTHONPATH=src python3 -m vskill_os.cli list-projects --subsystem sitting
 | [Isaac Lab G1 environments](https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html) | 固定上身 IK、locomanipulation、三指手任务 | 完整实体打字任务定义 |
 | [LeRobot G1](https://huggingface.co/docs/lerobot/en/unitree_g1) | 通用机器人接口、遥操作和仿真流程 | 本项目的 Verifier/账本/Skill 契约 |
 | [G1 Piano Play](https://github.com/meetsitaram/g1-piano-play) | 坐姿、触键资产和 contact reward 起点 | 当前主要是 reach/contact，尚非成熟连续打字系统 |
+| [Stay Seated](https://arxiv.org/abs/2608.28090) | G1 在无动力五万向轮座椅上的全向坐姿移动、96/217 维非对称观测和训练消融 | v1 未发布代码/权重；真机仅定性演示，必须在本项目机型与座椅上重新量化 |
 
 ## 明确不采用的路线
 

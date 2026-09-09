@@ -9,7 +9,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
 
+from .action_graph import ActionModuleCatalog, KeyboardActionCompiler
 from .benchmark import BenchmarkConfig, run_benchmark
+from .config import load_json
 from .ledger import EventLedger
 from .research import ReferenceCatalog
 from .robot.g1 import (
@@ -18,7 +20,17 @@ from .robot.g1 import (
     G1PolicyManifest,
     G1_5010_PROFILES,
 )
+from .robot.seated_policy import SeatedLocomotionPolicyManifest
 from .simulation.app import build_simulation_app, project_root
+from .simulation.assets import G1SimulationManifest
+from .simulation.dex3_assets import (
+    compose_mode15_g1_with_dex3,
+    validate_g1_dex3_urdf,
+    validate_g1_dex3_usd,
+)
+from .simulation.hybrid import run_hybrid_smoke
+from .simulation.p2 import run_p2_smoke
+from .typing import TypingPlanner
 from .voice import AgentToolPolicy, RuleBasedToolPlanner, VoiceCommandPipeline
 
 
@@ -90,6 +102,76 @@ def build_parser() -> argparse.ArgumentParser:
         "voice-plan", help="run the deterministic local voice planning baseline"
     )
     voice.add_argument("transcript")
+
+    hybrid = subparsers.add_parser(
+        "hybrid-smoke", help="run the P1 keycap-to-PTY simulation smoke test"
+    )
+    hybrid.add_argument(
+        "--manifest",
+        type=Path,
+        default=root / "configs/simulation/g1_29dof_5010_p1.json",
+    )
+    hybrid.add_argument("--workspace", type=Path, default=None)
+
+    p2 = subparsers.add_parser(
+        "p2-smoke",
+        help="run the modular P2 single-key, chord, text, and repair acceptance",
+    )
+    p2.add_argument(
+        "--manifest",
+        type=Path,
+        default=root / "configs/simulation/g1_29dof_5010_p1.json",
+    )
+    p2.add_argument("--workspace", type=Path, default=None)
+    p2.add_argument("--output", type=Path, default=None)
+
+    action_graph = subparsers.add_parser(
+        "inspect-action-graph",
+        help="compile and inspect the versioned Ctrl+Alt+T ActionGraph",
+    )
+    action_graph.add_argument(
+        "--modules",
+        type=Path,
+        default=root / "configs/action_graphs/modules",
+    )
+    action_graph.add_argument("--output", type=Path, default=None)
+
+    assets = subparsers.add_parser(
+        "inspect-sim-assets", help="validate the pinned P1 simulation manifest"
+    )
+    assets.add_argument(
+        "--manifest",
+        type=Path,
+        default=root / "configs/simulation/g1_29dof_5010_p1.json",
+    )
+
+    dex3_assets = subparsers.add_parser(
+        "inspect-dex3-assets",
+        help="compose and validate collected G1 mode-15 + Dex3 assets",
+    )
+    dex3_assets.add_argument(
+        "--unitree-ros-root",
+        type=Path,
+        default=root / "artifacts/simulation-assets/unitree_ros_7d6075f7/robots",
+    )
+    dex3_assets.add_argument(
+        "--usd",
+        type=Path,
+        default=(
+            root
+            / "artifacts/simulation-assets/unitree_sim_isaaclab_usds_394cf244"
+            / "robots/g1-29dof-dex3-base-fix-usd/g1_29dof_with_dex3_base_fix.usd"
+        ),
+    )
+    dex3_assets.add_argument(
+        "--target-usd",
+        type=Path,
+        default=(
+            root
+            / "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd"
+        ),
+    )
+    dex3_assets.add_argument("--require-pxr", action="store_true")
     return parser
 
 
@@ -182,10 +264,19 @@ def inspect_robot_command(args: argparse.Namespace) -> int:
         ],
     }
     if args.policy_manifest is not None:
-        manifest = G1PolicyManifest.from_json(args.policy_manifest)
+        raw_manifest = load_json(args.policy_manifest)
+        manifest = G1PolicyManifest.from_dict(raw_manifest)
         manifest.validate_for(config.simulation_profile())
         payload["policy_manifest"] = str(args.policy_manifest)
         payload["policy_compatible_with_simulation"] = True
+        if "seated_locomotion" in raw_manifest:
+            seated = SeatedLocomotionPolicyManifest.from_dict(raw_manifest)
+            seated.validate_for(config.simulation_profile())
+            payload["seated_locomotion"] = {
+                "actor_dimension": seated.actor_dimension,
+                "critic_dimension": seated.critic_dimension,
+                "training_risk_flags": list(seated.training_risk_flags),
+            }
     _emit_json(payload, None)
     return 0
 
@@ -246,6 +337,99 @@ async def voice_plan_command(args: argparse.Namespace) -> int:
     return 0
 
 
+def hybrid_smoke_command(args: argparse.Namespace) -> int:
+    result = run_hybrid_smoke(
+        root=project_root(),
+        workspace=args.workspace,
+        manifest_path=args.manifest,
+    )
+    _emit_json(result.to_dict(), None)
+    return 0 if result.succeeded else 2
+
+
+async def p2_smoke_command(args: argparse.Namespace) -> int:
+    result = await run_p2_smoke(
+        root=project_root(),
+        workspace=args.workspace,
+        manifest_path=args.manifest,
+    )
+    _emit_json(result.to_dict(), args.output)
+    return 0 if result.succeeded else 2
+
+
+def inspect_action_graph_command(args: argparse.Namespace) -> int:
+    catalog = ActionModuleCatalog.from_directory(args.modules)
+    plan = TypingPlanner().plan_chord_detailed(["ctrl", "alt", "t"])
+    graph = KeyboardActionCompiler(catalog).compile_chord(plan)
+    _emit_json(graph.to_dict(), args.output)
+    return 0
+
+
+def inspect_sim_assets_command(args: argparse.Namespace) -> int:
+    manifest = G1SimulationManifest.from_json(args.manifest)
+    root = project_root()
+    manifest.validate(root=root)
+    capability = manifest.capability()
+    report_path = capability.get("acceptance_report")
+    if report_path:
+        manifest.verify_acceptance_report(root / str(report_path))
+        capability["acceptance_evidence"] = "verified"
+    _emit_json(capability, None)
+    return 0
+
+
+def inspect_dex3_assets_command(args: argparse.Namespace) -> int:
+    description = args.unitree_ros_root / "g1_description"
+    hand = args.unitree_ros_root / "dex3_1"
+    target = description / "g1_29dof_mode_15_with_dex3_1.urdf"
+    composite = compose_mode15_g1_with_dex3(
+        g1_urdf=description / "g1_29dof_mode_15.urdf",
+        left_hand_urdf=hand / "dex3_1_l.urdf",
+        right_hand_urdf=hand / "dex3_1_r.urdf",
+        output=target,
+    )
+    legacy = validate_g1_dex3_urdf(
+        description / "g1_29dof_with_hand_rev_1_0.urdf"
+    )
+    usd = validate_g1_dex3_usd(
+        args.usd,
+        expected_sha256="d23b9bbc8b59cf20fa1983f55874f855a76e038b9e22eae39542e62be5b4ba3d",
+        require_pxr=args.require_pxr,
+        require_positive_masses=False,
+    )
+    target_config = load_json(
+        project_root() / "configs/simulation/g1_29dof_5010_dex3_assets.json"
+    )["usd_target"]
+    target_usd = validate_g1_dex3_usd(
+        args.target_usd,
+        expected_sha256=str(target_config["sha256"]),
+        require_pxr=args.require_pxr,
+    )
+    _emit_json(
+        {
+            "target_composite_urdf": composite.to_dict(),
+            "target_composite_usd": {
+                **target_usd.to_dict(),
+                "compatible_with_mode15_5010": True,
+            },
+            "official_legacy_composite_urdf": {
+                **legacy.to_dict(),
+                "compatible_with_mode15_5010": False,
+                "reason": "official README identifies it as mode 5 with 4010 wrists",
+            },
+            "official_fixed_base_usd_reference": {
+                **usd.to_dict(),
+                "file_integrity_validated": True,
+                "joint_schema_validated": usd.pxr_parsed,
+                "dynamics_compatible_with_mode15_5010": False,
+                "reason": "default prim derives from the legacy mode-5 composite",
+            },
+        },
+        None,
+    )
+    return 0
+
+
 class _UnusedASR:
     async def transcribe(self, audio: bytes) -> str:
         del audio
@@ -278,6 +462,16 @@ def main(argv: list[str] | None = None) -> int:
         return list_projects_command(args)
     if args.command == "voice-plan":
         return asyncio.run(voice_plan_command(args))
+    if args.command == "hybrid-smoke":
+        return hybrid_smoke_command(args)
+    if args.command == "p2-smoke":
+        return asyncio.run(p2_smoke_command(args))
+    if args.command == "inspect-action-graph":
+        return inspect_action_graph_command(args)
+    if args.command == "inspect-sim-assets":
+        return inspect_sim_assets_command(args)
+    if args.command == "inspect-dex3-assets":
+        return inspect_dex3_assets_command(args)
     raise RuntimeError(f"unhandled command: {args.command}")
 
 

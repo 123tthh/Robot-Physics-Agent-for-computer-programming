@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import StrEnum
+import math
 from typing import Any, Mapping
 
 
@@ -19,6 +20,47 @@ class SkillStatus(StrEnum):
     FAILED = "failed"
     REJECTED = "rejected"
     CANCELED = "canceled"
+
+
+@dataclass(frozen=True, slots=True)
+class FactValidity:
+    """Lifetime and dependency metadata for one independently verified fact."""
+
+    verified_at: float
+    ttl_seconds: float | None = None
+    dependencies: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not math.isfinite(self.verified_at):
+            raise ValueError("fact verification time must be finite")
+        if self.ttl_seconds is not None and (
+            not math.isfinite(self.ttl_seconds) or self.ttl_seconds <= 0.0
+        ):
+            raise ValueError("fact ttl_seconds must be finite and positive")
+        if len(self.dependencies) != len(set(self.dependencies)):
+            raise ValueError("fact dependencies contain duplicate entries")
+
+    def is_expired(self, now: float) -> bool:
+        return (
+            self.ttl_seconds is not None
+            and now >= self.verified_at + self.ttl_seconds
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "verified_at": self.verified_at,
+            "ttl_seconds": self.ttl_seconds,
+            "dependencies": list(self.dependencies),
+        }
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Any]) -> "FactValidity":
+        ttl = data.get("ttl_seconds")
+        return cls(
+            verified_at=float(data["verified_at"]),
+            ttl_seconds=None if ttl is None else float(ttl),
+            dependencies=tuple(str(item) for item in data.get("dependencies", ())),
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,6 +92,7 @@ class StateSnapshot:
     facts: set[str] = field(default_factory=set)
     values: dict[str, Any] = field(default_factory=dict)
     revision: int = 0
+    validity: dict[str, FactValidity] = field(default_factory=dict)
 
     def has_all(self, required: tuple[str, ...] | list[str] | set[str]) -> bool:
         return set(required).issubset(self.facts)
@@ -58,13 +101,75 @@ class StateSnapshot:
         return set(required) - self.facts
 
     def copy(self) -> "StateSnapshot":
-        return StateSnapshot(set(self.facts), dict(self.values), self.revision)
+        return StateSnapshot(
+            set(self.facts),
+            dict(self.values),
+            self.revision,
+            dict(self.validity),
+        )
+
+    def mark_verified(
+        self,
+        fact: str,
+        *,
+        verified_at: float,
+        ttl_seconds: float | None = None,
+        dependencies: tuple[str, ...] = (),
+    ) -> None:
+        """Record a verified fact without allowing a controller to self-verify it."""
+
+        self.facts.add(fact)
+        self.validity[fact] = FactValidity(
+            verified_at=verified_at,
+            ttl_seconds=ttl_seconds,
+            dependencies=dependencies,
+        )
+
+    def invalidate(self, facts: set[str] | tuple[str, ...] | list[str]) -> tuple[str, ...]:
+        """Remove facts and every tracked fact that depends on them."""
+
+        triggers = set(facts)
+        removed: set[str] = triggers & self.facts
+        changed = True
+        while changed:
+            changed = False
+            for fact, metadata in tuple(self.validity.items()):
+                if fact in removed:
+                    continue
+                if any(
+                    dependency in triggers or dependency in removed
+                    for dependency in metadata.dependencies
+                ):
+                    removed.add(fact)
+                    changed = True
+        self.facts.difference_update(removed)
+        for fact in removed:
+            self.validity.pop(fact, None)
+        return tuple(sorted(removed))
+
+    def expire(self, now: float) -> tuple[str, ...]:
+        """Expire stale facts and propagate invalidation through dependencies."""
+
+        if not math.isfinite(now):
+            raise ValueError("state clock value must be finite")
+        stale = {
+            fact
+            for fact, metadata in self.validity.items()
+            if metadata.is_expired(now)
+            or any(dependency not in self.facts for dependency in metadata.dependencies)
+        }
+        return self.invalidate(stale)
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "facts": sorted(self.facts),
             "values": dict(self.values),
             "revision": self.revision,
+            "validity": {
+                fact: metadata.to_dict()
+                for fact, metadata in sorted(self.validity.items())
+                if fact in self.facts
+            },
         }
 
     @classmethod
@@ -73,6 +178,10 @@ class StateSnapshot:
             facts=set(data.get("facts", ())),
             values=dict(data.get("values", {})),
             revision=int(data.get("revision", 0)),
+            validity={
+                str(fact): FactValidity.from_dict(metadata)
+                for fact, metadata in dict(data.get("validity", {})).items()
+            },
         )
 
 

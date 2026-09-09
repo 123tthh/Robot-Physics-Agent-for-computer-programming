@@ -1,0 +1,90 @@
+{
+  "robot": "unitree_g1",
+  "mode_machine": 15,
+  "body_dof": 29,
+  "wrist_motor": "5010",
+  "waist_locked": false,
+  "hip_gear_ratio": [22.5, 22.5],
+  "joint_order": [
+    "left_hip_pitch",
+    "left_hip_roll",
+    "left_hip_yaw",
+    "left_knee",
+    "left_ankle_pitch",
+    "left_ankle_roll",
+    "right_hip_pitch",
+    "right_hip_roll",
+    "right_hip_yaw",
+    "right_knee",
+    "right_ankle_pitch",
+    "right_ankle_roll",
+    "waist_yaw",
+    "waist_roll",
+    "waist_pitch",
+    "left_shoulder_pitch",
+    "left_shoulder_roll",
+    "left_shoulder_yaw",
+    "left_elbow",
+    "left_wrist_roll",
+    "left_wrist_pitch",
+    "left_wrist_yaw",
+    "right_shoulder_pitch",
+    "right_shoulder_roll",
+    "right_shoulder_yaw",
+    "right_elbow",
+    "right_wrist_roll",
+    "right_wrist_pitch",
+    "right_wrist_yaw"
+  ],
+  "action_type": "joint_position_residual",
+  "policy_hz": 50,
+  "low_level_hz": 200,
+  "simulator": "mjlab",
+  "simulator_version": "PIN_BEFORE_USE",
+  "training_commit": "PIN_BEFORE_USE",
+  "seated_locomotion": {
+    "source": "arXiv:2608.28090v1",
+    "actor_observations": [
+      {"name": "torso_angular_velocity", "dimension": 3},
+      {"name": "projected_gravity", "dimension": 3},
+      {"name": "joint_positions", "dimension": 29},
+      {"name": "joint_velocities", "dimension": 29},
+      {"name": "last_action", "dimension": 29},
+      {"name": "velocity_command", "dimension": 3}
+    ],
+    "critic_only_observations": [
+      {"name": "torso_linear_velocity", "dimension": 3},
+      {"name": "foot_heights", "dimension": 2},
+      {"name": "foot_air_times", "dimension": 2},
+      {"name": "foot_contact_states", "dimension": 2},
+      {"name": "foot_contact_forces", "dimension": 6},
+      {"name": "chair_relative_pose", "dimension": 9},
+      {"name": "chair_relative_velocity", "dimension": 6},
+      {"name": "chair_projected_gravity", "dimension": 3},
+      {"name": "caster_contact_states", "dimension": 5},
+      {"name": "caster_contact_forces", "dimension": 15},
+      {"name": "pelvis_seat_contact_states", "dimension": 3},
+      {"name": "pelvis_seat_contact_forces", "dimension": 9},
+      {"name": "chair_leg_contact_states", "dimension": 14},
+      {"name": "chair_leg_contact_forces", "dimension": 42}
+    ],
+    "command_limits": {
+      "vx_mps": 1.0,
+      "vy_mps": 1.0,
+      "yaw_rate_rps": 0.5
+    },
+    "passive_chair": {
+      "caster_count": 5,
+      "seat_rotation_unlocked": true
+    },
+    "training_termination": {
+      "pelvis_seat_contact_loss_s": 1.0,
+      "torso_or_chair_tilt_rad": 1.2217304764
+    },
+    "training_components": {
+      "symmetry_regularization": true,
+      "foot_slip_regularization": false,
+      "command_curriculum": true
+    }
+  }
+}

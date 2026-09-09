@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 
 
 def _clamp(value: float, lower: float, upper: float) -> float:
@@ -16,6 +17,13 @@ class RootVelocityCommand:
     vx_mps: float = 0.0
     vy_mps: float = 0.0
     yaw_rate_rps: float = 0.0
+
+    def __post_init__(self) -> None:
+        if any(
+            not math.isfinite(value)
+            for value in (self.vx_mps, self.vy_mps, self.yaw_rate_rps)
+        ):
+            raise ValueError("root velocity command values must be finite")
 
     def bounded(
         self,

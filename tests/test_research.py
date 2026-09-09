@@ -13,6 +13,7 @@ class ResearchCatalogTests(unittest.TestCase):
         )
         for subsystem in (
             "locomotion",
+            "seated_locomotion",
             "sitting",
             "dexterous_hand",
             "typing",

@@ -1,0 +1,62 @@
+{
+  "name": "bimanual_prepose",
+  "version": "1.1.0",
+  "contract_version": "1.0.0",
+  "description": "Move both Dex3 hands above their first assigned keys and join at a barrier.",
+  "interface": {
+    "inputs": [
+      {"name": "left_key", "type": "key_name"},
+      {"name": "left_finger", "type": "dex3_finger"},
+      {"name": "right_key", "type": "key_name"},
+      {"name": "right_finger", "type": "dex3_finger"}
+    ],
+    "outputs": [
+      {"name": "ready", "type": "barrier", "node": "ready"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "left_prepose",
+      "kind": "cartesian_move",
+      "executor": "left.${left_finger}",
+      "parameters": {
+        "target_key": "${left_key}",
+        "phase": "prepose",
+        "height_offset_m": 0.03,
+        "position_tolerance_m": 0.020,
+        "speed_limit_mps": 0.12
+      },
+      "resources": ["upper_body_ik", "left_arm", "left_dex3"],
+      "evidence": [{"domain": "physical", "kind": "fingertip_pose"}],
+      "failure_codes": ["UNREACHABLE_KEY", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 5.0
+    },
+    {
+      "id": "right_prepose",
+      "kind": "cartesian_move",
+      "executor": "right.${right_finger}",
+      "parameters": {
+        "target_key": "${right_key}",
+        "phase": "prepose",
+        "height_offset_m": 0.03,
+        "position_tolerance_m": 0.020,
+        "speed_limit_mps": 0.12
+      },
+      "resources": ["upper_body_ik", "right_arm", "right_dex3"],
+      "evidence": [{"domain": "physical", "kind": "fingertip_pose"}],
+      "failure_codes": ["UNREACHABLE_KEY", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 5.0
+    },
+    {
+      "id": "ready",
+      "kind": "barrier",
+      "executor": "bimanual_coordinator",
+      "parameters": {"barrier": "hands_preposed"},
+      "depends_on": ["left_prepose", "right_prepose"],
+      "resources": ["keyboard_camera"],
+      "evidence": [{"domain": "physical", "kind": "barrier_state"}],
+      "failure_codes": ["HAND_COLLISION_RISK", "PREPOSE_TIMEOUT"],
+      "timeout_seconds": 0.25
+    }
+  ]
+}

@@ -6,6 +6,7 @@
   "faults": {
     "navigate_to_workstation": ["NAVIGATION_BLOCKED"],
     "sit_and_prepare_for_typing": ["CHAIR_SHIFTED"],
+    "reposition_while_seated": ["SEATED_TRACKING_FAILED"],
     "press_chord": ["ALT_MISSED"],
     "launch_code_agent": ["NETWORK_INTERRUPTED"]
   }

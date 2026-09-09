@@ -19,6 +19,7 @@ flowchart TD
 - `vskill_os.control.phases`：不可跳级的控制状态机；
 - `vskill_os.control.commands`：低维根速度意图与风险控制权分配；
 - `vskill_os.control.sitting`：接触守卫驱动的坐下子阶段；
+- `vskill_os.control.seated_locomotion`：无动力轮椅坐姿移动的限幅、守卫与可验证指标；
 - `vskill_os.typing`：键盘几何、Dex3 指派、组合键与错字修复；
 - `vskill_os.skills.simulation`：以上控制状态与现有 SkillGraph 的完整集成。
 
@@ -31,6 +32,7 @@ flowchart TD
 | `station_alignment` | 几何足步/视觉伺服 | 椅子/桌子相对位姿 | 骨盆和双脚落入坐下入口域 |
 | `sit_transition` | 运动模仿 + 接触策略 | 参考动作、座椅、足/臀接触 | 负载转移完成，无滑动/冲击超限 |
 | `seated_stabilization` | 坐姿稳定器 | IMU、座椅压力、足底、躯干速度 | 骨盆和躯干速度持续低于阈值 |
+| `seated_locomotion` | passive-chair velocity policy | `{vx, vy, yaw_rate}`、本体状态 | 接触/倾角安全，产生非零进度，停止后重新稳定 |
 | `upper_body_operation` | 上肢 IK/WBC + 残差 | 末端目标、视线、躯干扰动 | 屏幕可见、双手可达 |
 | `keyboard_calibration` | 手眼标定与视觉伺服 | 键盘角点、键帽、腕部相机 | 键位姿态和可达性已验证 |
 | `typing` | Dex3 指尖控制 | 键位目标、接触、键盘事件、OCR | 当前键已触发、指尖释放、姿态仍稳定 |
@@ -79,6 +81,35 @@ WBC-AGILE / 重定向动作 motion prior
 
 [WBC-AGILE](https://github.com/nvidia-isaac/WBC-AGILE) 已公开 G1 sit-down/stand-up、velocity-height、teleoperation 等任务，适合作为 sit policy adapter 的第一选择；[VideoMimic](https://arxiv.org/abs/2505.03729) 可参考场景条件化视频模仿；[HoST](https://github.com/InternRobotics/HoST) 用作跌倒后站起恢复，而不是工作坐姿控制器。
 
+## 无动力轮椅上的坐姿移动
+
+[Stay Seated](https://arxiv.org/abs/2608.28090) 展示了 G1 通过间歇足—地接触推动
+机器人—座椅系统，在骨盆没有刚性固定到座椅的情况下跟踪
+`{vx, vy, yaw_rate}`。本项目把这一能力放在坐下和键盘标定之间：
+
+```text
+work_pose_ready
+→ reposition_while_seated({vx, vy, yaw_rate}, duration)
+→ seated_locomotion
+→ seated_stabilization
+→ upper_body_operation
+→ seated_reposition_verified
+```
+
+实现保留三条边界：
+
+1. Agent 只给出低维速度与最长 5 秒的有限时域，不接触 29 维关节目标；
+2. 策略 actor 只允许 96 维本体感觉与速度命令，座椅和接触真值只进入训练期 critic（总计 217 维）；
+3. 控制器的“成功”声明不够，Verifier 必须从原始指标确认真实进度、速度 RMSE、座面接触、骨盆偏移、躯干/椅子倾角和最终静止。
+
+论文训练命令范围为 `vx, vy ∈ [-1, 1] m/s`、`yaw_rate ∈ [-0.5, 0.5] rad/s`；
+本项目在没有完成具体机型、座椅和地面量化前，将部署侧平移限幅保守设为
+`0.5 m/s`，且使用比论文训练终止条件更严格的运行时接触/倾角守卫。
+
+训练配方不被写成未经验证的结论：SY+CC 在文中最一致，FS 可降低 CoT
+但会增大跟踪误差，FS-only 的部分随机种子还会收敛到“保持坐着但不移动”的
+局部最优。因此策略清单会标记 FS-only 风险，评测同时要求超时成功和非零运动进度。
+
 ## Dex3 实体打字
 
 Dex3 每手七个手部自由度，抽象为 thumb 3 + index 2 + middle 2。工程不让 LLM 输出这七维命令，而采用以下流水线：
@@ -114,6 +145,7 @@ Dex3 每手七个手部自由度，抽象为 thumb 3 + index 2 + middle 2。工�
 | S1 速度执行器 | ONNX locomotion + 风险门控 | 命令/观测维度校验；MuJoCo/Isaac 一致 | 接口已实现，待接权重 |
 | S2 坐下基线 | WBC-AGILE sit/stand adapter | 六段守卫和故障注入通过 | 阶段控制已实现，待外部 adapter |
 | S3 工作坐姿 | 上肢扰动下保持稳定 | 屏幕可见、双手可达、姿态阈值通过 | 仿真语义已实现 |
-| S4 单键/组合键 | 键盘标定与物理触键 | 键事件与 OCR 双验证 | 规划/纠错已实现，待 Isaac 场景 |
-| S5 连续文本 | 多指调度与自主纠错 | 文本成功率和恢复率达到门槛 | 待训练 |
-| S6 语音 Agent 闭环 | 本地 ASR/LLM 调用 L2/L3 | 越权调用为零；完整任务可验证 | 适配层与基线已实现 |
+| S4 坐姿移动 | passive-chair velocity policy | 非零进度、跟踪/接触/倾角与再稳定联合验证 | 契约、守卫、仿真故障恢复和策略清单已实现，待 mjlab 权重 |
+| S5 单键/组合键 | 键盘标定与物理触键 | 键事件与屏幕双验证 | P2 自动事件诊断已存在；GUI 可见触键和 camera-only OCR 尚未通过 |
+| S6 连续文本 | 多指调度与自主纠错 | 文本成功率和恢复率达到门槛 | 待训练 |
+| S7 语音 Agent 闭环 | 本地 ASR/LLM 调用 L2/L3 | 越权调用为零；完整任务可验证 | 适配层与基线已实现 |

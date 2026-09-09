@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Protocol
 
-from .control import RootVelocityCommand, SitObjective
+from .control import RootVelocityCommand, SeatedLocomotionObservation, SitObjective
 from .domain import Evidence, StateSnapshot
+from .ipc import WorkerMessage
 from .typing import Keystroke, KeyboardCalibration
 
 
@@ -35,6 +36,19 @@ class TestRunnerAdapter(Protocol):
         """Run an isolated test specification and return observable evidence."""
 
 
+class WorkerAdapter(Protocol):
+    async def invoke(
+        self,
+        request: WorkerMessage,
+        *,
+        timeout_seconds: float,
+    ) -> tuple[WorkerMessage, ...]:
+        """Invoke an Isaac, desktop, or model worker through the P0 protocol."""
+
+    async def close(self) -> None:
+        """Cancel outstanding work and release the worker boundary."""
+
+
 class LocomotionPolicyAdapter(Protocol):
     async def infer(
         self,
@@ -45,6 +59,18 @@ class LocomotionPolicyAdapter(Protocol):
 
     async def stop(self) -> None:
         """Issue a bounded zero/hold command through the controller backend."""
+
+
+class SeatedLocomotionPolicyAdapter(Protocol):
+    async def track(
+        self,
+        command: RootVelocityCommand,
+        observation: SeatedLocomotionObservation,
+    ) -> tuple[Evidence, ...]:
+        """Track safe planar intent while retaining unfixed pelvis-seat contact."""
+
+    async def stop_and_stabilize(self) -> tuple[Evidence, ...]:
+        """Stop chair motion and return evidence for the stable work-pose guard."""
 
 
 class WholeBodyPolicyAdapter(Protocol):

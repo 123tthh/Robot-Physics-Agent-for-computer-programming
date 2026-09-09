@@ -1,0 +1,1183 @@
+{
+  "schema_version": 1,
+  "phase": "P2",
+  "status": "passed",
+  "generated_at_unix": 1788518444.2741358,
+  "runtime": {
+    "isaac_sim_path": "/home/descfly/IsaacLab-2.3.2/_isaac_sim",
+    "isaac_lab": "0.54.2",
+    "isaac_lab_commit": "37ddf626871758333d6ed89cf64ad702aef127d0",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "robot_forward_offset_m": 0.28
+  },
+  "robot": {
+    "fixed_base": true,
+    "joint_count": 43,
+    "body_count": 52,
+    "body_names": [
+      "pelvis",
+      "imu_in_pelvis",
+      "left_hip_pitch_link",
+      "right_hip_pitch_link",
+      "waist_yaw_link",
+      "left_hip_roll_link",
+      "right_hip_roll_link",
+      "waist_roll_link",
+      "left_hip_yaw_link",
+      "right_hip_yaw_link",
+      "torso_link",
+      "left_knee_link",
+      "right_knee_link",
+      "d435_link",
+      "head_link",
+      "imu_in_torso",
+      "left_shoulder_pitch_link",
+      "logo_link",
+      "mid360_link",
+      "right_shoulder_pitch_link",
+      "left_ankle_pitch_link",
+      "right_ankle_pitch_link",
+      "left_shoulder_roll_link",
+      "right_shoulder_roll_link",
+      "left_ankle_roll_link",
+      "right_ankle_roll_link",
+      "left_shoulder_yaw_link",
+      "right_shoulder_yaw_link",
+      "left_elbow_link",
+      "right_elbow_link",
+      "left_wrist_roll_link",
+      "right_wrist_roll_link",
+      "left_wrist_pitch_link",
+      "right_wrist_pitch_link",
+      "left_wrist_yaw_link",
+      "right_wrist_yaw_link",
+      "left_hand_palm_link",
+      "right_hand_palm_link",
+      "left_hand_index_0_link",
+      "left_hand_middle_0_link",
+      "left_hand_thumb_0_link",
+      "right_hand_index_0_link",
+      "right_hand_middle_0_link",
+      "right_hand_thumb_0_link",
+      "left_hand_index_1_link",
+      "left_hand_middle_1_link",
+      "left_hand_thumb_1_link",
+      "right_hand_index_1_link",
+      "right_hand_middle_1_link",
+      "right_hand_thumb_1_link",
+      "left_hand_thumb_2_link",
+      "right_hand_thumb_2_link"
+    ],
+    "joint_names": [
+      "left_hip_pitch_joint",
+      "right_hip_pitch_joint",
+      "waist_yaw_joint",
+      "left_hip_roll_joint",
+      "right_hip_roll_joint",
+      "waist_roll_joint",
+      "left_hip_yaw_joint",
+      "right_hip_yaw_joint",
+      "waist_pitch_joint",
+      "left_knee_joint",
+      "right_knee_joint",
+      "left_shoulder_pitch_joint",
+      "right_shoulder_pitch_joint",
+      "left_ankle_pitch_joint",
+      "right_ankle_pitch_joint",
+      "left_shoulder_roll_joint",
+      "right_shoulder_roll_joint",
+      "left_ankle_roll_joint",
+      "right_ankle_roll_joint",
+      "left_shoulder_yaw_joint",
+      "right_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "right_elbow_joint",
+      "left_wrist_roll_joint",
+      "right_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "right_wrist_pitch_joint",
+      "left_wrist_yaw_joint",
+      "right_wrist_yaw_joint",
+      "left_hand_index_0_joint",
+      "left_hand_middle_0_joint",
+      "left_hand_thumb_0_joint",
+      "right_hand_index_0_joint",
+      "right_hand_middle_0_joint",
+      "right_hand_thumb_0_joint",
+      "left_hand_index_1_joint",
+      "left_hand_middle_1_joint",
+      "left_hand_thumb_1_joint",
+      "right_hand_index_1_joint",
+      "right_hand_middle_1_joint",
+      "right_hand_thumb_1_joint",
+      "left_hand_thumb_2_joint",
+      "right_hand_thumb_2_joint"
+    ],
+    "jacobian_shape": [
+      1,
+      51,
+      6,
+      43
+    ],
+    "tip_body_ids": {
+      "left_hand_thumb_2_link": 50,
+      "left_hand_index_1_link": 44,
+      "left_hand_middle_1_link": 45,
+      "right_hand_thumb_2_link": 51,
+      "right_hand_index_1_link": 47,
+      "right_hand_middle_1_link": 48
+    },
+    "tip_positions_world_m": {
+      "left_hand_thumb_2_link": [
+        0.5486417412757874,
+        0.08698520064353943,
+        0.8802647590637207
+      ],
+      "left_hand_index_1_link": [
+        0.6495683193206787,
+        0.15387913584709167,
+        0.9067285656929016
+      ],
+      "left_hand_middle_1_link": [
+        0.6484498381614685,
+        0.15382742881774902,
+        0.8497396111488342
+      ],
+      "right_hand_thumb_2_link": [
+        0.548632025718689,
+        -0.08698480576276779,
+        0.8803005218505859
+      ],
+      "right_hand_index_1_link": [
+        0.6495494246482849,
+        -0.15388351678848267,
+        0.906777024269104
+      ],
+      "right_hand_middle_1_link": [
+        0.6484394669532776,
+        -0.15382933616638184,
+        0.8497878909111023
+      ]
+    }
+  },
+  "keyboard": {
+    "joint_count": 74,
+    "target_key_joint_ids": {
+      "t": 32,
+      "right_alt": 71,
+      "right_ctrl": 73
+    },
+    "target_key_positions_rad": {
+      "t": 0.0,
+      "right_alt": 0.0,
+      "right_ctrl": 0.0
+    },
+    "contact_sensor_bodies": 74
+  },
+  "action_graph": {
+    "contract_version": "1.0.0",
+    "joint_commands_in_graph": false,
+    "low_level_boundary": "isaac_damped_least_squares_ik",
+    "name": "ctrl_alt_t",
+    "version": "1.0.0",
+    "module_instances": [
+      {
+        "namespace": "prepose",
+        "name": "bimanual_prepose",
+        "version": "1.1.0"
+      },
+      {
+        "namespace": "prepose_001_right_ctrl",
+        "name": "key_prepose",
+        "version": "1.0.0"
+      },
+      {
+        "namespace": "down_000_right_alt",
+        "name": "key_down",
+        "version": "1.1.0"
+      },
+      {
+        "namespace": "down_001_right_ctrl",
+        "name": "key_down",
+        "version": "1.1.0"
+      },
+      {
+        "namespace": "down_002_t",
+        "name": "key_down",
+        "version": "1.1.0"
+      },
+      {
+        "namespace": "up_000_t",
+        "name": "key_up",
+        "version": "1.0.1"
+      },
+      {
+        "namespace": "up_modifiers",
+        "name": "modifier_release_group",
+        "version": "1.0.0"
+      },
+      {
+        "namespace": "screen",
+        "name": "screen_gate",
+        "version": "1.0.0"
+      }
+    ],
+    "node_count": 23,
+    "run": {
+      "graph": "ctrl_alt_t",
+      "version": "1.0.0",
+      "status": "succeeded",
+      "completed_nodes": [
+        "down_000_right_alt.actuate",
+        "down_000_right_alt.approach",
+        "down_000_right_alt.contact",
+        "down_000_right_alt.held",
+        "down_000_right_alt.hover",
+        "down_001_right_ctrl.actuate",
+        "down_001_right_ctrl.approach",
+        "down_001_right_ctrl.contact",
+        "down_001_right_ctrl.held",
+        "down_001_right_ctrl.hover",
+        "down_002_t.actuate",
+        "down_002_t.approach",
+        "down_002_t.contact",
+        "down_002_t.held",
+        "down_002_t.hover",
+        "prepose.left_prepose",
+        "prepose.ready",
+        "prepose.right_prepose",
+        "prepose_001_right_ctrl.prepose",
+        "screen.verify",
+        "up_000_t.clear",
+        "up_000_t.release",
+        "up_modifiers.release"
+      ],
+      "failure_node": null,
+      "failure_code": null,
+      "node_results": [
+        {
+          "node_id": "prepose.left_prepose",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.9639281790005043,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "t",
+                "phase": "prepose",
+                "within_tolerance": true,
+                "error_m": 0.019979199394583702,
+                "tip_xyz_m": [
+                  0.7668599486351013,
+                  0.02843335270881653,
+                  0.7862251400947571
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "prepose.right_prepose",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.9323524289993657,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "right_alt",
+                "phase": "prepose",
+                "within_tolerance": true,
+                "error_m": 0.019446618854999542,
+                "tip_xyz_m": [
+                  0.7047598361968994,
+                  -0.06491418182849884,
+                  0.793737530708313
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "prepose.ready",
+          "kind": "barrier",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 5.565799983742181e-05,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "barrier_state",
+              "value": {
+                "ready": true,
+                "barrier": "hands_preposed"
+              },
+              "source": "isaac_action_barrier",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "prepose_001_right_ctrl.prepose",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.0150545399992552,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "right_ctrl",
+                "phase": "prepose",
+                "within_tolerance": true,
+                "error_m": 0.009686042554676533,
+                "tip_xyz_m": [
+                  0.7266349196434021,
+                  -0.11207297444343567,
+                  0.8027397990226746
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_000_right_alt.hover",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.4146494409997104,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "right_alt",
+                "phase": "hover",
+                "within_tolerance": true,
+                "error_m": 0.002890284638851881,
+                "tip_xyz_m": [
+                  0.7176094055175781,
+                  -0.059019822627305984,
+                  0.7913872003555298
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_000_right_alt.approach",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 3.445713623001211,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "right_alt",
+                "phase": "approach",
+                "within_tolerance": true,
+                "error_m": 0.0014847730053588748,
+                "tip_xyz_m": [
+                  0.7189496159553528,
+                  -0.05790488421916962,
+                  0.7751233577728271
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_000_right_alt.contact",
+          "kind": "contact_gate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 2.299896278000233,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_key_contact",
+              "value": {
+                "target_key": "right_alt",
+                "in_contact": true,
+                "force_n": 0.20588020980358124,
+                "adjacent_contacts": [],
+                "tip_xyz_m": [
+                  0.719538688659668,
+                  -0.05756596848368645,
+                  0.7686914205551147
+                ]
+              },
+              "source": "isaac_physx_contact_sensor",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_000_right_alt.actuate",
+          "kind": "key_actuate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.1404109129998687,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "keycap_travel",
+              "value": {
+                "target_key": "right_alt",
+                "travel_m": 0.0020710350945591927,
+                "force_n": 2.206569194793701
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            },
+            {
+              "domain": "physical",
+              "kind": "key_event",
+              "value": {
+                "event_type": "keydown",
+                "key": "right_alt",
+                "modifiers": [
+                  "right_alt"
+                ],
+                "event_id": "d3b25e5269fb4465b4f7383abf9d2aa8"
+              },
+              "source": "keyboard_event_bridge",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_000_right_alt.held",
+          "kind": "key_hold",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.0001349199992546346,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "key_hold_state",
+              "value": {
+                "target_key": "right_alt",
+                "keys_down": [
+                  "right_alt"
+                ],
+                "stable": true,
+                "force_n": 2.206569194793701
+              },
+              "source": "isaac_physx_keycap_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_001_right_ctrl.hover",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.2214984549991641,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "right_ctrl",
+                "phase": "hover",
+                "within_tolerance": true,
+                "error_m": 0.002665893640369177,
+                "tip_xyz_m": [
+                  0.7194429039955139,
+                  -0.1070285364985466,
+                  0.7928755283355713
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_001_right_ctrl.approach",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.4969706510000833,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "right_ctrl",
+                "phase": "approach",
+                "within_tolerance": true,
+                "error_m": 0.0013878904283046722,
+                "tip_xyz_m": [
+                  0.7195262908935547,
+                  -0.10378643125295639,
+                  0.7738098502159119
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_001_right_ctrl.contact",
+          "kind": "contact_gate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 2.3773146999992605,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_key_contact",
+              "value": {
+                "target_key": "right_ctrl",
+                "in_contact": true,
+                "force_n": 0.4910503625869751,
+                "adjacent_contacts": [],
+                "tip_xyz_m": [
+                  0.719610333442688,
+                  -0.10510583221912384,
+                  0.7671780586242676
+                ]
+              },
+              "source": "isaac_physx_contact_sensor",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_001_right_ctrl.actuate",
+          "kind": "key_actuate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.44795450099991285,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "keycap_travel",
+              "value": {
+                "target_key": "right_ctrl",
+                "travel_m": 0.0021999760065227747,
+                "force_n": 2.538844108581543
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            },
+            {
+              "domain": "physical",
+              "kind": "key_event",
+              "value": {
+                "event_type": "keydown",
+                "key": "right_ctrl",
+                "modifiers": [
+                  "right_alt",
+                  "right_ctrl"
+                ],
+                "event_id": "14fe0e4217874735a75fa71413721d07"
+              },
+              "source": "keyboard_event_bridge",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_001_right_ctrl.held",
+          "kind": "key_hold",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.00011630399967543781,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "key_hold_state",
+              "value": {
+                "target_key": "right_ctrl",
+                "keys_down": [
+                  "right_alt",
+                  "right_ctrl"
+                ],
+                "stable": true,
+                "force_n": 2.538844108581543
+              },
+              "source": "isaac_physx_keycap_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_002_t.hover",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.3721849339999608,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "t",
+                "phase": "hover",
+                "within_tolerance": true,
+                "error_m": 0.002319460269063711,
+                "tip_xyz_m": [
+                  0.7790586948394775,
+                  0.030486319214105606,
+                  0.7898995876312256
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_002_t.approach",
+          "kind": "cartesian_move",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.8340811059988482,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_pose",
+              "value": {
+                "target_key": "t",
+                "phase": "approach",
+                "within_tolerance": true,
+                "error_m": 0.001086070784367621,
+                "tip_xyz_m": [
+                  0.7768144607543945,
+                  0.030658520758152008,
+                  0.7731679081916809
+                ]
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_002_t.contact",
+          "kind": "contact_gate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.5194517719992291,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "fingertip_key_contact",
+              "value": {
+                "target_key": "t",
+                "in_contact": true,
+                "force_n": 0.01689046062529087,
+                "adjacent_contacts": [],
+                "tip_xyz_m": [
+                  0.7767544388771057,
+                  0.031091934069991112,
+                  0.7709581255912781
+                ]
+              },
+              "source": "isaac_physx_contact_sensor",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_002_t.actuate",
+          "kind": "key_actuate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.2418277809993015,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "keycap_travel",
+              "value": {
+                "target_key": "t",
+                "travel_m": 0.002073319163173437,
+                "force_n": 2.225301742553711
+              },
+              "source": "isaac_articulation_state",
+              "confidence": 1.0
+            },
+            {
+              "domain": "physical",
+              "kind": "key_event",
+              "value": {
+                "event_type": "keydown",
+                "key": "t",
+                "modifiers": [
+                  "right_alt",
+                  "right_ctrl"
+                ],
+                "event_id": "251f3e846153424f8aa9b5d9ca2c18e5"
+              },
+              "source": "keyboard_event_bridge",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "down_002_t.held",
+          "kind": "key_hold",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.00010660999942047056,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "key_hold_state",
+              "value": {
+                "target_key": "t",
+                "keys_down": [
+                  "right_alt",
+                  "right_ctrl",
+                  "t"
+                ],
+                "stable": true,
+                "force_n": 2.225301742553711
+              },
+              "source": "isaac_physx_keycap_state",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "up_000_t.release",
+          "kind": "key_release",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 1.5206742739992478,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "key_event",
+              "value": {
+                "event_type": "keyup",
+                "key": "t",
+                "modifiers": [
+                  "right_alt",
+                  "right_ctrl"
+                ],
+                "event_id": "546914475e494982a74bb23b8c259e50"
+              },
+              "source": "keyboard_event_bridge",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "up_000_t.clear",
+          "kind": "clearance_gate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 0.0003137920011795359,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "key_release_state",
+              "value": {
+                "target_key": "t",
+                "released": true,
+                "clear": true,
+                "clearance_m": 0.045813941764831556
+              },
+              "source": "isaac_physx_contact_sensor",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "up_modifiers.release",
+          "kind": "key_release_group",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 3.5399344189991098,
+          "evidence": [
+            {
+              "domain": "physical",
+              "kind": "key_event",
+              "value": {
+                "event_type": "keyup",
+                "key": "right_alt",
+                "modifiers": [
+                  "right_ctrl"
+                ],
+                "event_id": "e9ac7fd7e85e4f0fb432107b0b0aa711"
+              },
+              "source": "keyboard_event_bridge",
+              "confidence": 1.0
+            },
+            {
+              "domain": "physical",
+              "kind": "key_event",
+              "value": {
+                "event_type": "keyup",
+                "key": "right_ctrl",
+                "modifiers": [],
+                "event_id": "9fea79905c434a38816d8e2b0048bf50"
+              },
+              "source": "keyboard_event_bridge",
+              "confidence": 1.0
+            },
+            {
+              "domain": "physical",
+              "kind": "key_release_state",
+              "value": {
+                "target_key": "right_alt",
+                "released": true,
+                "clear": true,
+                "clearance_m": 0.05165913085937501
+              },
+              "source": "isaac_physx_contact_sensor",
+              "confidence": 1.0
+            },
+            {
+              "domain": "physical",
+              "kind": "key_release_state",
+              "value": {
+                "target_key": "right_ctrl",
+                "released": true,
+                "clear": true,
+                "clearance_m": 0.045666301059722914
+              },
+              "source": "isaac_physx_contact_sensor",
+              "confidence": 1.0
+            }
+          ]
+        },
+        {
+          "node_id": "screen.verify",
+          "kind": "screen_gate",
+          "status": "succeeded",
+          "failure_code": null,
+          "message": "",
+          "duration_seconds": 9.173999933409505e-05,
+          "evidence": [
+            {
+              "domain": "gui",
+              "kind": "screen_state",
+              "value": {
+                "visible": true,
+                "focused": true,
+                "text": "/bin/sh: 0: can't access tty; job control turned off\n",
+                "keys_down": []
+              },
+              "source": "desktop_text_snapshot",
+              "confidence": 1.0
+            }
+          ]
+        }
+      ],
+      "cleanup_evidence": []
+    }
+  },
+  "fingertip_acceptance": {
+    "mode": "chord",
+    "executor_contract": [
+      {
+        "key": "right_alt",
+        "executor": "right.thumb",
+        "role": "modifier"
+      },
+      {
+        "key": "right_ctrl",
+        "executor": "right.middle",
+        "role": "modifier"
+      },
+      {
+        "key": "t",
+        "executor": "left.middle",
+        "role": "primary"
+      }
+    ],
+    "target_keys": [
+      "right_alt",
+      "right_ctrl",
+      "t"
+    ],
+    "physics_sample_count": 3055,
+    "key_metrics": {
+      "right_alt": {
+        "maximum_key_displacement_m": 0.0022000339813530445,
+        "maximum_contact_force_n": 5.623971462249756
+      },
+      "right_ctrl": {
+        "maximum_key_displacement_m": 0.0022000339813530445,
+        "maximum_contact_force_n": 5.774043083190918
+      },
+      "t": {
+        "maximum_key_displacement_m": 0.0020836209878325462,
+        "maximum_contact_force_n": 2.225301742553711
+      }
+    },
+    "minimum_action_errors_m": {
+      "prepose.left_prepose": 0.019979199394583702,
+      "prepose.right_prepose": 0.019446618854999542,
+      "prepose_001_right_ctrl.prepose": 0.009686042554676533,
+      "down_000_right_alt.hover": 0.002890284638851881,
+      "down_000_right_alt.approach": 0.0014847730053588748,
+      "down_001_right_ctrl.hover": 0.002665893640369177,
+      "down_001_right_ctrl.approach": 0.0013878904283046722,
+      "down_002_t.hover": 0.002319460269063711,
+      "down_002_t.approach": 0.001086070784367621
+    },
+    "ik_debug": [
+      {
+        "executor": "left.middle",
+        "jacobian_shape": [
+          3,
+          9
+        ],
+        "tip_position_before_m": [
+          0.7004397511482239,
+          0.15391452610492706,
+          0.84871906042099
+        ],
+        "tip_target_m": [
+          0.7771499752998352,
+          0.030700000002980232,
+          0.8032000064849854
+        ],
+        "position_error_m": [
+          0.07671022415161133,
+          -0.12321452796459198,
+          -0.04551905393600464
+        ],
+        "predicted_task_delta_m": [
+          0.003302806057035923,
+          -0.005726643837988377,
+          -0.0020327423699200153
+        ],
+        "delta_joint_norm_rad": 0.026570552960038185,
+        "jacobian_column_norms_by_joint": {
+          "left_shoulder_pitch_joint": 0.5055259466171265,
+          "left_shoulder_roll_joint": 0.22602519392967224,
+          "left_shoulder_yaw_joint": 0.4478374421596527,
+          "left_elbow_joint": 0.434000164270401,
+          "left_wrist_roll_joint": 0.02961612679064274,
+          "left_wrist_pitch_joint": 0.2956691384315491,
+          "left_wrist_yaw_joint": 0.2433639019727707,
+          "left_hand_middle_0_joint": 0.12409381568431854,
+          "left_hand_middle_1_joint": 0.07830074429512024
+        },
+        "maximum_target_lead_rad": 0.16,
+        "tip_position_after_m": [
+          0.7005391120910645,
+          0.15375521779060364,
+          0.8481041789054871
+        ],
+        "observed_tip_delta_m": [
+          9.936094284057617e-05,
+          -0.0001593083143234253,
+          -0.0006148815155029297
+        ]
+      }
+    ],
+    "event_counts": {
+      "keydown": 3,
+      "keyup": 3
+    },
+    "events_balanced": true,
+    "event_timeline_verified": true,
+    "event_duration_seconds": 3.7916666666114907,
+    "duration_limit_seconds": 5.0,
+    "event_duration_verified": true,
+    "expected_event_timeline": [
+      {
+        "event_type": "keydown",
+        "key": "right_alt",
+        "modifiers": [
+          "right_alt"
+        ]
+      },
+      {
+        "event_type": "keydown",
+        "key": "right_ctrl",
+        "modifiers": [
+          "right_alt",
+          "right_ctrl"
+        ]
+      },
+      {
+        "event_type": "keydown",
+        "key": "t",
+        "modifiers": [
+          "right_alt",
+          "right_ctrl"
+        ]
+      },
+      {
+        "event_type": "keyup",
+        "key": "t",
+        "modifiers": [
+          "right_alt",
+          "right_ctrl"
+        ]
+      },
+      {
+        "event_type": "keyup",
+        "key": "right_alt",
+        "modifiers": [
+          "right_ctrl"
+        ]
+      },
+      {
+        "event_type": "keyup",
+        "key": "right_ctrl",
+        "modifiers": []
+      }
+    ],
+    "keys_down_after_shutdown": [],
+    "event_timeline": [
+      {
+        "event_type": "keydown",
+        "key": "right_alt",
+        "modifiers": [
+          "right_alt"
+        ],
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "event_type": "keydown",
+        "key": "right_ctrl",
+        "modifiers": [
+          "right_alt",
+          "right_ctrl"
+        ],
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "event_type": "keydown",
+        "key": "t",
+        "modifiers": [
+          "right_alt",
+          "right_ctrl"
+        ],
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "event_type": "keyup",
+        "key": "t",
+        "modifiers": [
+          "right_alt",
+          "right_ctrl"
+        ],
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "event_type": "keyup",
+        "key": "right_alt",
+        "modifiers": [
+          "right_ctrl"
+        ],
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "event_type": "keyup",
+        "key": "right_ctrl",
+        "modifiers": [],
+        "source": "keyboard_event_bridge"
+      }
+    ],
+    "event_context_timeline": [
+      {
+        "node_id": "down_000_right_alt.actuate",
+        "event_type": "keydown",
+        "key": "right_alt",
+        "event_time": 8600.249862132603,
+        "reason": "physical_threshold",
+        "travel_m": 0.0020157566759735346,
+        "force_n": 2.1424059867858887
+      },
+      {
+        "node_id": "down_001_right_ctrl.actuate",
+        "event_type": "keydown",
+        "key": "right_ctrl",
+        "event_time": 8601.933195465912,
+        "reason": "physical_threshold",
+        "travel_m": 0.0020737377926707268,
+        "force_n": 2.304790735244751
+      },
+      {
+        "node_id": "down_002_t.actuate",
+        "event_type": "keydown",
+        "key": "t",
+        "event_time": 8602.883195465898,
+        "reason": "physical_threshold",
+        "travel_m": 0.0020227660425007343,
+        "force_n": 2.173389434814453
+      },
+      {
+        "node_id": "up_000_t.release",
+        "event_type": "keyup",
+        "key": "t",
+        "event_time": 8602.983195465897,
+        "reason": "release_threshold",
+        "travel_m": 0.0010613624472171068,
+        "force_n": 0.821499764919281
+      },
+      {
+        "node_id": "up_modifiers.release",
+        "event_type": "keyup",
+        "key": "right_alt",
+        "event_time": 8603.558195465888,
+        "reason": "release_threshold",
+        "travel_m": 0.0011188050266355276,
+        "force_n": 0.8099108934402466
+      },
+      {
+        "node_id": "up_modifiers.release",
+        "event_type": "keyup",
+        "key": "right_ctrl",
+        "event_time": 8604.041528799215,
+        "reason": "release_threshold",
+        "travel_m": 0.0011160554131492972,
+        "force_n": 1.0074944496154785
+      }
+    ]
+  }
+}

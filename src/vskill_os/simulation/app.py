@@ -12,7 +12,7 @@ from ..graph_executor import GraphRunResult, GraphSupervisor
 from ..ledger import EventLedger
 from ..recovery import build_default_recovery_manager
 from ..robot.g1 import G1DeploymentConfig
-from ..runtime import SkillRuntime
+from ..runtime import SkillRuntime, StateValidityPolicy
 from ..skills.simulation import build_simulation_registry
 from ..verifier import RuleBasedVerifier, build_default_verifier
 from .environment import SimulationScenario, SimulatedWorld
@@ -104,6 +104,26 @@ def build_simulation_app(
         verifier=build_simulation_verifier(),
         ledger=ledger,
         recovery=build_default_recovery_manager(),
+        state_validity={
+            "keyboard_calibrated": StateValidityPolicy(
+                ttl_seconds=30.0,
+                dependencies=("work_pose_ready",),
+            ),
+            "work_pose_ready": StateValidityPolicy(
+                ttl_seconds=2.0,
+                dependencies=("seated_stable", "screen_visible", "hands_reachable"),
+            ),
+            "terminal_focused": StateValidityPolicy(ttl_seconds=5.0),
+            "terminal_ready": StateValidityPolicy(
+                ttl_seconds=2.0,
+                dependencies=(
+                    "terminal_visible",
+                    "terminal_focused",
+                    "fingers_released",
+                    "work_pose_ready",
+                ),
+            ),
+        },
     )
     supervisor = GraphSupervisor(
         runtime=runtime,

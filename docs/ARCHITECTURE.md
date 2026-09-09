@@ -51,14 +51,26 @@ flowchart TD
 - 优先复用历史成功恢复记录，否则使用默认失败码路由；
 - 支持中断后在新进程中恢复任务。
 
+### ActionGraph Runtime
+
+- 位于 L2/L3 Skill 与机器人 Adapter 之间，描述有限时域的笛卡尔、接触、键事件和屏幕动作；
+- 从版本化模块组装 DAG，按资源锁执行，并在任一节点失败时统一释放按键；
+- schema 明确拒绝关节位置、速度和力矩命令；
+- Adapter 只能返回动作声明与原始证据，`IndependentActionVerifier` 独立检查位姿、邻键、力、键程、事件唯一性、释放净空和屏幕结果；
+- 纯 Python 与 Isaac Adapter 使用同一模块和 Verifier，低层 DLS 只存在于 Isaac 边界。
+
 ## 适配层
 
-`interfaces.py` 定义四类端口：
+`interfaces.py` 定义机器人、感知、数字 Agent 和控制策略端口：
 
 - `RobotAdapter`：未来接 ROS 2 Action 或 Unitree SDK；
 - `PerceptionAdapter`：未来接屏幕 OCR、键盘/椅子检测；
 - `CodeAgentAdapter`：未来接 Codex 沙箱；
 - `TestRunnerAdapter`：未来接独立测试执行器。
+- `WorkerAdapter`：跨进程 Isaac、桌面和模型 worker 的请求/取消/结果边界；
+- `LocomotionPolicyAdapter`：站立行走速度策略；
+- `SeatedLocomotionPolicyAdapter`：无动力轮椅坐姿速度策略与停止后再稳定；
+- `WholeBodyPolicyAdapter`、`DexterousHandAdapter`：坐下/工作姿态与实体按键。
 
 核心运行时不依赖具体机器人、模型或通信中间件，因此仿真、真机和离线回放可以共用同一套 Skill 契约。
 
@@ -70,3 +82,4 @@ flowchart TD
 4. 派生状态如 `terminal_ready` 必须由显式规则或学习式 Verifier 计算；
 5. 未验证状态不能成为后续 Skill 的前置条件；
 6. 所有状态变更必须能够追溯到调用和证据。
+7. 易失事实由 Runtime 记录 TTL 和依赖；过期或依赖失效会在下一控制器启动前级联删除。

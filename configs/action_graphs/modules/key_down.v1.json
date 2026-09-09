@@ -1,0 +1,106 @@
+{
+  "name": "key_down",
+  "version": "1.1.0",
+  "contract_version": "1.0.0",
+  "description": "Reusable hover, approach, contact, actuation, and hold sequence for one key.",
+  "interface": {
+    "inputs": [
+      {"name": "key", "type": "key_name"},
+      {"name": "hand", "type": "hand_side"},
+      {"name": "finger", "type": "dex3_finger"},
+      {"name": "role", "type": "key_role"}
+    ],
+    "outputs": [
+      {"name": "held", "type": "verified_key_hold", "node": "held"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "hover",
+      "kind": "cartesian_move",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "phase": "hover",
+        "height_offset_m": 0.018,
+        "position_tolerance_m": 0.003,
+        "speed_limit_mps": 0.10
+      },
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3"],
+      "evidence": [{"domain": "physical", "kind": "fingertip_pose"}],
+      "failure_codes": ["UNREACHABLE_KEY", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 4.0
+    },
+    {
+      "id": "approach",
+      "kind": "cartesian_move",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "phase": "approach",
+        "height_offset_m": 0.001,
+        "position_tolerance_m": 0.0015,
+        "speed_limit_mps": 0.035
+      },
+      "depends_on": ["hover"],
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3"],
+      "evidence": [{"domain": "physical", "kind": "fingertip_pose"}],
+      "failure_codes": ["UNREACHABLE_KEY", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 6.0
+    },
+    {
+      "id": "contact",
+      "kind": "contact_gate",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "maximum_contact_force_n": 8.0,
+        "adjacent_contacts_allowed": 0
+      },
+      "depends_on": ["approach"],
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3", "keyboard"],
+      "evidence": [{"domain": "physical", "kind": "fingertip_key_contact"}],
+      "failure_codes": ["MISSED_CONTACT", "ADJACENT_KEY_CONTACT", "FORCE_LIMIT"],
+      "timeout_seconds": 5.0
+    },
+    {
+      "id": "actuate",
+      "kind": "key_actuate",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "event_type": "keydown",
+        "target_travel_m": 0.0020,
+        "maximum_contact_force_n": 8.0
+      },
+      "depends_on": ["contact"],
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3", "keyboard"],
+      "evidence": [
+        {"domain": "physical", "kind": "keycap_travel"},
+        {"domain": "physical", "kind": "key_event"}
+      ],
+      "failure_codes": ["MISSED_EVENT", "INSUFFICIENT_TRAVEL", "DUPLICATE_EVENT", "WRONG_KEY", "FORCE_LIMIT", "ALT_MISSED"],
+      "timeout_seconds": 4.0
+    },
+    {
+      "id": "held",
+      "kind": "key_hold",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "maximum_hold_seconds": 3.0,
+        "maximum_contact_force_n": 8.0
+      },
+      "depends_on": ["actuate"],
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3", "keyboard"],
+      "evidence": [{"domain": "physical", "kind": "key_hold_state"}],
+      "failure_codes": ["HOLD_LOST", "FORCE_LIMIT"],
+      "timeout_seconds": 1.0
+    }
+  ]
+}

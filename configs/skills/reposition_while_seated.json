@@ -1,0 +1,37 @@
+{
+  "name": "reposition_while_seated",
+  "version": "0.1.0",
+  "arguments": {
+    "vx_mps": 0.0,
+    "vy_mps": 0.18,
+    "yaw_rate_rps": 0.0,
+    "duration_s": 1.0
+  },
+  "preconditions": [
+    "work_pose_ready",
+    "seated_stable",
+    "robot_safe"
+  ],
+  "resources": [
+    "whole_body",
+    "locomotion",
+    "head_camera"
+  ],
+  "controller": {
+    "type": "passive_chair_velocity_policy",
+    "agent_command_space": ["vx_mps", "vy_mps", "yaw_rate_rps"]
+  },
+  "local_postconditions": [
+    "seated_reposition_verified"
+  ],
+  "next_skill_readiness": [],
+  "failure_codes": [
+    "SEAT_CONTACT_LOST",
+    "SEATED_POSTURE_UNSTABLE",
+    "SEATED_TRACKING_FAILED"
+  ],
+  "recoveries": [
+    "recover_seated_contact",
+    "stabilize_work_pose"
+  ]
+}

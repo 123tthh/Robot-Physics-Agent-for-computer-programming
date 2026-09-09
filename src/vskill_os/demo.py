@@ -28,6 +28,7 @@ async def run_demo(*, scenario_name: str = "software_recovery") -> dict[str, obj
                     "clear_navigation_path",
                     "realign_with_chair",
                     "stabilize_work_pose",
+                    "recover_seated_contact",
                     "recalibrate_keyboard",
                     "restore_terminal_focus",
                     "restore_code_agent_session",

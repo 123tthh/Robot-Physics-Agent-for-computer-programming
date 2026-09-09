@@ -19,9 +19,16 @@
       "required_postconditions": ["work_pose_ready"]
     },
     {
+      "id": "reposition_seated",
+      "skill": "reposition_while_seated",
+      "arguments": {"vx_mps": 0.0, "vy_mps": 0.18, "yaw_rate_rps": 0.0, "duration_s": 1.0},
+      "depends_on": ["prepare_pose"],
+      "required_postconditions": ["seated_reposition_verified"]
+    },
+    {
       "id": "calibrate_keyboard",
       "skill": "calibrate_keyboard",
-      "depends_on": ["prepare_pose"],
+      "depends_on": ["reposition_seated"],
       "required_postconditions": ["keyboard_calibrated", "target_keys_reachable"]
     },
     {

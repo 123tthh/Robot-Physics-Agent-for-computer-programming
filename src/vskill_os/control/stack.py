@@ -5,6 +5,11 @@ from __future__ import annotations
 from ..robot.g1 import G1HardwareProfile
 from .commands import RootVelocityCommand
 from .phases import ControlPhase, PhaseController
+from .seated_locomotion import (
+    SeatedLocomotionController,
+    SeatedLocomotionMetrics,
+    SeatedLocomotionObservation,
+)
 from .sitting import SitObservation, StagedSitController
 
 
@@ -25,6 +30,7 @@ class G1ControlStack:
         self.max_linear_mps = max_linear_mps
         self.max_yaw_rate_rps = max_yaw_rate_rps
         self.sitting = StagedSitController()
+        self.seated_locomotion = SeatedLocomotionController()
         self.last_locomotion: RootVelocityCommand | None = None
 
     @property
@@ -146,6 +152,52 @@ class G1ControlStack:
             reason="activate close-range keyboard perception",
         )
 
+    def issue_seated_locomotion(
+        self,
+        command: RootVelocityCommand,
+        observation: SeatedLocomotionObservation,
+    ) -> RootVelocityCommand:
+        if self.phase is ControlPhase.SEATED_STABILIZATION:
+            self.phases.transition(
+                ControlPhase.UPPER_BODY_OPERATION,
+                reason="seated pose is stable before chair locomotion",
+            )
+        if self.phase is not ControlPhase.UPPER_BODY_OPERATION:
+            raise RuntimeError(
+                "seated locomotion requires a verified stable upper-body phase"
+            )
+        issued = self.seated_locomotion.begin(command, observation)
+        self.phases.transition(
+            ControlPhase.SEATED_LOCOMOTION,
+            reason="activate passive-chair velocity policy",
+        )
+        return issued
+
+    def observe_seated_locomotion(
+        self,
+        observation: SeatedLocomotionObservation,
+    ) -> None:
+        self.seated_locomotion.observe(observation)
+
+    def complete_seated_locomotion(
+        self,
+        settled_observation: SeatedLocomotionObservation,
+    ) -> SeatedLocomotionMetrics:
+        metrics = self.seated_locomotion.finish(settled_observation)
+        self.phases.transition(
+            ControlPhase.SEATED_STABILIZATION,
+            reason="seated velocity command ended; require post-motion stabilization",
+        )
+        self.phases.transition(
+            ControlPhase.UPPER_BODY_OPERATION,
+            reason="post-motion work pose returned to the stable envelope",
+        )
+        return metrics
+
+    def abort_seated_locomotion(self, reason: str) -> None:
+        self.seated_locomotion.abort()
+        self.phases.fail(reason=reason)
+
     def restore_work_pose(self) -> None:
         if self.phase is ControlPhase.RECOVERY:
             self.phases.recover(
@@ -188,6 +240,7 @@ class G1ControlStack:
 
     def synchronize(self, facts: set[str]) -> None:
         self.phases.synchronize(facts)
+        self.seated_locomotion.abort()
         if "seated_stable" not in facts:
             self.sitting.reset()
 
@@ -196,6 +249,12 @@ class G1ControlStack:
             "phase": self.phase.value,
             "g1_profile": self.profile.compatibility_key,
             "sit_stage": self.sitting.stage.value,
+            "seated_locomotion_active": self.seated_locomotion.active,
+            "last_seated_locomotion": (
+                None
+                if self.seated_locomotion.last_metrics is None
+                else self.seated_locomotion.last_metrics.to_dict()
+            ),
             "last_locomotion": (
                 None
                 if self.last_locomotion is None

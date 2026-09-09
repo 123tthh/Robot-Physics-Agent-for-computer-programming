@@ -1,0 +1,39 @@
+{
+  "name": "modifier_release_group",
+  "version": "1.0.0",
+  "contract_version": "1.0.0",
+  "description": "Release two same-hand chord modifiers as one verified physical action.",
+  "interface": {
+    "inputs": [
+      {"name": "key_a", "type": "key_name"},
+      {"name": "finger_a", "type": "dex3_finger"},
+      {"name": "key_b", "type": "key_name"},
+      {"name": "finger_b", "type": "dex3_finger"},
+      {"name": "hand", "type": "hand_side"}
+    ],
+    "outputs": [
+      {"name": "released", "type": "verified_modifier_release_group", "node": "release"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "release",
+      "kind": "key_release_group",
+      "executor": "${hand}.modifier_group",
+      "parameters": {
+        "target_keys": ["${key_a}", "${key_b}"],
+        "executors": ["${hand}.${finger_a}", "${hand}.${finger_b}"],
+        "event_type": "keyup",
+        "release_threshold_m": 0.0012,
+        "minimum_clearance_m": 0.008
+      },
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3", "keyboard"],
+      "evidence": [
+        {"domain": "physical", "kind": "key_event", "minimum_count": 2},
+        {"domain": "physical", "kind": "key_release_state", "minimum_count": 2}
+      ],
+      "failure_codes": ["MISSING_KEYUP", "DUPLICATE_EVENT", "WRONG_KEY", "STUCK_MODIFIER", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 6.0
+    }
+  ]
+}

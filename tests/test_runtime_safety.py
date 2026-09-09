@@ -4,7 +4,14 @@ import asyncio
 import unittest
 
 from vskill_os.contracts import SkillContract
-from vskill_os.domain import SkillExecution, SkillRequest, SkillStatus, StateSnapshot
+from vskill_os.domain import (
+    Evidence,
+    EvidenceDomain,
+    SkillExecution,
+    SkillRequest,
+    SkillStatus,
+    StateSnapshot,
+)
 from vskill_os.ledger import EventLedger
 from vskill_os.recovery import build_default_recovery_manager
 from vskill_os.registry import SkillRegistry
@@ -66,6 +73,51 @@ class UnsupportedDerivedStateSkill:
         )
 
 
+class StationarySeatedClaimSkill:
+    contract = SkillContract(
+        name="stationary_seated_claim",
+        version="0.1.0",
+        local_postconditions=("seated_reposition_verified",),
+    )
+
+    async def execute(self, state, arguments):
+        del state, arguments
+        return SkillExecution(
+            status=SkillStatus.SUCCEEDED,
+            claimed_states=("seated_reposition_verified",),
+            evidence=(
+                Evidence(
+                    domain=EvidenceDomain.PHYSICAL,
+                    kind="seated_locomotion_metrics",
+                    value={
+                        "issued_command": {
+                            "vx_mps": 0.0,
+                            "vy_mps": 0.18,
+                            "yaw_rate_rps": 0.0,
+                        },
+                        "duration_s": 1.0,
+                        "path_length_m": 0.0,
+                        "absolute_yaw_rad": 0.0,
+                        "tracking_rmse": {
+                            "vx_mps": 0.0,
+                            "vy_mps": 0.18,
+                            "yaw_rate_rps": 0.0,
+                        },
+                        "pelvis_seat_rms_m": 0.01,
+                        "minimum_seat_contact_confidence": 0.99,
+                        "maximum_contact_loss_s": 0.0,
+                        "maximum_torso_tilt_rad": 0.04,
+                        "maximum_chair_tilt_rad": 0.04,
+                        "left_foot_contact_fraction": 0.5,
+                        "right_foot_contact_fraction": 0.5,
+                        "settled": True,
+                    },
+                    source="sim_robot",
+                ),
+            ),
+        )
+
+
 class RuntimeSafetyTests(unittest.IsolatedAsyncioTestCase):
     def make_runtime(self, skill):
         registry = SkillRegistry()
@@ -117,6 +169,20 @@ class RuntimeSafetyTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.status, SkillStatus.FAILED)
         self.assertIn("terminal_ready", result.missing)
         self.assertNotIn("terminal_ready", result.achieved)
+
+    async def test_stationary_policy_cannot_claim_seated_reposition(self) -> None:
+        runtime, ledger = self.make_runtime(StationarySeatedClaimSkill())
+        result = await runtime.execute(
+            SkillRequest(task_id="stationary", skill="stationary_seated_claim"),
+            StateSnapshot(
+                facts={"robot_safe", "seated_stable", "work_pose_ready"}
+            ),
+        )
+        ledger.close()
+
+        self.assertEqual(result.status, SkillStatus.FAILED)
+        self.assertEqual(result.failure_code, "POSTCONDITION_FAILED")
+        self.assertIn("seated_reposition_verified", result.missing)
 
 
 if __name__ == "__main__":

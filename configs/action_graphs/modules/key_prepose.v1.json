@@ -1,0 +1,36 @@
+{
+  "name": "key_prepose",
+  "version": "1.0.0",
+  "contract_version": "1.0.0",
+  "description": "Move one assigned Dex3 fingertip to a collision-free pose before any chord key is pressed.",
+  "interface": {
+    "inputs": [
+      {"name": "key", "type": "key_name"},
+      {"name": "hand", "type": "hand_side"},
+      {"name": "finger", "type": "dex3_finger"},
+      {"name": "role", "type": "key_role"}
+    ],
+    "outputs": [
+      {"name": "ready", "type": "verified_fingertip_prepose", "node": "prepose"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "prepose",
+      "kind": "cartesian_move",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "phase": "prepose",
+        "height_offset_m": 0.03,
+        "position_tolerance_m": 0.010,
+        "speed_limit_mps": 0.12
+      },
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3"],
+      "evidence": [{"domain": "physical", "kind": "fingertip_pose"}],
+      "failure_codes": ["UNREACHABLE_KEY", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 5.0
+    }
+  ]
+}

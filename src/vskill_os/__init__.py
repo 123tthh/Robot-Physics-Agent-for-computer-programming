@@ -4,6 +4,7 @@ from .contracts import SkillContract
 from .domain import (
     Evidence,
     EvidenceDomain,
+    FactValidity,
     SkillExecution,
     SkillRequest,
     SkillResult,
@@ -12,13 +13,14 @@ from .domain import (
 )
 from .ledger import EventLedger
 from .registry import SkillRegistry
-from .runtime import SkillRuntime
+from .runtime import SkillRuntime, StateValidityPolicy
 from .graph import SkillGraph, SkillNode
 from .graph_executor import GraphRunResult, GraphSupervisor
 
 __all__ = [
     "Evidence",
     "EvidenceDomain",
+    "FactValidity",
     "EventLedger",
     "GraphRunResult",
     "GraphSupervisor",
@@ -32,4 +34,5 @@ __all__ = [
     "SkillRuntime",
     "SkillStatus",
     "StateSnapshot",
+    "StateValidityPolicy",
 ]

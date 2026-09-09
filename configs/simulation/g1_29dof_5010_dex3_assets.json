@@ -1,0 +1,76 @@
+{
+  "name": "unitree_g1_mode15_5010_with_dual_dex3_asset_candidates",
+  "enabled_by_default": true,
+  "license": "Apache-2.0",
+  "robot_target": {
+    "robot": "unitree_g1",
+    "body_dof": 29,
+    "mode_machine": 15,
+    "wrist_motor": "5010",
+    "waist_locked": false,
+    "body_compatibility_key": "g1-29dof-mode15-wrist5010-hip22.5x22.5-free"
+  },
+  "urdf": {
+    "repository": "https://github.com/unitreerobotics/unitree_ros.git",
+    "commit": "7d6075f7f58588b189b940130e3edab3c839b2df",
+    "body_source": "robots/g1_description/g1_29dof_mode_15.urdf",
+    "left_hand_source": "robots/dexterous_hand_description/dex3_1/dex3_1_l.urdf",
+    "right_hand_source": "robots/dexterous_hand_description/dex3_1/dex3_1_r.urdf",
+    "generated_name": "g1_29dof_mode_15_with_dex3_1.urdf",
+    "generated_sha256": "e7b3231a1ca30c8c08f927dd860d41291f0b7640c33e5a978913092ffb619246",
+    "expected_body_joints": 29,
+    "expected_hand_joints": 14,
+    "validated_links": 52,
+    "validated_total_joints": 51,
+    "validated_mesh_files": 48,
+    "note": "The official pre-combined g1_29dof_with_hand_rev_1_0 model is mode_machine 5 with 4010 wrists and is not used as the target body. Coordinate-only sensor frames receive transparent micrometer placeholders for warning-free Isaac import."
+  },
+  "usd_target": {
+    "path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+    "sha256": "be081c94bc93d8dc3fb8b7047847f753db5fe1ef2b60536508fed1d82581f230",
+    "format": "usdc",
+    "default_prim": "/g1_29dof_mode_15_with_dex3_1",
+    "prim_count": 215,
+    "physics_joint_count": 52,
+    "revolute_joint_count": 43,
+    "body_joint_count": 29,
+    "dex3_joint_count": 14,
+    "used_layer_count": 6,
+    "rigid_body_count": 52,
+    "collision_shape_count": 51,
+    "dex3_collision_shape_count": 16,
+    "positive_mass_count": 52,
+    "minimum_mass_kg": 0.0001,
+    "maximum_mass_kg": 6.78
+  },
+  "usd_reference": {
+    "dataset": "https://huggingface.co/datasets/unitreerobotics/unitree_sim_isaaclab_usds",
+    "dataset_revision": "394cf2448f8a9ed815c77c701a761f3d1ff1c8fb",
+    "archive": "assets.zip",
+    "archive_size_bytes": 1305090539,
+    "archive_linked_etag": "06fbf14549be3a81e3dbd4a8a019e7f060f48de1556b70f291a18ac8f9ead4b0",
+    "member": "assets/robots/g1-29dof-dex3-base-fix-usd/g1_29dof_with_dex3_base_fix.usd",
+    "member_uncompressed_size": 40572536,
+    "member_crc32": "66b98083",
+    "member_sha256": "d23b9bbc8b59cf20fa1983f55874f855a76e038b9e22eae39542e62be5b4ba3d",
+    "expected_body_joints": 29,
+    "expected_hand_joints": 14,
+    "openusd_validation": {
+      "format": "usdc",
+      "default_prim": "/g1_29dof_with_hand_rev_1_0",
+      "prim_count": 364,
+      "physics_joint_count": 55,
+      "revolute_joint_count": 43,
+      "used_layer_count": 2
+    },
+    "compatibility": "Reference USD parses and has the correct joint names, but its default prim is based on g1_29dof_with_hand_rev_1_0 (mode 5 / 4010). Re-convert the generated mode-15 composite before policy training or hardware transfer."
+  },
+  "runtime_validation": {
+    "urdf_structure_and_meshes": "verified",
+    "usd_openusd_parse": "verified",
+    "isaac_sim_physx_launch": "verified",
+    "mode15_composite_usd_conversion": "verified",
+    "dual_dex3_joint_motion": "verified",
+    "acceptance_report": "reports/isaac_p1_acceptance.json"
+  }
+}

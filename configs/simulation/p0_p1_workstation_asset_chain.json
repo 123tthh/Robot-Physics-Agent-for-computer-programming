@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "name": "p0_p1_mobile_chair_workstation",
+  "meters_per_unit": 1.0,
+  "up_axis": "Z",
+  "stage_order": [
+    "room_entry",
+    "workstation_approach",
+    "chair_alignment",
+    "pre_sit",
+    "seated_stabilization",
+    "work_pose"
+  ],
+  "stages": [
+    {
+      "id": "room_entry",
+      "control_phase": "locomotion",
+      "depends_on": [],
+      "robot_xy_yaw": [-3.25, 0.0, 0.0],
+      "required_assets": ["ground", "workstation", "mobile_chair"],
+      "required_evidence": ["localization", "collision_clearance"]
+    },
+    {
+      "id": "workstation_approach",
+      "control_phase": "locomotion",
+      "depends_on": ["room_entry"],
+      "robot_xy_yaw": [-1.05, 0.0, 0.0],
+      "required_assets": ["ground", "workstation", "mobile_chair"],
+      "required_evidence": ["workstation_relative_pose", "collision_clearance"]
+    },
+    {
+      "id": "chair_alignment",
+      "control_phase": "station_alignment",
+      "depends_on": ["workstation_approach"],
+      "robot_xy_yaw": [-0.38, 0.0, 0.0],
+      "required_assets": ["mobile_chair", "seat_contact_surface", "caster_contact_surfaces"],
+      "required_evidence": ["chair_relative_pose", "rear_clearance"]
+    },
+    {
+      "id": "pre_sit",
+      "control_phase": "sit_transition",
+      "depends_on": ["chair_alignment"],
+      "robot_xy_yaw": [-0.18, 0.0, 0.0],
+      "required_assets": ["mobile_chair", "seat_contact_surface", "backrest_contact_surface"],
+      "required_evidence": ["seat_height", "bilateral_foot_contact", "chair_velocity"]
+    },
+    {
+      "id": "seated_stabilization",
+      "control_phase": "seated_stabilization",
+      "depends_on": ["pre_sit"],
+      "robot_xy_yaw": [0.0, 0.0, 0.0],
+      "required_assets": ["seat_contact_surface", "backrest_contact_surface", "caster_contact_surfaces"],
+      "required_evidence": ["pelvis_seat_contact", "bilateral_foot_contact", "torso_tilt", "chair_tilt"]
+    },
+    {
+      "id": "work_pose",
+      "control_phase": "upper_body_operation",
+      "depends_on": ["seated_stabilization"],
+      "robot_xy_yaw": [0.0, 0.0, 0.0],
+      "required_assets": ["desk", "display", "keyboard", "mobile_chair"],
+      "required_evidence": ["seated_stable", "screen_visible", "hands_reachable"]
+    }
+  ],
+  "workstation": {
+    "desk_top_center_m": [0.83, 0.0, 0.70],
+    "desk_top_size_m": [0.72, 1.20, 0.055],
+    "desk_leg_height_m": 0.6725,
+    "display_center_m": [1.12, 0.0, 1.05],
+    "display_size_m": [0.035, 0.62, 0.40],
+    "keyboard_center_m": [0.77000625, 0.0, 0.743]
+  },
+  "chair": {
+    "asset_type": "passive_mobile_office_chair_5caster",
+    "initial_center_m": [-0.36, -0.58, 0.0],
+    "working_center_m": [-0.10, 0.0, 0.0],
+    "seat_center_z_m": 0.44,
+    "seat_size_m": [0.46, 0.48, 0.075],
+    "backrest_center_m": [-0.205, 0.0, 0.70],
+    "backrest_size_m": [0.055, 0.44, 0.46],
+    "frame_mass_kg": 13.0,
+    "caster_count": 5,
+    "caster_radius_from_center_m": 0.34,
+    "wheel_radius_m": 0.035,
+    "wheel_width_m": 0.026,
+    "passive_swivel_joint_count": 5,
+    "passive_wheel_joint_count": 5,
+    "wheel_static_friction": 0.12,
+    "wheel_dynamic_friction": 0.08,
+    "swivel_joint_friction": 0.01,
+    "rolling_joint_friction": 0.08,
+    "rolling_joint_max_velocity_deg_s": 20.0,
+    "world_fixed": false,
+    "mobility_probe": {
+      "force_n": 120.0,
+      "force_duration_s": 0.15,
+      "coast_duration_s": 0.50,
+      "minimum_displacement_m": 0.01,
+      "maximum_rolling_contribution_ratio": 0.35
+    },
+    "contact_surfaces": [
+      "seat",
+      "backrest",
+      "caster_0",
+      "caster_1",
+      "caster_2",
+      "caster_3",
+      "caster_4"
+    ]
+  },
+  "validation": {
+    "profile": "Prop-Robotics-Neutral",
+    "profile_version": "1.0.0",
+    "property_assignment": "skipped_procedural_material_and_physics_are_explicit",
+    "required_prim_paths": [
+      "/World/Ground",
+      "/World/TaskStages",
+      "/World/Workstation/Desk",
+      "/World/Workstation/Display",
+      "/World/Keyboard",
+      "/World/MobileChair",
+      "/World/MobileChair/Bodies/Frame",
+      "/World/MobileChair/Bodies/Caster_0_Fork",
+      "/World/MobileChair/Bodies/Caster_0_Wheel"
+    ]
+  }
+}

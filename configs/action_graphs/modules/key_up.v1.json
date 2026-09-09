@@ -1,0 +1,49 @@
+{
+  "name": "key_up",
+  "version": "1.0.1",
+  "contract_version": "1.0.0",
+  "description": "Release one held key, observe KeyUp, then verify fingertip clearance.",
+  "interface": {
+    "inputs": [
+      {"name": "key", "type": "key_name"},
+      {"name": "hand", "type": "hand_side"},
+      {"name": "finger", "type": "dex3_finger"},
+      {"name": "role", "type": "key_role"}
+    ],
+    "outputs": [
+      {"name": "released", "type": "verified_key_release", "node": "clear"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "release",
+      "kind": "key_release",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "event_type": "keyup",
+        "release_threshold_m": 0.0012
+      },
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3", "keyboard"],
+      "evidence": [{"domain": "physical", "kind": "key_event"}],
+      "failure_codes": ["MISSING_KEYUP", "STUCK_MODIFIER", "STUCK_KEY"],
+      "timeout_seconds": 4.0
+    },
+    {
+      "id": "clear",
+      "kind": "clearance_gate",
+      "executor": "${hand}.${finger}",
+      "parameters": {
+        "target_key": "${key}",
+        "role": "${role}",
+        "minimum_clearance_m": 0.008
+      },
+      "depends_on": ["release"],
+      "resources": ["upper_body_ik", "${hand}_arm", "${hand}_dex3", "keyboard"],
+      "evidence": [{"domain": "physical", "kind": "key_release_state"}],
+      "failure_codes": ["STUCK_MODIFIER", "STUCK_KEY", "HAND_COLLISION_RISK"],
+      "timeout_seconds": 1.0
+    }
+  ]
+}

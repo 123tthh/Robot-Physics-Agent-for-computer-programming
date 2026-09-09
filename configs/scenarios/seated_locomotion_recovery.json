@@ -1,0 +1,9 @@
+{
+  "name": "seated_locomotion_recovery",
+  "expected_output": "hello, world",
+  "buggy_first_draft": false,
+  "max_recovery_attempts": 2,
+  "faults": {
+    "reposition_while_seated": ["SEAT_CONTACT_LOST"]
+  }
+}

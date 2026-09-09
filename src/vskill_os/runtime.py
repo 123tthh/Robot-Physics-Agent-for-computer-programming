@@ -6,6 +6,9 @@ import asyncio
 import time
 from collections import defaultdict
 from contextlib import AsyncExitStack
+from dataclasses import dataclass
+import math
+from typing import Callable, Mapping
 from uuid import uuid4
 
 from .domain import SkillRequest, SkillResult, SkillStatus, StateSnapshot
@@ -26,6 +29,22 @@ class ResourceLockManager:
         return stack
 
 
+@dataclass(frozen=True, slots=True)
+class StateValidityPolicy:
+    """Runtime-owned lifetime policy for a verified task fact."""
+
+    ttl_seconds: float | None = None
+    dependencies: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if self.ttl_seconds is not None and (
+            not math.isfinite(self.ttl_seconds) or self.ttl_seconds <= 0.0
+        ):
+            raise ValueError("state validity TTL must be finite and positive")
+        if len(self.dependencies) != len(set(self.dependencies)):
+            raise ValueError("state validity dependencies contain duplicate entries")
+
+
 class SkillRuntime:
     def __init__(
         self,
@@ -34,15 +53,20 @@ class SkillRuntime:
         verifier: RuleBasedVerifier,
         ledger: EventLedger,
         recovery: RecoveryManager,
+        clock: Callable[[], float] = time.time,
+        state_validity: Mapping[str, StateValidityPolicy] | None = None,
     ) -> None:
         self.registry = registry
         self.verifier = verifier
         self.ledger = ledger
         self.recovery = recovery
         self.resources = ResourceLockManager()
+        self.clock = clock
+        self.state_validity = dict(state_validity or {})
 
     async def execute(self, request: SkillRequest, state: StateSnapshot) -> SkillResult:
         started_at = time.perf_counter()
+        state_now = self.clock()
         call_id = uuid4().hex
         skill = self.registry.get(request.skill)
         contract = skill.contract
@@ -60,6 +84,16 @@ class SkillRuntime:
                 "metadata": dict(request.metadata),
             },
         )
+
+        expired = state.expire(state_now)
+        if expired:
+            state.revision += 1
+            self.ledger.append(
+                task_id=request.task_id,
+                call_id=call_id,
+                kind="state_invalidated",
+                payload={"reason": "expired_or_dependency_missing", "states": list(expired)},
+            )
 
         missing_preconditions = tuple(sorted(state.missing(contract.preconditions)))
         if missing_preconditions:
@@ -124,8 +158,15 @@ class SkillRuntime:
             return result
 
         if execution.invalidated_states:
-            state.facts.difference_update(execution.invalidated_states)
-            state.revision += 1
+            invalidated = state.invalidate(execution.invalidated_states)
+            if invalidated:
+                state.revision += 1
+                self.ledger.append(
+                    task_id=request.task_id,
+                    call_id=call_id,
+                    kind="state_invalidated",
+                    payload={"reason": "skill_execution", "states": list(invalidated)},
+                )
 
         if execution.status is not SkillStatus.SUCCEEDED:
             result = SkillResult(
@@ -155,8 +196,16 @@ class SkillRuntime:
             execution.evidence,
             known_states=set(state.facts),
         )
-        state.facts.update(report.verified)
         if report.verified:
+            verified_at = self.clock()
+            for fact in report.verified:
+                policy = self.state_validity.get(fact, StateValidityPolicy())
+                state.mark_verified(
+                    fact,
+                    verified_at=verified_at,
+                    ttl_seconds=policy.ttl_seconds,
+                    dependencies=policy.dependencies,
+                )
             state.revision += 1
 
         required = set(contract.expected_states) | set(request.required_postconditions)

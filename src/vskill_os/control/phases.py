@@ -13,6 +13,7 @@ class ControlPhase(StrEnum):
     STATION_ALIGNMENT = "station_alignment"
     SIT_TRANSITION = "sit_transition"
     SEATED_STABILIZATION = "seated_stabilization"
+    SEATED_LOCOMOTION = "seated_locomotion"
     UPPER_BODY_OPERATION = "upper_body_operation"
     KEYBOARD_CALIBRATION = "keyboard_calibration"
     TYPING = "typing"
@@ -38,10 +39,21 @@ ALLOWED_TRANSITIONS: dict[ControlPhase, frozenset[ControlPhase]] = {
         {ControlPhase.STATION_ALIGNMENT, ControlPhase.SEATED_STABILIZATION}
     ),
     ControlPhase.SEATED_STABILIZATION: frozenset(
-        {ControlPhase.SIT_TRANSITION, ControlPhase.UPPER_BODY_OPERATION}
+        {
+            ControlPhase.SIT_TRANSITION,
+            ControlPhase.SEATED_LOCOMOTION,
+            ControlPhase.UPPER_BODY_OPERATION,
+        }
+    ),
+    ControlPhase.SEATED_LOCOMOTION: frozenset(
+        {ControlPhase.SEATED_STABILIZATION}
     ),
     ControlPhase.UPPER_BODY_OPERATION: frozenset(
-        {ControlPhase.SEATED_STABILIZATION, ControlPhase.KEYBOARD_CALIBRATION}
+        {
+            ControlPhase.SEATED_STABILIZATION,
+            ControlPhase.SEATED_LOCOMOTION,
+            ControlPhase.KEYBOARD_CALIBRATION,
+        }
     ),
     ControlPhase.KEYBOARD_CALIBRATION: frozenset(
         {ControlPhase.UPPER_BODY_OPERATION, ControlPhase.TYPING}
@@ -152,4 +164,3 @@ class PhaseController:
         self._phase = target
         self._history.append(transition)
         return transition
-

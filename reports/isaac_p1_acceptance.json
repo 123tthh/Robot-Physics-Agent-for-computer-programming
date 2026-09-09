@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "phase": "P1",
+  "status": "passed",
+  "generated_at_unix": 1788522623.4305706,
+  "runtime": {
+    "isaac_sim": "5.1.0",
+    "isaac_sim_build": "5.1.0-rc.19+release.26219.9c81211b.gl",
+    "isaac_sim_path": "/home/descfly/isaac-sim-standalone-5.1.0-linux-x86_64",
+    "isaac_lab_release": "2.3.2",
+    "isaac_lab": "0.54.2",
+    "isaac_lab_path": "/home/descfly/IsaacLab-2.3.2",
+    "isaac_lab_commit": "37ddf626871758333d6ed89cf64ad702aef127d0",
+    "device": "cuda:0",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "physics_dt": 0.008333333333333333
+  },
+  "robot": {
+    "asset": "/home/descfly/humanoid-computer-agent/artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+    "asset_sha256": "be081c94bc93d8dc3fb8b7047847f753db5fe1ef2b60536508fed1d82581f230",
+    "fixed_base": true,
+    "mode_machine": 15,
+    "wrist_motor": "5010",
+    "joint_count": 43,
+    "rigid_body_count": 52,
+    "body_joint_count": 29,
+    "dex3_joint_count": 14,
+    "collision_shape_count": 51,
+    "positive_mass_count": 52,
+    "minimum_mass_kg": 9.999999747378752e-05,
+    "maximum_mass_kg": 6.78000020980835,
+    "inertia_finite": true,
+    "inertia_positive_diagonal": true,
+    "dex3_joint_names": [
+      "left_hand_index_0_joint",
+      "left_hand_index_1_joint",
+      "left_hand_middle_0_joint",
+      "left_hand_middle_1_joint",
+      "left_hand_thumb_0_joint",
+      "left_hand_thumb_1_joint",
+      "left_hand_thumb_2_joint",
+      "right_hand_index_0_joint",
+      "right_hand_index_1_joint",
+      "right_hand_middle_0_joint",
+      "right_hand_middle_1_joint",
+      "right_hand_thumb_0_joint",
+      "right_hand_thumb_1_joint",
+      "right_hand_thumb_2_joint"
+    ],
+    "dex3_min_motion_rad": 0.009777901694178581,
+    "dex3_max_motion_rad": 0.07954156398773193,
+    "heading_axis_world": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "heading_yaw_rad": 0.0,
+    "faces_keyboard": true
+  },
+  "scene": {
+    "usd": "/home/descfly/humanoid-computer-agent/artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda",
+    "usd_sha256": "8073bb9daf057f39eed72b2f7cb133fa30f3506442caabfc8f9f5009779b4d9e",
+    "keyboard_key_count": 74,
+    "keyboard_prismatic_joint_count": 74,
+    "contact_sensor_body_count": 74,
+    "keyboard_legend_count": 74,
+    "keyboard_legend_lit_pixel_count": 2035,
+    "keyboard_operator_side": "negative_x",
+    "keyboard_operator_row_x": 0.72,
+    "keyboard_function_row_x": 0.8200125,
+    "keyboard_layout_operator_side_valid": true,
+    "keyboard_escape_y": 0.13547499999999998,
+    "keyboard_f12_y": -0.09312500000000001,
+    "keyboard_left_right_valid": true,
+    "head_camera": {
+      "initialized": true,
+      "shape": [
+        1,
+        720,
+        1280,
+        3
+      ],
+      "finite": true,
+      "mean": 208.5392608642578,
+      "std": 33.782958984375,
+      "source": "isaac_rtx_rgb",
+      "artifact": "/home/descfly/humanoid-computer-agent/reports/isaac_p1_renders/head_camera.png",
+      "artifact_sha256": "b14b54e721d1b1963eed5e1330063f9caf29e370d630fab125fab818c56cb823"
+    },
+    "keyboard_camera": {
+      "initialized": true,
+      "shape": [
+        1,
+        720,
+        1280,
+        3
+      ],
+      "finite": true,
+      "mean": 191.61106872558594,
+      "std": 51.73041534423828,
+      "source": "isaac_rtx_rgb",
+      "artifact": "/home/descfly/humanoid-computer-agent/reports/isaac_p1_renders/keyboard_camera.png",
+      "artifact_sha256": "9744a08d8b49708752cb8f8d3c7776e991607e4c6661a68cad3ba0fdd1f8095e"
+    },
+    "overview_camera": {
+      "initialized": true,
+      "shape": [
+        1,
+        540,
+        960,
+        3
+      ],
+      "finite": true,
+      "mean": 189.9169921875,
+      "std": 52.31035232543945,
+      "source": "isaac_rtx_rgb",
+      "artifact": "/home/descfly/humanoid-computer-agent/reports/isaac_p1_renders/overview_camera.png",
+      "artifact_sha256": "432ebe61a7acb379925576dc6062c9eb8f904012da66a0ef9e11d57c819413c8"
+    }
+  },
+  "workstation_asset_chain": {
+    "name": "p0_p1_mobile_chair_workstation",
+    "stage_order": [
+      "room_entry",
+      "workstation_approach",
+      "chair_alignment",
+      "pre_sit",
+      "seated_stabilization",
+      "work_pose"
+    ],
+    "stage_count": 6,
+    "chair_asset_type": "passive_mobile_office_chair_5caster",
+    "caster_count": 5,
+    "passive_dof_count": 10,
+    "seat_top_height_m": 0.4775,
+    "world_fixed": false,
+    "contact_surfaces": [
+      "seat",
+      "backrest",
+      "caster_0",
+      "caster_1",
+      "caster_2",
+      "caster_3",
+      "caster_4"
+    ],
+    "config": "/home/descfly/humanoid-computer-agent/configs/simulation/p0_p1_workstation_asset_chain.json",
+    "property_assignment": "skipped_procedural_material_and_physics_are_explicit",
+    "required_prim_paths": [
+      "/World/Ground",
+      "/World/TaskStages",
+      "/World/Workstation/Desk",
+      "/World/Workstation/Display",
+      "/World/Keyboard",
+      "/World/MobileChair",
+      "/World/MobileChair/Bodies/Frame",
+      "/World/MobileChair/Bodies/Caster_0_Fork",
+      "/World/MobileChair/Bodies/Caster_0_Wheel"
+    ],
+    "required_prims_present": true,
+    "stage_marker_paths": [
+      "/World/TaskStages/room_entry",
+      "/World/TaskStages/workstation_approach",
+      "/World/TaskStages/chair_alignment",
+      "/World/TaskStages/pre_sit",
+      "/World/TaskStages/seated_stabilization",
+      "/World/TaskStages/work_pose"
+    ],
+    "chair_prim": "/World/MobileChair",
+    "chair_rigid_body_count": 11,
+    "chair_swivel_joint_count": 5,
+    "chair_wheel_joint_count": 5,
+    "chair_contact_paths": [
+      "/World/MobileChair/Bodies/Frame/Seat",
+      "/World/MobileChair/Bodies/Frame/Backrest",
+      "/World/MobileChair/Bodies/Caster_0_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_1_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_2_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_3_Wheel/WheelVisual",
+      "/World/MobileChair/Bodies/Caster_4_Wheel/WheelVisual"
+    ],
+    "chair_initial_center_m": [
+      -0.36,
+      -0.58,
+      0.0
+    ],
+    "chair_working_center_m": [
+      -0.1,
+      0.0,
+      0.0
+    ],
+    "chair_seat_top_height_m": 0.4775,
+    "chair_world_fixed": false,
+    "chair_mobility_probe": {
+      "source": "isaac_physx_external_force_on_free_chair_root",
+      "force_n": 120.0,
+      "force_duration_s": 0.15,
+      "coast_duration_s": 0.5,
+      "displacement_m": 0.12721741199493408,
+      "minimum_displacement_m": 0.01,
+      "max_wheel_rotation_rad": 0.1668669879436493,
+      "mean_wheel_rotation_rad": 0.0755334123969078,
+      "rolling_equivalent_distance_m": 0.0026436694338917736,
+      "rolling_contribution_ratio": 0.020780720126558204,
+      "maximum_rolling_contribution_ratio": 0.35,
+      "sliding_dominant": true,
+      "passed": true,
+      "interpretation": "free passive chair responds primarily by sliding under contact-equivalent force; robot sit-contact trajectory is not claimed"
+    },
+    "desk_leg_count": 2,
+    "display_has_stand": true,
+    "motion_policy_status": "not_claimed_asset_readiness_only"
+  },
+  "navigation_environment": {
+    "name": "p1_simple_room_three_workstations",
+    "room_size_m": [
+      8.0,
+      6.0,
+      2.8
+    ],
+    "logical_wall_count": 4,
+    "wall_collider_count": 6,
+    "door_width_m": 1.2,
+    "workstation_ids": [
+      "A",
+      "B",
+      "C"
+    ],
+    "workstation_count": 3,
+    "target_workstation_id": "A",
+    "spawn_count": 3,
+    "obstacle_count": 1,
+    "anchor_count": 12,
+    "config": "/home/descfly/humanoid-computer-agent/configs/simulation/p1_navigation_room.json",
+    "room_prim": "/World/Navigation/Room",
+    "wall_paths": [
+      "/World/Navigation/Room/WallWestSouth",
+      "/World/Navigation/Room/WallWestNorth",
+      "/World/Navigation/Room/WallWestHeader",
+      "/World/Navigation/Room/WallEast",
+      "/World/Navigation/Room/WallSouth",
+      "/World/Navigation/Room/WallNorth"
+    ],
+    "station_paths": [
+      "/World/Navigation/Workstations/Workstation_A",
+      "/World/Navigation/Workstations/Workstation_B",
+      "/World/Navigation/Workstations/Workstation_C"
+    ],
+    "anchor_paths": [
+      "/World/Navigation/Anchors/Workstation_A_Approach",
+      "/World/Navigation/Anchors/Workstation_A_ChairAlignment",
+      "/World/Navigation/Anchors/Workstation_A_WorkPose",
+      "/World/Navigation/Anchors/Workstation_B_Approach",
+      "/World/Navigation/Anchors/Workstation_B_ChairAlignment",
+      "/World/Navigation/Anchors/Workstation_B_WorkPose",
+      "/World/Navigation/Anchors/Workstation_C_Approach",
+      "/World/Navigation/Anchors/Workstation_C_ChairAlignment",
+      "/World/Navigation/Anchors/Workstation_C_WorkPose",
+      "/World/Navigation/Anchors/Spawn_entry_center",
+      "/World/Navigation/Anchors/Spawn_entry_south",
+      "/World/Navigation/Anchors/Spawn_entry_north"
+    ],
+    "spawn_paths": [
+      "/World/Navigation/Anchors/Spawn_entry_center",
+      "/World/Navigation/Anchors/Spawn_entry_south",
+      "/World/Navigation/Anchors/Spawn_entry_north"
+    ],
+    "obstacle_paths": [
+      "/World/Navigation/Obstacles/filing_cabinet"
+    ],
+    "required_prim_paths": [
+      "/World/Ground",
+      "/World/Navigation/Room/WallWestSouth",
+      "/World/Navigation/Room/WallWestNorth",
+      "/World/Navigation/Room/WallWestHeader",
+      "/World/Navigation/Room/WallEast",
+      "/World/Navigation/Room/WallSouth",
+      "/World/Navigation/Room/WallNorth",
+      "/World/Navigation/Workstations/Workstation_A",
+      "/World/Navigation/Workstations/Workstation_B",
+      "/World/Navigation/Workstations/Workstation_C",
+      "/World/Navigation/Anchors/Spawn_entry_center",
+      "/World/Navigation/Anchors/Workstation_A_Approach",
+      "/World/Navigation/Obstacles/filing_cabinet"
+    ],
+    "required_prims_present": true,
+    "policy_status": "not_claimed_asset_readiness_only"
+  },
+  "keyboard_bridge": {
+    "physics_sample_source": "isaac_physx_keycap_contact",
+    "event_source": "keyboard_event_bridge",
+    "desktop_source": "desktop_text_snapshot",
+    "sample_count": 57,
+    "contacted_keys": [
+      "-",
+      "1",
+      "a",
+      "d",
+      "e",
+      "enter",
+      "f",
+      "i",
+      "left_alt",
+      "left_ctrl",
+      "n",
+      "p",
+      "r",
+      "space",
+      "t",
+      "y"
+    ],
+    "max_displacement_m": {
+      "1": 0.0023166202008724213,
+      "-": 0.0023166202008724213,
+      "e": 0.0023166202008724213,
+      "r": 0.0023166202008724213,
+      "t": 0.002316620433703065,
+      "y": 0.0023166202008724213,
+      "i": 0.0023166202008724213,
+      "p": 0.0023166202008724213,
+      "a": 0.0023166202008724213,
+      "d": 0.0023166202008724213,
+      "f": 0.0023166202008724213,
+      "enter": 0.002313779667019844,
+      "n": 0.0023166202008724213,
+      "left_ctrl": 0.002316181780770421,
+      "left_alt": 0.002316181780770421,
+      "space": 0.0022862402256578207
+    },
+    "max_contact_force_n": {
+      "1": 2.68205189704895,
+      "-": 2.68205189704895,
+      "e": 2.68205189704895,
+      "r": 2.68205189704895,
+      "t": 2.68205189704895,
+      "y": 2.68205189704895,
+      "i": 2.68205189704895,
+      "p": 2.68205189704895,
+      "a": 2.68205189704895,
+      "d": 2.68205189704895,
+      "f": 2.68205189704895,
+      "enter": 4.146737575531006,
+      "n": 2.68205189704895,
+      "left_ctrl": 3.068239212036133,
+      "left_alt": 3.068239212036133,
+      "space": 6.025305271148682
+    },
+    "event_counts": {
+      "keydown": 19,
+      "keyup": 19
+    },
+    "terminal_visible": true,
+    "terminal_focused": true,
+    "pty_output_observed": true,
+    "keys_down_after_shutdown": []
+  },
+  "scope": {
+    "included": [
+      "G1 29DoF mode-15/5010 fixed-base articulation",
+      "dual Dex3-1 meshes, collisions, inertias, and 14 actuated joints",
+      "74-key procedural keyboard with independent physical travel",
+      "74 high-contrast mesh legends fixed to moving keycaps",
+      "operator-side keyboard row orientation and explicit +X robot heading",
+      "six-stage entry-to-seated-work asset chain with visible stage markers",
+      "passive five-caster office chair with five swivel and five rolling joints",
+      "free chair root and measured sliding-dominant PhysX mobility gate",
+      "four-wall room shell with doorway and three uniquely identified workstations",
+      "multiple robot spawn, approach, chair-alignment, and work-pose anchors",
+      "static navigation obstacle with collision geometry",
+      "seat, backrest, and caster contact surfaces plus complete desk supports",
+      "PhysX contact reporting",
+      "head, keyboard, and overview RTX RGB cameras with saved render evidence",
+      "physical keycap to KEYDOWN/KEYUP to PTY path"
+    ],
+    "deferred_to_p2": [
+      "Dex3 fingertip trajectory control for pressing keys",
+      "camera-only key pose estimation and OCR verification",
+      "walking, robot-to-chair sit-contact trajectory, loaded-chair stability, and sim-to-real validation"
+    ]
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "blockers": [
+    "asset_validator: omni_asset_validate CLI and omni.asset_validator module are unavailable",
+    "simready_validate: SimReady Foundation checkout is missing"
+  ],
+  "conversion_tools": [],
+  "dependency_policy": "selected-target-dependencies",
+  "env": {},
+  "generated_at": "2026-09-04T11:02:12.589115+00:00",
+  "legacy_options_ignored": [],
+  "manifest_path": "/home/descfly/humanoid-computer-agent/reports/simready/p0_p1_workstation/preflight.json",
+  "paths": {
+    "home": "/home/descfly/.physical-ai-skill-hub",
+    "output_root": "/home/descfly/humanoid-computer-agent/reports/simready/p0_p1_workstation",
+    "project_root": "/home/descfly/humanoid-computer-agent",
+    "state_root": "/home/descfly/humanoid-computer-agent/reports/simready/state",
+    "upstream_root": "/home/descfly/humanoid-computer-agent/reports/simready/upstreams",
+    "venv_root": "/home/descfly/.physical-ai-skill-hub/venvs"
+  },
+  "platform": {
+    "machine": "x86_64",
+    "python": "3.11.16",
+    "system": "linux"
+  },
+  "preflight_mode": "route-aware-dependency-bootstrap",
+  "route_selection": {
+    "conversion_tools_reason": "source-format",
+    "source_asset": "/home/descfly/humanoid-computer-agent/artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda",
+    "source_format": "usd"
+  },
+  "runtimes": {
+    "asset_validator": {
+      "executable": "/home/descfly/miniconda3/envs/isaaclab-2.3.2/bin/python",
+      "message": "omni_asset_validate CLI and omni.asset_validator module are unavailable",
+      "status": "blocked"
+    },
+    "content_agents": {
+      "message": "Content Agents preflight was explicitly skipped",
+      "status": "skipped"
+    },
+    "git_lfs": {
+      "executable": "/usr/bin/git-lfs",
+      "message": "Git LFS is available",
+      "status": "ready"
+    },
+    "openusd_python": {
+      "executable": "/home/descfly/miniconda3/envs/isaaclab-2.3.2/bin/python",
+      "message": "OpenUSD Python APIs are importable",
+      "status": "ready"
+    },
+    "repo_python": {
+      "executable": "/home/descfly/miniconda3/envs/isaaclab-2.3.2/bin/python",
+      "message": "repo Python environment sync was not run",
+      "project_root": "/home/descfly/humanoid-computer-agent",
+      "status": "ready",
+      "uv": "/home/descfly/.local/bin/uv"
+    },
+    "request": {
+      "checks": [
+        {
+          "message": "source asset exists and is readable",
+          "name": "source_asset",
+          "status": "ready"
+        },
+        {
+          "message": "output root can be created under /home/descfly/humanoid-computer-agent/reports",
+          "name": "output_root",
+          "status": "ready"
+        }
+      ],
+      "message": "request inputs are ready",
+      "output_root": "/home/descfly/humanoid-computer-agent/reports/simready/p0_p1_workstation",
+      "source_asset": "/home/descfly/humanoid-computer-agent/artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda",
+      "status": "ready"
+    },
+    "simready_validate": {
+      "message": "SimReady Foundation checkout is missing",
+      "root": "/home/descfly/humanoid-computer-agent/reports/simready/upstreams/simready-foundation",
+      "status": "blocked"
+    }
+  },
+  "schema_version": "1.0",
+  "services": {},
+  "skill": "cad-to-simready-preflight",
+  "status": "blocked",
+  "steps": [
+    {
+      "command": [
+        "/home/descfly/miniconda3/envs/isaaclab-2.3.2/bin/python",
+        "-c",
+        "from pxr import Usd, UsdGeom, UsdPhysics; print(Usd.GetVersion())"
+      ],
+      "message": "command completed",
+      "name": "python",
+      "returncode": 0,
+      "status": "ready",
+      "stdout_tail": "(0, 26, 3)\n"
+    },
+    {
+      "command": [
+        "/home/descfly/miniconda3/envs/isaaclab-2.3.2/bin/python",
+        "-c",
+        "import omni.asset_validator"
+      ],
+      "message": "command failed with exit 1",
+      "name": "python",
+      "returncode": 1,
+      "status": "blocked",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'omni.asset_validator'\n"
+    }
+  ],
+  "targets": [
+    "validation"
+  ],
+  "upstreams": {
+    "simready_foundation": {
+      "branch": "main",
+      "message": "checkout is missing: /home/descfly/humanoid-computer-agent/reports/simready/upstreams/simready-foundation",
+      "path": "/home/descfly/humanoid-computer-agent/reports/simready/upstreams/simready-foundation",
+      "status": "blocked",
+      "url": "https://github.com/NVIDIA/simready-foundation"
+    }
+  }
+}

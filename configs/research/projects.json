@@ -1,5 +1,5 @@
 {
-  "reviewed_at": "2026-09-03",
+  "reviewed_at": "2026-09-04",
   "projects": [
     {
       "name": "Unitree G1 description",
@@ -18,6 +18,24 @@
       "integration": "adapter",
       "use_for": ["G1 29DoF velocity executor", "motion imitation", "ONNX policy export"],
       "constraints": ["pin the robot asset and Isaac Lab version used for training"]
+    },
+    {
+      "name": "Stay Seated",
+      "url": "https://arxiv.org/abs/2608.28090",
+      "subsystem": "seated_locomotion",
+      "maturity": "paper_zero_shot_demo",
+      "integration": "reference",
+      "use_for": [
+        "passive-chair omnidirectional velocity policy",
+        "asymmetric actor-critic observation boundary",
+        "seated contact and progress verification",
+        "symmetry and command-curriculum ablations"
+      ],
+      "constraints": [
+        "code and policy weights were not released with v1",
+        "real-robot tracking and disturbance robustness were qualitative only",
+        "validate on the project's exact G1 mode and chair before deployment"
+      ]
     },
     {
       "name": "Unitree Sim IsaacLab",

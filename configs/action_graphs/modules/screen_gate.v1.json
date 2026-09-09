@@ -1,0 +1,33 @@
+{
+  "name": "screen_gate",
+  "version": "1.0.0",
+  "contract_version": "1.0.0",
+  "description": "Independent terminal visibility, focus, and text observation gate.",
+  "interface": {
+    "inputs": [
+      {"name": "terminal_required", "type": "boolean"},
+      {"name": "expected_text", "type": "string"},
+      {"name": "match_mode", "type": "text_match_mode"}
+    ],
+    "outputs": [
+      {"name": "verified", "type": "verified_screen_state", "node": "verify"}
+    ]
+  },
+  "nodes": [
+    {
+      "id": "verify",
+      "kind": "screen_gate",
+      "executor": "screen_observer",
+      "parameters": {
+        "terminal_required": "${terminal_required}",
+        "expected_text": "${expected_text}",
+        "match_mode": "${match_mode}",
+        "all_keys_released": true
+      },
+      "resources": ["screen", "keyboard_camera"],
+      "evidence": [{"domain": "gui", "kind": "screen_state"}],
+      "failure_codes": ["TERMINAL_NOT_VISIBLE", "TERMINAL_NOT_FOCUSED", "SCREEN_TEXT_MISMATCH", "STUCK_MODIFIER"],
+      "timeout_seconds": 1.0
+    }
+  ]
+}

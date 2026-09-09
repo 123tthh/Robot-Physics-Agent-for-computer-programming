@@ -19,6 +19,7 @@ class DemoTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(summary["successful"])
         self.assertIn("clear_navigation_path", summary["recoveries"])
         self.assertIn("realign_with_chair", summary["recoveries"])
+        self.assertIn("stabilize_work_pose", summary["recoveries"])
         self.assertIn("recalibrate_keyboard", summary["recoveries"])
         self.assertIn("restore_code_agent_session", summary["recoveries"])
 

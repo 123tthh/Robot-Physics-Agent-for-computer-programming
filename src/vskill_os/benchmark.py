@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import math
 import random
 import statistics
 import tempfile
@@ -43,6 +44,9 @@ def sample_scenario(rng: random.Random, profile: str, episode: int) -> Simulatio
         "navigate_to_workstation": "NAVIGATION_BLOCKED",
         "align_with_chair": "CHAIR_NOT_FOUND",
         "sit_and_prepare_for_typing": rng.choice(("CHAIR_SHIFTED", "POSTURE_UNSTABLE")),
+        "reposition_while_seated": rng.choice(
+            ("SEAT_CONTACT_LOST", "SEATED_POSTURE_UNSTABLE", "SEATED_TRACKING_FAILED")
+        ),
         "calibrate_keyboard": "KEYBOARD_NOT_FOUND",
         "press_chord": rng.choice(("ALT_MISSED", "TERMINAL_NOT_FOCUSED")),
         "launch_code_agent": "NETWORK_INTERRUPTED",
@@ -68,6 +72,9 @@ async def run_benchmark(config: BenchmarkConfig) -> dict[str, object]:
     durations: list[float] = []
     call_counts: list[int] = []
     recovery_counts: list[int] = []
+    seated_path_lengths: list[float] = []
+    seated_tracking_rmse: list[float] = []
+    seated_contact_confidences: list[float] = []
     failure_codes: Counter[str] = Counter()
     success_count = 0
     false_completion_count = 0
@@ -105,6 +112,7 @@ async def run_benchmark(config: BenchmarkConfig) -> dict[str, object]:
                 "clear_navigation_path",
                 "realign_with_chair",
                 "stabilize_work_pose",
+                "recover_seated_contact",
                 "recalibrate_keyboard",
                 "restore_terminal_focus",
                 "restore_code_agent_session",
@@ -119,6 +127,28 @@ async def run_benchmark(config: BenchmarkConfig) -> dict[str, object]:
             and "test_passed" not in result.final_state.facts
         )
         false_completion_count += int(false_completion)
+        seated_metrics = None
+        for item in result.skill_results:
+            if "seated_reposition_verified" not in item.achieved:
+                continue
+            seated_metrics = next(
+                (
+                    evidence.value
+                    for evidence in item.evidence
+                    if evidence.kind == "seated_locomotion_metrics"
+                    and isinstance(evidence.value, dict)
+                ),
+                None,
+            )
+        if seated_metrics is not None:
+            tracking = seated_metrics["tracking_rmse"]
+            seated_path_lengths.append(float(seated_metrics["path_length_m"]))
+            seated_tracking_rmse.append(
+                math.hypot(float(tracking["vx_mps"]), float(tracking["vy_mps"]))
+            )
+            seated_contact_confidences.append(
+                float(seated_metrics["minimum_seat_contact_confidence"])
+            )
         durations.append(elapsed)
         call_counts.append(calls)
         recovery_counts.append(recoveries)
@@ -132,6 +162,9 @@ async def run_benchmark(config: BenchmarkConfig) -> dict[str, object]:
                 "recoveries": recoveries,
                 "failure_node": result.failure_node,
                 "false_completion": false_completion,
+                "seated_reposition_verified": (
+                    "seated_reposition_verified" in result.final_state.facts
+                ),
             }
         )
 
@@ -145,6 +178,20 @@ async def run_benchmark(config: BenchmarkConfig) -> dict[str, object]:
             "success_count": success_count,
             "success_rate": success_count / config.episodes,
             "false_completion_count": false_completion_count,
+            "seated_reposition_verified_count": len(seated_path_lengths),
+            "mean_seated_path_length_m": (
+                statistics.fmean(seated_path_lengths) if seated_path_lengths else None
+            ),
+            "mean_seated_planar_tracking_rmse_mps": (
+                statistics.fmean(seated_tracking_rmse)
+                if seated_tracking_rmse
+                else None
+            ),
+            "mean_minimum_seat_contact_confidence": (
+                statistics.fmean(seated_contact_confidences)
+                if seated_contact_confidences
+                else None
+            ),
             "mean_skill_calls": statistics.fmean(call_counts),
             "mean_recoveries": statistics.fmean(recovery_counts),
             "mean_duration_seconds": statistics.fmean(durations),

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vskill-os"
-version = "0.3.0"
+version = "0.4.0"
 description = "Verifier-grounded Agent-Skill runtime for humanoid physical computer use"
 readme = "README.md"
 requires-python = ">=3.11"

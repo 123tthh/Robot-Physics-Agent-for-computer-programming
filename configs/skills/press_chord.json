@@ -1,6 +1,6 @@
 {
   "name": "press_chord",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "arguments": {
     "keys": ["ctrl", "alt", "t"]
   },
@@ -13,10 +13,23 @@
   "resources": [
     "left_arm",
     "right_arm",
+    "left_dex3",
+    "right_dex3",
+    "keyboard",
     "keyboard_camera"
   ],
   "controller": {
-    "type": "hybrid_geometric_residual_policy"
+    "type": "modular_action_graph",
+    "contract_version": "1.0.0",
+    "compiler": "keyboard_action_compiler",
+    "modules": [
+      "bimanual_prepose@1.1.0",
+      "key_prepose@1.0.0",
+      "key_down@1.1.0",
+      "key_up@1.0.1",
+      "modifier_release_group@1.0.0",
+      "screen_gate@1.0.0"
+    ]
   },
   "local_postconditions": [
     "commanded_keys_pressed",
@@ -27,7 +40,17 @@
   ],
   "failure_codes": [
     "ALT_MISSED",
+    "UNREACHABLE_KEY",
+    "MISSED_CONTACT",
+    "ADJACENT_KEY_CONTACT",
+    "FORCE_LIMIT",
+    "MISSED_EVENT",
+    "INSUFFICIENT_TRAVEL",
+    "DUPLICATE_EVENT",
+    "MISSING_KEYUP",
     "WRONG_KEY",
+    "STUCK_MODIFIER",
+    "HAND_COLLISION_RISK",
     "TERMINAL_NOT_FOCUSED"
   ],
   "recoveries": [

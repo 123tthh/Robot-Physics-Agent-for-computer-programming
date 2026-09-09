@@ -4,7 +4,12 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from ..control import ControlPhase, RootVelocityCommand
+from ..control import (
+    ControlPhase,
+    RootVelocityCommand,
+    SeatedLocomotionObservation,
+    SeatedLocomotionSafetyError,
+)
 from ..contracts import SkillContract
 from ..domain import Evidence, EvidenceDomain, SkillExecution, SkillStatus, StateSnapshot
 from ..registry import SkillRegistry
@@ -37,11 +42,14 @@ class SimulationSkill:
         source: str,
         message: str = "",
         extra_evidence: tuple[Evidence, ...] = (),
+        invalidated_states: tuple[str, ...] = (),
     ) -> SkillExecution:
+        self.world.clear_states(*invalidated_states)
         self.world.set_states(*states)
         return SkillExecution(
             status=SkillStatus.SUCCEEDED,
             claimed_states=states,
+            invalidated_states=invalidated_states,
             evidence=self.world.evidence_for(
                 list(states), domain=domain, source=source
             )
@@ -81,6 +89,7 @@ class NavigateToWorkstation(SimulationSkill):
         self, state: StateSnapshot, arguments: Mapping[str, Any]
     ) -> SkillExecution:
         del state
+        self.world.clear_states("seated_reposition_verified")
         command = RootVelocityCommand(
             vx_mps=float(arguments.get("vx_mps", 0.35)),
             vy_mps=float(arguments.get("vy_mps", 0.0)),
@@ -274,6 +283,201 @@ class StabilizeWorkPose(SimulationSkill):
         )
 
 
+class RepositionWhileSeated(SimulationSkill):
+    """Finite-horizon passive-chair locomotion with post-motion stabilization."""
+
+    contract = SkillContract(
+        name="reposition_while_seated",
+        version="0.1.0",
+        preconditions=("work_pose_ready", "seated_stable", "robot_safe"),
+        local_postconditions=("seated_reposition_verified",),
+        resources=("whole_body", "locomotion", "head_camera"),
+        failure_codes=(
+            "SEAT_CONTACT_LOST",
+            "SEATED_POSTURE_UNSTABLE",
+            "SEATED_TRACKING_FAILED",
+        ),
+        recoveries=("recover_seated_contact", "stabilize_work_pose"),
+    )
+
+    async def execute(
+        self, state: StateSnapshot, arguments: Mapping[str, Any]
+    ) -> SkillExecution:
+        del state
+        command = RootVelocityCommand(
+            vx_mps=float(arguments.get("vx_mps", 0.0)),
+            vy_mps=float(arguments.get("vy_mps", 0.18)),
+            yaw_rate_rps=float(arguments.get("yaw_rate_rps", 0.0)),
+        )
+        duration_s = float(arguments.get("duration_s", 1.0))
+        if not 0.2 <= duration_s <= 5.0:
+            return self.failure(
+                "SEATED_TRACKING_FAILED",
+                "seated reposition duration must be within [0.2, 5.0] seconds",
+                invalidated_states=("seated_reposition_verified",),
+            )
+
+        initial = self._observation(0.0, 0.0, 0.0, duration_s / 4.0)
+        try:
+            issued = self.world.control.issue_seated_locomotion(command, initial)
+        except SeatedLocomotionSafetyError as exc:
+            self.world.control.abort_seated_locomotion(str(exc))
+            return self.failure(
+                exc.failure_code,
+                str(exc),
+                invalidated_states=("seated_reposition_verified",),
+            )
+
+        command_evidence = Evidence(
+            domain=EvidenceDomain.PHYSICAL,
+            kind="bounded_seated_velocity",
+            value={
+                "requested": {
+                    "vx_mps": command.vx_mps,
+                    "vy_mps": command.vy_mps,
+                    "yaw_rate_rps": command.yaw_rate_rps,
+                },
+                "issued": {
+                    "vx_mps": issued.vx_mps,
+                    "vy_mps": issued.vy_mps,
+                    "yaw_rate_rps": issued.yaw_rate_rps,
+                },
+            },
+            source="sim_robot",
+        )
+        fault = self.fault()
+        factors = (0.9, 0.98, 1.03, 1.0)
+        if fault == "SEATED_TRACKING_FAILED":
+            factors = (0.0, 0.0, 0.0, 0.0)
+
+        try:
+            for index, factor in enumerate(factors):
+                observation = self._observation(
+                    issued.vx_mps * factor,
+                    issued.vy_mps * factor,
+                    issued.yaw_rate_rps * factor,
+                    duration_s / len(factors),
+                    left_foot_contact=index % 2 == 0,
+                    right_foot_contact=index % 2 == 1,
+                )
+                if fault == "SEAT_CONTACT_LOST" and index == 1:
+                    observation = self._observation(
+                        observation.measured_vx_mps,
+                        observation.measured_vy_mps,
+                        observation.measured_yaw_rate_rps,
+                        observation.sample_duration_s,
+                        seat_contact_confidence=0.2,
+                        continuous_contact_loss_s=0.3,
+                    )
+                elif fault == "SEATED_POSTURE_UNSTABLE" and index == 1:
+                    observation = self._observation(
+                        observation.measured_vx_mps,
+                        observation.measured_vy_mps,
+                        observation.measured_yaw_rate_rps,
+                        observation.sample_duration_s,
+                        torso_tilt_rad=0.4,
+                    )
+                self.world.control.observe_seated_locomotion(observation)
+
+            settled = self._observation(0.01, 0.0, 0.01, 0.02)
+            metrics = self.world.control.complete_seated_locomotion(settled)
+        except SeatedLocomotionSafetyError as exc:
+            unsafe_evidence = Evidence(
+                domain=EvidenceDomain.PHYSICAL,
+                kind="seated_locomotion_guard_failure",
+                value={"failure_code": exc.failure_code, "message": str(exc)},
+                source="sim_robot",
+            )
+            self.world.control.abort_seated_locomotion(str(exc))
+            self.world.clear_states("seated_stable", "work_pose_ready")
+            return self.failure(
+                exc.failure_code,
+                str(exc),
+                evidence=(command_evidence, unsafe_evidence, self.control_evidence()),
+                invalidated_states=(
+                    "seated_reposition_verified",
+                    "seated_stable",
+                    "work_pose_ready",
+                ),
+            )
+
+        metrics_evidence = Evidence(
+            domain=EvidenceDomain.PHYSICAL,
+            kind="seated_locomotion_metrics",
+            value=metrics.to_dict(),
+            source="sim_robot",
+        )
+        if fault == "SEATED_TRACKING_FAILED":
+            self.world.control.fail("seated policy did not track a nonzero command")
+            self.world.clear_states("work_pose_ready")
+            return self.failure(
+                "SEATED_TRACKING_FAILED",
+                "seated policy remained stationary under a nonzero command",
+                evidence=(command_evidence, metrics_evidence, self.control_evidence()),
+                invalidated_states=("seated_reposition_verified", "work_pose_ready"),
+            )
+
+        return self.success(
+            ("seated_reposition_verified",),
+            domain=EvidenceDomain.PHYSICAL,
+            source="sim_robot",
+            message="passive-chair reposition completed and independently measurable",
+            extra_evidence=(command_evidence, metrics_evidence, self.control_evidence()),
+            invalidated_states=("seated_reposition_verified",),
+        )
+
+    @staticmethod
+    def _observation(
+        vx_mps: float,
+        vy_mps: float,
+        yaw_rate_rps: float,
+        sample_duration_s: float,
+        *,
+        seat_contact_confidence: float = 0.96,
+        continuous_contact_loss_s: float = 0.0,
+        torso_tilt_rad: float = 0.05,
+        left_foot_contact: bool = True,
+        right_foot_contact: bool = True,
+    ) -> SeatedLocomotionObservation:
+        return SeatedLocomotionObservation(
+            measured_vx_mps=vx_mps,
+            measured_vy_mps=vy_mps,
+            measured_yaw_rate_rps=yaw_rate_rps,
+            seat_contact_confidence=seat_contact_confidence,
+            continuous_contact_loss_s=continuous_contact_loss_s,
+            pelvis_seat_offset_m=0.018,
+            torso_tilt_rad=torso_tilt_rad,
+            chair_tilt_rad=0.035,
+            left_foot_contact=left_foot_contact,
+            right_foot_contact=right_foot_contact,
+            sample_duration_s=sample_duration_s,
+        )
+
+
+class RecoverSeatedContact(SimulationSkill):
+    contract = SkillContract(
+        name="recover_seated_contact",
+        version="0.1.0",
+        preconditions=("chair_aligned", "robot_safe"),
+        local_postconditions=("seated_stable", "screen_visible", "hands_reachable"),
+        next_skill_readiness=("work_pose_ready",),
+        resources=("whole_body", "head_camera"),
+    )
+
+    async def execute(
+        self, state: StateSnapshot, arguments: Mapping[str, Any]
+    ) -> SkillExecution:
+        del state, arguments
+        self.world.control.restore_work_pose()
+        return self.success(
+            ("seated_stable", "screen_visible", "hands_reachable", "work_pose_ready"),
+            domain=EvidenceDomain.PHYSICAL,
+            source="sim_robot",
+            message="pelvis-seat contact and the work pose were reacquired",
+            extra_evidence=(self.control_evidence(),),
+        )
+
+
 class CalibrateKeyboard(SimulationSkill):
     contract = SkillContract(
         name="calibrate_keyboard",
@@ -333,7 +537,7 @@ class RecalibrateKeyboard(CalibrateKeyboard):
 class PressChord(SimulationSkill):
     contract = SkillContract(
         name="press_chord",
-        version="0.2.0",
+        version="0.4.0",
         preconditions=(
             "work_pose_ready",
             "keyboard_calibrated",
@@ -342,8 +546,29 @@ class PressChord(SimulationSkill):
         ),
         local_postconditions=("commanded_keys_pressed", "fingers_released"),
         next_skill_readiness=("terminal_ready",),
-        resources=("left_arm", "right_arm", "keyboard_camera"),
-        failure_codes=("ALT_MISSED", "WRONG_KEY", "TERMINAL_NOT_FOCUSED"),
+        resources=(
+            "left_arm",
+            "right_arm",
+            "left_dex3",
+            "right_dex3",
+            "keyboard",
+            "keyboard_camera",
+        ),
+        failure_codes=(
+            "ALT_MISSED",
+            "UNREACHABLE_KEY",
+            "MISSED_CONTACT",
+            "ADJACENT_KEY_CONTACT",
+            "FORCE_LIMIT",
+            "MISSED_EVENT",
+            "INSUFFICIENT_TRAVEL",
+            "DUPLICATE_EVENT",
+            "MISSING_KEYUP",
+            "WRONG_KEY",
+            "STUCK_MODIFIER",
+            "HAND_COLLISION_RISK",
+            "TERMINAL_NOT_FOCUSED",
+        ),
         recoveries=("recalibrate_keyboard", "restore_terminal_focus"),
     )
 
@@ -356,19 +581,28 @@ class PressChord(SimulationSkill):
             return self.failure("WRONG_KEY", f"unsupported chord: {keys!r}")
 
         self.world.control.begin_typing()
-        planned = TypingPlanner().plan_chord(list(keys))
+        planned = TypingPlanner().plan_chord_detailed(list(keys))
         plan_evidence = Evidence(
             domain=EvidenceDomain.PHYSICAL,
-            kind="dex3_key_objective",
-            value=[
-                {
-                    "key": stroke.key,
-                    "modifiers": list(stroke.modifiers),
-                    "hand": stroke.hand.value,
-                    "finger": stroke.finger.value,
-                }
-                for stroke in planned
-            ],
+            kind="dex3_chord_plan",
+            value={
+                "version": planned.version,
+                "assignments": [
+                    {
+                        "logical_key": assignment.logical_key,
+                        "physical_key": assignment.physical_key,
+                        "hand": assignment.hand.value,
+                        "finger": assignment.finger.value,
+                        "role": assignment.role.value,
+                    }
+                    for assignment in planned.assignments
+                ],
+                "press_order": list(planned.press_order),
+                "release_order": list(planned.release_order),
+                "held_while_primary": list(planned.held_while_primary),
+                "maximum_duration_seconds": planned.maximum_duration_seconds,
+                "contains_joint_commands": planned.contains_joint_commands,
+            },
             source="sim_keyboard",
         )
         fault = self.fault()
@@ -393,6 +627,31 @@ class PressChord(SimulationSkill):
             return self.failure(
                 "WRONG_KEY",
                 "an adjacent key was triggered",
+                evidence=(plan_evidence, self.control_evidence()),
+            )
+        if fault == "STUCK_MODIFIER":
+            self.world.control.fail("modifier release threshold was not observed")
+            self.world.set_states("fingers_released")
+            return self.failure(
+                "STUCK_MODIFIER",
+                "fail-safe all_keys_up released the modifier",
+                evidence=(
+                    Evidence(
+                        domain=EvidenceDomain.PHYSICAL,
+                        kind="all_keys_up",
+                        value={"keys_down": [], "reason": "STUCK_MODIFIER"},
+                        source="sim_keyboard",
+                    ),
+                    plan_evidence,
+                    self.control_evidence(),
+                ),
+                invalidated_states=("terminal_ready",),
+            )
+        if fault == "HAND_COLLISION_RISK":
+            self.world.control.fail("bimanual prepose collision guard tripped")
+            return self.failure(
+                "HAND_COLLISION_RISK",
+                "bimanual prepose was canceled before contact",
                 evidence=(plan_evidence, self.control_evidence()),
             )
         if fault == "TERMINAL_NOT_FOCUSED":
@@ -658,6 +917,8 @@ def build_simulation_registry(world: SimulatedWorld) -> SkillRegistry:
         RealignWithChair,
         SitAndPrepareForTyping,
         StabilizeWorkPose,
+        RepositionWhileSeated,
+        RecoverSeatedContact,
         CalibrateKeyboard,
         RecalibrateKeyboard,
         PressChord,
