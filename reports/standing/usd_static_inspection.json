@@ -1,0 +1,80 @@
+{
+  "capability": "usd_schema_and_reference_inspection_only",
+  "isaac_sim_target": "6.0.1",
+  "openusd_version": "0.25.11",
+  "simulation_started": false,
+  "gpu_used": false,
+  "physical_acceptance": false,
+  "source_asset_modified": false,
+  "asset_path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+  "layers": [
+    {
+      "path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/configuration/g1_mode15_dex3_p1_base.usd",
+      "sha256": "f240abaa72b21e4d1143c19a206d96c08988dc9c9197a1f1ca8e8b95ca6feafe",
+      "external_layer_references": [
+        ""
+      ]
+    },
+    {
+      "path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/configuration/g1_mode15_dex3_p1_physics.usd",
+      "sha256": "d66b834b8d4228f15ab1e0a3050319d8daa39a66de76c3ee6badae569c4c4328",
+      "external_layer_references": [
+        "",
+        "g1_mode15_dex3_p1_base.usd"
+      ]
+    },
+    {
+      "path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/configuration/g1_mode15_dex3_p1_robot.usd",
+      "sha256": "1fbbe953fa8ac6c33ae5bd19e5acb2494e64466017a25749d36a07c69fda9a14",
+      "external_layer_references": []
+    },
+    {
+      "path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/configuration/g1_mode15_dex3_p1_sensor.usd",
+      "sha256": "1e2ab3fd105a3b2a29f1c80b4f6188f197ceaa6073ef74de944bcac5c9b35ef3",
+      "external_layer_references": []
+    },
+    {
+      "path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+      "sha256": "be081c94bc93d8dc3fb8b7047847f753db5fe1ef2b60536508fed1d82581f230",
+      "external_layer_references": [
+        "configuration/g1_mode15_dex3_p1_base.usd",
+        "configuration/g1_mode15_dex3_p1_physics.usd",
+        "configuration/g1_mode15_dex3_p1_robot.usd",
+        "configuration/g1_mode15_dex3_p1_sensor.usd"
+      ]
+    }
+  ],
+  "file_layer_count": 5,
+  "external_original_project_dependencies": [],
+  "all_usd_layer_references_relative": true,
+  "static_checks": {
+    "43_revolute_joints": true,
+    "two_rigid_index_links": [
+      "/World/G1/left_hand_index_1_link",
+      "/World/G1/right_hand_index_1_link"
+    ],
+    "fixed_root_joint": "/World/G1/root_joint",
+    "fixed_root_world_position": [
+      0.2800000011920929,
+      0.0,
+      0.7900000214576721
+    ],
+    "robot_xform_ops": [
+      "xformOp:translate",
+      "xformOp:orient",
+      "xformOp:scale"
+    ]
+  },
+  "material_dependency": {
+    "asset_identifier": "OmniPBR.mdl",
+    "plain_openusd_resolver_resolved": false,
+    "installed_runtime_candidate": "/home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64/kit/mdl/core/Base/OmniPBR.mdl",
+    "candidate_exists": true,
+    "rendering_validated": false
+  },
+  "limitations": [
+    "No Kit, PhysX, RTX, sensor, contact, or control loop was started.",
+    "Material resolution and camera output still require runtime verification.",
+    "Jacobian tensor dimensions and contact filter order remain guarded runtime conditions."
+  ]
+}

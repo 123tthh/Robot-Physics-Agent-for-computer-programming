@@ -1,0 +1,33 @@
+{
+  "description": "CPU synthetic, non-physics CEM baseline. Isaac Sim 6.0.1 environment adapter is an explicit integration hook; no simulator is launched by this configuration.",
+  "training": {
+    "adapter": "synthetic",
+    "seed": 42,
+    "population": 12,
+    "elite_count": 3,
+    "episodes_per_candidate": 4,
+    "max_steps": 480,
+    "residual_limit_m": 0.004,
+    "max_fingertip_step_m": 0.006,
+    "minimum_key_travel_m": 0.002,
+    "minimum_contact_force_n": 0.05,
+    "max_contact_force_n": 8.0,
+    "minimum_hand_separation_m": 0.025,
+    "max_base_tilt_rad": 0.18,
+    "max_foot_slip_m": 0.02,
+    "initial_std": 0.16,
+    "minimum_std": 0.02,
+    "curriculum_pass_rate": 0.8,
+    "curriculum_evaluation_episodes": 5,
+    "timestep_s": 0.016666666666666666,
+    "version": "1.0.0"
+  },
+  "randomization": {
+    "keyboard_translation_m": 0.004,
+    "controller_bias_m": 0.001,
+    "tracking_gain_min": 0.65,
+    "tracking_gain_max": 1.0,
+    "contact_force_scale_min": 0.75,
+    "contact_force_scale_max": 1.25
+  }
+}

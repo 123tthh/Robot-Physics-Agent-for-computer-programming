@@ -1,0 +1,47 @@
+{
+  "name": "g1_mode15_dex3_standing_bimanual_index_demo",
+  "version": "1.0.0",
+  "runtime": {
+    "isaac_sim_version": "6.0.1",
+    "isaac_sim_root": "/home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64",
+    "standalone_python": true,
+    "physics_device": "cpu",
+    "isaac_lab_required": false,
+    "refuse_existing_simulator": true,
+    "refuse_busy_gpu": true
+  },
+  "robot": {
+    "name": "unitree_g1",
+    "mode_machine": 15,
+    "wrist_motor": "5010",
+    "body_dof": 29,
+    "hands": "dual_dex3_1",
+    "hand_dof": 14,
+    "active_typing_fingers": [
+      "left.index",
+      "right.index"
+    ],
+    "base_mode": "fixed_standing",
+    "asset_manifest": "configs/simulation/g1_29dof_5010_dex3_assets.json",
+    "usd_path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+    "asset_dependency_lock": "configs/simulation/dex3_standing_asset_lock.json"
+  },
+  "scene": {
+    "chair": false,
+    "keyboard": "procedural_p1_74_key",
+    "physics_dt_s": 0.008333333333333333
+  },
+  "task": {
+    "text": "afjk",
+    "seed": 0,
+    "key_event_order": "text_order",
+    "cooperative_hover_preposition": true,
+    "maximum_simultaneously_held_keys": 2
+  },
+  "evidence": {
+    "output": "reports/standing/isaac_report.json",
+    "record_dir": "reports/standing/frames",
+    "synthetic_is_physical_evidence": false,
+    "free_standing_balance_verified": false
+  }
+}

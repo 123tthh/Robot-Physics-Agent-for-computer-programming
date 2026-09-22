@@ -1,5 +1,7 @@
 # V-Skill OS
 
+本分支新增 **Isaac Sim 6.0.1 站姿固定基座 + 双 Dex3-1 食指协同打字** 框架。站立场景无椅子；双手可预定位，按键按文本顺序提交。先运行 `make standing-plan`、`make standing-replay` 和 `make standing-runtime`，均不启动仿真或使用 GPU。物理入口为 `make isaac-standing` / `make isaac-standing-gui`，检测到已有 Isaac/Kit 或 GPU 工作负载时拒绝启动。**新增物理 demo 尚待独立运行验收，纯 Python 回放不代表真实触键。** 详见 [站立双食指复现指南](docs/STANDING_DEX3_DEMO_CN.md) 和 [训练与分层控制架构](docs/STANDING_TRAINING_ARCHITECTURE_CN.md)。以下 P1/P2 说明是保留的 Isaac 5.1 历史基线。
+
 面向人形机器人实体计算机操作的 Verifier-Grounded Agent–Skill 系统。目前已完成无需真机的纯 Python 基线，以及本机 Isaac Sim 5.1 / Isaac Lab 2.3.2 上的 P1 资产/混合仿真底座：Unitree G1 29DOF mode 15 / 5010、双 Dex3、五脚万向轮办公椅、8×6 m 四墙房间、三工位与导航锚点、74 键带高对比标识的物理键盘、PhysX 接触、三路 RTX 相机和键帽—PTY 链路。P2 自动化事件门禁已有诊断结果，但 GUI 尚未确认可见实体触键，因此保持 `PARTIAL`。真实导航 rollout、真实坐下、载人椅子动力学、camera-only 视觉、真机策略和真实代码 Agent 仍通过后续 adapter 接入。
 
 ## 已实现

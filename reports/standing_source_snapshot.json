@@ -1,0 +1,7 @@
+{
+  "source": "/home/descfly/humanoid-computer-agent",
+  "source_commit": "e81b6f39975c3994206bc87846b3e48069f512f1",
+  "source_status": " D docs/PROJECT_PITCH_CN.md\n?? configs/simulation/g1_29dof_5010_dex5_assets.json\n?? \"docs/ \\351\\241\\271\\347\\233\\256\\345\\273\\272\\350\\256\\256\\344\\271\\246.md\"\n?? docs/RSI_RESEARCH_CN.md\n?? \"docs/\\351\\241\\271\\347\\233\\256/\"\n?? src/vskill_os/adapters/isaac/dex5_scene_geometry.py\n?? src/vskill_os/simulation/dex5_assets.py\n?? src/vskill_os/simulation/dex5_typing.py\n",
+  "copied_current_working_tree": true,
+  "copied_ignored_assets": true
+}

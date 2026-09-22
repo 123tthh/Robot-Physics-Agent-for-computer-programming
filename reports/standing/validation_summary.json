@@ -1,0 +1,31 @@
+{
+  "schema": "standing_framework_validation",
+  "unit_tests": 129,
+  "make_check": "passed",
+  "make_demo": "passed",
+  "planner_and_synthetic_replay": "passed",
+  "standalone_launcher_syntax": "passed",
+  "training": {
+    "completed_cem_generations": 4,
+    "resume_validated": true,
+    "evaluation": {
+      "episodes": 32,
+      "success_rate": 1.0,
+      "mean_return": 46.21219844221875,
+      "mean_character_error_rate": 0.0,
+      "mean_steps": 66.15625,
+      "mean_successful_characters_per_minute": 164.5010429784723,
+      "safety_violation_rate": 0.0,
+      "failures": {},
+      "evidence_kinds": [
+        "synthetic_non_physics"
+      ],
+      "physical_acceptance_episodes": 0
+    }
+  },
+  "physics_demo_executed": false,
+  "physics_training_executed": false,
+  "gpu_used": false,
+  "physical_acceptance": false,
+  "reason": "User requested no competition with existing Isaac Sim workload; optional Isaac6 integration is source/static checked only."
+}

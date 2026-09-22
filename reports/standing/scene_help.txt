@@ -1,0 +1,25 @@
+usage: standing_scene.py [-h] [--config CONFIG] [--text TEXT] [--seed SEED]
+                         [--headless | --no-headless] [--device {cpu}]
+                         [--output OUTPUT] [--record-dir RECORD_DIR]
+                         [--robot-usd ROBOT_USD]
+                         [--asset-manifest ASSET_MANIFEST] [--inspect-only]
+
+Isolated Isaac 6.0.1 standing, two-index demo entry point. No simulator is
+imported until version, source assets and exclusive occupancy have passed.
+Source-checked only until an idle-machine physical run records its own report;
+inherited P1/P2 reports are never reused as success evidence.
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG
+  --text TEXT
+  --seed SEED
+  --headless, --no-headless
+  --device {cpu}        Compatibility core adapter uses CPU PhysX; RTX images
+                        still require idle GPU
+  --output OUTPUT
+  --record-dir RECORD_DIR
+  --robot-usd ROBOT_USD
+  --asset-manifest ASSET_MANIFEST
+  --inspect-only        Starts Kit after guard; loads/samples scene without
+                        typing

@@ -1,0 +1,244 @@
+{
+  "text": "afjk",
+  "steps": [
+    {
+      "index": 0,
+      "character": "a",
+      "primary": {
+        "hand": "left",
+        "key": "a",
+        "xyz_m": [
+          0.7581,
+          0.10213749999999999,
+          0.7602
+        ],
+        "finger": "index"
+      },
+      "modifier": null,
+      "wave": 0
+    },
+    {
+      "index": 1,
+      "character": "f",
+      "primary": {
+        "hand": "left",
+        "key": "f",
+        "xyz_m": [
+          0.7581,
+          0.044987499999999986,
+          0.7602
+        ],
+        "finger": "index"
+      },
+      "modifier": null,
+      "wave": 1
+    },
+    {
+      "index": 2,
+      "character": "j",
+      "primary": {
+        "hand": "right",
+        "key": "j",
+        "xyz_m": [
+          0.7581,
+          -0.01216250000000002,
+          0.7602
+        ],
+        "finger": "index"
+      },
+      "modifier": null,
+      "wave": 1
+    },
+    {
+      "index": 3,
+      "character": "k",
+      "primary": {
+        "hand": "right",
+        "key": "k",
+        "xyz_m": [
+          0.7581,
+          -0.031212500000000032,
+          0.7602
+        ],
+        "finger": "index"
+      },
+      "modifier": null,
+      "wave": 2
+    }
+  ],
+  "waves": [
+    {
+      "index": 0,
+      "step_indices": [
+        0
+      ],
+      "targets": [
+        {
+          "hand": "left",
+          "key": "a",
+          "xyz_m": [
+            0.7581,
+            0.10213749999999999,
+            0.7602
+          ],
+          "finger": "index"
+        }
+      ],
+      "parked_hands": [
+        "right"
+      ],
+      "minimum_clearance_m": 0.035,
+      "ordered_key_commits": true
+    },
+    {
+      "index": 1,
+      "step_indices": [
+        1,
+        2
+      ],
+      "targets": [
+        {
+          "hand": "left",
+          "key": "f",
+          "xyz_m": [
+            0.7581,
+            0.044987499999999986,
+            0.7602
+          ],
+          "finger": "index"
+        },
+        {
+          "hand": "right",
+          "key": "j",
+          "xyz_m": [
+            0.7581,
+            -0.01216250000000002,
+            0.7602
+          ],
+          "finger": "index"
+        }
+      ],
+      "parked_hands": [],
+      "minimum_clearance_m": 0.035,
+      "ordered_key_commits": true
+    },
+    {
+      "index": 2,
+      "step_indices": [
+        3
+      ],
+      "targets": [
+        {
+          "hand": "right",
+          "key": "k",
+          "xyz_m": [
+            0.7581,
+            -0.031212500000000032,
+            0.7602
+          ],
+          "finger": "index"
+        }
+      ],
+      "parked_hands": [
+        "left"
+      ],
+      "minimum_clearance_m": 0.035,
+      "ordered_key_commits": true
+    }
+  ],
+  "expected_events": [
+    {
+      "step_index": 0,
+      "event_type": "keydown",
+      "key": "a",
+      "hand": "left"
+    },
+    {
+      "step_index": 0,
+      "event_type": "keyup",
+      "key": "a",
+      "hand": "left"
+    },
+    {
+      "step_index": 1,
+      "event_type": "keydown",
+      "key": "f",
+      "hand": "left"
+    },
+    {
+      "step_index": 1,
+      "event_type": "keyup",
+      "key": "f",
+      "hand": "left"
+    },
+    {
+      "step_index": 2,
+      "event_type": "keydown",
+      "key": "j",
+      "hand": "right"
+    },
+    {
+      "step_index": 2,
+      "event_type": "keyup",
+      "key": "j",
+      "hand": "right"
+    },
+    {
+      "step_index": 3,
+      "event_type": "keydown",
+      "key": "k",
+      "hand": "right"
+    },
+    {
+      "step_index": 3,
+      "event_type": "keyup",
+      "key": "k",
+      "hand": "right"
+    }
+  ],
+  "movement_cost_m": 0.396931261,
+  "minimum_hand_separation_m": 0.025,
+  "version": "1.0.0",
+  "strategy": "global-dp-two-index-coordinated-preposition-ordered-commit",
+  "schema": "standing_bimanual_typing_plan",
+  "posture": "standing_fixed_base",
+  "park_positions": {
+    "left": [
+      0.64,
+      0.16,
+      0.84
+    ],
+    "right": [
+      0.64,
+      -0.16,
+      0.84
+    ]
+  },
+  "preconditions": [
+    "standing_fixed_base_verified",
+    "keyboard_calibrated",
+    "text_sink_ready"
+  ],
+  "postconditions": [
+    "exact_text_observed",
+    "all_keys_physically_released"
+  ],
+  "resources": [
+    "left_arm",
+    "right_arm",
+    "left_dex3.index",
+    "right_dex3.index",
+    "keyboard"
+  ],
+  "failure_codes": [
+    "UNREACHABLE_KEY",
+    "TWO_INDEX_CAPACITY",
+    "HAND_COLLISION_RISK",
+    "CONTACT_MISSING",
+    "FORCE_LIMIT",
+    "EVENT_MISMATCH",
+    "PHYSICAL_RELEASE_MISSING",
+    "TEXT_MISMATCH"
+  ],
+  "joint_commands": false
+}

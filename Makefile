@@ -1,4 +1,4 @@
-.PHONY: demo demo-mixed demo-seated-recovery demo-p1 demo-p2 benchmark inspect inspect-action-graph inspect-dex3-assets isaac-p1-assets isaac-p1 isaac-p1-validate isaac-p2 test check
+.PHONY: demo demo-mixed demo-seated-recovery demo-p1 demo-p2 benchmark inspect inspect-action-graph inspect-dex3-assets isaac-p1-assets isaac-p1 isaac-p1-validate isaac-p2 standing-plan standing-replay standing-runtime standing-training-smoke isaac-standing isaac-standing-gui isaac-standing-assets test check
 
 ISAACLAB_ROOT ?= /home/descfly/IsaacLab-2.3.2
 ISAACLAB_CONDA ?= /home/descfly/miniconda3/bin/conda
@@ -8,6 +8,8 @@ ISAACLAB_ACTIVATE ?= $(ISAACLAB_ENV_PREFIX)/etc/conda/activate.d/setenv.sh
 ISAACLAB_PYTHON ?= $(ISAACLAB_ENV_PREFIX)/bin/python
 P1_URDF := $(CURDIR)/artifacts/simulation-assets/unitree_ros_7d6075f7/robots/g1_description/g1_29dof_mode_15_with_dex3_1.urdf
 P1_USD := $(CURDIR)/artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd
+STANDING_TEXT ?= afjk
+ISAAC_SIM_ROOT ?= /home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64
 
 demo:
 	PYTHONPATH=src python3 -m vskill_os.demo
@@ -52,6 +54,28 @@ isaac-p1-validate:
 
 isaac-p2:
 	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.p2_scene --headless --device cuda:0 --mode chord'
+
+standing-plan:
+	./scripts/run_standing_demo.sh --plan-only --text "$(STANDING_TEXT)"
+
+standing-replay:
+	./scripts/run_standing_demo.sh --synthetic --text "$(STANDING_TEXT)"
+
+standing-runtime:
+	ISAAC_SIM_ROOT="$(ISAAC_SIM_ROOT)" ./scripts/run_standing_demo.sh --check-runtime
+
+standing-training-smoke:
+	PYTHONPATH=src python3 -m vskill_os.training train --config configs/training/dex3_standing.json --output artifacts/standing-training --iterations 3
+	PYTHONPATH=src python3 -m vskill_os.training evaluate --checkpoint artifacts/standing-training/checkpoint.json --episodes 8 --output artifacts/standing-training/evaluation.json
+
+isaac-standing:
+	ISAAC_SIM_ROOT="$(ISAAC_SIM_ROOT)" ./scripts/run_standing_demo.sh --headless --text "$(STANDING_TEXT)"
+
+isaac-standing-gui:
+	ISAAC_SIM_ROOT="$(ISAAC_SIM_ROOT)" ./scripts/run_standing_demo.sh --no-headless --text "$(STANDING_TEXT)"
+
+isaac-standing-assets:
+	ISAAC_SIM_ROOT="$(ISAAC_SIM_ROOT)" ./scripts/run_standing_demo.sh --build-assets
 
 test:
 	PYTHONPATH=src python3 -m unittest discover -s tests -v

@@ -1,0 +1,16 @@
+{
+  "target_runtime": "Isaac Sim 6.0.1",
+  "posture": "standing_fixed_base",
+  "hands": "dual Dex3-1, one index per hand",
+  "physics_demo_status": "not_run_user_resource_isolation_constraint",
+  "physics_training_status": "not_run_adapter_acceptance_pending",
+  "simulation_started": false,
+  "gpu_training_started": false,
+  "existing_processes_modified": false,
+  "physical_acceptance": false,
+  "cpu_framework_checks": "passed",
+  "scope": "planner, coordinated finite-horizon controller, independent verifier, optional source-checked Isaac6 driver, CPU residual training/evaluation/checkpoint framework",
+  "unit_tests_passed": 129,
+  "training_generations_completed": 4,
+  "synthetic_evaluation_episodes_passed": 32
+}

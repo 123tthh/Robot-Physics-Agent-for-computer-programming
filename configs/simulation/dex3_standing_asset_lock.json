@@ -1,0 +1,27 @@
+{
+  "schema": "standing_usd_dependency_lock",
+  "version": "1.0.0",
+  "provenance": "copied mode15 Dex3 baseline, captured without launching Isaac",
+  "layers": [
+    {
+      "path": "configuration/g1_mode15_dex3_p1_base.usd",
+      "sha256": "f240abaa72b21e4d1143c19a206d96c08988dc9c9197a1f1ca8e8b95ca6feafe"
+    },
+    {
+      "path": "configuration/g1_mode15_dex3_p1_physics.usd",
+      "sha256": "d66b834b8d4228f15ab1e0a3050319d8daa39a66de76c3ee6badae569c4c4328"
+    },
+    {
+      "path": "configuration/g1_mode15_dex3_p1_robot.usd",
+      "sha256": "1fbbe953fa8ac6c33ae5bd19e5acb2494e64466017a25749d36a07c69fda9a14"
+    },
+    {
+      "path": "configuration/g1_mode15_dex3_p1_sensor.usd",
+      "sha256": "1e2ab3fd105a3b2a29f1c80b4f6188f197ceaa6073ef74de944bcac5c9b35ef3"
+    },
+    {
+      "path": "g1_mode15_dex3_p1.usd",
+      "sha256": "be081c94bc93d8dc3fb8b7047847f753db5fe1ef2b60536508fed1d82581f230"
+    }
+  ]
+}
