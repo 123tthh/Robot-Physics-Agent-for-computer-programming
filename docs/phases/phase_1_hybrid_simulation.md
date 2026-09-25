@@ -2,7 +2,7 @@
 
 状态：`DONE`。P1-T01 至 P1-T06 的轻量闭环、完整工位资产链和 Isaac/PhysX/RTX 验收均已完成。
 
-详细设计见 [`../sim_guidance.md`](../sim_guidance.md)。
+详细设计见 [`../sim_guidance.md`](../simulation/sim_guidance.md)。
 
 ## 目标
 
@@ -92,7 +92,7 @@ Dex3-1。官方现成 G1+Dex3 是 mode 5 / 4010，因此 P1 使用官方 mode 15
 Ctrl/Win/Alt→Space→Alt/Menu/Ctrl 的左右序由清单与验收报告同时约束。P1 用
 确定性 key-switch drive 产生接触/键程样本，以隔离测试事件桥；
 Dex3 14 个关节在同一场景中全部驱动并验证，但“指尖实际按键”保留给 P2。
-详见 [`../DEX3_ASSET_AUDIT.md`](../DEX3_ASSET_AUDIT.md)。
+详见 [`../DEX3_ASSET_AUDIT.md`](../experiments/dex3/DEX3_ASSET_AUDIT.md)。
 
 验收：固定场景可重复启动，关节顺序与兼容性 Manifest 一致，探针和键帽接触可观测。
 
@@ -109,7 +109,7 @@ Dex3 14 个关节在同一场景中全部驱动并验证，但“指尖实际按
 - 完整桌腿、显示器支架以及版本化尺寸/质量/摩擦配置；
 - 独立资产链契约与 P1 验收字段。
 
-验收证明资产/关节拓扑可加载，并证明无载椅在 PhysX 水平力下能够移动；G1 在 P1 仍为固定基座检查姿态，不用传送、外力探针或事件注入冒充机器人行走、坐下或载人椅子移动。详见 [`../P0_P1_ASSET_CHAIN.md`](../P0_P1_ASSET_CHAIN.md)。
+验收证明资产/关节拓扑可加载，并证明无载椅在 PhysX 水平力下能够移动；G1 在 P1 仍为固定基座检查姿态，不用传送、外力探针或事件注入冒充机器人行走、坐下或载人椅子移动。详见 [`../P0_P1_ASSET_CHAIN.md`](../simulation/P0_P1_ASSET_CHAIN.md)。
 
 ### P1-T06：补齐第一阶段导航场景资产
 
@@ -124,7 +124,7 @@ Dex3 14 个关节在同一场景中全部驱动并验证，但“指尖实际按
 - 1 个带碰撞的静态文件柜障碍；
 - 模块化房间配置、纯 Python 约束模型、Isaac authoring 模块和 OpenUSD 验收字段。
 
-验收只证明导航场景资产、语义 ID、锚点和碰撞几何可用；没有创建地图、规划轨迹，也没有声明 `workstation_reached`。详见 [`../P1_NAVIGATION_ROOM.md`](../P1_NAVIGATION_ROOM.md)。
+验收只证明导航场景资产、语义 ID、锚点和碰撞几何可用；没有创建地图、规划轨迹，也没有声明 `workstation_reached`。详见 [`../P1_NAVIGATION_ROOM.md`](../simulation/P1_NAVIGATION_ROOM.md)。
 
 ## 当前完成证据
 

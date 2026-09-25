@@ -13,16 +13,16 @@
 | ID / 子项目 | 当前范围与状态 | 证据或入口 | 未完成边界 |
 |---|---|---|---|
 | CORE 共享运行时 | `DONE`：契约、任务图、资源锁、TTL、账本、恢复的轻量基线 | `make check`、`make demo`；[P0](phases/phase_0_runtime_baseline.md) | 真实多 worker 控制权、锁内状态重检与持续撤销仍需集成验收 |
-| SIM 共享仿真底座 | `DONE`：限定 P1 的资产、PhysX/RTX、键盘桥和 PTY | [P1](phases/phase_1_hybrid_simulation.md)、[资产链](P0_P1_ASSET_CHAIN.md) | 场景锚点不是导航 rollout；资产接触不是通用技能 |
-| D3-5 Dex3 历史触键 | `PARTIAL`：Isaac 5.1 固定基座 ActionGraph 与事件诊断 | [P2](phases/phase_2_bimanual_typing.md)、[资产审计](DEX3_ASSET_AUDIT.md) | 原 P2 GUI 可见实体触键仍待确认；不由 D3-6 或 D5 的结果代替 |
-| D5 Dex5 坐姿与连续输入 | `DONE`：指定场景演示；通用技能仍 `PARTIAL` | [受支撑十指](DEX5_SEATED_DEMO.md)、[自由坐下](FREE_BALANCE_SITTING.md)、[连续演示](CONTINUOUS_COMPUTER_DEMO.md) | 现有手部 IK；不代表任意文本、视觉控制、无 IK 学习或真机 |
+| SIM 共享仿真底座 | `DONE`：限定 P1 的资产、PhysX/RTX、键盘桥和 PTY | [P1](phases/phase_1_hybrid_simulation.md)、[资产链](simulation/P0_P1_ASSET_CHAIN.md) | 场景锚点不是导航 rollout；资产接触不是通用技能 |
+| D3-5 Dex3 历史触键 | `PARTIAL`：Isaac 5.1 固定基座 ActionGraph 与事件诊断 | [P2](phases/phase_2_bimanual_typing.md)、[资产审计](experiments/dex3/DEX3_ASSET_AUDIT.md) | 原 P2 GUI 可见实体触键仍待确认；不由 D3-6 或 D5 的结果代替 |
+| D5 Dex5 坐姿与连续输入 | `DONE`：指定场景演示；通用技能仍 `PARTIAL` | [受支撑十指](experiments/dex5/DEX5_SEATED_DEMO.md)、[自由坐下](experiments/dex5/FREE_BALANCE_SITTING.md)、[连续演示](experiments/dex5/CONTINUOUS_COMPUTER_DEMO.md) | 现有手部 IK；不代表任意文本、视觉控制、无 IK 学习或真机 |
 | DESKTOP 屏幕与软件任务 | `PARTIAL`：实体 `ls`/Enter → PTY → 机器人 RGB-D/OCR 已有报告 | [屏幕验收](../reports/isaac_continuous_computer/virtual-screen-acceptance.json)、[P3](phases/phase_3_code_agent_loop.md) | 已有本地代码 Agent/测试适配器；真实隔离编程任务失败—修复—复测尚未端到端验收 |
 | D3-6 Dex3 站姿实验 | `PARTIAL`：Isaac 6.0.1 固定站姿双食指 `ak` 两次通过 | [独立工作树与报告位置](BRANCHES.md#3-dex3-站姿工作树) | `afjk` 失败；无自由站立、行走或机器人相机验收；未合入当前树 |
-| CHAIR 机器人—椅子交互 | `PARTIAL`：领域模型、独立轨迹验证、替身、worker 客户端和可选 PPO | [工程接口](CHAIR_INTERACTION_ENGINEERING.md)、[研究规划](CHAIR_INTERACTION_RESEARCH.md) | 真实载人椅物理 worker、策略训练和主动重定位未验收；自由坐下不证明主动滑椅 |
-| LEARN 严格无 IK 学习 | `PLANNED`：目标架构、动作空间、课程与数据来源约束 | [学习专项设计](LEARNING_SYSTEM_ARCHITECTURE.md)、[训练调研](DEX5_LEARNING_WITHOUT_IK.md) | 向量环境、学习执行器、策略包和独立学习结果未交付 |
-| IMPROVE 受约束自改进 | `PLANNED`：episode、候选档案、晋升与回滚设计 | [RSI 集成设计](RSI_INTEGRATION_PLAN.md) | 不另建 Runtime；无已验证持续改进或 RSI 能力 |
-| NAV / VOICE 导航与语音 | `PARTIAL`：场景、控制端口、工具白名单与规则/loopback 基线 | [P5](phases/phase_5_navigation_and_voice.md)、[语音接口](VOICE_LLM.md) | 真实导航 rollout、感知和真实模型性能待验收；D3-6 中 velocity 候选不等于行走通过 |
-| REAL 真机与 HIL | `PLANNED`：身份校验与策略兼容性框架 | [P6](phases/phase_6_sim2real_self_improvement.md)、[G1 配置](G1_29DOF_5010.md) | 尚无本登记可引用的 HIL/真机通过证据 |
+| CHAIR 机器人—椅子交互 | `PARTIAL`：领域模型、独立轨迹验证、替身、worker 客户端和可选 PPO | [工程接口](research/chair/CHAIR_INTERACTION_ENGINEERING.md)、[研究规划](research/chair/CHAIR_INTERACTION_RESEARCH.md) | 真实载人椅物理 worker、策略训练和主动重定位未验收；自由坐下不证明主动滑椅 |
+| LEARN 严格无 IK 学习 | `PLANNED`：目标架构、动作空间、课程与数据来源约束 | [学习专项设计](research/learning/LEARNING_SYSTEM_ARCHITECTURE.md)、[训练调研](research/learning/DEX5_LEARNING_WITHOUT_IK.md) | 向量环境、学习执行器、策略包和独立学习结果未交付 |
+| IMPROVE 受约束自改进 | `PLANNED`：episode、候选档案、晋升与回滚设计 | [RSI 集成设计](research/rsi/RSI_INTEGRATION_PLAN.md) | 不另建 Runtime；无已验证持续改进或 RSI 能力 |
+| NAV / VOICE 导航与语音 | `PARTIAL`：场景、控制端口、工具白名单与规则/loopback 基线 | [P5](phases/phase_5_navigation_and_voice.md)、[语音接口](integrations/VOICE_LLM.md) | 真实导航 rollout、感知和真实模型性能待验收；D3-6 中 velocity 候选不等于行走通过 |
+| REAL 真机与 HIL | `PLANNED`：身份校验与策略兼容性框架 | [P6](phases/phase_6_sim2real_self_improvement.md)、[G1 配置](core/G1_29DOF_5010.md) | 尚无本登记可引用的 HIL/真机通过证据 |
 
 ## Dex5 已有物理证据的边界
 

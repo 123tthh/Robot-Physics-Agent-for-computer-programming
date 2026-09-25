@@ -2,21 +2,21 @@
 
 # V-Skill OS
 
-[学习驱动整体架构（无 IK，目标设计）](../../LEARNING_SYSTEM_ARCHITECTURE.md) · [基础运行时架构](../../ARCHITECTURE.md) · [学习训练调研](../../DEX5_LEARNING_WITHOUT_IK.md)
+[学习驱动整体架构（无 IK，目标设计）](../../research/learning/LEARNING_SYSTEM_ARCHITECTURE.md) · [基础运行时架构](../../ARCHITECTURE.md) · [学习训练调研](../../research/learning/DEX5_LEARNING_WITHOUT_IK.md)
 
 面向人形机器人实体计算机操作的 Verifier-Grounded Agent–Skill 系统。目前已完成无需真机的纯 Python 基线，以及本机 Isaac Sim 5.1 / Isaac Lab 2.3.2 上的 P1 资产/混合仿真底座：Unitree G1 29DOF mode 15 / 5010、双 Dex3、五脚万向轮办公椅、8×6 m 四墙房间、三工位与导航锚点、74 键带高对比标识的物理键盘、PhysX 接触、三路 RTX 相机和键帽—PTY 链路。P2 自动化事件门禁已有诊断结果，但 GUI 尚未确认可见实体触键，因此保持 `PARTIAL`。Dex5 自由坐下、连续十指打字和终端屏幕闭环的新增验收见下。真实导航 rollout、主动载人椅移动、完全基于视觉的控制、真机策略和真实代码 Agent 任务仍待后续验收。
 
-2026-09-23：[G1 + 双 Dex5-1 受支撑坐下与十指打字 Demo](../../DEX5_SEATED_DEMO.md) 已在 Isaac Sim 5.1 完整运行通过，双手十指物理输入 `asdf␠jkl;␠`，逐键验证接触、键程、事件、文字与释放，并保存录像。此结果限定于显式支撑与近似指尖接触模型，不代表自由平衡坐下或真机验收。复现入口为 `make dex5-assets`、`make demo-dex5`、`make isaac-dex5`。
+2026-09-23：[G1 + 双 Dex5-1 受支撑坐下与十指打字 Demo](../../experiments/dex5/DEX5_SEATED_DEMO.md) 已在 Isaac Sim 5.1 完整运行通过，双手十指物理输入 `asdf␠jkl;␠`，逐键验证接触、键程、事件、文字与释放，并保存录像。此结果限定于显式支撑与近似指尖接触模型，不代表自由平衡坐下或真机验收。复现入口为 `make dex5-assets`、`make demo-dex5`、`make isaac-dex5`。
 
-2026-09-23：[G1 + 双 Dex5-1 自由平衡坐下实验](../../FREE_BALANCE_SITTING.md) 已在同一 Isaac Sim 5.1 环境完成两次独立运行：机器人站立后坐到 P1 被动五脚轮办公椅上，并小幅调整躯干；无骨盆支架、无根轨迹写入，900 个物理观测样本在同种子重跑中一致。[录像](../../../artifacts/free-sit/accepted-seed7/demo.mp4)与[独立验收](../../../reports/isaac_free_sitting_acceptance.json)已保存，原普通椅子另存为 `scene.usd`。复现入口为 `make free-sit-assets`、`make isaac-free-sit`、`make verify-free-sit`。此前结果限定于自由坐下；新的连续十指衔接验收见下。主动载人椅移动仍待实现。
+2026-09-23：[G1 + 双 Dex5-1 自由平衡坐下实验](../../experiments/dex5/FREE_BALANCE_SITTING.md) 已在同一 Isaac Sim 5.1 环境完成两次独立运行：机器人站立后坐到 P1 被动五脚轮办公椅上，并小幅调整躯干；无骨盆支架、无根轨迹写入，900 个物理观测样本在同种子重跑中一致。[录像](../../../artifacts/free-sit/accepted-seed7/demo.mp4)与[独立验收](../../../reports/isaac_free_sitting_acceptance.json)已保存，原普通椅子另存为 `scene.usd`。复现入口为 `make free-sit-assets`、`make isaac-free-sit`、`make verify-free-sit`。此前结果限定于自由坐下；新的连续十指衔接验收见下。主动载人椅移动仍待实现。
 
-2026-09-23：[44 cm 低椅连续坐下与十指打字](../../CONTINUOUS_COMPUTER_DEMO.md) 已通过：60 s 单一物理过程完成站立、自由坐下及双 Dex5-1 十指 `asdf␠jkl;␠`，3000 条全身物理观测、全部按键事件和最终释放经独立验证。[视频](../../../artifacts/computer/continuous-v2-seed7/demo.mp4) · [验收报告](../../../reports/isaac_continuous_computer/acceptance.json)。复现：`make isaac-computer`、`make verify-computer`。虚拟屏幕闭环亦已通过：实体输入 `ls` 与 Enter → PTY 真实 Shell → 动态屏幕纹理 → 机器人 RGB-D / OCR。[屏幕验收](../../../reports/isaac_continuous_computer/virtual-screen-acceptance.json)。
+2026-09-23：[44 cm 低椅连续坐下与十指打字](../../experiments/dex5/CONTINUOUS_COMPUTER_DEMO.md) 已通过：60 s 单一物理过程完成站立、自由坐下及双 Dex5-1 十指 `asdf␠jkl;␠`，3000 条全身物理观测、全部按键事件和最终释放经独立验证。[视频](../../../artifacts/computer/continuous-v2-seed7/demo.mp4) · [验收报告](../../../reports/isaac_continuous_computer/acceptance.json)。复现：`make isaac-computer`、`make verify-computer`。虚拟屏幕闭环亦已通过：实体输入 `ls` 与 Enter → PTY 真实 Shell → 动态屏幕纹理 → 机器人 RGB-D / OCR。[屏幕验收](../../../reports/isaac_continuous_computer/virtual-screen-acceptance.json)。
 
 ## 已实现
 
-机器人—椅子交互研究分支新增 [论文调研与实验规划](../../CHAIR_INTERACTION_RESEARCH.md) 和 [工程/训练接口](../../CHAIR_INTERACTION_ENGINEERING.md)：包括独立轨迹验证、训练环境与采样接口、可选 PPO、物理 worker 传输和 `make demo-chair` 替身演示。状态为 `PARTIAL / 未测试`；本轮按要求没有运行测试、demo 或训练，真实载人椅物理 worker 尚待接入。
+机器人—椅子交互研究分支新增 [论文调研与实验规划](../../research/chair/CHAIR_INTERACTION_RESEARCH.md) 和 [工程/训练接口](../../research/chair/CHAIR_INTERACTION_ENGINEERING.md)：包括独立轨迹验证、训练环境与采样接口、可选 PPO、物理 worker 传输和 `make demo-chair` 替身演示。状态为 `PARTIAL / 未测试`；本轮按要求没有运行测试、demo 或训练，真实载人椅物理 worker 尚待接入。
 
-2026-09-23：新增 [不使用 IK 的坐下与双 Dex5-1 打字学习方案](../../DEX5_LEARNING_WITHOUT_IK.md)，核查直接关节 RL、专家数据与视觉蒸馏路线，列出单指到连续坐下/十指打字的实验门槛。当前为调研与规划，尚未训练；上述已验收录像仍使用手部 IK，不是新学习方案的结果。
+2026-09-23：新增 [不使用 IK 的坐下与双 Dex5-1 打字学习方案](../../research/learning/DEX5_LEARNING_WITHOUT_IK.md)，核查直接关节 RL、专家数据与视觉蒸馏路线，列出单指到连续坐下/十指打字的实验门槛。当前为调研与规划，尚未训练；上述已验收录像仍使用手部 IK，不是新学习方案的结果。
 
 - 版本化 Skill 契约和 Registry；
 - JSON 配置的 V-SkillGraph；
@@ -199,22 +199,22 @@ PYTHONPATH=src python3 -m vskill_os.cli run \
 
 - [Codex 规划入口](../../overview.md)
 - [Codex 工作协议](../../CODEX_WORKPLAN.md)
-- [Isaac Sim + Pygame/PTY 混合仿真指南](../../sim_guidance.md)
-- [仿真专项分阶段实施规划](../../SIMULATION_PHASE_PLAN.md)
+- [Isaac Sim + Pygame/PTY 混合仿真指南](../../simulation/sim_guidance.md)
+- [仿真专项分阶段实施规划](../../simulation/SIMULATION_PHASE_PLAN.md)
 - [分阶段任务索引](../../phases/README.md)
-- [灵巧手选型与键盘验收](../../HAND_SELECTION.md)
-- [G1 mode 15 / 5010 + Dex3 资产审计](../../DEX3_ASSET_AUDIT.md)
-- [双 Dex5-1 受支撑坐下与十指打字 Demo](../../DEX5_SEATED_DEMO.md)
-- [双 Dex5 与被动轮椅的自由平衡坐下实验](../../FREE_BALANCE_SITTING.md)
-- [Dex5-1 资产来源、耦合与安装近似审计](../../DEX5_ASSET_AUDIT.md)
+- [灵巧手选型与键盘验收](../../simulation/HAND_SELECTION.md)
+- [G1 mode 15 / 5010 + Dex3 资产审计](../../experiments/dex3/DEX3_ASSET_AUDIT.md)
+- [双 Dex5-1 受支撑坐下与十指打字 Demo](../../experiments/dex5/DEX5_SEATED_DEMO.md)
+- [双 Dex5 与被动轮椅的自由平衡坐下实验](../../experiments/dex5/FREE_BALANCE_SITTING.md)
+- [Dex5-1 资产来源、耦合与安装近似审计](../../experiments/dex5/DEX5_ASSET_AUDIT.md)
 - [项目总览](../../PROJECT_OVERVIEW.md)
 - [系统架构](../../ARCHITECTURE.md)
-- [Skill 规范](../../SKILL_SPEC.md)
-- [纯仿真实现](../../SIMULATION.md)
-- [Benchmark 设计](../../BENCHMARK.md)
+- [Skill 规范](../../core/SKILL_SPEC.md)
+- [纯仿真实现](../../core/SIMULATION.md)
+- [Benchmark 设计](../../core/BENCHMARK.md)
 - [构建顺序](../../BUILD_ORDER.md)
-- [参考工作与设计映射](../../REFERENCES.md)
-- [G1 29DOF/5010 配置基线](../../G1_29DOF_5010.md)
-- [分阶段运控、坐下与实体打字](../../CONTROL_PHASES.md)
-- [本地轻量语音—LLM](../../VOICE_LLM.md)
-- [相关项目与集成决策](../../RELATED_PROJECTS.md)
+- [参考工作与设计映射](../../integrations/REFERENCES.md)
+- [G1 29DOF/5010 配置基线](../../core/G1_29DOF_5010.md)
+- [分阶段运控、坐下与实体打字](../../core/CONTROL_PHASES.md)
+- [本地轻量语音—LLM](../../integrations/VOICE_LLM.md)
+- [相关项目与集成决策](../../integrations/RELATED_PROJECTS.md)

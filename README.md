@@ -39,8 +39,8 @@ PYTHONPATH=src python3 -m vskill_os.cli run --scenario configs/scenarios/mixed_f
 |---|---|---|---|
 | 工位、Dex3 历史基线 | `make demo-p1`、`make demo-p2` | `make isaac-p1`、`make isaac-p2` | 本工作树，Isaac 5.1 / Lab 2.3.2 |
 | Dex5 受支撑十指基线 | `make demo-dex5` | `make isaac-dex5` | 先准备 Dex5 资产；显式支撑 |
-| Dex5 自由坐下 | 见[实验说明](docs/FREE_BALANCE_SITTING.md) | `make isaac-free-sit`、`make verify-free-sit` | 自由根；独立物理记录 |
-| 连续坐下与打字 | 见[连续演示](docs/CONTINUOUS_COMPUTER_DEMO.md) | `make isaac-computer`、`make verify-computer` | 仍使用手部 IK |
+| Dex5 自由坐下 | 见[实验说明](docs/experiments/dex5/FREE_BALANCE_SITTING.md) | `make isaac-free-sit`、`make verify-free-sit` | 自由根；独立物理记录 |
+| 连续坐下与打字 | 见[连续演示](docs/experiments/dex5/CONTINUOUS_COMPUTER_DEMO.md) | `make isaac-computer`、`make verify-computer` | 仍使用手部 IK |
 | 虚拟计算机屏幕 | 同上 | `make isaac-virtual-computer`、`make verify-virtual-computer` | 额外桌面依赖与机器人相机 |
 | 椅子研究 | `make chair-plan`、`make demo-chair` | 真实物理 worker 待接入 | demo 为替身；训练入口不等于可用策略 |
 | Dex3 站姿 | 见[分支登记](docs/BRANCHES.md) | 在独立工作树运行 | Isaac 6.0.1，固定基座双食指 |

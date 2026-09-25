@@ -304,7 +304,7 @@ PYTHONPATH=src python3 -m vskill_os.cli voice-plan \
 | P2 | sherpa-onnx / SenseVoice | 离线语音基线 |
 | P2 | Qwen3 / llama.cpp | 本地结构化工具规划 |
 
-完整链接、成熟度和采用边界见 [`docs/RELATED_PROJECTS.md`](../../RELATED_PROJECTS.md) 与 [`configs/research/projects.json`](../../../configs/research/projects.json)。
+完整链接、成熟度和采用边界见 [`docs/integrations/RELATED_PROJECTS.md`](../../integrations/RELATED_PROJECTS.md) 与 [`configs/research/projects.json`](../../../configs/research/projects.json)。
 
 ## 16. 交接给下一位开发者的首要任务
 

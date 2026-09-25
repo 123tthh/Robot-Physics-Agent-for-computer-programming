@@ -6,13 +6,13 @@
 
 | 阶段 | 本地目录 | 主要主题 |
 |---|---|---|
-| P0 | [`P0_runtime_baseline/`](P0_runtime_baseline/) | Agent-Skill 契约、Verifier、恢复与账本 |
-| P1 | [`P1_hybrid_simulation/`](P1_hybrid_simulation/) | 混合仿真、机器人资产、接触与 Adapter |
-| P2 | [`P2_bimanual_typing/`](P2_bimanual_typing/) | 双手多指、键盘操作、视觉伺服与示范学习 |
-| P3 | [`P3_code_agent_loop/`](P3_code_agent_loop/) | 隔离代码 Agent、独立测试与软件证据 |
-| P4 | [`P4_posture_and_chair/`](P4_posture_and_chair/) | 坐下、工作姿态、坐姿移动与全身控制 |
-| P5 | [`P5_navigation_and_voice/`](P5_navigation_and_voice/) | 导航、ROS 2 Action、本地语音与工具规划 |
-| P6 | [`P6_sim2real_self_improvement/`](P6_sim2real_self_improvement/) | Sim-to-real、安全评测、消融与受约束更新 |
+| P0 | [`P0_runtime_baseline/`](P0_runtime_baseline) | Agent-Skill 契约、Verifier、恢复与账本 |
+| P1 | [`P1_hybrid_simulation/`](P1_hybrid_simulation) | 混合仿真、机器人资产、接触与 Adapter |
+| P2 | [`P2_bimanual_typing/`](P2_bimanual_typing) | 双手多指、键盘操作、视觉伺服与示范学习 |
+| P3 | [`P3_code_agent_loop/`](P3_code_agent_loop) | 隔离代码 Agent、独立测试与软件证据 |
+| P4 | [`P4_posture_and_chair/`](P4_posture_and_chair) | 坐下、工作姿态、坐姿移动与全身控制 |
+| P5 | [`P5_navigation_and_voice/`](P5_navigation_and_voice) | 导航、ROS 2 Action、本地语音与工具规划 |
+| P6 | [`P6_sim2real_self_improvement/`](P6_sim2real_self_improvement) | Sim-to-real、安全评测、消融与受约束更新 |
 
 每个阶段包含：
 

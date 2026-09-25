@@ -1,6 +1,6 @@
 # 统一系统架构
 
-本文定义整个项目共同遵守的边界与代码归属。能力状态以[子项目登记](WORKSTREAMS.md)为准；[学习设计](LEARNING_SYSTEM_ARCHITECTURE.md)和[RSI 设计](RSI_INTEGRATION_PLAN.md)是本架构内的专项扩展，未实现部分不能当成当前调用链。
+本文定义整个项目共同遵守的边界与代码归属。能力状态以[子项目登记](WORKSTREAMS.md)为准；[学习设计](research/learning/LEARNING_SYSTEM_ARCHITECTURE.md)和[RSI 设计](research/rsi/RSI_INTEGRATION_PLAN.md)是本架构内的专项扩展，未实现部分不能当成当前调用链。
 
 ## 1. 一套核心，两类循环，多种后端
 
@@ -80,7 +80,7 @@ flowchart TB
 | Policy Adapter | 观测到低层动作的映射、模型加载与控制频率 | 不能提交已验证任务事实 |
 | Safety / 控制权 | 限幅、限速、支撑与停止；控制者交接 | 不能受 Agent/奖励函数关闭 |
 
-历史触键路径采用笛卡尔预定位和 DLS/IK，算法留在 Isaac Adapter。无 IK 路线应新增执行策略，复用目标和证据语义，不把旧笛卡尔节点偷偷解释成 IK。学习动作空间、数据排除规则和策略 manifest 详见[学习专项设计](LEARNING_SYSTEM_ARCHITECTURE.md)。
+历史触键路径采用笛卡尔预定位和 DLS/IK，算法留在 Isaac Adapter。无 IK 路线应新增执行策略，复用目标和证据语义，不把旧笛卡尔节点偷偷解释成 IK。学习动作空间、数据排除规则和策略 manifest 详见[学习专项设计](research/learning/LEARNING_SYSTEM_ARCHITECTURE.md)。
 
 ## 5. 后端与实验配置边界
 

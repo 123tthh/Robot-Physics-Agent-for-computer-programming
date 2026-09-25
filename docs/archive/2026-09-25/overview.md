@@ -137,21 +137,21 @@ flowchart LR
 ### 面向 Codex 的执行入口
 
 - [`CODEX_WORKPLAN.md`](../../CODEX_WORKPLAN.md)：如何选择任务、约束范围并验收；
-- [`sim_guidance.md`](../../sim_guidance.md)：Isaac Sim、Pygame/PTY、麦克风和验证桥接方案；
-- [`HAND_SELECTION.md`](../../HAND_SELECTION.md)：Dex3、Dex5、DG-5F-S 等灵巧手选型；
-- [`RSI_INTEGRATION_PLAN.md`](../../RSI_INTEGRATION_PLAN.md)：受验证器约束的自我改进总体路线、论文假设与 Codex 任务；
-- [`RSI_CODEBASES.md`](../../RSI_CODEBASES.md)：可采用、需适配、仅供研究参考的学习与 RSI codebase 清单；
-- [`RSI_RESEARCH_CN.md`](../../RSI_RESEARCH_CN.md)：机器人自我改进方向的文献与课程调研；
+- [`sim_guidance.md`](../../simulation/sim_guidance.md)：Isaac Sim、Pygame/PTY、麦克风和验证桥接方案；
+- [`HAND_SELECTION.md`](../../simulation/HAND_SELECTION.md)：Dex3、Dex5、DG-5F-S 等灵巧手选型；
+- [`RSI_INTEGRATION_PLAN.md`](../../research/rsi/RSI_INTEGRATION_PLAN.md)：受验证器约束的自我改进总体路线、论文假设与 Codex 任务；
+- [`RSI_CODEBASES.md`](../../research/rsi/RSI_CODEBASES.md)：可采用、需适配、仅供研究参考的学习与 RSI codebase 清单；
+- [`RSI_RESEARCH_CN.md`](../../research/rsi/RSI_RESEARCH_CN.md)：机器人自我改进方向的文献与课程调研；
 - [`phases/README.md`](../../phases/README.md)：阶段索引和任务编号。
 
 ### 既有技术文档
 
 - [`PROJECT_OVERVIEW.md`](../../PROJECT_OVERVIEW.md)：当前研究总览；
 - [`ARCHITECTURE.md`](../../ARCHITECTURE.md)：软件架构；
-- [`SKILL_SPEC.md`](../../SKILL_SPEC.md)：Skill 契约规范；
-- [`SIMULATION.md`](../../SIMULATION.md)：当前纯 Python 模拟器；
-- [`CONTROL_PHASES.md`](../../CONTROL_PHASES.md)：G1 控制阶段、坐下、坐姿移动和 Dex3；
-- [`VOICE_LLM.md`](../../VOICE_LLM.md)：本地语音和轻量 LLM；
-- [`G1_29DOF_5010.md`](../../G1_29DOF_5010.md)：机器人硬件身份与部署防错；
-- [`BENCHMARK.md`](../../BENCHMARK.md)：评测与故障注入；
-- [`RELATED_PROJECTS.md`](../../RELATED_PROJECTS.md)：上游项目和集成决策。
+- [`SKILL_SPEC.md`](../../core/SKILL_SPEC.md)：Skill 契约规范；
+- [`SIMULATION.md`](../../core/SIMULATION.md)：当前纯 Python 模拟器；
+- [`CONTROL_PHASES.md`](../../core/CONTROL_PHASES.md)：G1 控制阶段、坐下、坐姿移动和 Dex3；
+- [`VOICE_LLM.md`](../../integrations/VOICE_LLM.md)：本地语音和轻量 LLM；
+- [`G1_29DOF_5010.md`](../../core/G1_29DOF_5010.md)：机器人硬件身份与部署防错；
+- [`BENCHMARK.md`](../../core/BENCHMARK.md)：评测与故障注入；
+- [`RELATED_PROJECTS.md`](../../integrations/RELATED_PROJECTS.md)：上游项目和集成决策。

@@ -2,7 +2,7 @@
 
 状态：`PARTIAL`
 
-控制阶段、坐下守卫、坐姿移动接口和模拟恢复已经存在；P1 已加入五脚万向轮椅、完整桌架和六阶段资产锚点。2026-09-23 接入 G1 + 双 Dex5 自由底座坐下实验和载人接触证据。载人椅移动策略、工作姿态交接与真机可观测验证仍未完成。详细背景见 [`../CONTROL_PHASES.md`](../CONTROL_PHASES.md) 与 [`../P0_P1_ASSET_CHAIN.md`](../P0_P1_ASSET_CHAIN.md)。
+控制阶段、坐下守卫、坐姿移动接口和模拟恢复已经存在；P1 已加入五脚万向轮椅、完整桌架和六阶段资产锚点。2026-09-23 接入 G1 + 双 Dex5 自由底座坐下实验和载人接触证据。载人椅移动策略、工作姿态交接与真机可观测验证仍未完成。详细背景见 [`../CONTROL_PHASES.md`](../core/CONTROL_PHASES.md) 与 [`../P0_P1_ASSET_CHAIN.md`](../simulation/P0_P1_ASSET_CHAIN.md)。
 
 ## 目标
 
@@ -38,7 +38,7 @@
 
 验收：不能仅以臀部接触判断成功；必须进入稳定工作姿态。
 
-新增 [自由平衡坐下实验](../FREE_BALANCE_SITTING.md)：锁定 GR00T 平衡网络，组合无固定根 G1 + 双 Dex5 与原 P1 被动轮椅，接入足底/骨盆/髋部接触、自由座椅状态、非预期接触和连续稳定窗口检查。确认承重后停止降低高度指令，继续主动平衡；直接冻结关节的失败试验保持失败。已有普通椅子场景及受支撑录像另存为基线。该实验不代表 Stay Seated 策略复现，不自动放行载人靠桌移动、工作姿态或自由坐姿打字。
+新增 [自由平衡坐下实验](../experiments/dex5/FREE_BALANCE_SITTING.md)：锁定 GR00T 平衡网络，组合无固定根 G1 + 双 Dex5 与原 P1 被动轮椅，接入足底/骨盆/髋部接触、自由座椅状态、非预期接触和连续稳定窗口检查。确认承重后停止降低高度指令，继续主动平衡；直接冻结关节的失败试验保持失败。已有普通椅子场景及受支撑录像另存为基线。该实验不代表 Stay Seated 策略复现，不自动放行载人靠桌移动、工作姿态或自由坐姿打字。
 
 ### P4-T03：坐姿椅子重定位
 
@@ -53,7 +53,7 @@
 
 验收：产生非零进度且保持接触；移动结束必须重新验证 `work_pose_ready`。
 
-2026-09-22：新建 `codex/robot-chair-interaction` 专题分支。新增 `vskill_os.chair` 契约、独立轨迹验证、训练环境、GAE/采样、可选 Torch PPO、隔离物理 worker 传输与替身 demo。参见 [研究路线](../CHAIR_INTERACTION_RESEARCH.md) 和 [工程接口](../CHAIR_INTERACTION_ENGINEERING.md)。用户明确要求 demo 先写不测试：本轮未运行测试、demo、训练或物理仿真，没有提交。物理 worker、SY 镜像与独立课程评估器、载人椅资产验收仍未完成；不改变 P4 阶段退出条件。
+2026-09-22：新建 `codex/robot-chair-interaction` 专题分支。新增 `vskill_os.chair` 契约、独立轨迹验证、训练环境、GAE/采样、可选 Torch PPO、隔离物理 worker 传输与替身 demo。参见 [研究路线](../research/chair/CHAIR_INTERACTION_RESEARCH.md) 和 [工程接口](../research/chair/CHAIR_INTERACTION_ENGINEERING.md)。用户明确要求 demo 先写不测试：本轮未运行测试、demo、训练或物理仿真，没有提交。物理 worker、SY 镜像与独立课程评估器、载人椅资产验收仍未完成；不改变 P4 阶段退出条件。
 
 ### P4-T04：任务约束工作姿态
 
@@ -81,4 +81,4 @@
 
 当前已验证资产、契约/回放、八个硬 PhysX 末节耦合和实际支撑运动轨迹；`accepted-seed7` 完成受支撑坐下、双手预定位及十指打字，逐键物理证据通过。早期失败记录保留用于诊断。骨盆固定/平移/升降机构的存在写入报告，`dynamic_sitting_verified=false`。该演示不满足原 P4 要求的自由基座稳定、骨盆—座面与双足接触、冲击/滑移、低速度及屏幕视野联合门槛，也不证明移动椅载人动力学。
 
-使用 `make isaac-dex5-inspect` 检查场景与预定位，使用 `make isaac-dex5` / `make isaac-dex5-gui` 执行打字实验。后续按原 P4 门槛接入独立坐下控制器，并逐步移除支撑验证稳定性。详见 [Dex5 Demo](../DEX5_SEATED_DEMO.md) 与 [资产审计](../DEX5_ASSET_AUDIT.md)。
+使用 `make isaac-dex5-inspect` 检查场景与预定位，使用 `make isaac-dex5` / `make isaac-dex5-gui` 执行打字实验。后续按原 P4 门槛接入独立坐下控制器，并逐步移除支撑验证稳定性。详见 [Dex5 Demo](../experiments/dex5/DEX5_SEATED_DEMO.md) 与 [资产审计](../experiments/dex5/DEX5_ASSET_AUDIT.md)。

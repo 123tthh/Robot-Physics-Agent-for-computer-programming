@@ -2,7 +2,7 @@
 
 状态：`PARTIAL`（纯 Python 和自动化事件门禁已通过；GUI 观察未确认可见按键动作）
 
-[`../../src/vskill_os/typing.py`](../../src/vskill_os/typing.py) 已实现键盘几何、完整修饰键/主键分配、事件时序和最长正确前缀纠错；[`../../src/vskill_os/action_graph/`](../../src/vskill_os/action_graph/) 提供不含关节命令的模块化 ActionGraph；[`../../src/vskill_os/adapters/isaac/p2_scene.py`](../../src/vskill_os/adapters/isaac/p2_scene.py) 在 P1 的 G1 29DOF mode 15 / 5010 + 双 Dex3 场景上完成指尖物理控制。
+[`../../src/vskill_os/typing.py`](../../src/vskill_os/typing.py) 已实现键盘几何、完整修饰键/主键分配、事件时序和最长正确前缀纠错；[`../../src/vskill_os/action_graph/`](../../src/vskill_os/action_graph) 提供不含关节命令的模块化 ActionGraph；[`../../src/vskill_os/adapters/isaac/p2_scene.py`](../../src/vskill_os/adapters/isaac/p2_scene.py) 在 P1 的 G1 29DOF mode 15 / 5010 + 双 Dex3 场景上完成指尖物理控制。
 
 ## 目标
 
@@ -98,7 +98,7 @@
 
 ## 已实现的模块边界
 
-ActionGraph 模块位于 [`../../configs/action_graphs/modules/`](../../configs/action_graphs/modules/)：
+ActionGraph 模块位于 [`../../configs/action_graphs/modules/`](../../configs/action_graphs/modules)：
 
 - `bimanual_prepose@1.1.0`：双手粗预定位；
 - `key_prepose@1.0.0`：在按下任何修饰键前预定位额外指尖；
@@ -140,4 +140,4 @@ Isaac 自动化报告中，Alt、Ctrl、T 的峰值接触力分别约为 5.62 N�
 
 已完成版本化 hover → press → release 契约、独立接触/键程/唯一事件/显示文本/全指释放门禁、安全守卫、九类故障回放以及有界前缀修复。标准库与回放证据为 C0/C1；Isaac `accepted-seed7` 已另行完成实际受支撑坐下与全部十指打字，并通过独立物理证据验证及可见画面检查。近似联动、球形接触垫、关闭自碰撞等边界见完整说明。
 
-复现入口：`make demo-dex5`、`make dex5-assets`、`make isaac-dex5`、`make isaac-dex5-gui`。完整边界、产物与验收步骤见 [双 Dex5 Demo](../DEX5_SEATED_DEMO.md)。本支线的事件显示是事件接收端文本，尚未完成 camera OCR、终端焦点或真实代码 Agent 链路；Shift 和组合键仍属于后续扩展。
+复现入口：`make demo-dex5`、`make dex5-assets`、`make isaac-dex5`、`make isaac-dex5-gui`。完整边界、产物与验收步骤见 [双 Dex5 Demo](../experiments/dex5/DEX5_SEATED_DEMO.md)。本支线的事件显示是事件接收端文本，尚未完成 camera OCR、终端焦点或真实代码 Agent 链路；Shift 和组合键仍属于后续扩展。
