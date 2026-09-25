@@ -106,7 +106,7 @@ ISAAC_SIM_ROOT=/home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64 \
 ## 三、资产可复现性
 
 配置入口为 `configs/simulation/dex3_standing_demo.json`；目标机器人资产与上游版本清单为
-`configs/simulation/g1_29dof_5010_dex3_assets.json`，详细背景见 [Dex3 资产审计](DEX3_ASSET_AUDIT.md)。
+`configs/simulation/g1_29dof_5010_dex3_assets.json`，详细背景见 [Dex3 资产审计](../dex3/DEX3_ASSET_AUDIT.md)。
 默认使用复制的 mode 15 / 5010 + 双 Dex3 分层 USD：
 
 ```text

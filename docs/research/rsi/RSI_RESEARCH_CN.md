@@ -33,7 +33,7 @@
 
 ## 3. 与当前仓库的实际衔接
 
-本次检查了 [README](../README.md)、[架构](ARCHITECTURE.md)、[P6 规划](phases/phase_6_sim2real_self_improvement.md)、[项目构想](项目/ideaself.md)及相关源码。
+本次检查了 [README](../../../README.md)、[架构](../../ARCHITECTURE.md)、[P6 规划](../../phases/phase_6_sim2real_self_improvement.md)、[项目构想](../../proposals/ideaself.md)及相关源码。
 
 | 现有基础 | 可复用价值 | 仍缺的能力 |
 |---|---|---|
@@ -44,7 +44,7 @@
 | 随机故障 Benchmark | 比较任务恢复和误报完成 | 接触动力学任务、学习曲线、跨键盘测试与遗忘评测 |
 | P1 仿真资产与键帽—PTY 链路 | 提供可重复实验场景 | P2 清晰可见的实体触键验收、真实感知与真机证据 |
 
-重要实现细节：当前 [registry.py](../src/vskill_os/registry.py) 保存的是每个名称对应的当前 Skill；`replace()` 是直接替换，不能视为已实现策略晋升系统。[ledger.py](../src/vskill_os/ledger.py) 记录事件不等于已有完整 RL replay buffer。[benchmark.py](../src/vskill_os/benchmark.py) 的故障注入基线不等于物理策略学习的验证。
+重要实现细节：当前 [registry.py](../../../src/vskill_os/registry.py) 保存的是每个名称对应的当前 Skill；`replace()` 是直接替换，不能视为已实现策略晋升系统。[ledger.py](../../../src/vskill_os/ledger.py) 记录事件不等于已有完整 RL replay buffer。[benchmark.py](../../../src/vskill_os/benchmark.py) 的故障注入基线不等于物理策略学习的验证。
 
 仓库当前把 P2 标为 `PARTIAL`、P6 标为 `PLANNED`。因此，可以提前建设学习数据和离线评测设施，但实体策略效果必须等接触证据与 P2 门槛补齐后再报告。本次不修改阶段状态。
 

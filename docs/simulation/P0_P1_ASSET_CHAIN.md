@@ -15,7 +15,7 @@
 | 5 | 坐姿稳定 | `seated_stabilization` | 座面/靠背/脚轮接触面 | 骨盆—座面接触、双足接触、躯干/椅子倾角 |
 | 6 | 工作姿态 | `work_pose` | 桌、显示器、键盘、移动椅 | 坐姿稳定、屏幕可见、双手可达 |
 
-配置源为 [`../configs/simulation/p0_p1_workstation_asset_chain.json`](../configs/simulation/p0_p1_workstation_asset_chain.json)，纯 Python 校验位于 [`../src/vskill_os/simulation/workstation_assets.py`](../src/vskill_os/simulation/workstation_assets.py)。
+配置源为 [`../configs/simulation/p0_p1_workstation_asset_chain.json`](../../configs/simulation/p0_p1_workstation_asset_chain.json)，纯 Python 校验位于 [`../src/vskill_os/simulation/workstation_assets.py`](../../src/vskill_os/simulation/workstation_assets.py)。
 
 ## 移动办公椅
 
@@ -31,17 +31,17 @@ P1 使用程序化五脚万向轮办公椅，不再用无轮方块占位：
 - 滚动轴保留 0.08 的被动阻力，并以 20 deg/s 的被动速度上限抑制不符合本阶段抽象的持续空转；
 - P1 对自由椅架施加 120 N、0.15 s 的水平测试力，当前验收实测平移 0.1272 m；平均脚轮等效滚动距离为 0.0026 m，滚动贡献 2.08%，以滑移贡献为主。
 
-Isaac authoring 模块位于 [`../src/vskill_os/adapters/isaac/workstation_scene.py`](../src/vskill_os/adapters/isaac/workstation_scene.py)。正式场景为 [`../artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda`](../artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda)。
+Isaac authoring 模块位于 [`../src/vskill_os/adapters/isaac/workstation_scene.py`](../../src/vskill_os/adapters/isaac/workstation_scene.py)。正式场景为 [`../artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda`](../../artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda)。
 
-项目级 OpenUSD 验收命令为 `make isaac-p1-validate`，报告位于 [`../reports/isaac_p1_workstation_validation.json`](../reports/isaac_p1_workstation_validation.json)。它会在新进程中重开 USD，并检查 defaultPrim、米制/Z-up、必需 prim、关节关系、接触面、座高、无世界固定关节和阶段元数据。动态移动证据位于 [`../reports/isaac_p1_acceptance.json`](../reports/isaac_p1_acceptance.json)。
+项目级 OpenUSD 验收命令为 `make isaac-p1-validate`，报告位于 [`../reports/isaac_p1_workstation_validation.json`](../../reports/isaac_p1_workstation_validation.json)。它会在新进程中重开 USD，并检查 defaultPrim、米制/Z-up、必需 prim、关节关系、接触面、座高、无世界固定关节和阶段元数据。动态移动证据位于 [`../reports/isaac_p1_acceptance.json`](../../reports/isaac_p1_acceptance.json)。
 
 ## 房间与多工位导航资产
 
 P1 主场景同时包含 8×6×2.8 m 简化房间、1.2 m 宽入口、四个逻辑墙面（门洞拆分后为 6 个碰撞墙段）、A/B/C 三个唯一工位、3 个出生点、每工位的接近/对椅/工作位锚点，以及 1 个带碰撞的文件柜障碍。A 为加载完整 G1、Dex3、键盘和移动椅的目标工位；B/C 为低成本静态代理，用于导航几何与工位选择，不冒充完整交互资产。
 
-配置、纯 Python 契约和 Isaac authoring 分别位于 [`../configs/simulation/p1_navigation_room.json`](../configs/simulation/p1_navigation_room.json)、[`../src/vskill_os/simulation/navigation_assets.py`](../src/vskill_os/simulation/navigation_assets.py) 和 [`../src/vskill_os/adapters/isaac/navigation_scene.py`](../src/vskill_os/adapters/isaac/navigation_scene.py)。详细边界见 [`P1_NAVIGATION_ROOM.md`](P1_NAVIGATION_ROOM.md)。
+配置、纯 Python 契约和 Isaac authoring 分别位于 [`../configs/simulation/p1_navigation_room.json`](../../configs/simulation/p1_navigation_room.json)、[`../src/vskill_os/simulation/navigation_assets.py`](../../src/vskill_os/simulation/navigation_assets.py) 和 [`../src/vskill_os/adapters/isaac/navigation_scene.py`](../../src/vskill_os/adapters/isaac/navigation_scene.py)。详细边界见 [`P1_NAVIGATION_ROOM.md`](P1_NAVIGATION_ROOM.md)。
 
-NVIDIA CAD-to-SimReady 只读预检记录位于 [`../reports/simready/p0_p1_workstation/preflight.json`](../reports/simready/p0_p1_workstation/preflight.json)。本机 OpenUSD 已就绪，但正式 Asset Validator 模块和 SimReady Foundation checkout 未安装，因此正式 `Prop-Robotics-Neutral` 合规状态明确记为 `blocked`；项目不把自身拓扑检查冒充正式 SimReady 认证。
+NVIDIA CAD-to-SimReady 只读预检记录位于 [`../reports/simready/p0_p1_workstation/preflight.json`](../../reports/simready/p0_p1_workstation/preflight.json)。本机 OpenUSD 已就绪，但正式 Asset Validator 模块和 SimReady Foundation checkout 未安装，因此正式 `Prop-Robotics-Neutral` 合规状态明确记为 `blocked`；项目不把自身拓扑检查冒充正式 SimReady 认证。
 
 ## 当前能力边界
 

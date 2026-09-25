@@ -47,11 +47,11 @@
 - 仿真和真机实现必须暴露相同 Skill 契约，硬件依赖放在 Adapter 层。
 - 本项目不使用 TISA；导航仅保留普通 `{vx, vy, yaw_rate}` 策略接口和数值限幅。
 
-仓库级开发约束见 [`AGENTS.md`](AGENTS.md)。
+仓库级开发约束见 [`AGENTS.md`](../AGENTS.md)。
 
 ## 4. 已实现的端到端任务
 
-默认工作流 [`configs/workflows/create_hello.json`](configs/workflows/create_hello.json) 包含 9 个图节点：
+默认工作流 [`configs/workflows/create_hello.json`](../configs/workflows/create_hello.json) 包含 9 个图节点：
 
 ```text
 navigate_to_workstation
@@ -93,9 +93,9 @@ navigate_to_workstation
 
 目标机器人是 Unitree G1 29DOF、5010 腕部版本，但“29DOF 5010”不能唯一确定动力学配置。代码显式支持 `mode_machine` 13、14、15、16、18，并区分髋部减速比和腰部锁定状态。
 
-- 硬件配置：[`configs/robots/g1_29dof_5010.json`](configs/robots/g1_29dof_5010.json)
-- 策略 Manifest 示例：[`configs/robots/g1_29dof_mode15_policy.example.json`](configs/robots/g1_29dof_mode15_policy.example.json)
-- 校验实现：[`src/vskill_os/robot/g1.py`](src/vskill_os/robot/g1.py)
+- 硬件配置：[`configs/robots/g1_29dof_5010.json`](../configs/robots/g1_29dof_5010.json)
+- 策略 Manifest 示例：[`configs/robots/g1_29dof_mode15_policy.example.json`](../configs/robots/g1_29dof_mode15_policy.example.json)
+- 校验实现：[`src/vskill_os/robot/g1.py`](../src/vskill_os/robot/g1.py)
 
 当前仿真使用 mode 15：
 
@@ -113,7 +113,7 @@ g1-29dof-mode15-wrist5010-hip22.5x22.5-free
 
 ## 7. 分阶段机器人运控
 
-[`src/vskill_os/control/phases.py`](src/vskill_os/control/phases.py) 实现不可任意跳级的控制状态机：
+[`src/vskill_os/control/phases.py`](../src/vskill_os/control/phases.py) 实现不可任意跳级的控制状态机：
 
 ```text
 stand_ready → locomotion → station_alignment → sit_transition
@@ -134,7 +134,7 @@ stand_ready → locomotion → station_alignment → sit_transition
 
 ## 8. 坐下与工作姿态
 
-[`src/vskill_os/control/sitting.py`](src/vskill_os/control/sitting.py) 已实现七状态守卫：
+[`src/vskill_os/control/sitting.py`](../src/vskill_os/control/sitting.py) 已实现七状态守卫：
 
 ```text
 reverse_alignment
@@ -159,7 +159,7 @@ reverse_alignment
 
 ## 9. 键盘规划与 P1/P2 灵巧手仿真
 
-[`src/vskill_os/typing.py`](src/vskill_os/typing.py) 当前具备：
+[`src/vskill_os/typing.py`](../src/vskill_os/typing.py) 当前具备：
 
 - 每手 7 轴 Dex3 的语义关节顺序；
 - 标准键盘平面几何与旋转/平移标定；
@@ -213,7 +213,7 @@ terminal_ready
 = terminal_visible + terminal_focused + fingers_released + work_pose_ready
 ```
 
-SQLite 账本保存调用事件、任务检查点和成功恢复记忆。失败码包括导航阻塞、椅子/姿态、键盘、终端焦点、网络、测试失败和超时；默认恢复路由位于 [`src/vskill_os/recovery.py`](src/vskill_os/recovery.py)。
+SQLite 账本保存调用事件、任务检查点和成功恢复记忆。失败码包括导航阻塞、椅子/姿态、键盘、终端焦点、网络、测试失败和超时；默认恢复路由位于 [`src/vskill_os/recovery.py`](../src/vskill_os/recovery.py)。
 
 当前 Verifier 是可信模拟证据加确定性规则；Runtime 已为 `keyboard_calibrated`、`work_pose_ready`、`terminal_focused` 和 `terminal_ready` 配置 TTL/依赖传播。真实阶段仍必须为每种 evidence source 标定置信度、TTL 和时钟误差。
 
@@ -302,13 +302,13 @@ PYTHONPATH=src python3 -m vskill_os.cli voice-plan \
 | P2 | sherpa-onnx / SenseVoice | 离线语音基线 |
 | P2 | Qwen3 / llama.cpp | 本地结构化工具规划 |
 
-完整链接、成熟度和采用边界见 [`docs/RELATED_PROJECTS.md`](docs/RELATED_PROJECTS.md) 与 [`configs/research/projects.json`](configs/research/projects.json)。
+完整链接、成熟度和采用边界见 [`docs/integrations/RELATED_PROJECTS.md`](integrations/RELATED_PROJECTS.md) 与 [`configs/research/projects.json`](../configs/research/projects.json)。
 
 ## 16. 交接给下一位开发者的首要任务
 
 开始任何新功能前：
 
-1. 阅读本文件、[`AGENTS.md`](AGENTS.md) 和 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)；
+1. 阅读本文件、[`AGENTS.md`](../AGENTS.md) 和 [`docs/ARCHITECTURE.md`](ARCHITECTURE.md)；
 2. 执行 `make check && make demo`，保留输出作为新分支基线；
 3. 从 `feat/g1-5010-control-stack` 建立新功能分支；
 4. P1 资产底座已完成；下一项先闭环入口到椅前的导航和真实坐下，再恢复 P2 可见触键验收；

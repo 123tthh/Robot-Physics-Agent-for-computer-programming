@@ -1,6 +1,6 @@
 # 纯仿真实现
 
-> 本文记录轻量纯 Python 模拟器；已完成的 Isaac P1 资产/底座、P2 诊断运行器与后续方案见 [`sim_guidance.md`](sim_guidance.md)、[`P0_P1_ASSET_CHAIN.md`](P0_P1_ASSET_CHAIN.md)、[`phases/phase_1_hybrid_simulation.md`](phases/phase_1_hybrid_simulation.md) 和 [`phases/phase_2_bimanual_typing.md`](phases/phase_2_bimanual_typing.md)。
+> 本文记录轻量纯 Python 模拟器；已完成的 Isaac P1 资产/底座、P2 诊断运行器与后续方案见 [`sim_guidance.md`](../simulation/sim_guidance.md)、[`P0_P1_ASSET_CHAIN.md`](../simulation/P0_P1_ASSET_CHAIN.md)、[`phases/phase_1_hybrid_simulation.md`](../phases/phase_1_hybrid_simulation.md) 和 [`phases/phase_2_bimanual_typing.md`](../phases/phase_2_bimanual_typing.md)。
 
 P1 保留两条路径：`make demo-p1` 是无需 Isaac 的可回放回归；`make isaac-p1` 在 Isaac Sim 5.1 中加载 G1 mode 15 / 5010 + 双 Dex3、74 键带标识的 PhysX 键盘与头部/键盘/全景三路 RTX 相机，再经同一迟滞/防抖桥生成 `KEYDOWN/KEYUP` 并驱动真实 PTY。后者同时保存渲染图和耐久化证据 `reports/isaac_p1_acceptance.json`。
 

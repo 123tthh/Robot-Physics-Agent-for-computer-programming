@@ -2,7 +2,7 @@
 
 状态：`PARTIAL`（纯 Python 和自动化事件门禁已通过；GUI 观察未确认可见按键动作）
 
-[`../../src/vskill_os/typing.py`](../../src/vskill_os/typing.py) 已实现键盘几何、完整修饰键/主键分配、事件时序和最长正确前缀纠错；[`../../src/vskill_os/action_graph/`](../../src/vskill_os/action_graph/) 提供不含关节命令的模块化 ActionGraph；[`../../src/vskill_os/adapters/isaac/p2_scene.py`](../../src/vskill_os/adapters/isaac/p2_scene.py) 在 P1 的 G1 29DOF mode 15 / 5010 + 双 Dex3 场景上完成指尖物理控制。
+[`../../src/vskill_os/typing.py`](../../src/vskill_os/typing.py) 已实现键盘几何、完整修饰键/主键分配、事件时序和最长正确前缀纠错；[`../../src/vskill_os/action_graph/`](../../src/vskill_os/action_graph) 提供不含关节命令的模块化 ActionGraph；[`../../src/vskill_os/adapters/isaac/p2_scene.py`](../../src/vskill_os/adapters/isaac/p2_scene.py) 在 P1 的 G1 29DOF mode 15 / 5010 + 双 Dex3 场景上完成指尖物理控制。
 
 ## 目标
 
@@ -98,7 +98,7 @@
 
 ## 已实现的模块边界
 
-ActionGraph 模块位于 [`../../configs/action_graphs/modules/`](../../configs/action_graphs/modules/)：
+ActionGraph 模块位于 [`../../configs/action_graphs/modules/`](../../configs/action_graphs/modules)：
 
 - `bimanual_prepose@1.1.0`：双手粗预定位；
 - `key_prepose@1.0.0`：在按下任何修饰键前预定位额外指尖；

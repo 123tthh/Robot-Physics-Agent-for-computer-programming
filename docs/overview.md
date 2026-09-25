@@ -1,6 +1,6 @@
 # Robot–Physics–Agent 项目总览
 
-本文是面向规划和 Codex 开发任务的总入口。它描述项目要解决什么问题、为什么值得做、系统边界、阶段依赖和文档导航。当前代码状态的细节以 [`PROJECT_HANDOFF.md`](../PROJECT_HANDOFF.md) 和现有技术文档为准。
+本文是面向规划和 Codex 开发任务的总入口。它描述项目要解决什么问题、为什么值得做、系统边界、阶段依赖和文档导航。当前代码状态的细节以 [`PROJECT_HANDOFF.md`](PROJECT_HANDOFF.md) 和现有技术文档为准。
 
 ## 1. 一句话定义
 
@@ -135,18 +135,18 @@ flowchart LR
 ### 面向 Codex 的执行入口
 
 - [`CODEX_WORKPLAN.md`](CODEX_WORKPLAN.md)：如何选择任务、约束范围并验收；
-- [`sim_guidance.md`](sim_guidance.md)：Isaac Sim、Pygame/PTY、麦克风和验证桥接方案；
-- [`HAND_SELECTION.md`](HAND_SELECTION.md)：Dex3、Dex5、DG-5F-S 等灵巧手选型；
+- [`sim_guidance.md`](simulation/sim_guidance.md)：Isaac Sim、Pygame/PTY、麦克风和验证桥接方案；
+- [`HAND_SELECTION.md`](simulation/HAND_SELECTION.md)：Dex3、Dex5、DG-5F-S 等灵巧手选型；
 - [`phases/README.md`](phases/README.md)：阶段索引和任务编号。
 
 ### 既有技术文档
 
 - [`PROJECT_OVERVIEW.md`](PROJECT_OVERVIEW.md)：当前研究总览；
 - [`ARCHITECTURE.md`](ARCHITECTURE.md)：软件架构；
-- [`SKILL_SPEC.md`](SKILL_SPEC.md)：Skill 契约规范；
-- [`SIMULATION.md`](SIMULATION.md)：当前纯 Python 模拟器；
-- [`CONTROL_PHASES.md`](CONTROL_PHASES.md)：G1 控制阶段、坐下、坐姿移动和 Dex3；
-- [`VOICE_LLM.md`](VOICE_LLM.md)：本地语音和轻量 LLM；
-- [`G1_29DOF_5010.md`](G1_29DOF_5010.md)：机器人硬件身份与部署防错；
-- [`BENCHMARK.md`](BENCHMARK.md)：评测与故障注入；
-- [`RELATED_PROJECTS.md`](RELATED_PROJECTS.md)：上游项目和集成决策。
+- [`SKILL_SPEC.md`](core/SKILL_SPEC.md)：Skill 契约规范；
+- [`SIMULATION.md`](core/SIMULATION.md)：当前纯 Python 模拟器；
+- [`CONTROL_PHASES.md`](core/CONTROL_PHASES.md)：G1 控制阶段、坐下、坐姿移动和 Dex3；
+- [`VOICE_LLM.md`](integrations/VOICE_LLM.md)：本地语音和轻量 LLM；
+- [`G1_29DOF_5010.md`](core/G1_29DOF_5010.md)：机器人硬件身份与部署防错；
+- [`BENCHMARK.md`](core/BENCHMARK.md)：评测与故障注入；
+- [`RELATED_PROJECTS.md`](integrations/RELATED_PROJECTS.md)：上游项目和集成决策。

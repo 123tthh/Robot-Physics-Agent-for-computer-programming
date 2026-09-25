@@ -2,7 +2,7 @@
 
 阶段按技术依赖排序，不代表固定工期。Codex 每次只领取一个带编号的任务；完成后更新该阶段的状态和证据。
 
-跨越多个项目阶段的仿真实施拆分、退出门槛和推荐顺序见 [`../SIMULATION_PHASE_PLAN.md`](../SIMULATION_PHASE_PLAN.md)。
+跨越多个项目阶段的仿真实施拆分、退出门槛和推荐顺序见 [`../SIMULATION_PHASE_PLAN.md`](../simulation/SIMULATION_PHASE_PLAN.md)。
 
 | 阶段 | 文件 | 当前状态 | 目标 |
 |---|---|---|---|

@@ -2,7 +2,7 @@
 
 状态：`PARTIAL`
 
-控制阶段、坐下守卫、坐姿移动接口和模拟恢复已经存在；P1 已加入五脚万向轮椅、完整桌架和六阶段资产锚点。真实 Isaac 坐下/移动策略、载人接触动力学和独立接触估计尚未接入。详细背景见 [`../CONTROL_PHASES.md`](../CONTROL_PHASES.md) 与 [`../P0_P1_ASSET_CHAIN.md`](../P0_P1_ASSET_CHAIN.md)。
+控制阶段、坐下守卫、坐姿移动接口和模拟恢复已经存在；P1 已加入五脚万向轮椅、完整桌架和六阶段资产锚点。真实 Isaac 坐下/移动策略、载人接触动力学和独立接触估计尚未接入。详细背景见 [`../CONTROL_PHASES.md`](../core/CONTROL_PHASES.md) 与 [`../P0_P1_ASSET_CHAIN.md`](../simulation/P0_P1_ASSET_CHAIN.md)。
 
 ## 目标
 

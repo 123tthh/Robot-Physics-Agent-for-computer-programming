@@ -1,10 +1,12 @@
 # V-Skill OS
 
-本分支新增 **Isaac Sim 6.0.1 站姿固定基座 + 双 Dex3-1 食指协同打字** 框架。无椅子；双手可预定位，按文本顺序输入。2026-09-25 的两次 `ak` 实际触键均通过 PhysX 接触、键程、事件与释放验证；较长 `afjk` 仍有姿态/跟踪超时。最小物理复现入口和完整边界见 [站立双食指复现指南](docs/STANDING_DEX3_DEMO_CN.md)。默认隔离规则拒绝与已有仿真竞争。以下 P1/P2 是保留的历史基线。
+> 本地资料已按目录整理：[站姿文档目录](docs/README.md)。全项目规划见[主项目总览](https://github.com/123tthh/Robot-Physics-Agent-for-computer-programming/blob/main/docs/overview.md)；以下内容限定于本分支及其历史基线。
 
-新增 **运动控制与桌面反馈框架**：`make workstation-feedback` 运行工位接近、稳定停止、双手修改计划和真实 Pygame 像素 OCR 闭环；`make standing-navigation` 验证有界运动命令。Isaac 显示器纹理与机器人相机桥已实现，匹配 G1＋Dex3 的物理行走权重和相机闭环仍待独立验收。完整入口与当前证据边界见 [工位反馈复现指南](docs/WORKSTATION_FEEDBACK_CN.md)。
+本分支新增 **Isaac Sim 6.0.1 站姿固定基座 + 双 Dex3-1 食指协同打字** 框架。无椅子；双手可预定位，按文本顺序输入。2026-09-25 的两次 `ak` 实际触键均通过 PhysX 接触、键程、事件与释放验证；较长 `afjk` 仍有姿态/跟踪超时。最小物理复现入口和完整边界见 [站立双食指复现指南](docs/experiments/dex3-standing/STANDING_DEX3_DEMO_CN.md)。默认隔离规则拒绝与已有仿真竞争。以下 P1/P2 是保留的历史基线。
 
-已定位本机官方 Unitree RL Lab 29DOF 行走权重，并实现 480 维历史观察编码、SDK 关节映射和 CPU ONNX 推理。[策略来源、复现与迁移步骤](docs/UNITREE_LOCOMOTION_CANDIDATES_CN.md) 明确区分模型推理与双 Dex3 负载下的真实行走。
+新增 **运动控制与桌面反馈框架**：`make workstation-feedback` 运行工位接近、稳定停止、双手修改计划和真实 Pygame 像素 OCR 闭环；`make standing-navigation` 验证有界运动命令。Isaac 显示器纹理与机器人相机桥已实现，匹配 G1＋Dex3 的物理行走权重和相机闭环仍待独立验收。完整入口与当前证据边界见 [工位反馈复现指南](docs/experiments/dex3-standing/WORKSTATION_FEEDBACK_CN.md)。
+
+已定位本机官方 Unitree RL Lab 29DOF 行走权重，并实现 480 维历史观察编码、SDK 关节映射和 CPU ONNX 推理。[策略来源、复现与迁移步骤](docs/experiments/dex3-standing/UNITREE_LOCOMOTION_CANDIDATES_CN.md) 明确区分模型推理与双 Dex3 负载下的真实行走。
 
 面向人形机器人实体计算机操作的 Verifier-Grounded Agent–Skill 系统。目前已完成无需真机的纯 Python 基线，以及本机 Isaac Sim 5.1 / Isaac Lab 2.3.2 上的 P1 资产/混合仿真底座：Unitree G1 29DOF mode 15 / 5010、双 Dex3、五脚万向轮办公椅、8×6 m 四墙房间、三工位与导航锚点、74 键带高对比标识的物理键盘、PhysX 接触、三路 RTX 相机和键帽—PTY 链路。P2 自动化事件门禁已有诊断结果，但 GUI 尚未确认可见实体触键，因此保持 `PARTIAL`。真实导航 rollout、真实坐下、载人椅子动力学、camera-only 视觉、真机策略和真实代码 Agent 仍通过后续 adapter 接入。
 
@@ -191,19 +193,19 @@ PYTHONPATH=src python3 -m vskill_os.cli run \
 
 - [Codex 规划入口](docs/overview.md)
 - [Codex 工作协议](docs/CODEX_WORKPLAN.md)
-- [Isaac Sim + Pygame/PTY 混合仿真指南](docs/sim_guidance.md)
-- [仿真专项分阶段实施规划](docs/SIMULATION_PHASE_PLAN.md)
+- [Isaac Sim + Pygame/PTY 混合仿真指南](docs/simulation/sim_guidance.md)
+- [仿真专项分阶段实施规划](docs/simulation/SIMULATION_PHASE_PLAN.md)
 - [分阶段任务索引](docs/phases/README.md)
-- [灵巧手选型与键盘验收](docs/HAND_SELECTION.md)
-- [G1 mode 15 / 5010 + Dex3 资产审计](docs/DEX3_ASSET_AUDIT.md)
+- [灵巧手选型与键盘验收](docs/simulation/HAND_SELECTION.md)
+- [G1 mode 15 / 5010 + Dex3 资产审计](docs/experiments/dex3/DEX3_ASSET_AUDIT.md)
 - [项目总览](docs/PROJECT_OVERVIEW.md)
 - [系统架构](docs/ARCHITECTURE.md)
-- [Skill 规范](docs/SKILL_SPEC.md)
-- [纯仿真实现](docs/SIMULATION.md)
-- [Benchmark 设计](docs/BENCHMARK.md)
+- [Skill 规范](docs/core/SKILL_SPEC.md)
+- [纯仿真实现](docs/core/SIMULATION.md)
+- [Benchmark 设计](docs/core/BENCHMARK.md)
 - [构建顺序](docs/BUILD_ORDER.md)
-- [参考工作与设计映射](docs/REFERENCES.md)
-- [G1 29DOF/5010 配置基线](docs/G1_29DOF_5010.md)
-- [分阶段运控、坐下与实体打字](docs/CONTROL_PHASES.md)
-- [本地轻量语音—LLM](docs/VOICE_LLM.md)
-- [相关项目与集成决策](docs/RELATED_PROJECTS.md)
+- [参考工作与设计映射](docs/integrations/REFERENCES.md)
+- [G1 29DOF/5010 配置基线](docs/core/G1_29DOF_5010.md)
+- [分阶段运控、坐下与实体打字](docs/core/CONTROL_PHASES.md)
+- [本地轻量语音—LLM](docs/integrations/VOICE_LLM.md)
+- [相关项目与集成决策](docs/integrations/RELATED_PROJECTS.md)

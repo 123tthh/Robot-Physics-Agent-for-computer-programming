@@ -2,7 +2,7 @@
 
 机器可读目录位于 `configs/research/projects.json`，可运行：
 
-人工审阅的项目快照、许可证、固定 commit 和适配笔记按阶段存放在 [`references/`](../references/README.md)；机器可读清单和本地资料索引应相互引用，但职责保持分离。
+人工审阅的项目快照、许可证、固定 commit 和适配笔记按阶段存放在 [`references/`](../../references/README.md)；机器可读清单和本地资料索引应相互引用，但职责保持分离。
 
 ```bash
 PYTHONPATH=src python3 -m vskill_os.cli list-projects

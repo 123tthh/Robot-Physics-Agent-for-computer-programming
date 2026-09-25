@@ -14,7 +14,7 @@
 资产侧已经完成独立审计与 P1 运行验收：官方现成 G1+Dex3 USD/URDF 使用旧的
 mode 5 / 4010 身体；本项目已用 mode 15 / 5010 body 与左右 Dex3-1 独立 URDF
 生成 29+14 轴目标 URDF/USD，并在 Isaac Sim 5.1 中验证全部 14 个手部关节运动。
-来源、哈希和验证边界见 [`DEX3_ASSET_AUDIT.md`](DEX3_ASSET_AUDIT.md)。
+来源、哈希和验证边界见 [`DEX3_ASSET_AUDIT.md`](../experiments/dex3/DEX3_ASSET_AUDIT.md)。
 
 ## 2. “间隙小”需要拆成四个指标
 

@@ -161,7 +161,7 @@ PTY 负责运行真实 shell 或受限命令行。代码执行必须位于隔离
 4. 噪声、回声和电机声回放；
 5. 真机麦克风阵列。
 
-模型候选和安全边界见 [`VOICE_LLM.md`](VOICE_LLM.md)。
+模型候选和安全边界见 [`VOICE_LLM.md`](../integrations/VOICE_LLM.md)。
 
 ## 8. 证据分层
 
