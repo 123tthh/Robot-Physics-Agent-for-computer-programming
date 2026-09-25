@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "backend": "pygame",
+  "before": {
+    "frame_id": 1,
+    "captured_at_s": 21976.200609447,
+    "pixel_sha256": "055373ecb74c25181103052593710d568b421e3734f37c753d02d1f6b1e30931",
+    "text": "helo world",
+    "focused": true,
+    "append_mode": true,
+    "consumed_event_count": 0,
+    "evidence_kind": "pixel_ocr",
+    "recognizer": "local_tesseract",
+    "focus_text": "EDITOR FOCUSED APPEND MODE"
+  },
+  "plan": {
+    "expected_text": "hello world",
+    "observed_text": "helo world",
+    "common_prefix_length": 3,
+    "backspaces": 7,
+    "suffix": "lo world",
+    "frame_id": 1,
+    "pixel_sha256": "055373ecb74c25181103052593710d568b421e3734f37c753d02d1f6b1e30931",
+    "consumed_event_count": 0
+  },
+  "after": {
+    "frame_id": 3,
+    "captured_at_s": 21976.40257048,
+    "pixel_sha256": "9b32c2ccb61a16364b6cef16461dcdc815943ed7d1c26c83dd311b891ceb2b27",
+    "text": "hello world",
+    "focused": true,
+    "append_mode": true,
+    "consumed_event_count": 30,
+    "evidence_kind": "pixel_ocr",
+    "recognizer": "local_tesseract",
+    "focus_text": "EDITOR FOCUSED APPEND MODE"
+  },
+  "verification": {
+    "passed": true,
+    "failure_code": null,
+    "expected_text": "hello world",
+    "observed_text": "hello world",
+    "frame_id": 3,
+    "pixel_sha256": "9b32c2ccb61a16364b6cef16461dcdc815943ed7d1c26c83dd311b891ceb2b27",
+    "evidence_kind": "pixel_ocr",
+    "physical_acceptance": false
+  },
+  "input_sources": [
+    "cpu_synthetic_key_events"
+  ],
+  "physical_acceptance": false,
+  "scope": "Actual rendered RGB pixels and local OCR; CPU synthetic key input, no robot/Isaac."
+}

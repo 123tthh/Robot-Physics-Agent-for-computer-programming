@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "frame": {
+    "frame_id": 3,
+    "captured_at_s": 21975.846181181,
+    "consumed_event_count": 30,
+    "width": 1024,
+    "height": 320,
+    "sha256": "83e25f64d95027bc455028ddd73d17df3ab9eebf84c5bf38227e28ec61b3118a",
+    "pixel_sha256": "9b32c2ccb61a16364b6cef16461dcdc815943ed7d1c26c83dd311b891ceb2b27",
+    "source": "pygame_desktop",
+    "provenance": {
+      "capture": "rendered_rgb_pixels",
+      "renderer": "pygame_desktop",
+      "clock": "local_monotonic",
+      "text_oracle": false
+    }
+  },
+  "transport_integrity_verified": true,
+  "live_freshness_checked": false,
+  "simulation_started": false,
+  "gpu_work_started": false,
+  "robot_visual_verified": false,
+  "camera_mount": "/World/G1/d435_link",
+  "usd_source_modified": false
+}

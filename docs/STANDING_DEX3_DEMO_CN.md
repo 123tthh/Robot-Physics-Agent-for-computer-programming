@@ -7,9 +7,17 @@
 
 ## 当前验收边界
 
-新增框架尚未取得 Isaac 6.0.1 物理成功证据。本轮遵守“不干扰已有 Isaac 5.x”的约束：
-仅运行 CPU 规划、合成证据测试和只读环境检查，不启动 Kit，不构建 USD，不开始 GPU 训练。
-已有 P1/P2 报告属于历史基线，不能用来证明新增站立食指 demo 成功。
+2026-09-25 已在安装的 Isaac `6.0.1-rc.7+release.42383.32955d8d.gl` 上，完成两次站姿双食指 `ak` 的物理通过报告。使用 CPU PhysX、关闭相机；左右食指各按一键，74 键接触/行程、事件顺序及完全释放均通过独立校验。固定基座、读屏和行走是不同验收范围。
+
+连续 `afjk` 测试已保留失败：输入 `af` 后进入右手接近阶段超时，清理停车也超时，因此完整报告不通过。默认演示调整为已通过的 `ak`；不能宣称任意文本输入或自由站立已完成。已有 P1/P2 报告仍是历史基线。
+
+```bash
+timeout --signal=INT --kill-after=15s 90s \
+  ./scripts/run_standing_demo.sh --headless --no-cameras \
+  --maximum-steps 5000 --text ak --output reports/standing/ak.json
+```
+
+结果与两次复现对比见 `reports/feedback/physical_reproducibility.json`。本次未运行 GPU 训练，也没有改动现有 Isaac 5.x 环境。
 
 | 层级 | 可检查的内容 | 不能据此宣称 |
 |---|---|---|

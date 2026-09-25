@@ -12,6 +12,7 @@ import fcntl
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 from typing import Iterable
 
@@ -100,8 +101,9 @@ def inspect_runtime(root: str | Path = DEFAULT_ISAAC_ROOT) -> RuntimeCheck:
 
 class RuntimeLease:
     """Hold for the entire lifetime of Kit, including scene import and cleanup."""
-    def __init__(self, root: str | Path = DEFAULT_ISAAC_ROOT):
+    def __init__(self, root: str | Path = DEFAULT_ISAAC_ROOT, *, resident_pids: tuple[int, ...] = ()):
         self.root = Path(root)
+        self.resident_pids = resident_pids
         self._lock = None
 
     def __enter__(self):
@@ -110,7 +112,12 @@ class RuntimeLease:
         try:
             fcntl.flock(self._lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
             check = inspect_runtime(self.root)
-            if not check.launch_allowed:
+            admitted = check.launch_allowed
+            if self.resident_pids:
+                free = subprocess.run(['nvidia-smi','--query-gpu=memory.free','--format=csv,noheader,nounits'],
+                                      capture_output=True,text=True,timeout=5,check=True)
+                admitted = shared_cpu_admission(check, self.resident_pids, int(free.stdout.splitlines()[0]))
+            if not admitted:
                 raise RuntimeError('Isaac launch refused: ' + json.dumps(check.to_dict(), ensure_ascii=False))
             return check
         except BaseException:
@@ -124,11 +131,33 @@ class RuntimeLease:
             self._lock = None
 
 
+def shared_cpu_admission(check: RuntimeCheck, resident_pids: tuple[int, ...], free_gpu_mib: int) -> bool:
+    """Explicit opt-in for bounded CPU PhysX only, never a generic force bypass.
+
+    Scene entry points must enforce no cameras, headless and bounded steps.
+    Any new/unrecognized resident, unknown occupancy or <12 GiB spare rejects.
+    Minimal Kit still initializes graphics; zero interference is not claimed.
+    """
+    if not resident_pids or any(type(p) is not int or p <= 0 for p in resident_pids):
+        return False
+    if not check.installation_valid or not check.occupancy_known or free_gpu_mib < 12288:
+        return False
+    if set(check.reasons) - {'EXISTING_SIMULATOR_OR_GPU_COMPUTE_WORKLOAD'}:
+        return False
+    for process in check.busy_processes:
+        match = re.match(r'(?:pid=|gpu_compute=)(\d+)(?:\s|,)', process)
+        if not match or int(match[1]) not in resident_pids:
+            return False
+    return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--isaac-root', type=Path, default=DEFAULT_ISAAC_ROOT)
     parser.add_argument('--check-only', action='store_true', help='Report only; never starts Kit')
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--shared-cpu-physics', action='store_true')
+    parser.add_argument('--resident-pid', type=int, action='append', default=[])
     args = parser.parse_args()
     check = inspect_runtime(args.isaac_root)
     report = json.dumps(check.to_dict(), ensure_ascii=False, indent=2) + '\n'
@@ -136,6 +165,13 @@ def main() -> int:
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(report)
+    if args.shared_cpu_physics and not args.check_only:
+        try:
+            with RuntimeLease(args.isaac_root, resident_pids=tuple(args.resident_pid)):
+                return 0
+        except RuntimeError as exc:
+            print(json.dumps({'shared_cpu_launch_allowed':False, 'reason':str(exc)}))
+            return 2
     return 0 if args.check_only or check.launch_allowed else 2
 
 

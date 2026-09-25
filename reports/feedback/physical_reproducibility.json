@@ -1,0 +1,70 @@
+{
+  "schema": "standing_physical_reproducibility",
+  "date": "2026-09-25",
+  "runtime_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+  "robot_posture": "fixed_standing",
+  "active_fingers": [
+    "left.index",
+    "right.index"
+  ],
+  "runs": [
+    {
+      "file": "reports/feedback/isaac6_calibrated_ak.json",
+      "sha256": "0b035372e78d8e9ced327a80a7ff763e1b4e32ea99feb0e7e04c7007a174582d",
+      "text": "ak",
+      "reported_acceptance": true,
+      "independent_trace_acceptance": true,
+      "accepted": true,
+      "physics_steps": 2095,
+      "max_force_n": 3.1437764167785645,
+      "failure_code": null,
+      "keys_physically_clear": true,
+      "hand_assignment": [
+        "left",
+        "right"
+      ],
+      "observed_process_exit_code": 0
+    },
+    {
+      "file": "reports/feedback/isaac6_calibrated_ak_repeat.json",
+      "sha256": "0b035372e78d8e9ced327a80a7ff763e1b4e32ea99feb0e7e04c7007a174582d",
+      "text": "ak",
+      "reported_acceptance": true,
+      "independent_trace_acceptance": true,
+      "accepted": true,
+      "physics_steps": 2095,
+      "max_force_n": 3.1437764167785645,
+      "failure_code": null,
+      "keys_physically_clear": true,
+      "hand_assignment": [
+        "left",
+        "right"
+      ],
+      "observed_process_exit_code": 0
+    },
+    {
+      "file": "reports/feedback/isaac6_calibrated_afjk.json",
+      "sha256": "887c609b2364996c236bac631827b8d3e4ba1f7be5ee0365bf9b43ccf0f08ebe",
+      "text": "afjk",
+      "reported_acceptance": false,
+      "independent_trace_acceptance": false,
+      "accepted": false,
+      "physics_steps": 4293,
+      "max_force_n": 3.1104893684387207,
+      "failure_code": "MOTION_TIMEOUT",
+      "keys_physically_clear": false,
+      "hand_assignment": [
+        "left",
+        "left",
+        "right",
+        "right"
+      ],
+      "observed_process_exit_code": 1
+    }
+  ],
+  "ak_two_runs_passed": true,
+  "ak_event_sequence_and_simulation_times_equal": true,
+  "arbitrary_text_supported": false,
+  "free_standing_or_walking_verified": false,
+  "robot_camera_verified": false
+}

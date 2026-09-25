@@ -1,8 +1,8 @@
 """Optional Isaac Sim 6.0.1 driver. Import only after SimulationApp starts.
 
 Uses the compatibility core API shipped in 6.0.1, without Isaac Lab. This
-implementation is source-checked, not physics-validated; runtime acceptance
-must be recorded on an idle machine. All joint commands stay in this adapter.
+implementation has a limited two-letter contact acceptance case; longer text
+still requires per-run evidence. All joint commands stay in this adapter.
 """
 from __future__ import annotations
 
@@ -65,6 +65,10 @@ class PhysicalFrame:
 
 class Isaac6StandingDriver:
     """One centralized physics clock and simultaneous two-arm DLS updates."""
+    # Key centers are at .7602; cubes have 10 mm height. With distal local X
+    # pointing down, +52 mm tip nearly coincides with the STL's distal support.
+    tip_contact_offset_m = 0.005
+    maximum_press_depth_m = 0.006  # 4 mm key stroke + 2 mm tracking allowance
     def __init__(self, robot_usd: Path, *, dt: float = 1 / 120, render: bool = False,
                  record_dir: Path | None = None, seed: int = 0):
         import numpy as np
@@ -85,7 +89,11 @@ class Isaac6StandingDriver:
         stage.SetDefaultPrim(stage.GetPrimAtPath('/World'))
         UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.z)
         UsdGeom.SetStageMetersPerUnit(stage, 1.0)
-        self.world.scene.add_default_ground_plane()
+        # The default ground fetches an NVIDIA network asset synchronously.
+        # A local collision plane makes startup reproducible without Nucleus.
+        self.world.scene.add_ground_plane(size=8.0, static_friction=0.8,
+                                          dynamic_friction=0.6, restitution=0.0)
+        print('[standing] local ground created', flush=True)
         light = UsdLux.DomeLight.Define(stage, '/World/Light')
         light.CreateIntensityAttr(1800)
         robot_prim = UsdGeom.Xform.Define(stage, '/World/G1')
@@ -94,21 +102,27 @@ class Isaac6StandingDriver:
         self.centers = {k.name: keyboard_key_center(k, operator_row_x=0.72,
                         left_origin_y=0.145, top_z=0.7602) for k in standard_keyboard_layout()}
 
-        def cube(path, pos, size, color, dynamic=False, mass=0.006):
-            obj = UsdGeom.Cube.Define(stage, path)
-            obj.CreateSizeAttr(1.0)
+        def cube(path, pos, size, color, dynamic=False, mass=0.006, collidable=True):
+            # Joint anchors are expressed in the unscaled rigid-body frame.
+            # Scaling the body itself also scales those anchors and can pull
+            # all keys toward the tiny root body during the first reset.
+            obj = UsdGeom.Xform.Define(stage, path)
             obj.AddTranslateOp().Set(Gf.Vec3d(*pos))
-            obj.AddScaleOp().Set(Gf.Vec3f(*size))
-            obj.CreateDisplayColorAttr([Gf.Vec3f(*color)])
-            UsdPhysics.CollisionAPI.Apply(obj.GetPrim())
+            shape = UsdGeom.Cube.Define(stage, path + '/Shape')
+            shape.CreateSizeAttr(1.0)
+            shape.AddScaleOp().Set(Gf.Vec3f(*size))
+            shape.CreateDisplayColorAttr([Gf.Vec3f(*color)])
+            if collidable:
+                UsdPhysics.CollisionAPI.Apply(shape.GetPrim())
             if dynamic:
                 UsdPhysics.RigidBodyAPI.Apply(obj.GetPrim())
                 UsdPhysics.MassAPI.Apply(obj.GetPrim()).CreateMassAttr(mass)
                 PhysxSchema.PhysxRigidBodyAPI.Apply(obj.GetPrim()).CreateDisableGravityAttr(True)
                 PhysxSchema.PhysxContactReportAPI.Apply(obj.GetPrim()).CreateThresholdAttr(0.0)
-                collision = PhysxSchema.PhysxCollisionAPI.Apply(obj.GetPrim())
-                collision.CreateContactOffsetAttr(0.0005)
-                collision.CreateRestOffsetAttr(0.0)
+                if collidable:
+                    collision = PhysxSchema.PhysxCollisionAPI.Apply(shape.GetPrim())
+                    collision.CreateContactOffsetAttr(0.0005)
+                    collision.CreateRestOffsetAttr(0.0)
             return obj
 
         cube('/World/Desk', (0.83, 0, 0.71), (0.55, 0.85, 0.04), (0.25, 0.31, 0.37))
@@ -120,7 +134,7 @@ class Isaac6StandingDriver:
         UsdGeom.Xform.Define(stage, '/World/Keyboard/Keys')
         UsdGeom.Xform.Define(stage, '/World/Keyboard/Joints')
         base = cube('/World/Keyboard/RootBody', (0.77,0,0.743), (0.001,0.001,0.001),
-                    (0.05,0.05,0.05), True, 2.0)
+                    (0.05,0.05,0.05), True, 2.0, collidable=False)
         fixed = UsdPhysics.FixedJoint.Define(stage, '/World/Keyboard/Joints/fixed')
         fixed.CreateBody1Rel().SetTargets([base.GetPath()])
         fixed.CreateLocalPos0Attr().Set(Gf.Vec3f(0.77,0,0.743))
@@ -166,10 +180,18 @@ class Isaac6StandingDriver:
                 from isaacsim.core.utils.viewports import set_camera_view
                 set_camera_view(eye=[-0.8,-1.3,1.55], target=[0.6,0,0.82])
             self.camera = Camera('/World/Camera', position=np.array([0.48,-0.64,1.35]), resolution=(960,720))
+        print('[standing] scene built; initializing PhysX', flush=True)
         self.world.reset()
+        print('[standing] PhysX initialized', flush=True)
         self.robot.set_gains(kps=np.full((1,self.robot.num_dof),1000.0), kds=np.full((1,self.robot.num_dof),100.0))
         self.q_target = self.robot.get_joint_positions().copy()
         self.limits = self.robot.get_dof_limits()[0]
+        # Mirrored local-Z finger axes from the pinned Dex3 URDF. Retraction
+        # keeps the unused middle fingertips away from the typing plane.
+        for hand, sign in (('left', -1), ('right', 1)):
+            for name, angle in zip(IsaacDex3ActionAdapter.FINGER_JOINTS[hand+'.middle'], (0.8, 1.0)):
+                index = self.robot.get_dof_index(name)
+                self.q_target[0, index] = np.clip(sign * angle, *self.limits[index])
         self.joint_ids = {h:[self.robot.get_dof_index(n) for n in (*IsaacDex3ActionAdapter.ARM_JOINTS[h],
                          *IsaacDex3ActionAdapter.FINGER_JOINTS[h+'.index'])] for h in ('left','right')}
         self.body_ids = {h:self.robot.get_body_index(IsaacDex3ActionAdapter.TIP_BODY_NAMES[h+'.index']) for h in ('left','right')}
@@ -222,8 +244,23 @@ class Isaac6StandingDriver:
             x,y,z=offsets[h_index]
             skew=np.array([[0,-z,y],[z,0,-x],[-y,x,0]])
             jac=body[:3]-skew@body[3:]
-            err=np.array(targets[hand])-points[h_index]
-            delta=jac.T@np.linalg.solve(jac@jac.T+np.eye(3)*0.04**2,err*0.55)
+            destination = np.array(targets[hand], dtype=float)
+            # Keep the distal index axis pointing down. Position-only IK can
+            # lower the palm/middle finger into adjacent keys while its index
+            # point is still above the requested hover plane.
+            axis = offsets[h_index] / 0.052
+            downward = np.array([0.0, 0.0, -1.0])
+            alignment = float(np.dot(axis, downward))
+            angular_error = np.cross(axis, downward)
+            if alignment < -0.95:
+                # Resolve the 180-degree cross-product singularity explicitly.
+                angular_error = np.cross(axis, np.array([0.0, 1.0, 0.0]))
+            if alignment < 0.94:
+                destination[2] = max(destination[2], 0.91)
+            err = destination - points[h_index]
+            pose_jac = np.concatenate((jac, body[3:] * 0.12), axis=0)
+            pose_error = np.concatenate((err * 0.55, angular_error * 0.12 * 0.55))
+            delta = pose_jac.T @ np.linalg.solve(pose_jac @ pose_jac.T + np.eye(6)*0.04**2, pose_error)
             delta*=min(1.0,0.006/max(float(np.max(np.abs(delta))),1e-12))
             target=np.clip(self.q_target[0,ids]+delta,current[ids]-0.08,current[ids]+0.08)
             self.q_target[0,ids]=np.clip(target,self.limits[ids,0]+0.002,self.limits[ids,1]-0.002)

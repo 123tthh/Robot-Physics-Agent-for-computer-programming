@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "frame_id": 3,
+  "captured_at_s": 21976.40257048,
+  "sha256": "83e25f64d95027bc455028ddd73d17df3ab9eebf84c5bf38227e28ec61b3118a",
+  "pixel_sha256": "9b32c2ccb61a16364b6cef16461dcdc815943ed7d1c26c83dd311b891ceb2b27",
+  "pixel_size": [
+    1024,
+    320
+  ],
+  "format": "png",
+  "file": "frame-00000003.png",
+  "source": "pygame_desktop",
+  "consumed_event_count": 30,
+  "provenance": {
+    "capture": "rendered_rgb_pixels",
+    "renderer": "pygame_desktop",
+    "clock": "local_monotonic",
+    "text_oracle": false
+  }
+}

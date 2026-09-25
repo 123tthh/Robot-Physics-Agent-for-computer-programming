@@ -3,10 +3,18 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from vskill_os.adapters.isaac.runtime_guard import RuntimeCheck, RuntimeLease, is_simulator_process
+from vskill_os.adapters.isaac.runtime_guard import RuntimeCheck, RuntimeLease, is_simulator_process, shared_cpu_admission
 
 
 class RuntimeGuardTests(unittest.TestCase):
+    def test_shared_cpu_profile_requires_known_resident_and_memory(self):
+        check=RuntimeCheck('/sim','6.0.1',True,True,('pid=123 executable=python','gpu_compute=123, python'),('EXISTING_SIMULATOR_OR_GPU_COMPUTE_WORKLOAD',))
+        self.assertTrue(shared_cpu_admission(check,(123,),25000))
+        self.assertFalse(shared_cpu_admission(check,(),25000))
+        self.assertFalse(shared_cpu_admission(check,(999,),25000))
+        self.assertFalse(shared_cpu_admission(check,(123,),1000))
+        self.assertFalse(shared_cpu_admission(RuntimeCheck('/sim','6.0.1',True,False,(),()),(123,),25000))
+
     def test_real_kit_and_python_are_detected(self):
         self.assertTrue(is_simulator_process(['/opt/isaac/kit/kit', 'app.kit']))
         self.assertTrue(is_simulator_process(['python3', '-m', 'vskill_os.adapters.isaac.standing_scene']))

@@ -64,7 +64,7 @@ class StandingSceneConfigTests(unittest.TestCase):
 
             class App:
                 def __init__(self, config): pass
-                def close(self):
+                def close(self, **kwargs):
                     calls.append('kit')
                     if failing == 'kit': raise RuntimeError('kit close error')
 
@@ -90,3 +90,40 @@ class StandingSceneConfigTests(unittest.TestCase):
                 self.assertEqual(calls,['driver','kit'])
                 self.assertEqual(report['status'],'failed')
                 self.assertFalse(report['physical_acceptance'])
+
+    def test_final_evidence_is_on_disk_before_kit_fast_exit(self):
+        @dataclass
+        class Frame:
+            tick: int = 30
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'inspected.json'
+            observed = []
+
+            class App:
+                def __init__(self, config):
+                    self.asserted_fast_shutdown = config['fast_shutdown']
+                def close(self, *, exit_code):
+                    # Isaac can call os._exit here; no finally would run.
+                    observed.append((exit_code, json.loads(path.read_text())))
+
+            class Driver:
+                dt, tick = 1/120, 30
+                def __init__(self, *args, **kwargs): pass
+                def observe(self): return Frame()
+                def close(self): pass
+
+            modules = {'isaacsim': types.SimpleNamespace(SimulationApp=App),
+                'vskill_os.adapters.isaac.standing_driver': types.SimpleNamespace(Isaac6StandingDriver=Driver)}
+            with patch.dict('sys.modules', modules), \
+                 patch('vskill_os.adapters.isaac.standing_scene.asset_evidence', return_value={}), \
+                 patch('vskill_os.adapters.isaac.standing_scene.RuntimeLease.__enter__',
+                       return_value=RuntimeCheck('/sim','6.0.1',True,True,(),())):
+                self.assertEqual(main(['--inspect-only', '--output', str(path)]), 0)
+            code, report = observed[0]
+            self.assertEqual(code, 0)
+            self.assertEqual(report['status'], 'scene_inspected_only')
+            self.assertEqual(report['physics_steps'], 30)
+            self.assertTrue(report['driver_close_completed'])
+            self.assertEqual(report['last_phase'], 'kit_shutdown_requested')
+            self.assertFalse(report['physical_acceptance'])

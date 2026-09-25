@@ -117,7 +117,8 @@ class StandingTypingController:
 
     def __init__(self, driver: StandingDriver, *, maximum_total_steps: int = 30000,
                  maximum_phase_steps: int = 600, maximum_force_n: float = 8.0,
-                 minimum_tip_distance_m: float = 0.025, text_sink: TextSink | None = None):
+                 minimum_tip_distance_m: float = 0.025, text_sink: TextSink | None = None,
+                 tip_contact_offset_m: float = 0.013, maximum_press_depth_m: float = 0.012):
         if maximum_total_steps <= 0 or maximum_phase_steps <= 0:
             raise ValueError("step budgets must be positive")
         if not all(math.isfinite(x) and x > 0 for x in (maximum_force_n, minimum_tip_distance_m)):
@@ -127,6 +128,12 @@ class StandingTypingController:
         self.maximum_phase_steps = maximum_phase_steps
         self.maximum_force_n = maximum_force_n
         self.minimum_tip_distance_m = minimum_tip_distance_m
+        if not math.isfinite(tip_contact_offset_m) or not 0 <= tip_contact_offset_m <= 0.02:
+            raise ValueError("invalid tip/contact geometry")
+        if not math.isfinite(maximum_press_depth_m) or not 0 < maximum_press_depth_m <= 0.012:
+            raise ValueError("invalid press depth bound")
+        self.TIP_CONTACT_OFFSET_M = tip_contact_offset_m
+        self.maximum_press_depth_m = maximum_press_depth_m
         self.sink = text_sink or DigitalTextBuffer()
         self.positions = keyboard_positions()
         self._used = False
@@ -184,6 +191,12 @@ class StandingTypingController:
             failure_code, failure_message = exc.code, str(exc)
         except Exception as exc:
             failure_code, failure_message = "DRIVER_EXCEPTION", f"{type(exc).__name__}: {exc}"
+        if failure_code and self.frame is not None:
+            self.trace.append({"phase": "failure_snapshot", "step_index": self.current_step,
+                "tick": self.frame.tick, "failure_code": failure_code,
+                "tips": dict(self.frame.tips), "requested_tips": dict(self.targets),
+                "contact_forces": {k: v for k, v in self.frame.forces.items() if v > 0.01},
+                "key_travel": {k: v for k, v in self.frame.travel.items() if v > 0.0001}})
         cleanup = self._cleanup() if failure_code else self._cleanup_state(False, 0)
         verification = StandingTypingVerifier().verify(plan, observations=self.observations,
             events=self.events, observed_text=self.sink.snapshot())
@@ -231,7 +244,8 @@ class StandingTypingController:
         self.records[identity] = {"force": 0.0, "travel": 0.0, "tip_error": float("inf")}
         self._move({target.hand: (x, y, z + self.TIP_CONTACT_OFFSET_M + 0.002)}, "approach")
         self._set_phase("press")
-        for _ in range(min(self.maximum_phase_steps, 120)):
+        depth_limit = z + self.TIP_CONTACT_OFFSET_M - self.maximum_press_depth_m
+        for _ in range(min(self.maximum_phase_steps, 240)):
             assert self.frame is not None
             if target.key in self.bridge.keys_down:
                 if self.frame.index_forces[target.key][target.hand] <= 0.01:
@@ -240,12 +254,12 @@ class StandingTypingController:
                 break
             current = self.targets[target.hand]
             # Never seek unbounded penetration if a target cannot actuate.
-            if current[2] < z + self.TIP_CONTACT_OFFSET_M - 0.012:
-                raise ControlFailure("MISSED_CONTACT", f"bounded press depth exhausted for {target.key}")
-            self.targets[target.hand] = current[0], current[1], current[2] - 0.00015
+            # At the depth limit, wait for measured tracking/debounce instead
+            # of treating a commanded point as already physically reached.
+            self.targets[target.hand] = current[0], current[1], max(depth_limit, current[2] - 0.00015)
             self._tick()
         else:
-            raise ControlFailure("MISSED_EVENT", f"{target.key} did not actuate within its step budget")
+            raise ControlFailure("MISSED_CONTACT", f"{target.key} did not actuate at bounded depth within its step budget")
         self._set_phase("hold")
         for _ in range(3):
             self._tick()
@@ -282,7 +296,8 @@ class StandingTypingController:
             # Lateral parking must never drag a hand across a depressed key or
             # bypass separation checks after that escape has completed.
             if any(frame.forces[k] > 0.01 or frame.travel[k] > 0.0012 for k in self.positions):
-                raise ControlFailure("PHYSICAL_RELEASE_MISSING", "key contact returned during lateral cleanup")
+                contacts = [k for k in self.positions if frame.forces[k] > 0.01 or frame.travel[k] > 0.0012]
+                raise ControlFailure("PHYSICAL_RELEASE_MISSING", f"key contact returned during lateral cleanup: {contacts}")
             if math.dist(frame.tips["left"], frame.tips["right"]) < self.minimum_tip_distance_m or frame.tips["left"][1] < frame.tips["right"][1]:
                 raise ControlFailure("HAND_COLLISION_RISK", "lateral cleanup violated hand separation")
         elif not cleanup:
@@ -347,10 +362,10 @@ class StandingTypingController:
 
     def _guard(self, frame: PhysicalFrameLike) -> None:
         if any(force > self.maximum_force_n for force in frame.forces.values()):
-            raise ControlFailure("FORCE_LIMIT", "independent force guard exceeded")
+            raise ControlFailure("FORCE_LIMIT", f"independent force guard exceeded: {[(k, f) for k, f in frame.forces.items() if f > self.maximum_force_n]}")
         allowed_keys = {t.key for t in self.plan.steps[self.current_step].targets} if self.current_step >= 0 else set()
         if any(force > 0.01 and key not in allowed_keys for key, force in frame.forces.items()):
-            raise ControlFailure("ADJACENT_KEY_CONTACT", "contact with an unreserved key was observed")
+            raise ControlFailure("ADJACENT_KEY_CONTACT", f"unreserved key contact: {[(k, f) for k, f in frame.forces.items() if f > 0.01 and k not in allowed_keys]}")
         if math.dist(frame.tips["left"], frame.tips["right"]) < self.minimum_tip_distance_m:
             raise ControlFailure("HAND_COLLISION_RISK", "index tip separation is below the configured limit")
         if frame.tips["left"][1] < frame.tips["right"][1]:

@@ -1,0 +1,5 @@
+# Optional local RGB renderer. The core runtime has no mandatory dependencies.
+pygame==2.6.1
+# Optional headless fallback renderer, matching the verified system version.
+Pillow==10.2.0
+# OCR uses the separately installed local tesseract executable (no Python wrapper).

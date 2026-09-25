@@ -1,0 +1,1515 @@
+{
+  "schema": "standing_isaac_acceptance",
+  "version": "1.0.0",
+  "status": "failed",
+  "simulation_started": true,
+  "physical_acceptance": false,
+  "seed": 0,
+  "plan": {
+    "text": "afjk",
+    "steps": [
+      {
+        "index": 0,
+        "character": "a",
+        "primary": {
+          "hand": "left",
+          "key": "a",
+          "xyz_m": [
+            0.7581,
+            0.10213749999999999,
+            0.7602
+          ],
+          "finger": "index"
+        },
+        "modifier": null,
+        "wave": 0
+      },
+      {
+        "index": 1,
+        "character": "f",
+        "primary": {
+          "hand": "left",
+          "key": "f",
+          "xyz_m": [
+            0.7581,
+            0.044987499999999986,
+            0.7602
+          ],
+          "finger": "index"
+        },
+        "modifier": null,
+        "wave": 1
+      },
+      {
+        "index": 2,
+        "character": "j",
+        "primary": {
+          "hand": "right",
+          "key": "j",
+          "xyz_m": [
+            0.7581,
+            -0.01216250000000002,
+            0.7602
+          ],
+          "finger": "index"
+        },
+        "modifier": null,
+        "wave": 1
+      },
+      {
+        "index": 3,
+        "character": "k",
+        "primary": {
+          "hand": "right",
+          "key": "k",
+          "xyz_m": [
+            0.7581,
+            -0.031212500000000032,
+            0.7602
+          ],
+          "finger": "index"
+        },
+        "modifier": null,
+        "wave": 2
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "step_indices": [
+          0
+        ],
+        "targets": [
+          {
+            "hand": "left",
+            "key": "a",
+            "xyz_m": [
+              0.7581,
+              0.10213749999999999,
+              0.7602
+            ],
+            "finger": "index"
+          }
+        ],
+        "parked_hands": [
+          "right"
+        ],
+        "minimum_clearance_m": 0.035,
+        "ordered_key_commits": true
+      },
+      {
+        "index": 1,
+        "step_indices": [
+          1,
+          2
+        ],
+        "targets": [
+          {
+            "hand": "left",
+            "key": "f",
+            "xyz_m": [
+              0.7581,
+              0.044987499999999986,
+              0.7602
+            ],
+            "finger": "index"
+          },
+          {
+            "hand": "right",
+            "key": "j",
+            "xyz_m": [
+              0.7581,
+              -0.01216250000000002,
+              0.7602
+            ],
+            "finger": "index"
+          }
+        ],
+        "parked_hands": [],
+        "minimum_clearance_m": 0.035,
+        "ordered_key_commits": true
+      },
+      {
+        "index": 2,
+        "step_indices": [
+          3
+        ],
+        "targets": [
+          {
+            "hand": "right",
+            "key": "k",
+            "xyz_m": [
+              0.7581,
+              -0.031212500000000032,
+              0.7602
+            ],
+            "finger": "index"
+          }
+        ],
+        "parked_hands": [
+          "left"
+        ],
+        "minimum_clearance_m": 0.035,
+        "ordered_key_commits": true
+      }
+    ],
+    "expected_events": [
+      {
+        "step_index": 0,
+        "event_type": "keydown",
+        "key": "a",
+        "hand": "left"
+      },
+      {
+        "step_index": 0,
+        "event_type": "keyup",
+        "key": "a",
+        "hand": "left"
+      },
+      {
+        "step_index": 1,
+        "event_type": "keydown",
+        "key": "f",
+        "hand": "left"
+      },
+      {
+        "step_index": 1,
+        "event_type": "keyup",
+        "key": "f",
+        "hand": "left"
+      },
+      {
+        "step_index": 2,
+        "event_type": "keydown",
+        "key": "j",
+        "hand": "right"
+      },
+      {
+        "step_index": 2,
+        "event_type": "keyup",
+        "key": "j",
+        "hand": "right"
+      },
+      {
+        "step_index": 3,
+        "event_type": "keydown",
+        "key": "k",
+        "hand": "right"
+      },
+      {
+        "step_index": 3,
+        "event_type": "keyup",
+        "key": "k",
+        "hand": "right"
+      }
+    ],
+    "movement_cost_m": 0.396931261,
+    "minimum_hand_separation_m": 0.025,
+    "version": "1.0.0",
+    "strategy": "global-dp-two-index-coordinated-preposition-ordered-commit",
+    "schema": "standing_bimanual_typing_plan",
+    "posture": "standing_fixed_base",
+    "park_positions": {
+      "left": [
+        0.64,
+        0.16,
+        0.84
+      ],
+      "right": [
+        0.64,
+        -0.16,
+        0.84
+      ]
+    },
+    "preconditions": [
+      "standing_fixed_base_verified",
+      "keyboard_calibrated",
+      "text_sink_ready"
+    ],
+    "postconditions": [
+      "exact_text_observed",
+      "all_keys_physically_released"
+    ],
+    "resources": [
+      "left_arm",
+      "right_arm",
+      "left_dex3.index",
+      "right_dex3.index",
+      "keyboard"
+    ],
+    "failure_codes": [
+      "UNREACHABLE_KEY",
+      "TWO_INDEX_CAPACITY",
+      "HAND_COLLISION_RISK",
+      "CONTACT_MISSING",
+      "FORCE_LIMIT",
+      "EVENT_MISMATCH",
+      "PHYSICAL_RELEASE_MISSING",
+      "TEXT_MISMATCH"
+    ],
+    "joint_commands": false
+  },
+  "plan_id": "484c864173cfb00f25e520c732b6566f6994999aec181aaf9ade4ad80ad7a081",
+  "config": {
+    "name": "g1_mode15_dex3_standing_bimanual_index_demo",
+    "version": "1.0.0",
+    "runtime": {
+      "isaac_sim_version": "6.0.1",
+      "isaac_sim_root": "/home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64",
+      "standalone_python": true,
+      "physics_device": "cpu",
+      "isaac_lab_required": false,
+      "refuse_existing_simulator": true,
+      "refuse_busy_gpu": true
+    },
+    "robot": {
+      "name": "unitree_g1",
+      "mode_machine": 15,
+      "wrist_motor": "5010",
+      "body_dof": 29,
+      "hands": "dual_dex3_1",
+      "hand_dof": 14,
+      "active_typing_fingers": [
+        "left.index",
+        "right.index"
+      ],
+      "base_mode": "fixed_standing",
+      "asset_manifest": "configs/simulation/g1_29dof_5010_dex3_assets.json",
+      "usd_path": "artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+      "asset_dependency_lock": "configs/simulation/dex3_standing_asset_lock.json"
+    },
+    "scene": {
+      "chair": false,
+      "keyboard": "procedural_p1_74_key",
+      "physics_dt_s": 0.008333333333333333
+    },
+    "task": {
+      "text": "afjk",
+      "seed": 0,
+      "key_event_order": "text_order",
+      "cooperative_hover_preposition": true,
+      "maximum_simultaneously_held_keys": 2
+    },
+    "evidence": {
+      "output": "reports/standing/isaac_report.json",
+      "record_dir": "reports/standing/frames",
+      "synthetic_is_physical_evidence": false,
+      "free_standing_balance_verified": false
+    }
+  },
+  "config_sha256": "4888f264216f569ed5702836ad15b0a1131dba5ee07870bc5d552391c5faa2fc",
+  "posture": "fixed_standing",
+  "chair_present": false,
+  "free_standing_balance_verified": false,
+  "camera_only_verification": false,
+  "implementation_status": "source_checked_pending_physics_validation",
+  "assets": {
+    "usd": "/tmp/hca-standing-feedback/artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd",
+    "sha256": "be081c94bc93d8dc3fb8b7047847f753db5fe1ef2b60536508fed1d82581f230",
+    "manifest": "/tmp/hca-standing-feedback/configs/simulation/g1_29dof_5010_dex3_assets.json",
+    "dependencies_verified": true,
+    "layers": [
+      {
+        "path": "configuration/g1_mode15_dex3_p1_base.usd",
+        "sha256": "f240abaa72b21e4d1143c19a206d96c08988dc9c9197a1f1ca8e8b95ca6feafe"
+      },
+      {
+        "path": "configuration/g1_mode15_dex3_p1_physics.usd",
+        "sha256": "d66b834b8d4228f15ab1e0a3050319d8daa39a66de76c3ee6badae569c4c4328"
+      },
+      {
+        "path": "configuration/g1_mode15_dex3_p1_robot.usd",
+        "sha256": "1fbbe953fa8ac6c33ae5bd19e5acb2494e64466017a25749d36a07c69fda9a14"
+      },
+      {
+        "path": "configuration/g1_mode15_dex3_p1_sensor.usd",
+        "sha256": "1e2ab3fd105a3b2a29f1c80b4f6188f197ceaa6073ef74de944bcac5c9b35ef3"
+      },
+      {
+        "path": "g1_mode15_dex3_p1.usd",
+        "sha256": "be081c94bc93d8dc3fb8b7047847f753db5fe1ef2b60536508fed1d82581f230"
+      }
+    ]
+  },
+  "runtime": {
+    "root": "/home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64",
+    "version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "installation_valid": true,
+    "occupancy_known": true,
+    "busy_processes": [],
+    "reasons": [],
+    "launch_allowed": true,
+    "simulation_started": false,
+    "explicit_shared_cpu_profile": false,
+    "permitted_resident_pids": []
+  },
+  "last_phase": "kit_shutdown_requested",
+  "initial_frame": {
+    "tick": 30,
+    "time_s": 0.25,
+    "tips": {
+      "left": [
+        0.7015166658066099,
+        0.15410953692904628,
+        0.9042919019814529
+      ],
+      "right": [
+        0.7015351248149502,
+        -0.15408580413262316,
+        0.9042277375862741
+      ]
+    },
+    "travel": {
+      "escape": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f3": 0.0,
+      "f4": 0.0,
+      "f5": 0.0,
+      "f6": 0.0,
+      "f7": 0.0,
+      "f8": 0.0,
+      "f9": 0.0,
+      "f10": 0.0,
+      "f11": 0.0,
+      "f12": 0.0,
+      "`": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0,
+      "8": 0.0,
+      "9": 0.0,
+      "0": 0.0,
+      "-": 0.0,
+      "=": 0.0,
+      "backspace": 0.0,
+      "tab": 0.0,
+      "q": 0.0,
+      "w": 0.0,
+      "e": 0.0,
+      "r": 0.0,
+      "t": 0.0,
+      "y": 0.0,
+      "u": 0.0,
+      "i": 0.0,
+      "o": 0.0,
+      "p": 0.0,
+      "[": 0.0,
+      "]": 0.0,
+      "\\": 0.0,
+      "delete": 0.0,
+      "capslock": 0.0,
+      "a": 0.0,
+      "s": 0.0,
+      "d": 0.0,
+      "f": 0.0,
+      "g": 0.0,
+      "h": 0.0,
+      "j": 0.0,
+      "k": 0.0,
+      "l": 0.0,
+      ";": 0.0,
+      "'": 0.0,
+      "enter": 0.0,
+      "left_shift": 0.0,
+      "z": 0.0,
+      "x": 0.0,
+      "c": 0.0,
+      "v": 0.0,
+      "b": 0.0,
+      "n": 0.0,
+      "m": 0.0,
+      ",": 0.0,
+      ".": 0.0,
+      "/": 0.0,
+      "right_shift": 0.0,
+      "left_ctrl": 0.0,
+      "left_super": 0.0,
+      "left_alt": 0.0,
+      "space": 0.0,
+      "right_alt": 0.0,
+      "menu": 0.0,
+      "right_ctrl": 0.0
+    },
+    "forces": {
+      "escape": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f3": 0.0,
+      "f4": 0.0,
+      "f5": 0.0,
+      "f6": 0.0,
+      "f7": 0.0,
+      "f8": 0.0,
+      "f9": 0.0,
+      "f10": 0.0,
+      "f11": 0.0,
+      "f12": 0.0,
+      "`": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0,
+      "8": 0.0,
+      "9": 0.0,
+      "0": 0.0,
+      "-": 0.0,
+      "=": 0.0,
+      "backspace": 0.0,
+      "tab": 0.0,
+      "q": 0.0,
+      "w": 0.0,
+      "e": 0.0,
+      "r": 0.0,
+      "t": 0.0,
+      "y": 0.0,
+      "u": 0.0,
+      "i": 0.0,
+      "o": 0.0,
+      "p": 0.0,
+      "[": 0.0,
+      "]": 0.0,
+      "\\": 0.0,
+      "delete": 0.0,
+      "capslock": 0.0,
+      "a": 0.0,
+      "s": 0.0,
+      "d": 0.0,
+      "f": 0.0,
+      "g": 0.0,
+      "h": 0.0,
+      "j": 0.0,
+      "k": 0.0,
+      "l": 0.0,
+      ";": 0.0,
+      "'": 0.0,
+      "enter": 0.0,
+      "left_shift": 0.0,
+      "z": 0.0,
+      "x": 0.0,
+      "c": 0.0,
+      "v": 0.0,
+      "b": 0.0,
+      "n": 0.0,
+      "m": 0.0,
+      ",": 0.0,
+      ".": 0.0,
+      "/": 0.0,
+      "right_shift": 0.0,
+      "left_ctrl": 0.0,
+      "left_super": 0.0,
+      "left_alt": 0.0,
+      "space": 0.0,
+      "right_alt": 0.0,
+      "menu": 0.0,
+      "right_ctrl": 0.0
+    },
+    "index_forces": {
+      "escape": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f2": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f3": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f4": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f5": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f6": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f7": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f8": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f9": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f10": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f11": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f12": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "`": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "2": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "3": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "4": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "5": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "6": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "7": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "8": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "9": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "0": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "-": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "=": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "backspace": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "tab": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "q": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "w": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "e": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "r": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "t": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "y": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "u": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "i": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "o": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "p": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "[": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "]": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "\\": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "delete": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "capslock": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "a": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "s": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "d": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "g": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "h": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "j": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "k": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "l": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      ";": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "'": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "enter": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_shift": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "z": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "x": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "c": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "v": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "b": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "n": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "m": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      ",": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      ".": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "/": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "right_shift": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_ctrl": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_super": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_alt": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "space": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "right_alt": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "menu": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "right_ctrl": {
+        "left": 0.0,
+        "right": 0.0
+      }
+    },
+    "source": "isaac_physx"
+  },
+  "execution": {
+    "succeeded": false,
+    "failure_code": "MOTION_TIMEOUT",
+    "failure_message": "approach did not reach its bounded target",
+    "verification": {
+      "succeeded": false,
+      "failure_codes": [
+        "CONTACT_COVERAGE_MISMATCH",
+        "EVENT_MISMATCH",
+        "TEXT_MISMATCH"
+      ],
+      "physical_acceptance": false,
+      "evidence_mode": "physical"
+    },
+    "cleanup": {
+      "attempted": true,
+      "physical_clear": false,
+      "keys_down": [],
+      "keys_in_contact": [],
+      "depressed_keys": [],
+      "steps": 1289,
+      "error": "ControlFailure: cleanup_park did not reach its bounded target"
+    },
+    "observations": [
+      {
+        "step_index": 0,
+        "key": "a",
+        "hand": "left",
+        "contact_force_n": 2.9495203495025635,
+        "travel_m": 0.0027276703622192144,
+        "released": true,
+        "clearance_m": 0.03460670644511466,
+        "source": "isaac_physx",
+        "finger": "index",
+        "adjacent_contacts": [],
+        "tip_error_m": 0.0008794441412964211
+      },
+      {
+        "step_index": 1,
+        "key": "f",
+        "hand": "left",
+        "contact_force_n": 3.1104893684387207,
+        "travel_m": 0.0029139553662389517,
+        "released": true,
+        "clearance_m": 0.033466270815924244,
+        "source": "isaac_physx",
+        "finger": "index",
+        "adjacent_contacts": [],
+        "tip_error_m": 0.002334624083098667
+      }
+    ],
+    "events": [
+      {
+        "step_index": 0,
+        "event_type": "keydown",
+        "key": "a",
+        "hand": "left",
+        "timestamp_s": 10.6,
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "step_index": 0,
+        "event_type": "keyup",
+        "key": "a",
+        "hand": "left",
+        "timestamp_s": 10.683333333333334,
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "step_index": 1,
+        "event_type": "keydown",
+        "key": "f",
+        "hand": "left",
+        "timestamp_s": 14.275,
+        "source": "keyboard_event_bridge"
+      },
+      {
+        "step_index": 1,
+        "event_type": "keyup",
+        "key": "f",
+        "hand": "left",
+        "timestamp_s": 14.375,
+        "source": "keyboard_event_bridge"
+      }
+    ],
+    "observed_text": "af",
+    "observed_text_source": "keyboard_event_buffer",
+    "phase_trace": [
+      {
+        "phase": "lift",
+        "step_index": -1,
+        "tick": 30
+      },
+      {
+        "phase": "park",
+        "step_index": -1,
+        "tick": 30
+      },
+      {
+        "phase": "coordinated_prepose",
+        "step_index": -1,
+        "tick": 960
+      },
+      {
+        "phase": "approach",
+        "step_index": 0,
+        "tick": 1187
+      },
+      {
+        "phase": "press",
+        "step_index": 0,
+        "tick": 1246
+      },
+      {
+        "phase": "hold",
+        "step_index": 0,
+        "tick": 1272
+      },
+      {
+        "phase": "release",
+        "step_index": 0,
+        "tick": 1275
+      },
+      {
+        "phase": "release_settle",
+        "step_index": 0,
+        "tick": 1337
+      },
+      {
+        "phase": "lift",
+        "step_index": -1,
+        "tick": 1337
+      },
+      {
+        "phase": "coordinated_prepose",
+        "step_index": -1,
+        "tick": 1337
+      },
+      {
+        "phase": "approach",
+        "step_index": 1,
+        "tick": 1615
+      },
+      {
+        "phase": "press",
+        "step_index": 1,
+        "tick": 1667
+      },
+      {
+        "phase": "hold",
+        "step_index": 1,
+        "tick": 1713
+      },
+      {
+        "phase": "release",
+        "step_index": 1,
+        "tick": 1716
+      },
+      {
+        "phase": "release_settle",
+        "step_index": 1,
+        "tick": 1804
+      },
+      {
+        "phase": "approach",
+        "step_index": 2,
+        "tick": 1804
+      },
+      {
+        "phase": "failure_snapshot",
+        "step_index": 2,
+        "tick": 3004,
+        "failure_code": "MOTION_TIMEOUT",
+        "tips": {
+          "left": [
+            0.758637827922727,
+            0.04925882523677785,
+            0.800388863000223
+          ],
+          "right": [
+            0.7521694312546885,
+            -0.008941479714703094,
+            0.770485371976474
+          ]
+        },
+        "requested_tips": {
+          "left": [
+            0.7581,
+            0.044987499999999986,
+            0.8002
+          ],
+          "right": [
+            0.7581,
+            -0.01216250000000002,
+            0.7672
+          ]
+        },
+        "contact_forces": {},
+        "key_travel": {}
+      },
+      {
+        "phase": "cleanup_lift",
+        "step_index": 2,
+        "tick": 3004
+      },
+      {
+        "phase": "cleanup_release_settle",
+        "step_index": 2,
+        "tick": 3093
+      },
+      {
+        "phase": "cleanup_park",
+        "step_index": 2,
+        "tick": 3093
+      }
+    ],
+    "physics_steps": 4263,
+    "plan_id": "484c864173cfb00f25e520c732b6566f6994999aec181aaf9ade4ad80ad7a081",
+    "maximum_force_n": 3.1104893684387207,
+    "schema": "standing_typing_controller_result",
+    "version": "1.0.0",
+    "text_evidence_is_ocr": false,
+    "joint_commands_in_controller": false
+  },
+  "final_frame": {
+    "tick": 4293,
+    "time_s": 35.775,
+    "tips": {
+      "left": [
+        0.6303861841112389,
+        0.16059464955907446,
+        0.8409736154368008
+      ],
+      "right": [
+        0.6400000438079259,
+        -0.1599998403691497,
+        0.840000072391265
+      ]
+    },
+    "travel": {
+      "escape": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f3": 0.0,
+      "f4": 0.0,
+      "f5": 0.0,
+      "f6": 0.0,
+      "f7": 0.0,
+      "f8": 0.0,
+      "f9": 0.0,
+      "f10": 0.0,
+      "f11": 0.0,
+      "f12": 0.0,
+      "`": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0,
+      "8": 0.0,
+      "9": 0.0,
+      "0": 0.0,
+      "-": 0.0,
+      "=": 0.0,
+      "backspace": 0.0,
+      "tab": 0.0,
+      "q": 0.0,
+      "w": 0.0,
+      "e": 0.0,
+      "r": 0.0,
+      "t": 0.0,
+      "y": 0.0,
+      "u": 0.0,
+      "i": 0.0,
+      "o": 0.0,
+      "p": 0.0,
+      "[": 0.0,
+      "]": 0.0,
+      "\\": 0.0,
+      "delete": 0.0,
+      "capslock": 0.0,
+      "a": 4.0614800411731267e-08,
+      "s": 0.0,
+      "d": 0.0,
+      "f": 4.0614800411731267e-08,
+      "g": 0.0,
+      "h": 0.0,
+      "j": 0.0,
+      "k": 0.0,
+      "l": 0.0,
+      ";": 0.0,
+      "'": 0.0,
+      "enter": 0.0,
+      "left_shift": 0.0,
+      "z": 0.0,
+      "x": 0.0,
+      "c": 0.0,
+      "v": 0.0,
+      "b": 0.0,
+      "n": 0.0,
+      "m": 0.0,
+      ",": 0.0,
+      ".": 0.0,
+      "/": 0.0,
+      "right_shift": 0.0,
+      "left_ctrl": 0.0,
+      "left_super": 0.0,
+      "left_alt": 0.0,
+      "space": 0.0,
+      "right_alt": 0.0,
+      "menu": 0.0,
+      "right_ctrl": 0.0
+    },
+    "forces": {
+      "escape": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f3": 0.0,
+      "f4": 0.0,
+      "f5": 0.0,
+      "f6": 0.0,
+      "f7": 0.0,
+      "f8": 0.0,
+      "f9": 0.0,
+      "f10": 0.0,
+      "f11": 0.0,
+      "f12": 0.0,
+      "`": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0,
+      "8": 0.0,
+      "9": 0.0,
+      "0": 0.0,
+      "-": 0.0,
+      "=": 0.0,
+      "backspace": 0.0,
+      "tab": 0.0,
+      "q": 0.0,
+      "w": 0.0,
+      "e": 0.0,
+      "r": 0.0,
+      "t": 0.0,
+      "y": 0.0,
+      "u": 0.0,
+      "i": 0.0,
+      "o": 0.0,
+      "p": 0.0,
+      "[": 0.0,
+      "]": 0.0,
+      "\\": 0.0,
+      "delete": 0.0,
+      "capslock": 0.0,
+      "a": 0.0,
+      "s": 0.0,
+      "d": 0.0,
+      "f": 0.0,
+      "g": 0.0,
+      "h": 0.0,
+      "j": 0.0,
+      "k": 0.0,
+      "l": 0.0,
+      ";": 0.0,
+      "'": 0.0,
+      "enter": 0.0,
+      "left_shift": 0.0,
+      "z": 0.0,
+      "x": 0.0,
+      "c": 0.0,
+      "v": 0.0,
+      "b": 0.0,
+      "n": 0.0,
+      "m": 0.0,
+      ",": 0.0,
+      ".": 0.0,
+      "/": 0.0,
+      "right_shift": 0.0,
+      "left_ctrl": 0.0,
+      "left_super": 0.0,
+      "left_alt": 0.0,
+      "space": 0.0,
+      "right_alt": 0.0,
+      "menu": 0.0,
+      "right_ctrl": 0.0
+    },
+    "index_forces": {
+      "escape": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f2": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f3": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f4": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f5": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f6": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f7": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f8": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f9": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f10": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f11": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f12": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "`": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "2": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "3": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "4": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "5": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "6": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "7": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "8": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "9": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "0": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "-": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "=": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "backspace": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "tab": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "q": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "w": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "e": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "r": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "t": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "y": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "u": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "i": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "o": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "p": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "[": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "]": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "\\": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "delete": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "capslock": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "a": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "s": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "d": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "f": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "g": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "h": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "j": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "k": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "l": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      ";": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "'": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "enter": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_shift": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "z": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "x": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "c": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "v": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "b": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "n": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "m": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      ",": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      ".": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "/": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "right_shift": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_ctrl": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_super": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "left_alt": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "space": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "right_alt": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "menu": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "right_ctrl": {
+        "left": 0.0,
+        "right": 0.0
+      }
+    },
+    "source": "isaac_physx"
+  },
+  "physics_dt_s": 0.008333333333333333,
+  "contact_geometry": {
+    "tip_contact_offset_m": 0.005,
+    "maximum_press_depth_m": 0.006
+  },
+  "physics_steps": 4293,
+  "frames_directory": null,
+  "sensor_basis": "PhysX key travel and index/key contact pairs + event buffer; not OCR",
+  "driver_close_completed": true,
+  "kit_shutdown": "requested_process_exit_not_yet_observed"
+}

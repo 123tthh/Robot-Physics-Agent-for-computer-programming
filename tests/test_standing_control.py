@@ -20,6 +20,7 @@ class Frame:
 
 class FakeDriver:
     """Test-only kinematic switch fixture; it is not physical acceptance."""
+    contact_offset_m = 0.013
     def __init__(self, fault=None):
         self.tick = 0
         self.tips = dict(PARK_POSITIONS)
@@ -42,7 +43,7 @@ class FakeDriver:
         for hand, point in self.tips.items():
             for key, pos in self.keys.items():
                 if abs(point[0] - pos[0]) < 0.003 and abs(point[1] - pos[1]) < 0.003:
-                    depth = pos[2] + 0.013 - point[2]
+                    depth = pos[2] + self.contact_offset_m - point[2]
                     if depth > 0:
                         travel[key] = min(depth, 0.004)
                         forces[key] = 1.5 if self.fault != "force" else 12.0
@@ -60,6 +61,15 @@ class FakeDriver:
 
 
 class StandingControlTests(unittest.TestCase):
+    def test_downward_tip_geometry_uses_bounded_calibrated_depth(self):
+        driver=FakeDriver()
+        driver.contact_offset_m=.005
+        result=StandingTypingController(driver,tip_contact_offset_m=.005,
+                    maximum_press_depth_m=.006).run(StandingTypingPlanner().plan_text('ak'))
+        self.assertTrue(result.succeeded,result.to_dict())
+        self.assertEqual(result.observed_text,'ak')
+        self.assertTrue(all(p[2]>=.7602+.005-.006 for c in driver.commands for p in c.values()))
+
     def test_central_clock_parallel_prepose_ordered_commits_and_text(self):
         plan = StandingTypingPlanner().plan_text("afjk Hi!\b")
         driver = FakeDriver()

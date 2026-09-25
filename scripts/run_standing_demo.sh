@@ -25,12 +25,16 @@ Default: launch the fixed standing-base Dex3 demo in Isaac Sim 6.0.1.
 Isaac arguments: --text afjk --output reports/standing/isaac_report.json
   --headless / --no-headless --device cpu --record-dir reports/standing/frames
   --inspect-only --config configs/simulation/dex3_standing_demo.json --seed 0
+  --no-cameras --maximum-steps 800
+  --shared-cpu-physics --resident-pid PID (requires headless, no cameras, <=3000 steps)
 Plan/synthetic arguments: --text afjk --output reports/standing/plan.json
 Asset arguments: --unitree-ros-root PATH --output-dir PATH
 
 ISAAC_SIM_ROOT overrides the installation path (must be 6.0.1).
 STANDING_PYTHON overrides ordinary Python (3.11+), not Isaac's bundled Python.
 The launch guard refuses to compete with an existing Isaac/Kit/GPU process.
+An explicitly authorized shared CPU check may exempt the named resident PIDs;
+it still requires 12 GiB free VRAM and initializes the graphics environment.
 HELP
             exit 0 ;;
     esac
@@ -70,8 +74,14 @@ fi
 
 # Guard executes with ordinary Python, before python.sh can start any Kit code.
 # The scene and asset builder repeat the guard so direct invocation is protected.
-env PYTHONPATH="$standing_repo_root/src" "$standing_python" -m vskill_os.adapters.isaac.runtime_guard \
-    --isaac-root "$standing_sim_root"
+standing_guard_args=(--isaac-root "$standing_sim_root")
+standing_previous=""
+for standing_arg in "$@"; do
+    if [[ "$standing_arg" == "--shared-cpu-physics" ]]; then standing_guard_args+=(--shared-cpu-physics); fi
+    if [[ "$standing_previous" == "--resident-pid" ]]; then standing_guard_args+=(--resident-pid "$standing_arg"); fi
+    standing_previous="$standing_arg"
+done
+env PYTHONPATH="$standing_repo_root/src" "$standing_python" -m vskill_os.adapters.isaac.runtime_guard "${standing_guard_args[@]}"
 
 # Keep the user's shell/environment intact. Only this child process is cleaned.
 standing_clean_env=(env

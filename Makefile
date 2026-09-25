@@ -8,7 +8,7 @@ ISAACLAB_ACTIVATE ?= $(ISAACLAB_ENV_PREFIX)/etc/conda/activate.d/setenv.sh
 ISAACLAB_PYTHON ?= $(ISAACLAB_ENV_PREFIX)/bin/python
 P1_URDF := $(CURDIR)/artifacts/simulation-assets/unitree_ros_7d6075f7/robots/g1_description/g1_29dof_mode_15_with_dex3_1.urdf
 P1_USD := $(CURDIR)/artifacts/isaac-p1/assets/g1_mode15_dex3_p1/g1_mode15_dex3_p1.usd
-STANDING_TEXT ?= afjk
+STANDING_TEXT ?= ak
 ISAAC_SIM_ROOT ?= /home/descfly/isaac-sim-standalone-6.0.1-linux-x86_64
 
 demo:
@@ -68,6 +68,27 @@ standing-training-smoke:
 	PYTHONPATH=src python3 -m vskill_os.training train --config configs/training/dex3_standing.json --output artifacts/standing-training --iterations 3
 	PYTHONPATH=src python3 -m vskill_os.training evaluate --checkpoint artifacts/standing-training/checkpoint.json --episodes 8 --output artifacts/standing-training/evaluation.json
 
+.PHONY: standing-navigation desktop-feedback workstation-feedback monitor-static
+standing-navigation:
+	PYTHONPATH=src python3 -m vskill_os.control.standing_locomotion --goal-x .4 --goal-y .1 --goal-yaw .2 --seed 7 --output reports/standing/navigation.json
+
+desktop-feedback:
+	PYTHONPATH=src:artifacts/desktop-deps SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy python3 -m vskill_os.adapters.pygame_desktop --backend pygame --output reports/feedback
+
+workstation-feedback:
+	PYTHONPATH=src:artifacts/desktop-deps SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy python3 -m vskill_os.workstation_mission --backend pygame --output reports/workstation_mission
+
+monitor-static:
+	PYTHONPATH=src python3 scripts/monitor_bridge_example.py --transport reports/workstation_mission/after --offline
+
+.PHONY: unitree-policy-import unitree-policy-inspect
+UNITREE_POLICY_PYTHON ?= python3
+unitree-policy-import:
+	python3 scripts/import_unitree_velocity.py
+
+unitree-policy-inspect:
+	PYTHONPATH=src $(UNITREE_POLICY_PYTHON) -m vskill_os.adapters.unitree_velocity
+
 isaac-standing:
 	ISAAC_SIM_ROOT="$(ISAAC_SIM_ROOT)" ./scripts/run_standing_demo.sh --headless --text "$(STANDING_TEXT)"
 
@@ -78,7 +99,7 @@ isaac-standing-assets:
 	ISAAC_SIM_ROOT="$(ISAAC_SIM_ROOT)" ./scripts/run_standing_demo.sh --build-assets
 
 test:
-	PYTHONPATH=src python3 -m unittest discover -s tests -v
+	PYTHONPATH=src:artifacts/desktop-deps SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy python3 -m unittest discover -s tests -v
 
 check: test
 	python3 -m compileall -q src tests
