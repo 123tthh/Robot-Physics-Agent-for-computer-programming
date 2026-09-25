@@ -1,0 +1,131 @@
+{
+  "succeeded": true,
+  "gates": {
+    "free_sitting_and_final_stability": true,
+    "typing": true,
+    "all_ten_fingers": true,
+    "default_demo_text": true,
+    "one_continuous_physics_timeline": true,
+    "all_events_preserved": true,
+    "finished_without_error": true,
+    "real_chair_support": true
+  },
+  "sitting": {
+    "report": "artifacts/computer/continuous-v2-seed7/report.json",
+    "report_sha256": "dd222285f34d04b5d592d01a9c5fe3ba1ef27f7178582a215d6c158410807211",
+    "succeeded": true,
+    "free_balance_sitting_verified": true,
+    "failure": null,
+    "source": "isaac_physx_free_sitting",
+    "sample_count": 3000,
+    "standing_height_m": 0.7499024903774262,
+    "final_height_m": 0.5958334803581238,
+    "minimum_seat_force_n": 126.38160490989685,
+    "maximum_chair_speed_mps": 0.007030523382127285,
+    "stable_window_s": 2.0,
+    "controller_status": "passed",
+    "evidence_note": "Checks record consistency; does not authenticate fabricated sensor records."
+  },
+  "typing": {
+    "succeeded": true,
+    "capability": "isaac_sim_5_1",
+    "failure_code": null,
+    "failure_detail": "",
+    "completed_strokes": 10,
+    "planned_strokes": 10,
+    "executors_observed": [
+      "left.index",
+      "left.little",
+      "left.middle",
+      "left.ring",
+      "left.thumb",
+      "right.index",
+      "right.little",
+      "right.middle",
+      "right.ring",
+      "right.thumb"
+    ],
+    "observed_text": "asdf jkl; ",
+    "expected_text": "asdf jkl; ",
+    "keys_down_after_stop": [],
+    "support_mode": "seat_contact",
+    "recovery_actions": [],
+    "dynamic_sitting_verified": false,
+    "camera_ocr_verified": false,
+    "real_robot_verified": false,
+    "version": "1.0.0"
+  },
+  "report": "artifacts/computer/continuous-v2-seed7/report.json",
+  "report_sha256": "dd222285f34d04b5d592d01a9c5fe3ba1ef27f7178582a215d6c158410807211",
+  "camera_ocr_verified": false,
+  "real_robot_verified": false,
+  "recording": {
+    "demo.mp4": {
+      "path": "artifacts/computer/continuous-v2-seed7/demo.mp4",
+      "sha256": "68bb9c27aa563d1c974c1df1d8cb8e03d3d41fe1713e4dc1a0522b39c58a66fd"
+    },
+    "physics.jsonl": {
+      "path": "artifacts/computer/continuous-v2-seed7/physics.jsonl",
+      "sha256": "74c86e162cabf7c35a115cd2374be1998380f0c321ac3aa31ae8a8dd93c3a270"
+    },
+    "scene.usda": {
+      "path": "artifacts/computer/continuous-v2-seed7/scene.usda",
+      "sha256": "21064b709cafad7363c6472ce436062b64ed8dc4fb6d951a2671c7a87443e88e"
+    }
+  },
+  "request": {
+    "output_dir": "artifacts/computer/continuous-v2-seed7",
+    "headless": true,
+    "video": true,
+    "device": "cuda:0",
+    "seed": 7,
+    "duration": 60.0,
+    "height": 0.5,
+    "seat_height": 0.44,
+    "lower_duration": 8.0,
+    "chair_x": -0.03,
+    "robot_x": 0.25,
+    "pitch": 0.2,
+    "settled_pitch": 0.05,
+    "desk_offset_x": 0.12,
+    "seat_stiffness": 20000.0,
+    "seat_damping": 600.0,
+    "hold_load_fraction": 0.35,
+    "chair_contact_mode": "cushion",
+    "type_text": "asdf jkl; ",
+    "room": true,
+    "resume_diagnostic": null,
+    "typing_height_drop": 0.02
+  },
+  "runtime": {
+    "isaac_sim": "5.1.0-rc.19+release.26219.9c81211b.gl",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "torch": "2.7.0+cu128"
+  },
+  "implementation_sha256": {
+    "free_sitting_scene.py": "02e40f547f7a87208515f863e3e1f038b424cf4f538e128de43a6c0579ccf955",
+    "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+    "free_sitting.py": "0648431d42cc8193bab391b1c9b735f90030371f6f43829c539b8e2dd3c76ca2",
+    "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+    "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+    "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+    "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+    "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+    "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02",
+    "free_typing.py": "ea7f118c7c17dc8766aee8855b2f7025f0b8d5c0a2f8090d7078dc4c9ea28009",
+    "dex5_kinematics.py": "da6f073650dd545a5f2dbfc6ad26923f8a8b0d4c799e2004de3235c80bad92fc",
+    "dex5_demo.py": "f94f6eb7f048deb570526af23440aa319e54d8528fc1718c16664e4596aa752c",
+    "dex5_postures.json": "d7de3015ea3b7b388ca232affe1cd490b3abec4ffa49f1c788846426aab7d674"
+  },
+  "assumptions": [
+    "NVIDIA balance policy transferred to G1 mode15 + Dex5 without retraining",
+    "0.10 m wrist mount origin; uncalibrated real mounting adapter",
+    "pelvis and hand collision convex decomposition; ten coaxial knuckle/palm filtered pairs",
+    "P1 sliding-dominant caster approximation; not an identified real caster model",
+    "PhysX contact/state oracle, not onboard perception",
+    "6 mm distal pads replacing distal mesh collision, attached to actual Dex5 links"
+  ],
+  "video_duration_s": 60.3,
+  "video_decoded_without_errors": true,
+  "source_archive": "artifacts/computer/continuous-v2-seed7/source/manifest.json"
+}

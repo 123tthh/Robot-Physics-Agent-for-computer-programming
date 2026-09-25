@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-09-23",
+  "scope": "Learning-based G1 + dual Dex5-1 seated computer typing without inverse kinematics",
+  "status": "research_only_no_training_executed",
+  "qualification": "Method-level review, not an exhaustive upstream dataset provenance audit or reproduction. Release status is limited to the inspected pages and versions.",
+  "sources": [
+    {
+      "id": "robopianist",
+      "title": "RoboPianist: Dexterous Piano Playing with Deep Reinforcement Learning",
+      "paper": "https://arxiv.org/html/2304.04150v2",
+      "repository": "https://github.com/google-research/robopianist",
+      "training_repository": "https://github.com/kevinzakka/robopianist-rl",
+      "inspected": ["Paper sections 3, 4, 5.1 and 5.2", "Training repository train.py"],
+      "method": "DroQ/SAC variant; learned joint-position commands executed through PD; fingering and dense rewards",
+      "ik_assessment": "Direct joint action method; no IK controller in the described learned action path",
+      "use": "Primary conceptual precedent for multi-finger physical key pressing",
+      "limits": "MuJoCo Shadow hands with movable forearms, not G1/Dex5. Paper's collection of song specialists is not one generalist. PPO proposed locally is not a reproduction of its optimizer."
+    },
+    {
+      "id": "rp1m",
+      "title": "RP1M: A Large-Scale Motion Dataset for Piano Playing with Bi-Manual Dexterous Hands",
+      "paper": "https://arxiv.org/html/2408.11048v1",
+      "project": "https://rp1m.github.io/",
+      "repository": "https://github.com/zhaoyi11/robopianist-rp1m",
+      "inspected": ["Paper task and action description", "Project page and repository overview"],
+      "method": "RL-generated specialist trajectories and optimal-transport fingering assignment",
+      "ik_assessment": "Finger assignment is not a Cartesian-to-joint IK solver; direct joint action task",
+      "use": "Learned-expert data generation and optional fingering assignment",
+      "limits": "Shadow-hand piano trajectories are not directly reusable Dex5 joint labels; automatic assignment alone does not require all ten fingers."
+    },
+    {
+      "id": "omnipianist",
+      "title": "Dexterous Robotic Piano Playing at Scale",
+      "paper": "https://arxiv.org/html/2511.02504v1",
+      "inspected": ["Paper method sections and v1 release statement"],
+      "method": "Specialist RL data, flow-matching generalist and DAgger state coverage",
+      "ik_assessment": "Joint-action piano learning route; no project-wide provenance audit performed",
+      "use": "Later multi-string generalization direction",
+      "limits": "Inspected v1 says datasets/models/code will be available upon acceptance; usable release and weights were not verified. Large expert collection is not the proposed minimum experiment."
+    },
+    {
+      "id": "bidexhands",
+      "title": "Bi-DexHands / DexterousHands",
+      "repository": "https://github.com/PKU-MARL/DexterousHands",
+      "environments": "https://github.com/PKU-MARL/DexterousHands/blob/main/docs/environments.md",
+      "paper": "https://arxiv.org/abs/2206.08686",
+      "inspected": ["Repository README", "Environment documentation", "Paper abstract"],
+      "method": "Bimanual dexterous reinforcement learning benchmark",
+      "ik_assessment": "Benchmark reference only; task-specific action implementations require audit before adoption",
+      "use": "Bimanual coordination and algorithm comparisons",
+      "limits": "Isaac Gym implementation; not a drop-in Isaac Lab 5.1 G1 keyboard task. Do not transfer benchmark FPS or any floating-hand wrench controls to this project."
+    },
+    {
+      "id": "dextrah_rgb",
+      "title": "DextrAH-RGB / DEXTRAH",
+      "paper": "https://arxiv.org/abs/2412.01791",
+      "method_pdf": "https://dextrah-rgb.github.io/static/pdfs/DextrahRGB.pdf",
+      "project": "https://dextrah-rgb.github.io/",
+      "repository": "https://github.com/NVlabs/DEXTRAH",
+      "inspected": ["Project page", "Paper method passages", "Repository README including installation version"],
+      "method": "Privileged RL teacher and RGB student with fabric-guided control",
+      "ik_assessment": "Fabrics are not equated with IK, but this is not the proposed direct joint-policy action layer",
+      "use": "Teacher/student visual training pattern only",
+      "limits": "Different robot and manipulation task; official README recommends Isaac Lab 2.2.1. Current local 2.3.2 compatibility unverified."
+    },
+    {
+      "id": "scaffolder",
+      "title": "Scaffolder",
+      "paper": "https://arxiv.org/abs/2405.14853",
+      "project": "https://penn-pal-lab.github.io/scaffolder/",
+      "repository": "https://github.com/penn-pal-lab/scaffolder",
+      "inspected": ["Project and repository overview", "Paper abstract"],
+      "method": "Model-based learning with privileged sensing during training, including Blind Deaf Piano",
+      "ik_assessment": "Not audited as a direct implementation candidate",
+      "use": "Training-only privileged sensing boundary",
+      "limits": "Dreamer-based route; proposed asymmetric PPO is not a reproduction of Scaffolder."
+    },
+    {
+      "id": "stay_seated",
+      "title": "Stay Seated: Learning Omnidirectional Humanoid Locomotion on a Passive Mobile Chair with Casters",
+      "paper": "https://arxiv.org/html/2608.28090v1",
+      "user_reference": "https://www.takatohorii.jp/blog/rsj2026-yanagida-seated-locomotion/",
+      "inspected": ["Paper section III: task, chair model, observations, action and PPO", "User-supplied project/blog page"],
+      "method": "PPO; asymmetric actor/critic; 29 normalized G1 joint-position commands executed through PD",
+      "ik_assessment": "Direct learned joint actions in the described control path",
+      "use": "Chair contact, observations and later seated locomotion",
+      "limits": "Starts seated; does not establish stand-to-sit or Dex5 typing. Uses mjlab/MuJoCo. Not the GR00T policy used in the current project. Its 29 body actions overlap the proposed typing arm actions."
+    },
+    {
+      "id": "apr",
+      "title": "Enforcing Human-like Kinematics in Dexterous Piano Playing via Adversarial Posture Regularization",
+      "paper": "https://arxiv.org/html/2606.23848v1",
+      "inspected": ["Figure 2", "Section III-A1 and equation 1", "Section III-B", "Limitations"],
+      "method": "IK nominal action plus PPO residual; IK prior also in observation",
+      "ik_assessment": "Uses IK explicitly; excluded from no-IK implementation shortlist",
+      "use": "Counterexample to classifying all RL piano controllers as no-IK",
+      "limits": "Style reward could be separately studied only after removing the IK path and auditing demonstration provenance. No drop-in no-IK claim."
+    },
+    {
+      "id": "hierarchical_typing",
+      "title": "A hierarchical deep reinforcement learning algorithm for typing with a dual-arm humanoid robot",
+      "paper": "https://www.cambridge.org/core/journals/knowledge-engineering-review/article/hierarchical-deep-reinforcement-learning-algorithm-for-typing-with-a-dualarm-humanoid-robot/8C4C2260F9C2F73FA8B9006C6EF9238D",
+      "inspected": ["Method sections 3.2 and 3.5"],
+      "method": "Hierarchical typing learning with KDL Jacobian-pseudoinverse IK below learned actions",
+      "ik_assessment": "Uses IK explicitly; excluded from no-IK implementation shortlist",
+      "use": "Clarify why keyboard task relevance alone is insufficient",
+      "limits": "Not a G1 dual-Dex5 ten-finger direct joint controller."
+    },
+    {
+      "id": "isaaclab_local",
+      "title": "Isaac Lab direct in-hand manipulation and RSL-RL PPO integration",
+      "documentation": "https://isaac-sim.github.io/IsaacLab/v2.3.0/source/overview/environments.html",
+      "local_action_code": "/home/descfly/IsaacLab-2.3.2/source/isaaclab_tasks/isaaclab_tasks/direct/inhand_manipulation/inhand_manipulation_env.py",
+      "local_ppo_config": "/home/descfly/IsaacLab-2.3.2/source/isaaclab_tasks/isaaclab_tasks/direct/allegro_hand/agents/rsl_rl_ppo_cfg.py",
+      "inspected": ["Official environment catalog", "Local _apply_action implementation", "Local PPO configuration", "Installed package metadata"],
+      "method": "Scale, smooth and clamp learned actions; set joint-position targets",
+      "ik_assessment": "Inspected in-hand action path does not use IK; unrelated G1 manipulation examples may use IK",
+      "use": "Native vectorized training implementation pattern",
+      "limits": "No Dex5 keyboard environment was reproduced or trained this turn. Installed runtime packages do not establish task feasibility or throughput."
+    }
+  ]
+}

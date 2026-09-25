@@ -1,0 +1,32 @@
+{
+  "commands": [
+    {
+      "command": "make check",
+      "exit_code": 0,
+      "tests": 157,
+      "skipped_optional": 1
+    },
+    {
+      "command": "make demo",
+      "exit_code": 0
+    },
+    {
+      "command": "Isaac Python optional virtual-computer tests",
+      "exit_code": 0,
+      "tests": 4
+    },
+    {
+      "command": "ffmpeg full decode continuous-v2-seed7/demo.mp4",
+      "exit_code": 0
+    },
+    {
+      "command": "camera verifier negative gates",
+      "tests": 5,
+      "exit_code": 0
+    }
+  ],
+  "notes": [
+    "The optional Pygame test skipped by the system Python passed in the Isaac Python environment.",
+    "Real PTY and asynchronous process tests ran on the host; restricted tool sandbox blocked asyncio thread notification."
+  ]
+}

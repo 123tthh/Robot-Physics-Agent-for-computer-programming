@@ -1,0 +1,130 @@
+{
+  "date": "2026-09-23",
+  "scope": "Two separate processes with the same seed and configuration on the same machine; not a robustness or cross-machine determinism claim.",
+  "checks": {
+    "same_physics_configuration": true,
+    "same_implementation": true,
+    "same_policy": true,
+    "same_composed_urdf": true,
+    "same_usd_bundle": true,
+    "same_scene_layer": true,
+    "same_physics_samples": true,
+    "same_body_motion": true
+  },
+  "physics_sample_sha256": "930ab70b3a23480c5dcfc1437009bf4b5f282c8d9458edc784265b9a39667827",
+  "configuration": {
+    "device": "cuda:0",
+    "seed": 7,
+    "duration": 18.0,
+    "height": 0.54,
+    "lower_duration": 8.0,
+    "chair_x": -0.03,
+    "robot_x": 0.25,
+    "pitch": 0.2,
+    "settled_pitch": 0.05,
+    "desk_offset_x": 0.0,
+    "seat_stiffness": 20000.0,
+    "seat_damping": 600.0,
+    "hold_load_fraction": 0.45,
+    "chair_contact_mode": "cushion"
+  },
+  "runtime": {
+    "isaac_sim": "5.1.0-rc.19+release.26219.9c81211b.gl",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "torch": "2.7.0+cu128"
+  },
+  "implementation_sha256": {
+    "free_sitting_scene.py": "e466d36edce931a1047c5c4da84a51574c38cbb5fac01aaef8e72470115e7097",
+    "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+    "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+    "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+    "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+    "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+    "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+    "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+    "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+  },
+  "model_sha256": "f645da599d4ca3d29ed273c8f4712620bb680d34977469ca3aeabe5bb9631c18",
+  "chair_sha256": "a3f35790240d68e6c617f3d0663ef4e7d2f95a428e550fbfe5545df4324676a2",
+  "final_two_seconds": {
+    "seat_force_n": {
+      "minimum": 156.1625747680664,
+      "maximum": 165.97894597053528
+    },
+    "left_foot_force_n": {
+      "minimum": 82.14692687988281,
+      "maximum": 89.5639419555664
+    },
+    "right_foot_force_n": {
+      "minimum": 96.29936218261719,
+      "maximum": 100.92756652832031
+    },
+    "pelvis_speed_mps": {
+      "minimum": 0.00958835519850254,
+      "maximum": 0.02324584126472473
+    },
+    "chair_speed_mps": {
+      "minimum": 0.0010249692713841796,
+      "maximum": 0.01995980553328991
+    },
+    "foot_slip_mps": {
+      "minimum": 0.0005941563285887241,
+      "maximum": 0.019088611006736755
+    },
+    "torso_tilt_rad": {
+      "minimum": 0.2640409659717488,
+      "maximum": 0.26798630966262915
+    },
+    "chair_tilt_rad": {
+      "minimum": 0.03886607571273454,
+      "maximum": 0.038876812067304645
+    },
+    "unexpected_contact_force_n": {
+      "minimum": 0.0,
+      "maximum": 0.0
+    }
+  },
+  "peak_body_contact_force_n": 457.5112609863281,
+  "load_handoff_time_s": 10.86,
+  "files": {
+    "reports/isaac_free_sitting_runs/seed7-video.json": "248553f0ef472be08bda34cd3bdada7ed5488793e8b5f0007c706debf8ddb410",
+    "reports/isaac_free_sitting_runs/seed7-no-video.json": "b3b98bfd77809a1aff6e587b9eaef5a656137e34875ebb47c6de2fdb1b5d28b3",
+    "reports/isaac_free_sitting_acceptance.json": "bd612ec574887c2ec00cf6f28e15752075f308015a0c22051b048d37ea9bdebb",
+    "reports/isaac_free_sitting_runs/metrics.png": "52ace41754779da7bfbad07ade3dd2e1ef3aa1d7fa9b9644b41936d2db98eaca",
+    "reports/isaac_free_sitting_runs/finished.png": "0008627b4f7300d7d6f2c47363624b9599af6e175f445713ecbcddb1a32e02f6",
+    "artifacts/free-sit/accepted-seed7/demo.mp4": "359479986bf3069d8d733b02fbd5373f9e2289aed2df5540596886b0f35d34e1",
+    "artifacts/free-sit/accepted-seed7/physics.jsonl": "a940cb266775851a4e057a913291ade397ab3a52b6588af0208ca19ebe77c8d5",
+    "artifacts/free-sit/repeated-seed7/physics.jsonl": "a940cb266775851a4e057a913291ade397ab3a52b6588af0208ca19ebe77c8d5",
+    "artifacts/dex5/baselines/fixed-chair-assisted-20260923/manifest.json": "1de646e3f8e0c8128353bb4912e976b2341f299d55cdc2ee411888692da92ee0",
+    "tools/verify_free_sitting_recording.py": "ee44e4143dc079e9a3b18968dceee0d0e24f556255a369adac7df7bf41e0c304"
+  },
+  "original_ordinary_chair_archive_integrity_verified": true,
+  "validation": {
+    "make check": {
+      "succeeded": true,
+      "tests": 145
+    },
+    "make demo": {
+      "succeeded": true
+    },
+    "independent_recording_verifier": {
+      "succeeded": true,
+      "runs": 2
+    }
+  },
+  "video": {
+    "path": "artifacts/free-sit/accepted-seed7/demo.mp4",
+    "width": 1280,
+    "height": 540,
+    "fps": 20,
+    "frames": 365,
+    "duration_s": 18.25,
+    "decoded_to_end": true
+  },
+  "limitations": [
+    "Only a nominal 18 second stand-to-sit run and small torso adjustment are accepted.",
+    "No active seated chair locomotion or free-seated typing handoff.",
+    "Unidentified cushion and caster model; uncalibrated Dex5 wrist mounting adapter.",
+    "No hardware validation; no probability of success inferred from these two equal-seed runs."
+  ]
+}

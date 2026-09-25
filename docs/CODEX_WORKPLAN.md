@@ -7,11 +7,11 @@
 Codex 开始工作前应依次阅读：
 
 1. 根目录 [`AGENTS.md`](../AGENTS.md)；
-2. [`overview.md`](overview.md)；
-3. 本文；
-4. [`phases/README.md`](phases/README.md) 中当前阶段；
-5. 当前任务对应的阶段文件；
-6. 阶段文件列出的相关技术文档和代码。
+2. [`overview.md`](overview.md) 与 [`BRANCHES.md`](BRANCHES.md)，确认实际工作树；
+3. [`WORKSTREAMS.md`](WORKSTREAMS.md) 中的子项目与证据边界；
+4. [`ARCHITECTURE.md`](ARCHITECTURE.md) 与本文；
+5. [`ROADMAP.md`](ROADMAP.md) 中当前任务，再读取对应阶段/专项文件；
+6. 专项文件列出的代码、配置和报告。
 
 不要要求 Codex 一次性阅读所有外部项目或实现所有阶段。
 
@@ -33,7 +33,7 @@ Codex 开始工作前应依次阅读：
 
 一个 Codex 任务应满足：
 
-- 只属于一个阶段，最多修改一个主要能力边界；
+- 归属一个子项目，最多修改一个主要能力边界；允许映射多个历史阶段编号；
 - 有稳定任务编号，例如 `P1-T03`；
 - 可以在一次任务中实现和验证；
 - 明确列出不做什么；
@@ -47,8 +47,9 @@ Codex 开始工作前应依次阅读：
 启动新任务时可直接复制以下提示词，并替换方括号内容：
 
 ```text
-请先阅读 AGENTS.md、docs/overview.md、docs/CODEX_WORKPLAN.md、
-docs/phases/README.md 和 [阶段文件]。
+请先阅读 AGENTS.md、docs/overview.md、docs/BRANCHES.md、
+docs/WORKSTREAMS.md、docs/ARCHITECTURE.md、docs/ROADMAP.md、
+docs/CODEX_WORKPLAN.md 和 [专项文件]。
 
 执行任务：[任务编号和名称]
 
@@ -72,7 +73,7 @@ docs/phases/README.md 和 [阶段文件]。
 
 完成后：
 1. 汇总改动、验证结果和剩余风险；
-2. 更新对应任务状态和完成证据；
+2. 更新对应任务证据与 docs/WORKSTREAMS.md；优先级变化只更新 docs/ROADMAP.md；
 3. 不自动开始下一个阶段。
 ```
 
@@ -117,17 +118,11 @@ Codex 不能因为单元测试通过就宣称真机能力完成。报告必须�
 - 硬件在环已验证；
 - 真机已验证。
 
-## 6. 阶段总表
+## 6. 状态与任务归属
 
-| 阶段 | 当前状态 | 核心退出条件 |
-|---|---|---|
-| P0 Runtime 与证据基线 | `DONE`/持续维护 | 非法状态不能推进；故障可恢复；测试通过 |
-| P1 混合仿真底座 | `DONE` | Isaac 5.1 中 G1 mode 15/5010 + 双 Dex3、四墙房间/三工位/导航锚点、74 键带标识 PhysX 接触、三路 RTX 相机与 PTY 已闭环 |
-| P2 双手多指键盘 | `PARTIAL` | 纯 Python 与自动事件门禁已通过，GUI 可见实体触键待复核 |
-| P3 代码 Agent 闭环 | `PARTIAL` | 真实隔离代码任务完成失败—修复—复测 |
-| P4 坐下、椅子与工作姿态 | `PARTIAL` | 坐姿稳定、屏幕可见和双手可达联合通过 |
-| P5 导航与本地语音 | `PARTIAL` | 语音目标可触发导航和任务图，且无低层越权 |
-| P6 Sim-to-real 与自改进 | `PLANNED` | 真机安全门槛、对照实验和受约束技能更新通过 |
+跨项目状态统一维护在 [WORKSTREAMS.md](WORKSTREAMS.md)，实施顺序见 [ROADMAP.md](ROADMAP.md)，P0–P6 专项任务见 [phases/README.md](phases/README.md)。本文不再复制一份阶段状态表。
+
+开始任务前检查实时 Git 状态。分支名不代表未提交文件已经隔离；现有多个分支指向相同提交的情况见 [BRANCHES.md](BRANCHES.md)。每个任务保存明确的起点提交、改动范围、后端和证据来源。
 
 ## 7. 通用 Definition of Done
 
@@ -135,7 +130,7 @@ Codex 不能因为单元测试通过就宣称真机能力完成。报告必须�
 
 1. 代码、配置或文档产物已经存在；
 2. 新接口有最小可运行实现或明确替身；
-3. 正常、失败和恢复路径至少各有一个测试；
+3. 行为改动覆盖正常、失败和恢复路径；仅文档/导航整理检查链接与命令并运行现有回归，不新增镜像实现的测试；
 4. Verifier 使用独立证据，而非复述控制器状态；
 5. 失败码能定位原因且不会静默降级；
 6. 运行 `make check` 与 `make demo`；

@@ -1,0 +1,924 @@
+{
+  "date": "2026-09-23",
+  "note": "Diagnostic history across changing controllers, assets, safety checks and configurations. Historical verdicts are those recorded at the time, not re-accepted by the current verifier. Do not aggregate as a success-rate benchmark. Current accepted runs are accepted-seed7 and repeated-seed7 only.",
+  "experiments": [
+    {
+      "run": "stand-v1",
+      "report": "artifacts/free-sit/stand-v1/report.json",
+      "report_sha256": "50ddfe58b813a5e1b79c99a53a211a1b56fedc70ff420687f2e29e351f7accae",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/stand-v1",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 5.0,
+        "height": 0.74,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "c8d7dae397bcdc94fb6c582ab39661c5896122097e65460a0ea3af383e0b5708",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.005,
+      "recorded_verification": null
+    },
+    {
+      "run": "stand-v2",
+      "report": "artifacts/free-sit/stand-v2/report.json",
+      "report_sha256": "87061372da365546bba5ef593c4ef2cd16f244479bf62b6bc0f4807bf7284bf6",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/stand-v2",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 5.0,
+        "height": 0.74,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "1afb451f0c5375473386649ab695f81e65f10d68a3e01272c11f7bc311ac9f75",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.005,
+      "recorded_verification": null
+    },
+    {
+      "run": "stand-v3",
+      "report": "artifacts/free-sit/stand-v3/report.json",
+      "report_sha256": "2efdf3495f3681c56e6b0398287a219a51fcde4dd513999981fe43b510a8a484",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/stand-v3",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 5.0,
+        "height": 0.74,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "ae4513b820adbaa39d8a61c97054e9b810b1f5f62c410d6faa323ca9a34a5117",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.005,
+      "recorded_verification": null
+    },
+    {
+      "run": "stand-v4",
+      "report": "artifacts/free-sit/stand-v4/report.json",
+      "report_sha256": "acb5296a9ef716c21b279957590670807186dcd760f96afb41608d5a65e5efe4",
+      "recorded_status": "failed",
+      "recorded_failure": "ErrorException: \n\tError in 'pxrInternal_v0_24__pxrReserved__::UsdStage::_ValidateEditPrim' at line 1466 in file /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp : 'Cannot create property spec at path </World/G1/pelvis/collisions/pelvis_ver0529/node_STL_BINARY_>; authoring to an instance proxy is not allowed.'\n\tError in 'pxrInternal_v0_24__pxrReserved__::UsdStage::_SetValueImpl' at line 6746 in file /builds/omniverse/usd-ci/USD/pxr/usd/usd/stage.cpp : 'Cannot set attribute value.  Failed to create attribute spec </World/G1/pelvis/collisions/pelvis_ver0529/node_STL_BINARY_.physics:approximation> in layer @anon:0x5758f24129d0:World0.usd@'",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/stand-v4",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 5.0,
+        "height": 0.74,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "13c884c25d66014f211f5b73885fb775cae06568d0d4c0aabd753ced91cfec67",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": null,
+      "recorded_verification": null
+    },
+    {
+      "run": "stand-v5",
+      "report": "artifacts/free-sit/stand-v5/report.json",
+      "report_sha256": "b8371be612e66350c4e109c5955a1b47229cd58edc39b33ebef3268869dab4ad",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/stand-v5",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 5.0,
+        "height": 0.74,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "2cca07a7543e871c57f0668777d7c63e575a85c9264429e932c99e6364c04009",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.045,
+      "recorded_verification": null
+    },
+    {
+      "run": "stand-v6",
+      "report": "artifacts/free-sit/stand-v6/report.json",
+      "report_sha256": "97c8402061f394cb7f64e80c2ab2a4ca5425bdef6cfb937fbf2cae38e3e20993",
+      "recorded_status": "failed",
+      "recorded_failure": "NO_SIT_TRANSITION",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/stand-v6",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 5.0,
+        "height": 0.74,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "22682ef2799aea3618bd7922adec39926bad6b88a09d30db3e054332d8504a4a",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 4.985,
+      "recorded_verification": {
+        "succeeded": false,
+        "free_balance_sitting_verified": false,
+        "failure": "NO_SIT_TRANSITION",
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 250
+      }
+    },
+    {
+      "run": "lower-v1",
+      "report": "artifacts/free-sit/lower-v1/report.json",
+      "report_sha256": "4b45576fb6a4769862a46dbef2836d7d639806a3dbb3fc082cb6081399d07469",
+      "recorded_status": "failed",
+      "recorded_failure": "INSUFFICIENT_SEAT_SUPPORT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v1",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.5,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "453dc9a0e4af2da05542bdf969c9660dcc64dfd3b1beb140fff1596a5710a908",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": false,
+        "free_balance_sitting_verified": false,
+        "failure": "INSUFFICIENT_SEAT_SUPPORT",
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900
+      }
+    },
+    {
+      "run": "lower-v2",
+      "report": "artifacts/free-sit/lower-v2/report.json",
+      "report_sha256": "92f0b739cbbd75b417db3f663b49ba3ee2cb91e841ab233b16ce89917feb2a9b",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v2",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": 0.0,
+        "robot_x": 0.25,
+        "pitch": 0.25
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "1824eade5b55e4941ee0e0da651a99f4b2866b9cccdcd3369c389fa8f5ca0be8",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.025,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v3",
+      "report": "artifacts/free-sit/lower-v3/report.json",
+      "report_sha256": "2226503fe0559ff62bcf8ec69a9e43a639ffba302e0852cd744f61a52dee2735",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v3",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "1824eade5b55e4941ee0e0da651a99f4b2866b9cccdcd3369c389fa8f5ca0be8",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.025,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v4",
+      "report": "artifacts/free-sit/lower-v4/report.json",
+      "report_sha256": "dbedc59a69a0f129b8745691b587c9f98b1fe199c3170fb27e108ad7f228d27c",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v4",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "5eb3b1b83b5cad3c5e2564e09f8090692f3123840452541ee25008a161342e1c",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.005,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v5",
+      "report": "artifacts/free-sit/lower-v5/report.json",
+      "report_sha256": "55c347179c9521f6fe2b14fb8087fe85bba27905f68a2d8244553ff09cbbda0c",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v5",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "9a96115b9c5f1014ec5516ad63f4d65a572ca85dcfe5ef01afd1c002dfa52088",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "8519154ee12ad44acbd07fc61f8108a7dfb88dd3e613186b58762ad4657a210d"
+      },
+      "observed_until_s": 0.005,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v6",
+      "report": "artifacts/free-sit/lower-v6/report.json",
+      "report_sha256": "f8ce63b6f3bc190b7708fcffd3676cc7272c1ce05d1961aec8e01a853ce0ed00",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNPLANNED_CONTACT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v6",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "89e1854d6b9cc84af3a8a1e41c2b10bb1d875b9183e0ead4a5c523f6fccef4bf",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 0.34500000000000003,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v7",
+      "report": "artifacts/free-sit/lower-v7/report.json",
+      "report_sha256": "5d716c40b1c315a672b4d106cf75f590c98a55e50dfe63b646f477c8399da386",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNPLANNED_CONTACT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v7",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "949cb7d3e4d39406e2ae0fa2dd64abd1159069f9579c328385f0a335f437e513",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 0.465,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v8",
+      "report": "artifacts/free-sit/lower-v8/report.json",
+      "report_sha256": "5f5b62dd7bb52cd9a11197c98a64dbdddd0dcdfb8776ed1ac1b968593da12a1c",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNPLANNED_CONTACT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v8",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.2
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "4894fbd648bb2a4bc1f794d925b27dd3d2f0e3d0e615f64de0625db855af9a99",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 0.785,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v9",
+      "report": "artifacts/free-sit/lower-v9/report.json",
+      "report_sha256": "a4a541af6008751730dcbd3a966db40e2554483404968f312ca54662e485ffc2",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNPLANNED_CONTACT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v9",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.2
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "234ad244d8876264c9c3112b152e1b7f7a40aa5a79a1453f57419d43ef023944",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 0.425,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v10",
+      "report": "artifacts/free-sit/lower-v10/report.json",
+      "report_sha256": "8341d6c71cec6915f0d2b717e57793d1b8d1432024094c80ed1fb4e9533787e5",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNPLANNED_CONTACT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v10",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "55fb06d931c6103f76125294abca5884f37840e477cf95fbf2175d3d88f193a1",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 0.785,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v11",
+      "report": "artifacts/free-sit/lower-v11/report.json",
+      "report_sha256": "51846e8fe295ea84fc6cf1a2c21fa3500c1758cad6b97ebafe86f7c3694ff847",
+      "recorded_status": "failed",
+      "recorded_failure": "INSUFFICIENT_SEAT_SUPPORT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v11",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "c62b98aac51f045d72b5dc3697adde69a849ab1cc0bdb216cd7958cc6fd5a7f3",
+        "balance_policy.py": "0f71817660a89ffc27b826742ef2d2fb5135893356ed0bb31dcc02bd9e5f3d12",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 15.985000000000001,
+      "recorded_verification": {
+        "succeeded": false,
+        "free_balance_sitting_verified": false,
+        "failure": "INSUFFICIENT_SEAT_SUPPORT",
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 800
+      }
+    },
+    {
+      "run": "lower-v12",
+      "report": "artifacts/free-sit/lower-v12/report.json",
+      "report_sha256": "baf0821f014c7bb48c882433844fb9e929da82434debdca4c23596d3e72ec985",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNPLANNED_CONTACT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v12",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "a55fc7c62f1677288717e1b6eee7e195cdc7bed75690d79ee1af30fcc0220ce0",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "938d7f875e97c84ed992d2f6ecdd16955a2b8bdfd518f4e39d15f27de404ee96"
+      },
+      "observed_until_s": 5.505,
+      "recorded_verification": null
+    },
+    {
+      "run": "lower-v13",
+      "report": "artifacts/free-sit/lower-v13/report.json",
+      "report_sha256": "866473c37b2e2d5f196926e3d25f9879c24dec76a5ba0c74d7d60b7e771fb55f",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/lower-v13",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 16.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "76afd0ccc47ba530fef930e5bbb04bc9f507cc747e83228d905ec8bb815ad68c",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "38ae78d24a4e15f114cc1fdfdc5a6690a717bc5fffbeeae4a257dcd4f4bb38d1"
+      },
+      "observed_until_s": 13.925,
+      "recorded_verification": null
+    },
+    {
+      "run": "contact-hold-v1",
+      "report": "artifacts/free-sit/contact-hold-v1/report.json",
+      "report_sha256": "beb2b200dee42d1f0e0771543add126b0c23179e0c21052f1ca781a49a47607e",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: UNSAFE_TILT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/contact-hold-v1",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "6b14d59a62c07dfb643358b0285039facc6b4f35021505d41a98e27ac863d226",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "483437cd7a3e7c9997871beca58e4326a58c92c3e35c77f970c9a9caf5f75de4"
+      },
+      "observed_until_s": 11.165000000000001,
+      "recorded_verification": null
+    },
+    {
+      "run": "contact-hold-v2",
+      "report": "artifacts/free-sit/contact-hold-v2/report.json",
+      "report_sha256": "664dd992e9c952514267254c83d93b789d7f06f8dc6c26cfa2cef86bef19c275",
+      "recorded_status": "passed",
+      "recorded_failure": null,
+      "configuration": {
+        "output_dir": "artifacts/free-sit/contact-hold-v2",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "4901c23ee11e232ff47bfafdf92b37100e050979402c762696865f0d63e71d04",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "483437cd7a3e7c9997871beca58e4326a58c92c3e35c77f970c9a9caf5f75de4"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": true,
+        "free_balance_sitting_verified": true,
+        "failure": null,
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900,
+        "standing_height_m": 0.750464574098587,
+        "final_height_m": 0.6231958866119385,
+        "minimum_seat_force_n": 110.77280044555664,
+        "maximum_chair_speed_mps": 0.0241134874522686,
+        "stable_window_s": 1.9999999999999982
+      }
+    },
+    {
+      "run": "video-seed7",
+      "report": "artifacts/free-sit/video-seed7/report.json",
+      "report_sha256": "bfde40facde7c7dca73799a2a5734ef37524a28425c2808e8251465e1fd7ad3f",
+      "recorded_status": "passed",
+      "recorded_failure": null,
+      "configuration": {
+        "output_dir": "artifacts/free-sit/video-seed7",
+        "headless": true,
+        "video": true,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.55
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "ef4434c632e6fef946bf400a50946258b460e0e504f77bedab4c231fd4211fd1",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": true,
+        "free_balance_sitting_verified": true,
+        "failure": null,
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900,
+        "standing_height_m": 0.750464574098587,
+        "final_height_m": 0.6231958866119385,
+        "minimum_seat_force_n": 110.77280044555664,
+        "maximum_chair_speed_mps": 0.0241134874522686,
+        "stable_window_s": 1.9999999999999982
+      }
+    },
+    {
+      "run": "near-desk-video-seed7",
+      "report": "artifacts/free-sit/near-desk-video-seed7/report.json",
+      "report_sha256": "0bdf80e646b4d0cba88248bb9a298e80f226f588e17011dc1cd51c106fa2b981",
+      "recorded_status": "failed",
+      "recorded_failure": "RuntimeError: EXCESS_CONTACT_FORCE",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/near-desk-video-seed7",
+        "headless": true,
+        "video": true,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "f3147060870ecedae00a2ee7cc5f4342a0ca97c63fecad78d62263abc0f27b8d",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 12.625,
+      "recorded_verification": null
+    },
+    {
+      "run": "cushion-near-seed7",
+      "report": "artifacts/free-sit/cushion-near-seed7/report.json",
+      "report_sha256": "2319c5f79d130cec962e94a944e1b7162b7a58387e665a3f916af897c48df2f4",
+      "recorded_status": "failed",
+      "recorded_failure": "NO_SIT_TRANSITION",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/cushion-near-seed7",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.56,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.25,
+        "desk_offset_x": 0.0,
+        "seat_stiffness": 20000.0,
+        "seat_damping": 600.0
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "3247e6116ca4b45c922ee63a195663ae7c88d3bd7cbc14cda823219f4dbc8bbc",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": false,
+        "free_balance_sitting_verified": false,
+        "failure": "NO_SIT_TRANSITION",
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900
+      }
+    },
+    {
+      "run": "cushion-load45-seed7",
+      "report": "artifacts/free-sit/cushion-load45-seed7/report.json",
+      "report_sha256": "55831478fa1a413d586af8c27baf9336aadfd7c95344ac19853097f243d2f8c7",
+      "recorded_status": "failed",
+      "recorded_failure": "SEATED_TILT",
+      "configuration": {
+        "output_dir": "artifacts/free-sit/cushion-load45-seed7",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.54,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.2,
+        "desk_offset_x": 0.0,
+        "seat_stiffness": 20000.0,
+        "seat_damping": 600.0,
+        "hold_load_fraction": 0.45
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "fae603db13a7231f6975045a90c7c05352c051bcc89871af1fa194cc94f3313e",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": false,
+        "free_balance_sitting_verified": false,
+        "failure": "SEATED_TILT",
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900
+      }
+    },
+    {
+      "run": "cushion-upright-seed7",
+      "report": "artifacts/free-sit/cushion-upright-seed7/report.json",
+      "report_sha256": "a1e6d2c2d352517e808ea2d5cdd90e82016e5537b4825ae6bdc30b2ad739133d",
+      "recorded_status": "passed",
+      "recorded_failure": null,
+      "configuration": {
+        "output_dir": "artifacts/free-sit/cushion-upright-seed7",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.54,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.2,
+        "settled_pitch": 0.05,
+        "desk_offset_x": 0.0,
+        "seat_stiffness": 20000.0,
+        "seat_damping": 600.0,
+        "hold_load_fraction": 0.45,
+        "chair_contact_mode": "cushion"
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "ad44feb2b388f5bb2128302ebabb0b94d22de597d5ef8918d8119a4d61b53063",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": true,
+        "free_balance_sitting_verified": true,
+        "failure": null,
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900,
+        "standing_height_m": 0.7506272828578949,
+        "final_height_m": 0.6135435700416565,
+        "minimum_seat_force_n": 156.1625747680664,
+        "maximum_chair_speed_mps": 0.01995980553328991,
+        "stable_window_s": 1.9999999999999982
+      }
+    },
+    {
+      "run": "accepted-seed7",
+      "report": "artifacts/free-sit/accepted-seed7/report.json",
+      "report_sha256": "248553f0ef472be08bda34cd3bdada7ed5488793e8b5f0007c706debf8ddb410",
+      "recorded_status": "passed",
+      "recorded_failure": null,
+      "configuration": {
+        "output_dir": "artifacts/free-sit/accepted-seed7",
+        "headless": true,
+        "video": true,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.54,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.2,
+        "settled_pitch": 0.05,
+        "desk_offset_x": 0.0,
+        "seat_stiffness": 20000.0,
+        "seat_damping": 600.0,
+        "hold_load_fraction": 0.45,
+        "chair_contact_mode": "cushion"
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "e466d36edce931a1047c5c4da84a51574c38cbb5fac01aaef8e72470115e7097",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": true,
+        "free_balance_sitting_verified": true,
+        "failure": null,
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900,
+        "standing_height_m": 0.7506272828578949,
+        "final_height_m": 0.6135435700416565,
+        "minimum_seat_force_n": 156.1625747680664,
+        "maximum_chair_speed_mps": 0.01995980553328991,
+        "stable_window_s": 1.9999999999999982
+      }
+    },
+    {
+      "run": "repeated-seed7",
+      "report": "artifacts/free-sit/repeated-seed7/report.json",
+      "report_sha256": "b3b98bfd77809a1aff6e587b9eaef5a656137e34875ebb47c6de2fdb1b5d28b3",
+      "recorded_status": "passed",
+      "recorded_failure": null,
+      "configuration": {
+        "output_dir": "artifacts/free-sit/repeated-seed7",
+        "headless": true,
+        "video": false,
+        "device": "cuda:0",
+        "seed": 7,
+        "duration": 18.0,
+        "height": 0.54,
+        "lower_duration": 8.0,
+        "chair_x": -0.03,
+        "robot_x": 0.25,
+        "pitch": 0.2,
+        "settled_pitch": 0.05,
+        "desk_offset_x": 0.0,
+        "seat_stiffness": 20000.0,
+        "seat_damping": 600.0,
+        "hold_load_fraction": 0.45,
+        "chair_contact_mode": "cushion"
+      },
+      "implementation_sha256": {
+        "free_sitting_scene.py": "e466d36edce931a1047c5c4da84a51574c38cbb5fac01aaef8e72470115e7097",
+        "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+        "free_sitting.py": "1fb1b2159202267bea0e01d2983c3126ceaeb16959a07b34d51f6e4ae5e8b436",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+        "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+        "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+        "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02"
+      },
+      "observed_until_s": 17.985,
+      "recorded_verification": {
+        "succeeded": true,
+        "free_balance_sitting_verified": true,
+        "failure": null,
+        "source": "isaac_physx_free_sitting",
+        "sample_count": 900,
+        "standing_height_m": 0.7506272828578949,
+        "final_height_m": 0.6135435700416565,
+        "minimum_seat_force_n": 156.1625747680664,
+        "maximum_chair_speed_mps": 0.01995980553328991,
+        "stable_window_s": 1.9999999999999982
+      }
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "scope": "assisted_seating_and_ten_finger_typing",
+  "passed": true,
+  "runs": [
+    {
+      "passed": true,
+      "gates": {
+        "recorded_status_passed": true,
+        "independent_telemetry_verification": true,
+        "full_default_ten_finger_plan": true,
+        "seating_transition_executed": true,
+        "source_preflight": true,
+        "hard_mimic_preflight": true,
+        "audited_distal_contacts": true,
+        "no_keys_down_at_end": true,
+        "event_stream_matches_observations": true
+      },
+      "report_path": "reports/isaac_dex5_runs/seed7-video.json",
+      "report_sha256": "92f3f268b8635f765589d2e6af6ce9091f4e88b99353e8cde48fbbe1c6b9912e",
+      "runtime": {
+        "isaac_sim": "5.1.0-rc.19+release.26219.9c81211b.gl",
+        "torch": "2.7.0+cu128",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "device": "cuda:0"
+      },
+      "seed": 7,
+      "physical_duration_s": 26.454166666666666,
+      "max_keycap_force_n": 1.3839455842971802,
+      "verification": {
+        "succeeded": true,
+        "capability": "isaac_sim_5_1",
+        "failure_code": null,
+        "failure_detail": "",
+        "completed_strokes": 10,
+        "planned_strokes": 10,
+        "executors_observed": [
+          "left.index",
+          "left.little",
+          "left.middle",
+          "left.ring",
+          "left.thumb",
+          "right.index",
+          "right.little",
+          "right.middle",
+          "right.ring",
+          "right.thumb"
+        ],
+        "observed_text": "asdf jkl; ",
+        "expected_text": "asdf jkl; ",
+        "keys_down_after_stop": [],
+        "support_mode": "assisted_fixture",
+        "recovery_actions": [],
+        "dynamic_sitting_verified": false,
+        "camera_ocr_verified": false,
+        "real_robot_verified": false,
+        "version": "1.0.0"
+      },
+      "assumptions": [
+        "actuated horizontal/vertical pelvis support fixture",
+        "fixed chair",
+        "approximate G1-Dex5 mount",
+        "approximate distal coupling",
+        "distal mesh collisions replaced by rigidly attached 6 mm spherical pads",
+        "model-based gravity feedforward; total joint torque not independently verified",
+        "PhysX oracle; no camera OCR"
+      ],
+      "implementation_sha256": {
+        "dex5_demo.py": "f94f6eb7f048deb570526af23440aa319e54d8528fc1718c16664e4596aa752c",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "dex5_typing.py": "df8e4a29eefe9216281a86ddc5caf56d670f0d97b248bac899924d188d32a2d9",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02",
+        "dex5_postures.json": "d7de3015ea3b7b388ca232affe1cd490b3abec4ffa49f1c788846426aab7d674"
+      },
+      "stroke_metrics": [
+        {
+          "stroke": 0,
+          "key": "a",
+          "executor": "left.little",
+          "keydown_time_s": 10.204166666666666,
+          "keyup_time_s": 10.233333333333333,
+          "keydown_travel_mm": 2.2941112983971834,
+          "keydown_contact_n": 0.8110820055007935,
+          "final_minimum_fingertip_clearance_mm": 41.65260934829706
+        },
+        {
+          "stroke": 1,
+          "key": "s",
+          "executor": "left.ring",
+          "keydown_time_s": 12.079166666666666,
+          "keyup_time_s": 12.104166666666666,
+          "keydown_travel_mm": 2.093565184623003,
+          "keydown_contact_n": 0.9647276997566223,
+          "final_minimum_fingertip_clearance_mm": 42.40487957000727
+        },
+        {
+          "stroke": 2,
+          "key": "d",
+          "executor": "left.middle",
+          "keydown_time_s": 13.9375,
+          "keyup_time_s": 13.966666666666667,
+          "keydown_travel_mm": 2.3738734889775515,
+          "keydown_contact_n": 0.8303074836730957,
+          "final_minimum_fingertip_clearance_mm": 42.26391458511347
+        },
+        {
+          "stroke": 3,
+          "key": "f",
+          "executor": "left.index",
+          "keydown_time_s": 15.6625,
+          "keyup_time_s": 15.670833333333333,
+          "keydown_travel_mm": 2.0257586147636175,
+          "keydown_contact_n": 0.7211995720863342,
+          "final_minimum_fingertip_clearance_mm": 41.966547012329045
+        },
+        {
+          "stroke": 4,
+          "key": "space",
+          "executor": "left.thumb",
+          "keydown_time_s": 16.975,
+          "keyup_time_s": 16.9875,
+          "keydown_travel_mm": 2.025547670200467,
+          "keydown_contact_n": 0.7281854748725891,
+          "final_minimum_fingertip_clearance_mm": 42.13093662261957
+        },
+        {
+          "stroke": 5,
+          "key": "j",
+          "executor": "right.index",
+          "keydown_time_s": 19.270833333333332,
+          "keyup_time_s": 19.2875,
+          "keydown_travel_mm": 2.17620050534606,
+          "keydown_contact_n": 0.7624363899230957,
+          "final_minimum_fingertip_clearance_mm": 41.65600681304926
+        },
+        {
+          "stroke": 6,
+          "key": "k",
+          "executor": "right.middle",
+          "keydown_time_s": 20.979166666666668,
+          "keyup_time_s": 21.004166666666666,
+          "keydown_travel_mm": 2.03502899967134,
+          "keydown_contact_n": 0.7225781679153442,
+          "final_minimum_fingertip_clearance_mm": 42.10149192810053
+        },
+        {
+          "stroke": 7,
+          "key": "l",
+          "executor": "right.ring",
+          "keydown_time_s": 23.0375,
+          "keyup_time_s": 23.0625,
+          "keydown_travel_mm": 2.0222177263349295,
+          "keydown_contact_n": 0.7143712639808655,
+          "final_minimum_fingertip_clearance_mm": 42.1274795532226
+        },
+        {
+          "stroke": 8,
+          "key": ";",
+          "executor": "right.little",
+          "keydown_time_s": 24.604166666666668,
+          "keyup_time_s": 24.625,
+          "keydown_travel_mm": 2.0045354031026363,
+          "keydown_contact_n": 0.7092183232307434,
+          "final_minimum_fingertip_clearance_mm": 42.11335325241083
+        },
+        {
+          "stroke": 9,
+          "key": "space",
+          "executor": "right.thumb",
+          "keydown_time_s": 25.904166666666665,
+          "keyup_time_s": 25.916666666666668,
+          "keydown_travel_mm": 2.021623542532325,
+          "keydown_contact_n": 0.7247218489646912,
+          "final_minimum_fingertip_clearance_mm": 42.095352649688664
+        }
+      ]
+    },
+    {
+      "passed": true,
+      "gates": {
+        "recorded_status_passed": true,
+        "independent_telemetry_verification": true,
+        "full_default_ten_finger_plan": true,
+        "seating_transition_executed": true,
+        "source_preflight": true,
+        "hard_mimic_preflight": true,
+        "audited_distal_contacts": true,
+        "no_keys_down_at_end": true,
+        "event_stream_matches_observations": true
+      },
+      "report_path": "reports/isaac_dex5_runs/seed7-no-video.json",
+      "report_sha256": "ee6875ef24fbfaa34236572f306aefba73207cd9203428ca6ed99ff49678a5d2",
+      "runtime": {
+        "isaac_sim": "5.1.0-rc.19+release.26219.9c81211b.gl",
+        "torch": "2.7.0+cu128",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "device": "cuda:0"
+      },
+      "seed": 7,
+      "physical_duration_s": 32.395833333333336,
+      "max_keycap_force_n": 0.7790937423706055,
+      "verification": {
+        "succeeded": true,
+        "capability": "isaac_sim_5_1",
+        "failure_code": null,
+        "failure_detail": "",
+        "completed_strokes": 10,
+        "planned_strokes": 10,
+        "executors_observed": [
+          "left.index",
+          "left.little",
+          "left.middle",
+          "left.ring",
+          "left.thumb",
+          "right.index",
+          "right.little",
+          "right.middle",
+          "right.ring",
+          "right.thumb"
+        ],
+        "observed_text": "asdf jkl; ",
+        "expected_text": "asdf jkl; ",
+        "keys_down_after_stop": [],
+        "support_mode": "assisted_fixture",
+        "recovery_actions": [],
+        "dynamic_sitting_verified": false,
+        "camera_ocr_verified": false,
+        "real_robot_verified": false,
+        "version": "1.0.0"
+      },
+      "assumptions": [
+        "actuated horizontal/vertical pelvis support fixture",
+        "fixed chair",
+        "approximate G1-Dex5 mount",
+        "approximate distal coupling",
+        "distal mesh collisions replaced by rigidly attached 6 mm spherical pads",
+        "model-based gravity feedforward; total joint torque not independently verified",
+        "PhysX oracle; no camera OCR"
+      ],
+      "implementation_sha256": {
+        "dex5_demo.py": "f94f6eb7f048deb570526af23440aa319e54d8528fc1718c16664e4596aa752c",
+        "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+        "dex5_typing.py": "df8e4a29eefe9216281a86ddc5caf56d670f0d97b248bac899924d188d32a2d9",
+        "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02",
+        "dex5_postures.json": "d7de3015ea3b7b388ca232affe1cd490b3abec4ffa49f1c788846426aab7d674"
+      },
+      "stroke_metrics": [
+        {
+          "stroke": 0,
+          "key": "a",
+          "executor": "left.little",
+          "keydown_time_s": 10.7125,
+          "keyup_time_s": 10.75,
+          "keydown_travel_mm": 2.011257456615567,
+          "keydown_contact_n": 0.7462074160575867,
+          "final_minimum_fingertip_clearance_mm": 42.84196043014521
+        },
+        {
+          "stroke": 1,
+          "key": "s",
+          "executor": "left.ring",
+          "keydown_time_s": 13.208333333333334,
+          "keyup_time_s": 13.241666666666667,
+          "keydown_travel_mm": 2.044297056272626,
+          "keydown_contact_n": 0.7513163685798645,
+          "final_minimum_fingertip_clearance_mm": 42.66803407669062
+        },
+        {
+          "stroke": 2,
+          "key": "d",
+          "executor": "left.middle",
+          "keydown_time_s": 15.695833333333333,
+          "keyup_time_s": 15.725,
+          "keydown_travel_mm": 2.056097611784935,
+          "keydown_contact_n": 0.7428790330886841,
+          "final_minimum_fingertip_clearance_mm": 42.45757007598871
+        },
+        {
+          "stroke": 3,
+          "key": "f",
+          "executor": "left.index",
+          "keydown_time_s": 18.054166666666667,
+          "keyup_time_s": 18.075,
+          "keydown_travel_mm": 2.02917424030602,
+          "keydown_contact_n": 0.7005364298820496,
+          "final_minimum_fingertip_clearance_mm": 42.055655956268254
+        },
+        {
+          "stroke": 4,
+          "key": "space",
+          "executor": "left.thumb",
+          "keydown_time_s": 19.78333333333333,
+          "keyup_time_s": 19.8,
+          "keydown_travel_mm": 2.076052827760577,
+          "keydown_contact_n": 0.7520448565483093,
+          "final_minimum_fingertip_clearance_mm": 42.23846340179438
+        },
+        {
+          "stroke": 5,
+          "key": "j",
+          "executor": "right.index",
+          "keydown_time_s": 22.895833333333332,
+          "keyup_time_s": 22.916666666666668,
+          "keydown_travel_mm": 2.0078199449926615,
+          "keydown_contact_n": 0.727414071559906,
+          "final_minimum_fingertip_clearance_mm": 42.08134555816645
+        },
+        {
+          "stroke": 6,
+          "key": "k",
+          "executor": "right.middle",
+          "keydown_time_s": 25.175,
+          "keyup_time_s": 25.204166666666666,
+          "keydown_travel_mm": 2.012786688283086,
+          "keydown_contact_n": 0.7323291897773743,
+          "final_minimum_fingertip_clearance_mm": 42.43158245086664
+        },
+        {
+          "stroke": 7,
+          "key": "l",
+          "executor": "right.ring",
+          "keydown_time_s": 27.9,
+          "keyup_time_s": 27.933333333333334,
+          "keydown_travel_mm": 2.031684387475252,
+          "keydown_contact_n": 0.7435116171836853,
+          "final_minimum_fingertip_clearance_mm": 42.469967842101994
+        },
+        {
+          "stroke": 8,
+          "key": ";",
+          "executor": "right.little",
+          "keydown_time_s": 30.0,
+          "keyup_time_s": 30.03333333333333,
+          "keydown_travel_mm": 2.1133022382855415,
+          "keydown_contact_n": 0.7790937423706055,
+          "final_minimum_fingertip_clearance_mm": 42.50573062896723
+        },
+        {
+          "stroke": 9,
+          "key": "space",
+          "executor": "right.thumb",
+          "keydown_time_s": 31.65833333333333,
+          "keyup_time_s": 31.670833333333334,
+          "keydown_travel_mm": 2.0599120762199163,
+          "keydown_contact_n": 0.7432121634483337,
+          "final_minimum_fingertip_clearance_mm": 42.20794582366938
+        }
+      ]
+    }
+  ],
+  "dynamic_sitting_verified": false,
+  "camera_ocr_verified": false,
+  "real_robot_verified": false,
+  "audit_tool_sha256": "33d18dd7425787e6043a20dbc209f2d634f653b8f4c5f0016c0e5968970d6bf2",
+  "video": {
+    "path": "artifacts/dex5/accepted-seed7/demo.mp4",
+    "sha256": "b6f221e7b686cc2cf2586cd75c2682386c6a6bccad8fabdf8c64683a02f26eca"
+  }
+}

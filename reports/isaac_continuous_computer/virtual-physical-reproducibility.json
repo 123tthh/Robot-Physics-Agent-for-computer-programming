@@ -1,0 +1,9 @@
+{
+  "succeeded": true,
+  "scope": "first 40 seconds of physical observations; same physical controller and seed, camera focal length differs",
+  "sample_count": 2000,
+  "first_run_duration_s": 48,
+  "second_run_duration_s": 40,
+  "sample_by_sample_equal": true,
+  "all_ten_finger_repetition_claimed": false
+}

@@ -1,5 +1,5 @@
 {
-  "reviewed_at": "2026-09-04",
+  "reviewed_at": "2026-09-25",
   "projects": [
     {
       "name": "Unitree G1 description",
@@ -180,6 +180,150 @@
       "integration": "adapter",
       "use_for": ["local GGUF runtime", "OpenAI-compatible loopback endpoint"],
       "constraints": ["pin runtime and chat template; regression-test tool calls on every upgrade"]
+    },
+    {
+      "name": "Isaac Lab",
+      "url": "https://github.com/isaac-sim/IsaacLab",
+      "subsystem": "simulation_learning",
+      "maturity": "official",
+      "integration": "adopt",
+      "use_for": ["vectorized robot-learning environments", "contact and RTX sensing", "RL and imitation-learning workflows"],
+      "constraints": ["keep the accepted Isaac Sim 5.1 and Isaac Lab 2.3.2 baseline pinned", "evaluate Isaac Lab 3.0 and Isaac Sim 6.x in a separate environment", "Isaac Sim and some dependencies have separate licensing terms"]
+    },
+    {
+      "name": "Newton",
+      "url": "https://github.com/newton-physics/newton",
+      "subsystem": "simulation_learning",
+      "maturity": "official_open_source",
+      "integration": "adapter",
+      "use_for": ["secondary physics backend", "high-throughput GPU simulation", "sim-to-sim robustness checks"],
+      "constraints": ["validate key travel, friction, hysteresis, multi-finger contacts, cameras, and evidence parity before replacing PhysX", "Apache-2.0 code; pin a tested release or commit"]
+    },
+    {
+      "name": "RSL-RL",
+      "url": "https://github.com/leggedrobotics/rsl_rl",
+      "subsystem": "robot_learning",
+      "maturity": "upstream",
+      "integration": "adapter",
+      "use_for": ["PPO baseline", "teacher-student distillation", "multi-GPU robot learning"],
+      "constraints": ["pin a version compatible with the selected Isaac Lab environment", "keep learner dependencies outside the core package"]
+    },
+    {
+      "name": "Hugging Face LeRobot",
+      "url": "https://github.com/huggingface/lerobot",
+      "subsystem": "dataset_training",
+      "maturity": "official_upstream",
+      "integration": "adapter",
+      "use_for": ["versioned robot datasets", "teleoperation and data collection", "ACT, Diffusion Policy, and HIL-SERL baselines", "Unitree G1 interface"],
+      "constraints": ["do not let its rollout success bypass the project Verifier", "the official G1 arm workflow may use IK and is not evidence for a strict no-IK experiment", "Apache-2.0 code; model and dataset licenses remain separate"]
+    },
+    {
+      "name": "robomimic",
+      "url": "https://github.com/ARISE-Initiative/robomimic",
+      "subsystem": "dataset_training",
+      "maturity": "research_release",
+      "integration": "baseline",
+      "use_for": ["behavior-cloning baselines", "Diffusion Policy baseline", "offline RL and reproducible dataset experiments"],
+      "constraints": ["requires a custom observation, action, and rollout adapter for G1 and dexterous hands", "MIT code"]
+    },
+    {
+      "name": "Diffusion Policy",
+      "url": "https://github.com/real-stanford/diffusion_policy",
+      "subsystem": "policy_learning",
+      "maturity": "research_release",
+      "integration": "baseline",
+      "use_for": ["action-sequence imitation-learning baseline", "published configurations and reproducibility logs"],
+      "constraints": ["not itself a self-improvement method", "avoid a second integration if LeRobot or robomimic already provides a sufficient baseline", "MIT code"]
+    },
+    {
+      "name": "RoboPianist",
+      "url": "https://github.com/google-research/robopianist",
+      "subsystem": "dexterous_benchmark",
+      "maturity": "research_release",
+      "integration": "reference",
+      "use_for": ["bimanual multi-finger contact tasks", "temporal precision and fingering evaluation", "adjacent-domain RL baseline"],
+      "constraints": ["MuJoCo Shadow Hand piano tasks differ from G1 computer-keyboard operation", "Apache-2.0 code with separate asset and dependency licenses"]
+    },
+    {
+      "name": "HIL-SERL",
+      "url": "https://github.com/rail-berkeley/hil-serl",
+      "subsystem": "online_improvement",
+      "maturity": "research_release",
+      "integration": "adapter",
+      "use_for": ["asynchronous actor-learner design", "replay and demonstration ingestion", "human intervention during real-robot RL"],
+      "constraints": ["official robot infrastructure targets Franka", "rewrite the G1 and hand environment, action space, safety, and intervention adapter", "human-in-the-loop results are not unattended autonomous learning", "Apache-2.0 code"]
+    },
+    {
+      "name": "SOAR",
+      "url": "https://github.com/rail-berkeley/soar",
+      "subsystem": "autonomous_collection",
+      "maturity": "research_release",
+      "integration": "reference",
+      "use_for": ["semantics-aware autonomous data collection", "RLDS conversion", "reset detection and collection orchestration"],
+      "constraints": ["targets WidowX tabletop tasks and JAX/Flax", "VLM weak labels cannot replace independent verification", "MIT code"]
+    },
+    {
+      "name": "RISE",
+      "url": "https://github.com/OpenDriveLab/RISE",
+      "subsystem": "world_model_improvement",
+      "maturity": "research_release",
+      "integration": "reference",
+      "use_for": ["action-conditioned dynamics model", "progress-value model", "policy improvement through imagined rollouts"],
+      "constraints": ["heavy OpenPI, RLinf, and video-model dependencies", "adopt only after low-dimensional models and residual baselines", "code defaults to Apache-2.0 while data and checkpoints use CC BY-NC-SA 4.0"]
+    },
+    {
+      "name": "OpenPI",
+      "url": "https://github.com/Physical-Intelligence/openpi",
+      "subsystem": "policy_learning",
+      "maturity": "official_research_release",
+      "integration": "reference",
+      "use_for": ["vision-language-action baseline", "LeRobot data conversion", "remote policy inference", "RISE dependency"],
+      "constraints": ["not the first keyboard residual-policy choice", "robot embodiments differ from G1 and dexterous hands", "code is Apache-2.0 while Gemma and checkpoint licenses are separate", "fine-tuning has substantial GPU memory requirements"]
+    },
+    {
+      "name": "OMNI-EPIC",
+      "url": "https://github.com/maxencefaldor/omni-epic",
+      "subsystem": "curriculum_generation",
+      "maturity": "research_release",
+      "integration": "reference",
+      "use_for": ["open-ended task generation", "interestingness and learnability scoring", "task archives"],
+      "constraints": ["whitelist the task and code search space", "original environments are not Isaac or G1", "requires external model APIs and a separate container", "Apache-2.0 code"]
+    },
+    {
+      "name": "Eureka",
+      "url": "https://github.com/eureka-research/Eureka",
+      "subsystem": "reward_generation",
+      "maturity": "research_release_legacy_stack",
+      "integration": "reference",
+      "use_for": ["LLM-generated reward candidates", "batched policy evaluation", "reward reflection"],
+      "constraints": ["built around Isaac Gym Preview 4 rather than current Isaac Lab", "generated rewards must never replace the frozen final Verifier", "MIT code"]
+    },
+    {
+      "name": "Darwin Godel Machine",
+      "url": "https://github.com/jennyzzt/dgm",
+      "subsystem": "recursive_improvement",
+      "maturity": "research_release_digital_agent",
+      "integration": "reference",
+      "use_for": ["parent-child candidate archives", "self-modifying code-agent experiments", "outer benchmark selection"],
+      "constraints": ["evidence is from software-engineering benchmarks, not robots", "run without hardware, verifier, or deployment credentials", "use only for the late meta-improver stage", "Apache-2.0 code"]
+    },
+    {
+      "name": "SERL",
+      "url": "https://github.com/rail-berkeley/serl",
+      "subsystem": "online_improvement",
+      "maturity": "deprecated_upstream",
+      "integration": "reference",
+      "use_for": ["historical sample-efficient real-robot RL design"],
+      "constraints": ["upstream declares this repository deprecated", "use HIL-SERL for new integration"]
+    },
+    {
+      "name": "IsaacGymEnvs",
+      "url": "https://github.com/isaac-sim/IsaacGymEnvs",
+      "subsystem": "simulation_learning",
+      "maturity": "archived_upstream",
+      "integration": "reference",
+      "use_for": ["reproducing legacy Eureka and Isaac Gym experiments"],
+      "constraints": ["repository is archived and read-only", "port only the minimum algorithmic idea into Isaac Lab"]
     }
   ]
 }

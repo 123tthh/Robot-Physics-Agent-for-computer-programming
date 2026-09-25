@@ -1,0 +1,37 @@
+{
+  "succeeded": true,
+  "runs": [
+    {
+      "report": "reports/isaac_free_sitting_runs/seed7-video.json",
+      "report_sha256": "248553f0ef472be08bda34cd3bdada7ed5488793e8b5f0007c706debf8ddb410",
+      "succeeded": true,
+      "free_balance_sitting_verified": true,
+      "failure": null,
+      "source": "isaac_physx_free_sitting",
+      "sample_count": 900,
+      "standing_height_m": 0.7506272828578949,
+      "final_height_m": 0.6135435700416565,
+      "minimum_seat_force_n": 156.1625747680664,
+      "maximum_chair_speed_mps": 0.01995980553328991,
+      "stable_window_s": 1.9999999999999982,
+      "controller_status": "passed",
+      "evidence_note": "Checks record consistency; does not authenticate fabricated sensor records."
+    },
+    {
+      "report": "reports/isaac_free_sitting_runs/seed7-no-video.json",
+      "report_sha256": "b3b98bfd77809a1aff6e587b9eaef5a656137e34875ebb47c6de2fdb1b5d28b3",
+      "succeeded": true,
+      "free_balance_sitting_verified": true,
+      "failure": null,
+      "source": "isaac_physx_free_sitting",
+      "sample_count": 900,
+      "standing_height_m": 0.7506272828578949,
+      "final_height_m": 0.6135435700416565,
+      "minimum_seat_force_n": 156.1625747680664,
+      "maximum_chair_speed_mps": 0.01995980553328991,
+      "stable_window_s": 1.9999999999999982,
+      "controller_status": "passed",
+      "evidence_note": "Checks record consistency; does not authenticate fabricated sensor records."
+    }
+  ]
+}

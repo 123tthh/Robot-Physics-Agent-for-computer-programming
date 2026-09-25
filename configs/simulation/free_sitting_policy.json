@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "name": "GR00T-WholeBodyControl-Balance",
+  "source_repository": "https://github.com/NVlabs/GR00T-WholeBodyControl",
+  "source_commit": "2a5e6a1b55d9d0205a96e757b86007ec020cf589",
+  "url": "https://media.githubusercontent.com/media/NVlabs/GR00T-WholeBodyControl/2a5e6a1b55d9d0205a96e757b86007ec020cf589/decoupled_wbc/sim2mujoco/resources/robots/g1/policy/GR00T-WholeBodyControl-Balance.onnx",
+  "sha256": "f645da599d4ca3d29ed273c8f4712620bb680d34977469ca3aeabe5bb9631c18",
+  "size_bytes": 1886682,
+  "local_path": "artifacts/free-sit/policy/GR00T-WholeBodyControl-Balance.onnx",
+  "license": "NVIDIA Open Model License (model); Apache-2.0 (source)",
+  "license_file": "references/P4_posture_and_chair/GR00T_LICENSE.txt",
+  "license_sha256": "24ab66be50d1aca4fc5e029ef76ce4ceaac6557ea21665caf4b140695a76ffee",
+  "input_shape": [1, 516],
+  "history_length": 6,
+  "single_observation_size": 86,
+  "output_shape": [1, 15],
+  "physics_dt_s": 0.005,
+  "control_decimation": 4,
+  "action_scale": 0.25,
+  "qualification": "simulation experiment; not Stay Seated weights; not qualified for real G1 + Dex5"
+}

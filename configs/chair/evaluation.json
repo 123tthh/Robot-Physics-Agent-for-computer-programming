@@ -1,0 +1,14 @@
+{
+  "schema": "chair-evaluation-plan-v1",
+  "status": "not_run",
+  "consumer": "research evaluator adapter; declarative plan, not automatically executed",
+  "held_out_seeds": [8101, 8102, 8103, 8104],
+  "directions": ["forward", "backward", "left", "right", "diagonal", "yaw_left", "yaw_right", "stop"],
+  "linear_speeds_mps": [0.05, 0.15, 0.3, 0.5],
+  "yaw_rates_rps": [0.1, 0.3, 0.5],
+  "skill_horizons_s": [0.2, 2.0, 5.0],
+  "held_out_conditions": ["chair_mass", "seat_height", "floor_friction", "caster_damping", "initial_caster_heading", "table_clearance", "hand_payload"],
+  "faults": ["seat_loss", "stationary", "wrong_way", "chair_stuck", "caster_locked", "stale_sensor", "collision", "cancel", "stop_failure", "unreachable_keyboard"],
+  "metrics": ["signed_robot_progress", "signed_chair_progress", "tracking_rmse", "minimum_seat_confidence", "pelvis_seat_offset", "torso_tilt", "chair_tilt", "wheel_slip_ratio", "foot_slip", "settle_duration", "work_pose_success", "mechanical_energy_per_distance", "stationary_rate", "failure_code", "latency_p95"],
+  "notes": "Filter commands by demand >= 0.02 and planar norm <= 0.5 for skill tests. Stop is a separate stability task. Mechanical energy is not electrical CoT; near-zero distance yields null, not zero. Publish numerator/denominator and confidence intervals, including failed episodes."
+}

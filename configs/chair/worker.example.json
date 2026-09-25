@@ -1,0 +1,4 @@
+{
+  "argv": ["/REPLACE_WITH_SIM_ENV/bin/python", "-m", "your_chair_worker"],
+  "timeout_s": 30.0
+}

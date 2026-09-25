@@ -1,0 +1,11 @@
+{
+  "schema": "chair-training-v1",
+  "episode_s": 20.0,
+  "command_hold_s": 2.0,
+  "iterations": 10000,
+  "rollout_steps": 24,
+  "seed": 42,
+  "symmetry": false,
+  "foot_slip": false,
+  "curriculum": false
+}

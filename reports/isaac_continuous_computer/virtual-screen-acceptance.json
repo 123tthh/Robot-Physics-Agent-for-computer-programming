@@ -1,0 +1,147 @@
+{
+  "succeeded": true,
+  "gates": {
+    "physical_command_and_sitting": true,
+    "requested_command": true,
+    "all_physical_events_forwarded_unchanged": true,
+    "correct_keydown_sequence": true,
+    "contact_event_source": true,
+    "camera_hashes_match": true,
+    "camera_output_absent_before_input": true,
+    "camera_output_visible_after_input": true,
+    "capture_after_enter": true,
+    "pty_contains_real_output": true,
+    "texture_pixel_evidence_matches": true,
+    "depth_sensor_has_finite_positive_measurements": true,
+    "depth_aligned_to_rgb_dimensions": true,
+    "fixed_head_camera_mount": true
+  },
+  "physical": {
+    "succeeded": true,
+    "gates": {
+      "free_sitting_and_final_stability": true,
+      "typing": true,
+      "one_continuous_physics_timeline": true,
+      "all_events_preserved": true,
+      "finished_without_error": true,
+      "real_chair_support": true
+    },
+    "sitting": {
+      "report": "artifacts/computer/virtual-wide-seed7/report.json",
+      "report_sha256": "485de3f4ad1fd57301b8db7931ba9a33aa18415798b6048414aa7eef2762768f",
+      "succeeded": true,
+      "free_balance_sitting_verified": true,
+      "failure": null,
+      "source": "isaac_physx_free_sitting",
+      "sample_count": 2000,
+      "standing_height_m": 0.7499024903774262,
+      "final_height_m": 0.5971729159355164,
+      "minimum_seat_force_n": 128.41241312026978,
+      "maximum_chair_speed_mps": 0.007901501841843128,
+      "stable_window_s": 2.0,
+      "controller_status": "passed",
+      "evidence_note": "Checks record consistency; does not authenticate fabricated sensor records."
+    },
+    "typing": {
+      "succeeded": true,
+      "capability": "isaac_sim_5_1",
+      "failure_code": null,
+      "failure_detail": "",
+      "completed_strokes": 3,
+      "planned_strokes": 3,
+      "executors_observed": [
+        "left.ring",
+        "right.little",
+        "right.ring"
+      ],
+      "observed_text": "ls\n",
+      "expected_text": "ls\n",
+      "keys_down_after_stop": [],
+      "support_mode": "seat_contact",
+      "recovery_actions": [],
+      "dynamic_sitting_verified": false,
+      "camera_ocr_verified": false,
+      "real_robot_verified": false,
+      "version": "1.0.0"
+    },
+    "report": "artifacts/computer/virtual-wide-seed7/report.json",
+    "report_sha256": "485de3f4ad1fd57301b8db7931ba9a33aa18415798b6048414aa7eef2762768f",
+    "camera_ocr_verified": false,
+    "real_robot_verified": false
+  },
+  "ocr": {
+    "source": "tesseract_robot_rgb",
+    "before": "\u2018TERMINAL / PHYSICAL KEYBOARD\n\nbin/sh: @: can't access tty; job control turned off\n\n&\n\nAO\n\nJ\n\na\n\nLf\n\n\\\\\n\n\\\n",
+    "after": "TERMINAL / PHYSICAL KEYBOARD\n\n/bin/s'\n\ncan't access tty; job control turned off\n\n\\s\n\nKEYBOARD_OK\n\nPry shart | Anputs keyeer of\n\njontact\n\n_\u2014\n\n/)\n\nFoe\n\noO\u00bb\n\n=\n\naa\n\nIJ\n",
+    "initial_image": "artifacts/computer/virtual-wide-seed7/computer/camera-04-start-hands.png",
+    "final_image": "artifacts/computer/virtual-wide-seed7/computer/camera-03-final.png"
+  },
+  "camera_ocr_verified": true,
+  "all_ten_fingers_in_this_run": false,
+  "code_agent_executed": false,
+  "depth_valid_fraction": 0.9467751736111111,
+  "report": "artifacts/computer/virtual-wide-seed7/report.json",
+  "report_sha256": "485de3f4ad1fd57301b8db7931ba9a33aa18415798b6048414aa7eef2762768f",
+  "request": {
+    "output_dir": "artifacts/computer/virtual-wide-seed7",
+    "headless": true,
+    "video": true,
+    "device": "cuda:0",
+    "seed": 7,
+    "duration": 40.0,
+    "height": 0.5,
+    "seat_height": 0.44,
+    "lower_duration": 8.0,
+    "chair_x": -0.03,
+    "robot_x": 0.25,
+    "pitch": 0.2,
+    "settled_pitch": 0.05,
+    "desk_offset_x": 0.12,
+    "seat_stiffness": 20000.0,
+    "seat_damping": 600.0,
+    "hold_load_fraction": 0.35,
+    "chair_contact_mode": "cushion",
+    "type_text": "ls\n",
+    "virtual_computer": true,
+    "terminal_command": "ls",
+    "room": true,
+    "resume_diagnostic": null,
+    "typing_height_drop": 0.02
+  },
+  "runtime": {
+    "isaac_sim": "5.1.0-rc.19+release.26219.9c81211b.gl",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "torch": "2.7.0+cu128"
+  },
+  "implementation_sha256": {
+    "free_sitting_scene.py": "cea4ace0ce36f66ceab5110013199dcf3d3c59f15da5cb9027584aaac428956c",
+    "balance_policy.py": "4f1770996d2a3e3c432a60a491170797ab9b4a41836e70ce7406f1a15689dadc",
+    "free_sitting.py": "0648431d42cc8193bab391b1c9b735f90030371f6f43829c539b8e2dd3c76ca2",
+    "dex5_scene_geometry.py": "7d70cb3dcad8c952d18289eaaacd47245a57d3f618f42981113b8fb5696745df",
+    "p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+    "dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+    "dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+    "free_sitting_policy.json": "63d668e75e494a94e67cb1030596c43b8d25100dfb26431fd99844a5a8e22cdd",
+    "g1_29dof_5010_dex5_assets.json": "a6cd6411ab4880ae20a05bcf5e693ea57ed7a062ecd0f1d767ffc079d6e6ef02",
+    "free_typing.py": "ea7f118c7c17dc8766aee8855b2f7025f0b8d5c0a2f8090d7078dc4c9ea28009",
+    "dex5_kinematics.py": "da6f073650dd545a5f2dbfc6ad26923f8a8b0d4c799e2004de3235c80bad92fc",
+    "dex5_demo.py": "f94f6eb7f048deb570526af23440aa319e54d8528fc1718c16664e4596aa752c",
+    "dex5_postures.json": "d7de3015ea3b7b388ca232affe1cd490b3abec4ffa49f1c788846426aab7d674",
+    "virtual_screen.py": "2706a096f10cf520825f5995ed42d2c69ec2518395c969a8ff9792e532d14800",
+    "virtual_computer.py": "20171ccf67b8ab99f25a71cc318da25ca9f09567c045f866f9c93508a509097f"
+  },
+  "videos": {
+    "demo.mp4": {
+      "path": "artifacts/computer/virtual-wide-seed7/demo.mp4",
+      "sha256": "b9b3f2d2af960a50f6da96da30b0252db84e286172601a770e12bcddd554e99a",
+      "decoded_without_errors": true
+    },
+    "robot-view.mp4": {
+      "path": "artifacts/computer/virtual-wide-seed7/robot-view.mp4",
+      "sha256": "ed57bea375b6e2799cc496760da1e7190ebddffde96d9044fbe44316b186caf3",
+      "decoded_without_errors": true
+    }
+  },
+  "robot_view_sampling_hz": 1,
+  "source_archive": "artifacts/computer/virtual-wide-seed7/source/manifest.json"
+}

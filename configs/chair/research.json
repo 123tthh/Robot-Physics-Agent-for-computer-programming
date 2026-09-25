@@ -1,0 +1,17 @@
+{
+  "schema": "chair-training-v1",
+  "episode_s": 20.0,
+  "command_hold_s": 2.0,
+  "iterations": 10000,
+  "rollout_steps": 24,
+  "seed": 42,
+  "symmetry": true,
+  "foot_slip": false,
+  "curriculum": true,
+  "linear_tracking_weight": 2.0,
+  "yaw_tracking_weight": 1.0,
+  "seat_weight": 0.5,
+  "action_rate_weight": 0.01,
+  "energy_weight": 0.0001,
+  "slip_weight": 0.1
+}

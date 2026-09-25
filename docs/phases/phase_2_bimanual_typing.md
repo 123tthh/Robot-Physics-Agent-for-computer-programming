@@ -133,3 +133,11 @@ Isaac 自动化报告中，Alt、Ctrl、T 的峰值接触力分别约为 5.62 N�
 - 验证：`make check`、`make demo`、`make demo-p2`、`make isaac-p2`
 - 能力等级：领域契约 + 纯 Python + Isaac；非 HIL/真机
 - 下一可领取任务：P3 真实隔离代码 Agent，或 P2/P6 camera-only 与 sim-to-real 强化
+
+## 2026-09-22 新增：SIM03-D5 双 Dex5-1 十指打字
+
+状态：`DONE`（2026-09-23，受支撑十指演示基线）。原 Dex3 组合键任务及以上阶段状态保留。新支线使用官方左右 Dex5-1，并将 `thumb/index/middle/ring/little` 五指分别映射到键位；默认字符串 `"asdf jkl; "` 的两个空格由左右拇指依次完成，其余八个字符覆盖双手其余八指。
+
+已完成版本化 hover → press → release 契约、独立接触/键程/唯一事件/显示文本/全指释放门禁、安全守卫、九类故障回放以及有界前缀修复。标准库与回放证据为 C0/C1；Isaac `accepted-seed7` 已另行完成实际受支撑坐下与全部十指打字，并通过独立物理证据验证及可见画面检查。近似联动、球形接触垫、关闭自碰撞等边界见完整说明。
+
+复现入口：`make demo-dex5`、`make dex5-assets`、`make isaac-dex5`、`make isaac-dex5-gui`。完整边界、产物与验收步骤见 [双 Dex5 Demo](../DEX5_SEATED_DEMO.md)。本支线的事件显示是事件接收端文本，尚未完成 camera OCR、终端焦点或真实代码 Agent 链路；Shift 和组合键仍属于后续扩展。

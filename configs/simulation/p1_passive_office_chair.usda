@@ -1,0 +1,610 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Scope "Looks"
+    {
+        def Material "ChairUpholstery"
+        {
+            token outputs:surface.connect = </World/Looks/ChairUpholstery/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.075, 0.11, 0.16)
+                float inputs:metallic = 0
+                float inputs:opacity = 1
+                float inputs:roughness = 0.52
+                token outputs:surface
+            }
+        }
+
+        def Material "ChairMetal"
+        {
+            token outputs:surface.connect = </World/Looks/ChairMetal/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.16, 0.18, 0.21)
+                float inputs:metallic = 0.75
+                float inputs:opacity = 1
+                float inputs:roughness = 0.52
+                token outputs:surface
+            }
+        }
+
+        def Material "ChairWheelRubber" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            token outputs:surface.connect = </World/Looks/ChairWheelRubber/PreviewSurface.outputs:surface>
+            float physics:dynamicFriction = 0.08
+            float physics:restitution = 0
+            float physics:staticFriction = 0.12
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.025, 0.028, 0.032)
+                float inputs:metallic = 0
+                float inputs:opacity = 1
+                float inputs:roughness = 0.52
+                token outputs:surface
+            }
+        }
+    }
+
+    def Xform "MobileChair" (
+        prepend apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
+        customData = {
+            dictionary vskill = {
+                string assetType = "passive_mobile_office_chair_5caster"
+                string mobilityIntent = "passive_contact_driven"
+                string mobilityMode = "sliding_dominant"
+                bool passive = 1
+                double seatTopHeightM = 0.4775
+                string workstationId = "A"
+                bool worldFixed = 0
+            }
+        }
+    )
+    {
+        bool physxArticulation:enabledSelfCollisions = 0
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Xform "Bodies"
+        {
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def Xform "Frame" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                customData = {
+                    dictionary vskill = {
+                        string contactSurface = "frame"
+                    }
+                }
+            )
+            {
+                float physics:mass = 13
+                double3 xformOp:translate = (-0.36, -0.58, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+
+                def Cube "Seat" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "seat"
+                        }
+                    }
+                )
+                {
+                    rel material:binding = </World/Looks/ChairUpholstery>
+                    double size = 1
+                    float3 xformOp:scale = (0.46, 0.48, 0.075)
+                    double3 xformOp:translate = (0, 0, 0.44)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+
+                def Cube "Backrest" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "backrest"
+                        }
+                    }
+                )
+                {
+                    rel material:binding = </World/Looks/ChairUpholstery>
+                    double size = 1
+                    float3 xformOp:scale = (0.055, 0.44, 0.46)
+                    double3 xformOp:translate = (-0.205, 0, 0.7)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+
+                def Cylinder "Column" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    uniform token axis = "Z"
+                    double height = 0.29250000000000004
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double radius = 0.035
+                    double3 xformOp:translate = (0, 0, 0.25625000000000003)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+
+                def Cylinder "Hub" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    uniform token axis = "Z"
+                    double height = 0.055
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double radius = 0.07
+                    double3 xformOp:translate = (0, 0, 0.085)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+
+                def Cube "Leg_0" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    float3 xformOp:scale = (0.34, 0.045, 0.035)
+                    double3 xformOp:translate = (0.1768, 0, 0.085)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+
+                def Cube "Leg_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    quatf xformOp:orient = (0.809017, 0, 0, 0.58778524)
+                    float3 xformOp:scale = (0.34, 0.045, 0.035)
+                    double3 xformOp:translate = (0.05463420460549071, 0.16814679208098315, 0.085)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cube "Leg_2" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    quatf xformOp:orient = (0.309017, 0, 0, 0.95105654)
+                    float3 xformOp:scale = (0.34, 0.045, 0.035)
+                    double3 xformOp:translate = (-0.1430342046054907, 0.10392043260530928, 0.085)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cube "Leg_3" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    quatf xformOp:orient = (-0.309017, 0, 0, 0.95105654)
+                    float3 xformOp:scale = (0.34, 0.045, 0.035)
+                    double3 xformOp:translate = (-0.14303420460549074, -0.10392043260530924, 0.085)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cube "Leg_4" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    quatf xformOp:orient = (-0.809017, 0, 0, 0.58778524)
+                    float3 xformOp:scale = (0.34, 0.045, 0.035)
+                    double3 xformOp:translate = (0.05463420460549068, -0.16814679208098318, 0.085)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Xform "Caster_0_Fork" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.22
+                quatf xformOp:orient = (1, 0, 0, 0)
+                double3 xformOp:translate = (-0.019999999999999962, -0.58, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cube "ForkVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    float3 xformOp:scale = (0.055, 0.045, 0.07)
+                    double3 xformOp:translate = (0, 0, 0.025)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+            }
+
+            def Xform "Caster_0_Wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.18
+                quatf xformOp:orient = (1, 0, 0, 0)
+                double3 xformOp:translate = (-0.019999999999999962, -0.58, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cylinder "WheelVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "caster_0"
+                        }
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.026
+                    rel material:binding = </World/Looks/ChairWheelRubber>
+                    rel material:binding:physics = </World/Looks/ChairWheelRubber> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    double radius = 0.035
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+            }
+
+            def Xform "Caster_1_Fork" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.22
+                quatf xformOp:orient = (0.809017, 0, 0, 0.58778524)
+                double3 xformOp:translate = (-0.25493422191251786, -0.2566407844596477, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cube "ForkVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    float3 xformOp:scale = (0.055, 0.045, 0.07)
+                    double3 xformOp:translate = (0, 0, 0.025)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+            }
+
+            def Xform "Caster_1_Wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.18
+                quatf xformOp:orient = (0.809017, 0, 0, 0.58778524)
+                double3 xformOp:translate = (-0.25493422191251786, -0.2566407844596477, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cylinder "WheelVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "caster_1"
+                        }
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.026
+                    rel material:binding = </World/Looks/ChairWheelRubber>
+                    rel material:binding:physics = </World/Looks/ChairWheelRubber> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    double radius = 0.035
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+            }
+
+            def Xform "Caster_2_Fork" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.22
+                quatf xformOp:orient = (0.309017, 0, 0, 0.95105654)
+                double3 xformOp:translate = (-0.6350657780874821, -0.380153014220559, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cube "ForkVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    float3 xformOp:scale = (0.055, 0.045, 0.07)
+                    double3 xformOp:translate = (0, 0, 0.025)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+            }
+
+            def Xform "Caster_2_Wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.18
+                quatf xformOp:orient = (0.309017, 0, 0, 0.95105654)
+                double3 xformOp:translate = (-0.6350657780874821, -0.380153014220559, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cylinder "WheelVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "caster_2"
+                        }
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.026
+                    rel material:binding = </World/Looks/ChairWheelRubber>
+                    rel material:binding:physics = </World/Looks/ChairWheelRubber> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    double radius = 0.035
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+            }
+
+            def Xform "Caster_3_Fork" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.22
+                quatf xformOp:orient = (-0.309017, 0, 0, 0.95105654)
+                double3 xformOp:translate = (-0.6350657780874822, -0.7798469857794408, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cube "ForkVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    float3 xformOp:scale = (0.055, 0.045, 0.07)
+                    double3 xformOp:translate = (0, 0, 0.025)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+            }
+
+            def Xform "Caster_3_Wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.18
+                quatf xformOp:orient = (-0.309017, 0, 0, 0.95105654)
+                double3 xformOp:translate = (-0.6350657780874822, -0.7798469857794408, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cylinder "WheelVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "caster_3"
+                        }
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.026
+                    rel material:binding = </World/Looks/ChairWheelRubber>
+                    rel material:binding:physics = </World/Looks/ChairWheelRubber> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    double radius = 0.035
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+            }
+
+            def Xform "Caster_4_Fork" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.22
+                quatf xformOp:orient = (-0.809017, 0, 0, 0.58778524)
+                double3 xformOp:translate = (-0.2549342219125179, -0.9033592155403523, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cube "ForkVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </World/Looks/ChairMetal>
+                    double size = 1
+                    float3 xformOp:scale = (0.055, 0.045, 0.07)
+                    double3 xformOp:translate = (0, 0, 0.025)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+            }
+
+            def Xform "Caster_4_Wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float physics:mass = 0.18
+                quatf xformOp:orient = (-0.809017, 0, 0, 0.58778524)
+                double3 xformOp:translate = (-0.2549342219125179, -0.9033592155403523, 0.045000000000000005)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+                def Cylinder "WheelVisual" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+                    customData = {
+                        dictionary vskill = {
+                            string contactSurface = "caster_4"
+                        }
+                    }
+                )
+                {
+                    uniform token axis = "Y"
+                    double height = 0.026
+                    rel material:binding = </World/Looks/ChairWheelRubber>
+                    rel material:binding:physics = </World/Looks/ChairWheelRubber> (
+                        bindMaterialAs = "weakerThanDescendants"
+                    )
+                    double radius = 0.035
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate"]
+                }
+            }
+        }
+
+        def Xform "Joints"
+        {
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def PhysicsRevoluteJoint "Caster_0_Swivel" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Z"
+                rel physics:body0 = </World/MobileChair/Bodies/Frame>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_0_Fork>
+                point3f physics:localPos0 = (0.34, 0, 0.045)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.01
+            }
+
+            def PhysicsRevoluteJoint "Caster_0_Rolling" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/MobileChair/Bodies/Caster_0_Fork>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_0_Wheel>
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.08
+                float physxJoint:maxJointVelocity = 20
+            }
+
+            def PhysicsRevoluteJoint "Caster_1_Swivel" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Z"
+                rel physics:body0 = </World/MobileChair/Bodies/Frame>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_1_Fork>
+                point3f physics:localPos0 = (0.10506578, 0.32335922, 0.045)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.01
+            }
+
+            def PhysicsRevoluteJoint "Caster_1_Rolling" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/MobileChair/Bodies/Caster_1_Fork>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_1_Wheel>
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.08
+                float physxJoint:maxJointVelocity = 20
+            }
+
+            def PhysicsRevoluteJoint "Caster_2_Swivel" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Z"
+                rel physics:body0 = </World/MobileChair/Bodies/Frame>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_2_Fork>
+                point3f physics:localPos0 = (-0.27506578, 0.19984698, 0.045)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.01
+            }
+
+            def PhysicsRevoluteJoint "Caster_2_Rolling" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/MobileChair/Bodies/Caster_2_Fork>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_2_Wheel>
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.08
+                float physxJoint:maxJointVelocity = 20
+            }
+
+            def PhysicsRevoluteJoint "Caster_3_Swivel" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Z"
+                rel physics:body0 = </World/MobileChair/Bodies/Frame>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_3_Fork>
+                point3f physics:localPos0 = (-0.27506578, -0.19984698, 0.045)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.01
+            }
+
+            def PhysicsRevoluteJoint "Caster_3_Rolling" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/MobileChair/Bodies/Caster_3_Fork>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_3_Wheel>
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.08
+                float physxJoint:maxJointVelocity = 20
+            }
+
+            def PhysicsRevoluteJoint "Caster_4_Swivel" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Z"
+                rel physics:body0 = </World/MobileChair/Bodies/Frame>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_4_Fork>
+                point3f physics:localPos0 = (0.10506578, -0.32335922, 0.045)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.01
+            }
+
+            def PhysicsRevoluteJoint "Caster_4_Rolling" (
+                prepend apiSchemas = ["PhysxJointAPI"]
+            )
+            {
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/MobileChair/Bodies/Caster_4_Fork>
+                rel physics:body1 = </World/MobileChair/Bodies/Caster_4_Wheel>
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                float physxJoint:jointFriction = 0.08
+                float physxJoint:maxJointVelocity = 20
+            }
+        }
+    }
+}
+

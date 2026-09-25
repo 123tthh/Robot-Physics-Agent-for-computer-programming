@@ -1,0 +1,16 @@
+{
+  "source": "artifacts/isaac-p1/scenes/p1_g1_dex3_keyboard.usda",
+  "source_sha256": "8073bb9daf057f39eed72b2f7cb133fa30f3506442caabfc8f9f5009779b4d9e",
+  "extracted_paths": [
+    "/World/MobileChair",
+    "/World/Looks/ChairUpholstery",
+    "/World/Looks/ChairMetal",
+    "/World/Looks/ChairWheelRubber"
+  ],
+  "asset": "configs/simulation/p1_passive_office_chair.usda",
+  "sha256": "a3f35790240d68e6c617f3d0663ef4e7d2f95a428e550fbfe5545df4324676a2",
+  "mobility": "sliding_dominant",
+  "body_count": 11,
+  "passive_joint_count": 10,
+  "independent_seat_swivel": false
+}
