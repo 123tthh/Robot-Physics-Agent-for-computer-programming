@@ -1,0 +1,14 @@
+# VF-01 合成契约配置
+
+- `single_key_contract_v1.json`：字符键 `a/s/d` 与 Backspace，监控全部 74 键；目标为 `a`。唯一关节为合成字段，没有 G1/Dex5 可达性或控制含义。
+- `evaluation_v1.json`：键程迟滞、释放保持时间、采样完整性、接触力和屏幕新鲜度的固定测试判据。
+
+这些文件是 VF-01-T01 的配置快照。它们不能当作物理标定或 PPO 训练配置。回放生成器为重复字符案例另存目标 `aa`，每个案例导出独立任务及其哈希。
+
+```bash
+PYTHONPATH=src python3 -m vskill_os.learning demo \
+  --policy configs/learning/verification_feedback/evaluation_v1.json \
+  --output artifacts/verification_feedback/vf01/contracts
+```
+
+完整格式、限制和独立复核命令见[实现说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)。

@@ -131,6 +131,13 @@ demo-chair:
 chair-train:
 	PYTHONPATH=src python3 -m vskill_os.chair.cli train --config configs/chair/ppo_baseline.json --backend-config "$(CHAIR_BACKEND_CONFIG)" --output "$(CHAIR_OUTPUT)"
 
+# VF-01-T01 exports synthetic evidence only; it does not start Isaac or PPO.
+.PHONY: demo-learning-evidence
+LEARNING_EVIDENCE_DIR ?= artifacts/verification_feedback/vf01/contracts
+
+demo-learning-evidence:
+	PYTHONPATH=src python3 -m vskill_os.learning demo --output "$(LEARNING_EVIDENCE_DIR)"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -146,5 +153,5 @@ help:
 	  '  Screen:     make isaac-virtual-computer | make verify-virtual-computer' \
 	  '  Chair:      make chair-plan | make demo-chair (proxy only)' \
 	  '  Dex3/6.0.1: separate worktree; see docs/BRANCHES.md' \
-	  '  Learning:   target design only; no general no-IK training target yet' \
+	  '  Learning:   make demo-learning-evidence (contracts only; no physics/PPO)' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'

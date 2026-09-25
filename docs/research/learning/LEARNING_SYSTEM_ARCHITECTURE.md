@@ -1,10 +1,14 @@
 # 学习驱动的人形机器人实体计算机操作：整体架构
 
-> 本文是 LEARN 子项目的目标设计，服从 [统一架构](../../ARCHITECTURE.md)。M0–M6 保留为学习验收编号，跨项目顺序见 [路线图](../../ROADMAP.md)；与 RSI 共用拟建的数据与策略描述层，不另建 Runtime。
+> 本文是 LEARN 子项目的目标设计，服从 [统一架构](../../ARCHITECTURE.md)。M0–M6 保留为学习验收编号，跨项目顺序见 [路线图](../../ROADMAP.md)；与 RSI 共用数据与策略描述层，不另建 Runtime。离线证据子集已交付，策略描述仍待实现。
+
+当前实施重点收敛到[验证反馈驱动技能学习的六阶段架构](../../../verification-feedback-skill-learning/README.md)：单手少量键 → 学习输入/验证/恢复 → 严格对照，随后再扩展视觉、双手和自由坐姿。本文保留较广的目标架构与动作/来源约束，旧 M 编号不再要求先完成双手才能研究验证机制。
 
 版本：0.1.0 · 日期：2026-09-25 · 分支：`codex/learning-system-architecture`
 
 状态：**目标架构与实施规范，尚未完成无 IK 策略训练**。本文是学习路线的总体设计入口；[基础运行时架构](../../ARCHITECTURE.md)解释已有核心组件，[训练调研](DEX5_LEARNING_WITHOUT_IK.md)提供方法依据和实验细节。文中的新模块、接口字段、技能和验收门槛均为待实现设计，除明确标注“已有”外，不代表已接入或已通过测试。
+
+已有工程：VF-01-T01 的版本化记录、离线独立评估与 10 类合成样例，入口 `make demo-learning-evidence`。具体字段和证据边界见[实现说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)；物理环境和无 IK 策略训练仍未交付。
 
 ## 1. 目标与设计决策
 
@@ -179,10 +183,10 @@ flowchart LR
 | `src/vskill_os/simulation/keyboard_bridge.py` | 键帽到事件 | 已有；批处理与训练接入待开发 |
 | `src/vskill_os/adapters/{virtual_computer,local_code_agent}.py` | PTY/Pygame、代码与测试适配 | 已有接口/实现，完整代码任务尚待验收 |
 | `src/vskill_os/chair/` | 椅子研究模型与训练接口 | 已有研究代码，不能当成已验收物理学习策略 |
-| `src/vskill_os/learning/` | 与后端无关的策略描述、数据来源、实验清单 | **拟建**；不得导入 Isaac/Torch |
+| `src/vskill_os/learning/` | 与后端无关的任务/记录/独立评估及后续策略描述 | **部分已有**：离线合成契约；其余待建，不得导入 Isaac/Torch |
 | `src/vskill_os/adapters/isaac/learning/` | 向量化任务、观测、奖励、reset/step、物理采集 | **拟建**；Isaac/Torch 可选依赖边界 |
 | `src/vskill_os/adapters/learned_policy.py` | 策略包加载、推理与动作映射 | **拟建**；与现有策略端口衔接 |
-| `configs/learning/`、`tools/train_learning.py`、`tools/evaluate_learning.py` | 配置与训练/评估入口 | **拟建**；本轮未提供可运行训练命令 |
+| `configs/learning/verification_feedback/`、`python -m vskill_os.learning` | 合成契约配置及离线评估入口 | **已有**；物理配置和训练命令待建，未提供 PPO 入口 |
 | `artifacts/learning/<run_id>/`、`reports/learning/<run_id>/` | checkpoint、轨迹、视频与验收 | **拟建**；大文件与可审计报告分开管理 |
 
 迁移时先提取共享资产和原始证据采集，保留旧录像复现入口；再增加无 IK 策略适配器和向量化环境，复用验证语义，最后接入 Skill Runtime。不能靠改旧模块名称或删除文档中的 IK 字样完成迁移。

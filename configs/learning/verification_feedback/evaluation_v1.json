@@ -1,0 +1,10 @@
+{
+  "version": "vf-offline/1",
+  "press_threshold_m": 0.002,
+  "release_threshold_m": 0.0012,
+  "release_dwell_s": 0.01,
+  "maximum_sample_gap_s": 0.025,
+  "maximum_contact_force_n": 20.0,
+  "maximum_screen_age_s": 0.25,
+  "minimum_screen_confidence": 0.9
+}

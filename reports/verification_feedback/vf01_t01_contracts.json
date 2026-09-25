@@ -1,0 +1,123 @@
+{
+  "task": "VF-01-T01",
+  "capability": "contract_replay",
+  "physical_execution_verified": false,
+  "evaluator_sha256": "6852da2b3ebd49fa87c2d59b69207c0867b8ea20f51d7a565c97e5e32883e0f8",
+  "policy_sha256": "758e56ed021a278aba8cc23e1cde9f40e146f7e51904078e6118ec5671262160",
+  "all_expectations_met": true,
+  "cases": [
+    {
+      "case": "correct_press",
+      "expected_contract_pass": true,
+      "contract_passed": true,
+      "failures": [],
+      "expectation_met": true,
+      "episode_sha256": "19496f6341d1a62149b3d5dbf43205e811392a822a876f5dbff971e6948dead8"
+    },
+    {
+      "case": "timeout_release",
+      "expected_contract_pass": false,
+      "contract_passed": false,
+      "failures": [
+        "ADMINISTRATIVE_RELEASE",
+        "STUCK_KEY"
+      ],
+      "expectation_met": true,
+      "episode_sha256": "ced7dc2efde238474a40284e8d4a120aaa216af430ab60cf4b121b36a1f63286"
+    },
+    {
+      "case": "duplicate_event",
+      "expected_contract_pass": false,
+      "contract_passed": false,
+      "failures": [
+        "DUPLICATE_EVENT",
+        "EVENT_MISMATCH",
+        "SCREEN_MISMATCH",
+        "TEXT_MISMATCH"
+      ],
+      "expectation_met": true,
+      "episode_sha256": "1c4e46c8ecd607228cab1e4aa7669a54427f5158fdb2f8cb020787e67cef71ca"
+    },
+    {
+      "case": "missing_event",
+      "expected_contract_pass": false,
+      "contract_passed": false,
+      "failures": [
+        "MISSING_EVENT"
+      ],
+      "expectation_met": true,
+      "episode_sha256": "a770e2f547111de88197f70add7a0f605a41f1bcf519a60e35d2812501c71e7a"
+    },
+    {
+      "case": "delayed_feedback",
+      "expected_contract_pass": false,
+      "contract_passed": false,
+      "failures": [
+        "SCREEN_PENDING"
+      ],
+      "expectation_met": true,
+      "episode_sha256": "2f6bb7bb650fdc30de04f0469b35c79f7e808166fdbd65a2857221ece5d6b4b3"
+    },
+    {
+      "case": "wrong_text",
+      "expected_contract_pass": false,
+      "contract_passed": false,
+      "failures": [
+        "SCREEN_MISMATCH",
+        "TEXT_EVENT_MISMATCH",
+        "TEXT_MISMATCH"
+      ],
+      "expectation_met": true,
+      "episode_sha256": "2a9b2dccc03fc1a8c608af56b2fc868f90de3a58d67e63d4a7ab76f6339286c2"
+    },
+    {
+      "case": "delayed_feedback_waited",
+      "expected_contract_pass": true,
+      "contract_passed": true,
+      "failures": [],
+      "expectation_met": true,
+      "episode_sha256": "0bf30285a10a3b9653d81e8fc92b32220520b285b5eb9b7e76fbff28213ffc24"
+    },
+    {
+      "case": "repeated_character",
+      "expected_contract_pass": true,
+      "contract_passed": true,
+      "failures": [],
+      "expectation_met": true,
+      "episode_sha256": "0d0051bb18d8aee60818de43f7643505b3a98045ca212243a7ea2b0d81b59564"
+    },
+    {
+      "case": "backspace_recovery",
+      "expected_contract_pass": true,
+      "contract_passed": true,
+      "failures": [],
+      "expectation_met": true,
+      "episode_sha256": "ab40ff4e7b9029d0ee4aeff331a6293e59cff1117131cbd2ab849660a03ea406"
+    },
+    {
+      "case": "dropped_then_retried",
+      "expected_contract_pass": true,
+      "contract_passed": true,
+      "failures": [],
+      "expectation_met": true,
+      "episode_sha256": "9d9f663d3f2445f5e0b076a804efbd49b598b6257ff86a2547a1b571bf3daf72"
+    }
+  ],
+  "validation": {
+    "make_check": {
+      "total": 181,
+      "passed": 180,
+      "skipped": 1,
+      "skip_reason": "optional virtual-computer extra"
+    },
+    "make_demo": {
+      "status": "succeeded"
+    },
+    "new_regression_tests": 24
+  },
+  "reproduce": [
+    "make demo-learning-evidence",
+    "make check",
+    "make demo"
+  ]
+}
