@@ -1,6 +1,6 @@
 # 分支与工作树登记
 
-更新：2026-09-26，VF-01-T05 实现阶段。从已发布的 T04 提交 `bd5d42f` 新建真实终端与机器人相机复验分支。下面记录职责与本地位置，准确提交以 Git 为准，历史未提交盘点保留在 `fe8e78e` 的本文件中。
+更新：2026-09-27，VF-02-T01 实现阶段。从已发布的 T05 提交 `4b55937` 新建动作映射健康检查分支。下面记录职责与本地位置，准确提交以 Git 为准，历史未提交盘点保留在 `fe8e78e` 的本文件中。
 
 ## 1. 分支职责
 
@@ -12,7 +12,8 @@
 | `codex/vf01-single-hand-env` | `ca7c02b` | VF-01-T02 直接关节单环境、原始物理记录与独立验收 |
 | `codex/vf01-text-feedback-isolation` | `3794312` | VF-01-T03 文本状态、反馈权限/预算与物理集成验收 |
 | `codex/vf01-batch-isolation-throughput` | `bd5d42f` | VF-01-T04 批物理环境、局部 reset 隔离、1/16/64 吞吐与资源验收 |
-| `codex/vf01-desktop-camera-revalidation` | `bd5d42f`（开发起点） | 主工作树当前分支；VF-01-T05 真实 PTY、机器人 RGB-D/OCR、反馈预算与六案例独立验收 |
+| `codex/vf01-desktop-camera-revalidation` | `4b55937` | VF-01-T05 真实 PTY、机器人 RGB-D/OCR、反馈预算与六案例独立验收 |
+| `codex/vf02-action-mapping-health` | `4b55937`（开发起点） | 主工作树当前分支；VF-02-T01 具名 23 维动作、限幅/交接、30/60/120 Hz 五案例验收 |
 | `codex/dex3-standing-bimanual` | `7fc204c` | 独立站姿路线，保留自身代码、环境、报告和目录整理 |
 | `codex/robot-chair-interaction` | `e81b6f3` | 保留的历史主题引用；后来保存的椅子代码已进入整合入口 |
 | `feat/g1-5010-control-stack` | `e81b6f3` | 历史运控基线 |

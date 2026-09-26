@@ -189,6 +189,18 @@ verify-learning-desktop:
 	@test -n "$(LEARNING_DESKTOP_RUN)" || (echo 'Set LEARNING_DESKTOP_RUN to an exact run directory'; exit 2)
 	PYTHONPATH="src:$(LEARNING_DESKTOP_DEPS)" "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.desktop_runner --verify-run "$(LEARNING_DESKTOP_RUN)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --desktop-config "$(LEARNING_DESKTOP_CONFIG)"
 
+# VF-02-T01 is a bounded mapping diagnostic; it never starts PPO training.
+.PHONY: isaac-learning-action-health verify-learning-action-health
+LEARNING_ACTION_DIR ?= $(CURDIR)/artifacts/verification_feedback/vf02/action_health
+LEARNING_ACTION_SCALE ?= $(CURDIR)/configs/learning/verification_feedback/action_scale_v1.json
+
+isaac-learning-action-health:
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.action_runner --output-dir "$(LEARNING_ACTION_DIR)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --action-scale "$(LEARNING_ACTION_SCALE)"'
+
+verify-learning-action-health:
+	@test -n "$(LEARNING_ACTION_RUN)" || (echo 'Set LEARNING_ACTION_RUN to an exact run directory'; exit 2)
+	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.action_runner --verify-run "$(LEARNING_ACTION_RUN)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --action-scale "$(LEARNING_ACTION_SCALE)"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -209,4 +221,5 @@ help:
 	  '  Feedback:   make demo-learning-feedback | make isaac-learning-feedback | make verify-learning-feedback' \
 	  '  Batch:      make isaac-learning-batch | make verify-learning-batch (1/16/64)' \
 	  '  Camera:     make isaac-learning-desktop | make verify-learning-desktop' \
+	  '  Actions:    make isaac-learning-action-health | make verify-learning-action-health' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'

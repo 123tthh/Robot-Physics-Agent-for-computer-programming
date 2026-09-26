@@ -102,6 +102,8 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 
 **VF-01-T05 已完成单键真实终端与仿真机器人相机范围的复验**：两次正常输入通过，失焦、纹理冻结、相机缺失和提前结束四类负例正确拒绝；保留原始 RGB-D 并独立重跑 OCR。见[桌面与相机说明](01_environment_and_evidence/DESKTOP_CAMERA.md)。
 
-下一项为 **VF-02-T01：动作映射健康检查**。当前仍是固定骨盆、人工直接关节诊断；多键、真实退格、PPO 和视觉策略尚未交付。
+**VF-02-T01 已完成动作映射健康检查**：23 维具名 schema、独立掩码/限幅、执行目标反馈及停止恢复；30/60/120 Hz 五个物理案例与 19 项软件检查通过。见[实现说明](02_joint_ppo_baseline/ACTION_MAPPING.md)。
+
+下一项为 **VF-02-T02：单键可学性诊断**。当前仍是固定骨盆、人工直接关节诊断；多键、真实退格、PPO 和视觉策略尚未交付。
 
 项目共同约束：[AGENTS.md](../AGENTS.md)、[统一架构](../docs/ARCHITECTURE.md)、[子项目状态](../docs/WORKSTREAMS.md)、[统一路线图](../docs/ROADMAP.md)。

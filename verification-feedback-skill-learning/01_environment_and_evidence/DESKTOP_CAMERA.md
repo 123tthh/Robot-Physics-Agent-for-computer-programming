@@ -115,4 +115,4 @@ make demo
 
 ![机器人相机输入后](../../reports/verification_feedback/vf01_t05_camera_after.png)
 
-下一项为 **VF-02-T01：动作映射健康检查**。多键、重复字符、真实退格、恢复技能与 PPO 仍需后续分别实现和验收。
+下一项为 **VF-02-T02：单键可学性诊断**（[T01 动作映射已验收](../02_joint_ppo_baseline/ACTION_MAPPING.md)）。多键、重复字符、真实退格、恢复技能与 PPO 仍需后续分别实现和验收。

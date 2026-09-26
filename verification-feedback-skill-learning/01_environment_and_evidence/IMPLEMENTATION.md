@@ -81,6 +81,6 @@ print(report.contract_passed, report.findings)
 
 ## 后续实现
 
-VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现；[T03 文本与反馈隔离](TEXT_FEEDBACK.md) 和 [T04 批环境与吞吐](BATCH_ENVIRONMENT.md) 也已交付。[T05 真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已完成单键六案例范围。当前下一项为 VF-02-T01：动作映射健康检查。
+VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现；[T03 文本与反馈隔离](TEXT_FEEDBACK.md) 和 [T04 批环境与吞吐](BATCH_ENVIRONMENT.md) 也已交付。[T05 真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已完成单键六案例范围。当前下一项为 VF-02-T02：单键可学性诊断（T01 已通过动作映射验收）。
 
 返回[阶段 1](README.md)或[研究主线](../README.md)。

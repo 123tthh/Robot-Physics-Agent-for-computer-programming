@@ -1,6 +1,6 @@
 # 阶段 2：直接关节 PPO 与可复用低层技能
 
-状态：待实现。前置：VF-01 的单环境物理接口、释放判据和数据来源审计通过。任务是证明局部控制可学，并交付供后续所有方法共享的冻结低层技能。
+状态：`PARTIAL`。[VF-02-T01 动作映射健康检查](ACTION_MAPPING.md) 已完成：23 维具名 schema、掩码、独立限幅、执行目标反馈、停止恢复与 30/60/120 Hz 五案例物理验收通过。下一项为 VF-02-T02 单键可学性诊断；尚未训练 PPO 或交付冻结低层策略。前置 VF-01 的单环境物理接口、释放判据和数据来源审计已通过。
 
 ## 控制范围
 
@@ -24,10 +24,11 @@ flowchart LR
     Package --> Evaluator[独立单键评估]
 ```
 
-| 拟建模块 | 建议位置（相对 `src/vskill_os/`） | 职责 |
+| 模块与状态 | 位置（相对 `src/vskill_os/`） | 职责 |
 |---|---|---|
-| `ActionSchema / JointMask` | `learning/policy_manifest.py` | 23 维具名动作、子集掩码、观测与关节顺序 |
-| `JointActionMapper` | `adapters/isaac/learning/joint_action.py` | 增量积分、最终目标同步、限位与控制权交接 |
+| `ActionSchema / JointMask`（已实现） | `learning/policy_manifest.py` | 23 维具名动作、子集掩码、周期/尺度与关节顺序 |
+| `JointActionMapper / JointActionSession`（已实现） | `adapters/isaac/learning/joint_action.py` | 从最终执行目标积分、独立限幅、停止/保持/恢复与令牌交接 |
+| `check_mapping_trace`（已实现） | `learning/action_evaluation.py` | 绑定原始物理动作，独立重算映射与生命周期；物理成功另由 VF-01 Verifier 判定 |
 | `TeacherObservationBuilder` | `adapters/isaac/learning/observations.py` | 关节角/速度、上一动作、目标键、指尖相对位姿、键程/接触 |
 | `RewardTerms` | `adapters/isaac/learning/rewards.py` | 完整按下/释放进度与辅助塑形；保留各项曲线 |
 | `PPOTrainer / RolloutBuffer` | `adapters/learning_torch/ppo.py` | 采样、GAE、更新、保存与恢复；Torch 可选依赖 |
@@ -60,8 +61,8 @@ GAE 区分物理失败 `terminated` 与时间截断 `truncated`：截断可对�
 
 | 任务 | 内容 | 门槛 |
 |---|---|---|
-| VF-02-T01 动作映射健康检查 | 掩码、极限、控制权、单步 dt、停止与恢复 | 无 IK 路径；保护不能被策略关闭 |
-| VF-02-T02 单键可学性 | 一个训练种子，约 `10^6` 累计环境转移的诊断预算 | 看到完整物理成功的趋势，不以辅助奖励上升代替 |
+| VF-02-T01 动作映射健康检查 | `DONE`：[实现与证据](ACTION_MAPPING.md)；19 项 CPU 检查、五个物理案例 | 无 IK；独立保护；极限两端属 CPU 证据，物理仅开放左食指 |
+| VF-02-T02 单键可学性 | `READY`：一个训练种子，约 `10^6` 累计环境转移的诊断预算 | 看到完整物理成功的趋势，不以辅助奖励上升代替 |
 | VF-02-T03 单键重复验收 | 三个独立训练种子，各 100 个独立评估回合 | 目标约 95%；逐种子报告成功、区间和失败类型，不只池化平均 |
 | VF-02-T04 少量键与退格 | 目标条件策略、重复字符、邻键、真实 Backspace、释放技能 | 每个任务键独立通过；退格消费真实按键改变文本 |
 | VF-02-T05 冻结技能包 | 策略、归一化、关节 schema、配置/来源哈希和验收 | 阶段 3/4 各方法使用同一技能版本；修订版本需统一重测 |
