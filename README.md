@@ -2,7 +2,7 @@
 
 让机器人通过实体键盘和屏幕完成计算机任务，由独立 Verifier 判断物理动作、界面变化和软件结果是否成立。Agent 只调用技能；关节控制、安全保护和完成判定分别保留独立边界。
 
-当前研究主线：[面向实体计算机操作的验证反馈驱动技能学习](verification-feedback-skill-learning/README.md)。从单臂单手、少量按键起步，研究何时继续输入、何时验证和如何恢复。已交付离线证据契约与[固定工位单键物理 reset/step](verification-feedback-skill-learning/01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)；下一项是文本状态与反馈隔离，后续策略训练尚未开展。
+当前研究主线：[面向实体计算机操作的验证反馈驱动技能学习](verification-feedback-skill-learning/README.md)。从单臂单手、少量按键起步，研究何时继续输入、何时验证和如何恢复。已交付离线证据契约、固定工位单键物理 reset/step 与[文本状态及反馈隔离](verification-feedback-skill-learning/01_environment_and_evidence/TEXT_FEEDBACK.md)；下一项是批环境隔离与吞吐，后续策略训练尚未开展。
 
 ## 项目入口
 
@@ -45,7 +45,7 @@ PYTHONPATH=src python3 -m vskill_os.cli run --scenario configs/scenarios/mixed_f
 | 连续坐下与打字 | 见[连续演示](docs/experiments/dex5/CONTINUOUS_COMPUTER_DEMO.md) | `make isaac-computer`、`make verify-computer` | 仍使用手部 IK |
 | 虚拟计算机屏幕 | 同上 | `make isaac-virtual-computer`、`make verify-virtual-computer` | 额外桌面依赖与机器人相机 |
 | 椅子研究 | `make chair-plan`、`make demo-chair` | 真实物理 worker 待接入 | demo 为替身；训练入口不等于可用策略 |
-| 验证反馈学习 | `make demo-learning-evidence` | `make isaac-learning-single-hand` | 契约回放与固定工位单 `a` 物理原语验收；尚未训练策略 |
+| 验证反馈学习 | `make demo-learning-evidence`、`make demo-learning-feedback` | `make isaac-learning-single-hand`、`make isaac-learning-feedback` | 单 `a` 物理原语及有预算的文本反馈隔离；读数是状态机模拟，尚未训练策略 |
 | Dex3 站姿 | 见[分支登记](docs/BRANCHES.md) | 在独立工作树运行 | Isaac 6.0.1，固定基座双食指 |
 
 物理入口的资产准备、环境变量和能力限制以对应实验说明为准。`make help` 只展示入口，不启动仿真或训练。

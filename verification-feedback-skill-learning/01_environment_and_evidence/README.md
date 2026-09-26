@@ -1,6 +1,6 @@
 # 阶段 1：最小物理环境与可信证据
 
-状态：`PARTIAL`。VF-01-T01 离线契约和 [VF-01-T02 单环境物理 reset/step](PHYSICAL_ENVIRONMENT.md) 已交付；在线反馈过滤与批环境尚待实现。共同定义见[接口与证据契约](../COMMON_CONTRACTS.md)，已运行的代码与验收见[实现说明](IMPLEMENTATION.md)。
+状态：`PARTIAL`。VF-01-T01 离线契约、[VF-01-T02 单环境物理 reset/step](PHYSICAL_ENVIRONMENT.md) 和 [VF-01-T03 文本/反馈隔离](TEXT_FEEDBACK.md) 已交付；批环境与真实桌面复验待做。共同定义见[接口与证据契约](../COMMON_CONTRACTS.md)，离线证据子集见[实现说明](IMPLEMENTATION.md)。
 
 ## 范围与研究问题
 
@@ -31,9 +31,11 @@ flowchart LR
 | `TaskSpec / EpisodeRecord / ResetSpec` | `learning/contracts.py` | 已有 v1 标准库数据契约、时钟/版本/来源；`ResetSpec` 在 `learning/environment.py` |
 | `TypingEnvironment` 协议 | `learning/environment.py` | 已有 reset/step/finish/close；区分终止与截断 |
 | `SingleHandKeyboardEnv` | `adapters/isaac/learning/single_hand_env.py` | 已有单环境建场、直接关节驱动、逐子步采样；批环境待建 |
-| `TextTaskState` | `learning/text_task.py` | 仅消费带来源的键事件；追加/退格、光标和焦点规则明确 |
-| `FeedbackQueue / ObservationFilter` | `learning/feedback.py` | 记录采集/到达时刻；按验证请求提供可见反馈 |
-| `EpisodeRecorder` | `learning/recording.py` | 关联四类记录与原始文件引用，不赋予任务成功 |
+| `TextTaskState` | `learning/text_task.py` | 已有事件身份检查、插入/删除、光标、焦点与软件丢失记录 |
+| `FeedbackQueue / ObservationFilter` | `learning/feedback.py` | 已有请求预算、采集/交付时间、过期/缺失处理和白名单观察 |
+| `FeedbackSession / FeedbackEpisode` | `learning/feedback_session.py` | 已有监督记录；物理来源与哈希由 Isaac `feedback_env.py` 绑定 |
+| `FeedbackPolicyPort` | `adapters/feedback_environment.py` | 已有低层受限端口；等待期间继续物理 step、安全和回合隔离 |
+| 文本/反馈独立评估 | `learning/feedback_evaluation.py`、Isaac `feedback_verify.py` | 已有外部冻结配置下的独立回放和原始物理绑定 |
 | `IndependentTypingEvaluator` | `learning/evaluation.py` | 已有合成契约验收：重算键程事件、文本、释放、时限与证据完整性；物理验收另由 `physical_evaluation.py` 与 Isaac `learning/verify.py` 实现 |
 | 严格 JSON / 回放入口 | `learning/serialization.py`、`learning/replay.py`、`learning/cli.py` | 已有记录导入导出、哈希和 10 类可复核案例 |
 
@@ -64,7 +66,7 @@ close() -> cleanup_record
 |---|---|---|
 | VF-01-T01 契约与离线记录 | `DONE`（契约）：v1 记录与独立评估，10 类样例、24 个新增测试 | 已覆盖重复/漏事件、文本不符、管理释放伪成功；详情见[验收](IMPLEMENTATION.md) |
 | VF-01-T02 单环境物理闭环 | `DONE`（固定工位单 `a`）：直接关节 reset/step，10 个物理诊断回合，原始记录与独立验收；[说明](PHYSICAL_ENVIRONMENT.md) | 实测拒绝映射错、卡键、管理释放、过期/旧指令；全部键、过力与姿态守卫另有记录回归 |
-| VF-01-T03 文本与反馈隔离 | 事件消费、延迟/缺失、策略输入过滤 | 超前读到文本真值、旧帧当新帧、漏字后盲目重按 |
+| VF-01-T03 文本与反馈隔离 | `DONE`（文本状态机读数）：事件消费、延迟/缺失、预算、策略过滤与单环境物理集成；[说明](TEXT_FEEDBACK.md) | 已覆盖提前泄露、过期读数、失焦/丢失、提前结束和错误读数伪成功；不因暂时无反馈盲目重按 |
 | VF-01-T04 批环境与吞吐 | 1、16、64 环境的隔离/资源报告 | 状态、事件、随机数、隐藏状态或 reset 串扰 |
 | VF-01-T05 真实桌面复验 | 小样本事件→真实文本框/终端→纹理→机器人相机 | 文本状态机通过但实际应用无效；PTY 文本替代相机 |
 

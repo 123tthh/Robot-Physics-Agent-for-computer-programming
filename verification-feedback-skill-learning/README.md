@@ -1,6 +1,6 @@
 # 面向实体计算机操作的验证反馈驱动技能学习
 
-状态：`PARTIAL`，2026-09-26。VF-01-T01 已交付[离线证据契约](01_environment_and_evidence/IMPLEMENTATION.md)，VF-01-T02 已通过[固定工位单键物理 reset/step 验收](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)；反馈隔离、批环境和学习模块仍待交付。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
+状态：`PARTIAL`，2026-09-26。VF-01-T01 已交付[离线证据契约](01_environment_and_evidence/IMPLEMENTATION.md)，VF-01-T02 已通过[固定工位单键物理 reset/step 验收](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)，VF-01-T03 已实现[文本状态与请求反馈隔离](01_environment_and_evidence/TEXT_FEEDBACK.md)；批环境和学习模块仍待交付。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
 
 ## 研究主线
 
@@ -55,16 +55,16 @@ flowchart TB
 
 ## 共同设计与代码位置
 
-先读 [COMMON_CONTRACTS.md](COMMON_CONTRACTS.md)：它统一消息、时间、观察权限、物理释放、结果和版本定义。每个阶段都说明已有实现与拟建模块；拟建路径仅是建议，当前并未创建可执行环境或训练入口。
+先读 [COMMON_CONTRACTS.md](COMMON_CONTRACTS.md)：它统一消息、时间、观察权限、物理释放、结果和版本定义。每个阶段都说明已有实现与拟建模块；已有单环境与反馈诊断入口，尚无本课题的策略训练入口。
 
 ```text
-src/vskill_os/learning/                    已有：离线任务/轨迹/独立契约评估；在线历史待建
-src/vskill_os/skills/                      现有：新增学习按键、观察与恢复技能包装
-src/vskill_os/adapters/isaac/learning/      拟建：物理环境、批量采样与传感器适配
+src/vskill_os/learning/                    已有：记录、文本状态、反馈队列、观察过滤和独立评估
+src/vskill_os/skills/                      现有技能；学习按键、观察与恢复包装待建
+src/vskill_os/adapters/isaac/learning/      已有：单环境物理/反馈诊断；批量采样与相机适配待建
 src/vskill_os/adapters/learning_torch/     拟建：PPO、风险预测器、循环决策与视觉训练
-configs/learning/verification_feedback/   已有：v1 合成任务/评估判据；训练配置待建
-artifacts/verification_feedback/          已有：合成契约回放；物理轨迹/权重待采集
-reports/verification_feedback/            已有：契约验收摘要；物理/训练报告待采集
+configs/learning/verification_feedback/   已有：契约、单环境物理及文本反馈配置；训练配置待建
+artifacts/verification_feedback/          已有：合成回放和原始物理记录；权重待训练
+reports/verification_feedback/            已有：契约、物理和反馈验收；学习结果待采集
 ```
 
 Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节向量。部署策略仍使用现有 Runtime、资源契约、独立 Verifier 和 Ledger。研究决策器提交的技能请求也必须经过相同门禁。
@@ -75,7 +75,7 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 - 实际字符集合和 Backspace 必须先经过同一手臂的无 IK 可达性与物理接触检查；不预先假定 `asdf` 与退格都可在相同小工作区完成。
 - 保持既有坐姿稳定模块的策略和控制范围固定，首先声明“手部无 IK”。全身严格无 IK 还需审计冻结身体模块的数据来源；支持方式、关节控制权和失败均记录。
 - 先锁定当前已验证的 Isaac 5.1 / Lab 2.3.2 资产基线，新建环境是否兼容以及可运行规模需实测；不自动迁移到 6.0.1。
-- 初始文本编辑规则限定为末尾追加与末尾退格，焦点正确、光标在末尾；延迟和文本丢失可作独立扰动。随机光标/焦点操作需先有真实可执行的恢复技能，不能用隐藏 API 自动修复。
+- 初始焦点正确、光标在末尾；T03 状态机已定义插入、退格、删除和光标移动，默认物理任务仍只执行单 `a`。焦点/软件丢失是明确记录的扰动；物理编辑与焦点恢复需先有真实可执行的技能，不能用隐藏 API 自动修复。
 - 暂不把导航、主动滑椅、真实编程任务、十指覆盖作为第一轮论文的必要条件。
 
 ## 当前仓库可复用的部分
@@ -96,6 +96,8 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 
 **VF-01-T02 已完成固定工位单键物理范围交付**：23 维直接关节接口、本次开放单食指，3 个完整触键正例、7 个按预期拒绝的失败/截断回合及同种子重置复现通过。见[物理实现说明](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)。
 
-下一项为 **VF-01-T03：文本状态与反馈隔离**，随后做 1/16/64 环境隔离与吞吐、真实桌面复验。本次原语采用手工诊断动作与文本状态机，PPO 和视觉策略尚未交付。
+**VF-01-T03 已完成文本状态与反馈隔离范围交付**：事件消费、焦点/软件丢失、请求预算、延迟/缺失/过期、策略白名单和独立回放已接入单手物理环境。见[反馈实现说明](01_environment_and_evidence/TEXT_FEEDBACK.md)。
+
+下一项为 **VF-01-T04：批环境与吞吐**，按 1/16/64 环境实测隔离与资源，再做真实桌面复验。本次原语采用手工诊断动作与文本状态机，PPO 和视觉策略尚未交付。
 
 项目共同约束：[AGENTS.md](../AGENTS.md)、[统一架构](../docs/ARCHITECTURE.md)、[子项目状态](../docs/WORKSTREAMS.md)、[统一路线图](../docs/ROADMAP.md)。

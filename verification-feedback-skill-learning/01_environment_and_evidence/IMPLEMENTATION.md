@@ -59,7 +59,7 @@ print(report.contract_passed, report.findings)
 - 必须有一次最终验证；新帧需在请求后采集、结束前到达，并晚于最后一次输入处理。缺失帧保留 `None`，不能冒充空文本；新鲜度按采集时刻计算。
 - 验证次数包含最终请求和未返回请求。验证时间为每次请求到返回的时长之和，未返回项计到回合终点；这是合成时钟的延迟成本，不是硬件能耗。总时限包含等待时间。
 
-`ObservationFrame` 和 `EpisodeRecord` 是监督侧记录，包含特权信息，**不是可直接交给 actor 的观察 API**。在线过滤、隐藏文本状态、反馈队列和恢复预算属于 VF-01-T03 / VF-03；v1 不声称已实现这些权限隔离机制。
+`ObservationFrame` 和 `EpisodeRecord` 是监督侧记录，包含特权信息，**不是可直接交给 actor 的观察 API**。本 T01 子集不包含在线权限隔离；随后交付的 [T03](TEXT_FEEDBACK.md) 已实现文本隐藏、反馈队列与策略过滤，恢复决策预算仍属于 VF-03。
 
 ## 验收记录
 
@@ -81,6 +81,6 @@ print(report.contract_passed, report.findings)
 
 ## 后续实现
 
-VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现。当前下一项为 VF-01-T03：文本状态与按请求反馈隔离。
+VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现；[T03 文本与反馈隔离](TEXT_FEEDBACK.md) 也已交付。当前下一项为 VF-01-T04：批环境与吞吐。
 
 返回[阶段 1](README.md)或[研究主线](../README.md)。

@@ -2,7 +2,7 @@
 
 状态：完整接口蓝图；其中 VF-01-T01 已实现 v1 离线子集，VF-01-T02 已实现单环境物理调用契约。实际字段和限制见[离线实现说明](01_environment_and_evidence/IMPLEMENTATION.md)、[物理环境说明](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)与 [contracts.py](../src/vskill_os/learning/contracts.py)。下表未逐项实现，不能整体当作 Python API。各阶段在此约定上扩展，不重复定义另一套任务事实；接入 Runtime 时适配现有 `Evidence`、`SkillContract`、`StateSnapshot` 和 `WorkerMessage`。
 
-当前 `ObservationFrame` 是监督侧的全量记录，尚没有 actor 可见性过滤；`JointTargetAction`、`DecisionRequest`、`SkillOutcome`、恢复预算和在线反馈队列仍待实现。v1 仅接受明确标注的合成记录，不能将字段存在解释为物理或传感器能力已验证。
+当前 `ObservationFrame` 是监督侧全量记录。T02 已实现 `JointTargetAction` 和物理 `PolicyObservation`；T03 已实现白名单 `ActorObservation`、请求队列、验证预算与独立 `FeedbackEpisode`，见[文本与反馈隔离](01_environment_and_evidence/TEXT_FEEDBACK.md)。`DecisionRequest`、学习技能 `SkillOutcome` 与恢复预算仍待实现。T01 接受合成契约记录，T02/T03 另行绑定真实 PhysX 原始记录；T03 读数明确来自模拟文本状态机，不能当作相机证据。
 
 ## 1. 四条独立通路
 

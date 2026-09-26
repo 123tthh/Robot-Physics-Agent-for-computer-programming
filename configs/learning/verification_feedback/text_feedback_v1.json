@@ -1,0 +1,43 @@
+{
+  "task": {
+    "target_text": "a",
+    "initial_text": "",
+    "initial_focus": true,
+    "character_keys": [
+      {
+        "key": "a",
+        "character": "a"
+      },
+      {
+        "key": "s",
+        "character": "s"
+      },
+      {
+        "key": "space",
+        "character": " "
+      }
+    ],
+    "maximum_length": 128
+  },
+  "config": {
+    "capture_delay_s": 0.02,
+    "delivery_delay_s": 0.08,
+    "request_timeout_s": 0.3,
+    "maximum_age_s": 0.5,
+    "minimum_confidence": 0.9,
+    "maximum_requests": 3,
+    "maximum_pending": 2,
+    "verification_time_budget_s": 0.9,
+    "horizon_s": 3.0
+  },
+  "access": {
+    "joint_state": true,
+    "physical_keys": true,
+    "raw_key_events": false
+  },
+  "input_plan": {
+    "dropped_keydown_indices": [],
+    "focus_changes": []
+  },
+  "readout_faults": []
+}

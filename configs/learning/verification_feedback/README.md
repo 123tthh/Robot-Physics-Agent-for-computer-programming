@@ -7,6 +7,8 @@
 
 `single_hand_physics_v1.json` 是独立的 VF-01-T02 固定工位物理配置：240 Hz、23 维有序关节目标、单食指开放、固定骨盆与明确接触模型。运行 `make isaac-learning-single-hand`，复核入口与适用范围见[物理环境说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)。这不是 PPO 超参数配置。
 
+`text_feedback_v1.json` 是 VF-01-T03 的独立冻结设置：文本目标/字符绑定、观察权限、请求次数、等待预算、反馈延迟、置信度与最大年龄。物理诊断按固定案例派生并保存软件丢失、失焦、缺失等扰动；验证时从外部设置重算，不能信任回合自行放宽权限。入口 `make demo-learning-feedback`、`make isaac-learning-feedback`，见[文本与反馈隔离](../../../verification-feedback-skill-learning/01_environment_and_evidence/TEXT_FEEDBACK.md)。读数为文本状态机模拟，不是相机 OCR。
+
 ```bash
 PYTHONPATH=src python3 -m vskill_os.learning demo \
   --policy configs/learning/verification_feedback/evaluation_v1.json \

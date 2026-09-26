@@ -30,7 +30,7 @@ flowchart LR
 | VF-05 | [视觉与双手](../verification-feedback-skill-learning/05_visual_policy_and_bimanual/README.md) | L2 的多指部分 / 学习 M5，机制成立后展开 |
 | VF-06 | [坐姿交接](../verification-feedback-skill-learning/06_seated_skill_handoff/README.md) | L2 连续交接 / E1 的物理数字部分；软件 C1 随后独立验收 |
 
-**VF-01-T01 契约与 VF-01-T02 单环境物理闭环均已交付**：见[契约验收](../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)和[固定工位单键物理验收](../verification-feedback-skill-learning/01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)。下一项为 **VF-01-T03：文本状态与反馈隔离**，随后按 1/16/64 环境实测决定规模。当前使用手工直接关节诊断；PPO、风险预测器、分层决策和视觉学生均未交付。
+**VF-01-T01 契约、VF-01-T02 单环境物理闭环和 VF-01-T03 文本反馈隔离均已交付**：见[契约验收](../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)、[固定工位单键物理验收](../verification-feedback-skill-learning/01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)和[文本反馈说明](../verification-feedback-skill-learning/01_environment_and_evidence/TEXT_FEEDBACK.md)。下一项为 **VF-01-T04：批环境与吞吐**，按 1/16/64 环境实测决定规模。当前使用手工直接关节诊断及模拟文本读数；PPO、风险预测器、分层决策和视觉学生均未交付。
 
 ## 2. 原工程里程碑：支持项与后续扩展
 
@@ -42,7 +42,7 @@ flowchart LR
 | G1 | CORE；物理多技能/并发集成前落实 | 资源锁内重检有效状态；等待期间过期/撤销不得执行；取消与失败不得留下可用旧事实；运行证据绑定后端、控制方式和版本；补独立失败回归 | 待实现，不启动物理训练 |
 | G2 | SIM / D3-6 / DESKTOP | 对照两个工作树的桌面、相机、资产和事件桥；逐项适配共享接口；保留原路径回归与 5.1/6.0.1 环境隔离 | 待整合；不要一次合并两个大功能提交 |
 | C1 | DESKTOP；首轮短串研究后扩展 | 真实隔离代码任务首稿失败 → 独立测试拒绝 → 反馈修复 → 固定规格复测；记录产物哈希、退出码、超时与恢复；禁止完成文本绕过测试 | 适配器已有，端到端待验收 |
-| L0 | LEARN；对应 VF-01，集成时满足相关 G1 守卫 | 无 IK 来源清单；直接关节动作映射、接触/键程、释放和环境隔离；1/16/64 环境检查并记录吞吐/显存；缺失物理后端时保持阻塞 | 部分：离线契约、单环境物理原语已验收；反馈隔离与批环境待做；对应 M0 |
+| L0 | LEARN；对应 VF-01，集成时满足相关 G1 守卫 | 无 IK 来源清单；直接关节动作映射、接触/键程、释放和环境隔离；1/16/64 环境检查并记录吞吐/显存；缺失物理后端时保持阻塞 | 部分：离线契约、单环境物理原语与文本反馈隔离已验收；批环境待做；对应 M0 |
 | L1 | LEARN；L0 | 单键按下与释放；三种子、每种 100 个独立评估回合；成功率提案 ≥95%；保留失败与未见目标，不能用合成回放替代 | 规划；对应 M1 |
 | L2 | LEARN / D5；L1 | 五指覆盖 → 双手固定短串 → 坐下/打字交接；十指短串成功率提案 ≥90%；连续段无 reset、无外部支撑，观测与事件完整 | 规划；对应 M2/M3，指标仍需实验验证 |
 | E1 | CORE / DESKTOP / LEARN；C1、L2 | 同一次物理时间线完成输入、机器人读屏、软件测试；同时报告整段失败与交接失败，绑定策略/资产/输入版本 | 规划；对应 M4 |
@@ -50,7 +50,7 @@ flowchart LR
 | X | CHAIR / NAV / VOICE / D3-6，按具体任务启动 | 各自完成物理 worker、失败恢复、稳定/释放/感知门槛后再接 E1 | 独立扩展，不统一宣称完成 |
 | H | REAL；所用技能的仿真门槛通过 | 实际硬件身份、时钟/传感器与控制停止、HIL、小范围真机、对应 Verifier | 未开放为已有能力 |
 
-**研究默认下一项以 VF-01-T03 为准。** G1-01 等运行时加固仍保留为集成门槛；离线 schema 与单键样例已通过独立回归。站姿 Dex3 继续单独保存其基线和失败记录，不混入 Dex5 动作维度或本课题成绩。
+**研究默认下一项以 VF-01-T04 为准。** G1-01 等运行时加固仍保留为集成门槛；离线 schema、单键与文本反馈样例已通过独立回归。站姿 Dex3 继续单独保存其基线和失败记录，不混入 Dex5 动作维度或本课题成绩。
 
 ### G1 的可领取任务
 

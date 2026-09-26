@@ -151,6 +151,20 @@ verify-learning-single-hand:
 	@test -n "$(LEARNING_PHYSICS_RUN)" || (echo 'Set LEARNING_PHYSICS_RUN to the captured run directory'; exit 2)
 	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.runner --verify-run "$(LEARNING_PHYSICS_RUN)" --config "$(LEARNING_PHYSICS_CONFIG)"
 
+.PHONY: demo-learning-feedback isaac-learning-feedback verify-learning-feedback
+LEARNING_FEEDBACK_DIR ?= $(CURDIR)/artifacts/verification_feedback/vf01/feedback_physics
+LEARNING_FEEDBACK_CONFIG ?= $(CURDIR)/configs/learning/verification_feedback/text_feedback_v1.json
+
+demo-learning-feedback:
+	PYTHONPATH=src python3 -m vskill_os.learning.feedback_demo
+
+isaac-learning-feedback:
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.feedback_runner --output-dir "$(LEARNING_FEEDBACK_DIR)" --config "$(LEARNING_PHYSICS_CONFIG)" --feedback-config "$(LEARNING_FEEDBACK_CONFIG)"'
+
+verify-learning-feedback:
+	@test -n "$(LEARNING_FEEDBACK_RUN)" || (echo 'Set LEARNING_FEEDBACK_RUN to an exact run directory'; exit 2)
+	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.feedback_runner --verify-run "$(LEARNING_FEEDBACK_RUN)" --config "$(LEARNING_PHYSICS_CONFIG)" --feedback-config "$(LEARNING_FEEDBACK_CONFIG)"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -168,4 +182,5 @@ help:
 	  '  Dex3/6.0.1: separate worktree; see docs/BRANCHES.md' \
 	  '  Learning:   make demo-learning-evidence (contracts)' \
 	  '  Single key: make isaac-learning-single-hand | make verify-learning-single-hand' \
+	  '  Feedback:   make demo-learning-feedback | make isaac-learning-feedback | make verify-learning-feedback' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'
