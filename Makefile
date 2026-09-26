@@ -165,6 +165,18 @@ verify-learning-feedback:
 	@test -n "$(LEARNING_FEEDBACK_RUN)" || (echo 'Set LEARNING_FEEDBACK_RUN to an exact run directory'; exit 2)
 	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.feedback_runner --verify-run "$(LEARNING_FEEDBACK_RUN)" --config "$(LEARNING_PHYSICS_CONFIG)" --feedback-config "$(LEARNING_FEEDBACK_CONFIG)"
 
+.PHONY: isaac-learning-batch verify-learning-batch
+LEARNING_BATCH_DIR ?= $(CURDIR)/artifacts/verification_feedback/vf01/batch
+LEARNING_BATCH_CONFIG ?= $(CURDIR)/configs/learning/verification_feedback/batch_v1.json
+LEARNING_BATCH_SCALES ?= 1 16 64
+
+isaac-learning-batch:
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.batch_runner --output "$(LEARNING_BATCH_DIR)" --batch-config "$(LEARNING_BATCH_CONFIG)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --scales $(LEARNING_BATCH_SCALES)'
+
+verify-learning-batch:
+	@test -n "$(LEARNING_BATCH_RUN)" || (echo 'Set LEARNING_BATCH_RUN to an exact run directory'; exit 2)
+	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.batch_runner --verify-run "$(LEARNING_BATCH_RUN)" --batch-config "$(LEARNING_BATCH_CONFIG)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --scales $(LEARNING_BATCH_SCALES)
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -183,4 +195,5 @@ help:
 	  '  Learning:   make demo-learning-evidence (contracts)' \
 	  '  Single key: make isaac-learning-single-hand | make verify-learning-single-hand' \
 	  '  Feedback:   make demo-learning-feedback | make isaac-learning-feedback | make verify-learning-feedback' \
+	  '  Batch:      make isaac-learning-batch | make verify-learning-batch (1/16/64)' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'

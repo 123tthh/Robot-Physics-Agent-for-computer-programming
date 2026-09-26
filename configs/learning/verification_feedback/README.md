@@ -9,6 +9,8 @@
 
 `text_feedback_v1.json` 是 VF-01-T03 的独立冻结设置：文本目标/字符绑定、观察权限、请求次数、等待预算、反馈延迟、置信度与最大年龄。物理诊断按固定案例派生并保存软件丢失、失焦、缺失等扰动；验证时从外部设置重算，不能信任回合自行放宽权限。入口 `make demo-learning-feedback`、`make isaac-learning-feedback`，见[文本与反馈隔离](../../../verification-feedback-skill-learning/01_environment_and_evidence/TEXT_FEEDBACK.md)。读数为文本状态机模拟，不是相机 OCR。
 
+`batch_v1.json` 是 VF-01-T04 的冻结批量诊断配置：1/16/64 工位、3 m 间距、独立种子、144 测量控制周期、有界记录块和明确的 PhysX 接触缓冲容量。入口 `make isaac-learning-batch`、`make verify-learning-batch`；见[批环境与吞吐说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/BATCH_ENVIRONMENT.md)。规模由 runner 逐项覆盖，其余配置保持一致；不是 PPO 训练配置。
+
 ```bash
 PYTHONPATH=src python3 -m vskill_os.learning demo \
   --policy configs/learning/verification_feedback/evaluation_v1.json \

@@ -1,0 +1,13 @@
+{
+  "num_envs": 1,
+  "spacing_m": 3.0,
+  "seed": 7,
+  "control_steps": 144,
+  "chunk_samples": 64,
+  "gpu_max_rigid_contact_count": 8388608,
+  "gpu_max_rigid_patch_count": 163840,
+  "gpu_found_lost_pairs_capacity": 2097152,
+  "gpu_found_lost_aggregate_pairs_capacity": 33554432,
+  "gpu_total_aggregate_pairs_capacity": 2097152,
+  "gpu_collision_stack_size": 67108864
+}

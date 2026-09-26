@@ -12,6 +12,7 @@ dependencies = []
 
 [project.optional-dependencies]
 chair-training = ["torch>=2.4"]
+learning-batch = ["numpy>=1.26"]
 virtual-computer = ["pygame==2.6.1", "pyte==0.8.2", "wcwidth==0.2.13"]
 
 [project.scripts]

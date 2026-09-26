@@ -4,6 +4,8 @@
 
 当前 `ObservationFrame` 是监督侧全量记录。T02 已实现 `JointTargetAction` 和物理 `PolicyObservation`；T03 已实现白名单 `ActorObservation`、请求队列、验证预算与独立 `FeedbackEpisode`，见[文本与反馈隔离](01_environment_and_evidence/TEXT_FEEDBACK.md)。`DecisionRequest`、学习技能 `SkillOutcome` 与恢复预算仍待实现。T01 接受合成契约记录，T02/T03 另行绑定真实 PhysX 原始记录；T03 读数明确来自模拟文本状态机，不能当作相机证据。
 
+T04 已实现 [1/16/64 工位批环境](01_environment_and_evidence/BATCH_ENVIRONMENT.md)，使用 `vf-batch-bundle/1` 原始数组与每回合记录保留环境行、全局物理步、回合代际和局部时间。局部 reset 恢复已记录的稳定缓存、不推进邻居时间；策略接口仍只接受低层批动作和过滤后观察，不是新的 Agent 关节控制接口。
+
 ## 1. 四条独立通路
 
 | 通路 | 生产者 → 消费者 | 权限 |
