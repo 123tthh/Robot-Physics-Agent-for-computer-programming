@@ -1,6 +1,6 @@
 # 子项目与证据登记
 
-盘点日期：2026-09-26。本表是跨项目能力状态的统一入口；本轮新增 VF-01-T04 的 1/16/64 工位物理隔离、吞吐与资源实测，其他子项目沿用既有报告，未重新验收。Git 所属关系另见[分支登记](BRANCHES.md)。
+盘点日期：2026-09-26。本表是跨项目能力状态的统一入口；本轮新增 VF-01-T05 的单键真实 PTY、机器人 RGB-D/OCR 与六类案例实测，其他子项目沿用既有报告，未重新验收。Git 所属关系另见[分支登记](BRANCHES.md)。
 
 ## 状态口径
 
@@ -19,7 +19,7 @@
 | DESKTOP 屏幕与软件任务 | `PARTIAL`：实体 `ls`/Enter → PTY → 机器人 RGB-D/OCR 已有报告 | [屏幕验收](../reports/isaac_continuous_computer/virtual-screen-acceptance.json)、[P3](phases/phase_3_code_agent_loop.md) | 已有本地代码 Agent/测试适配器；真实隔离编程任务失败—修复—复测尚未端到端验收 |
 | D3-6 Dex3 站姿实验 | `PARTIAL`：Isaac 6.0.1 固定站姿双食指 `ak` 两次通过 | [独立工作树与报告位置](BRANCHES.md#3-dex3-站姿工作树) | `afjk` 失败；无自由站立、行走或机器人相机验收；未合入当前树 |
 | CHAIR 机器人—椅子交互 | `PARTIAL`：领域模型、独立轨迹验证、替身、worker 客户端和可选 PPO | [工程接口](research/chair/CHAIR_INTERACTION_ENGINEERING.md)、[研究规划](research/chair/CHAIR_INTERACTION_RESEARCH.md) | 真实载人椅物理 worker、策略训练和主动重定位未验收；自由坐下不证明主动滑椅 |
-| LEARN 验证反馈驱动技能学习 | `PARTIAL`：T01–T03 单键物理与反馈隔离；T04 的 1/16/64 工位隔离、局部重置和吞吐验收通过 | [批环境验收](../verification-feedback-skill-learning/01_environment_and_evidence/BATCH_ENVIRONMENT.md)、[反馈验收](../verification-feedback-skill-learning/01_environment_and_evidence/TEXT_FEEDBACK.md)、[六阶段架构](../verification-feedback-skill-learning/README.md) | 手工直接关节诊断、固定骨盆和模拟文本读数；本课题真实桌面复验、PPO、视觉与机制对照待实现 |
+| LEARN 验证反馈驱动技能学习 | `PARTIAL`：T01–T04 单键物理、反馈与批环境；T05 单键真实 PTY/机器人相机六案例验收通过 | [相机验收](../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)、[批环境验收](../verification-feedback-skill-learning/01_environment_and_evidence/BATCH_ENVIRONMENT.md)、[六阶段架构](../verification-feedback-skill-learning/README.md) | 人工直接关节、固定骨盆、单键 PTY 与校准 ROI；多键、真实退格、PPO、视觉控制与机制对照待实现 |
 | IMPROVE 受约束自改进 | `PLANNED`：episode、候选档案、晋升与回滚设计 | [RSI 集成设计](research/rsi/RSI_INTEGRATION_PLAN.md) | 不另建 Runtime；无已验证持续改进或 RSI 能力 |
 | NAV / VOICE 导航与语音 | `PARTIAL`：场景、控制端口、工具白名单与规则/loopback 基线 | [P5](phases/phase_5_navigation_and_voice.md)、[语音接口](integrations/VOICE_LLM.md) | 真实导航 rollout、感知和真实模型性能待验收；D3-6 中 velocity 候选不等于行走通过 |
 | REAL 真机与 HIL | `PLANNED`：身份校验与策略兼容性框架 | [P6](phases/phase_6_sim2real_self_improvement.md)、[G1 配置](core/G1_29DOF_5010.md) | 尚无本登记可引用的 HIL/真机通过证据 |

@@ -177,6 +177,18 @@ verify-learning-batch:
 	@test -n "$(LEARNING_BATCH_RUN)" || (echo 'Set LEARNING_BATCH_RUN to an exact run directory'; exit 2)
 	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.batch_runner --verify-run "$(LEARNING_BATCH_RUN)" --batch-config "$(LEARNING_BATCH_CONFIG)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --scales $(LEARNING_BATCH_SCALES)
 
+.PHONY: isaac-learning-desktop verify-learning-desktop
+LEARNING_DESKTOP_DIR ?= $(CURDIR)/artifacts/verification_feedback/vf01/desktop_camera
+LEARNING_DESKTOP_CONFIG ?= $(CURDIR)/configs/learning/verification_feedback/desktop_camera_v1.json
+LEARNING_DESKTOP_DEPS ?= $(CURDIR)/artifacts/virtual-computer/deps
+
+isaac-learning-desktop:
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$(LEARNING_DESKTOP_DEPS):$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.desktop_runner --output-dir "$(LEARNING_DESKTOP_DIR)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --desktop-config "$(LEARNING_DESKTOP_CONFIG)"'
+
+verify-learning-desktop:
+	@test -n "$(LEARNING_DESKTOP_RUN)" || (echo 'Set LEARNING_DESKTOP_RUN to an exact run directory'; exit 2)
+	PYTHONPATH="src:$(LEARNING_DESKTOP_DEPS)" "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.desktop_runner --verify-run "$(LEARNING_DESKTOP_RUN)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --desktop-config "$(LEARNING_DESKTOP_CONFIG)"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -196,4 +208,5 @@ help:
 	  '  Single key: make isaac-learning-single-hand | make verify-learning-single-hand' \
 	  '  Feedback:   make demo-learning-feedback | make isaac-learning-feedback | make verify-learning-feedback' \
 	  '  Batch:      make isaac-learning-batch | make verify-learning-batch (1/16/64)' \
+	  '  Camera:     make isaac-learning-desktop | make verify-learning-desktop' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'

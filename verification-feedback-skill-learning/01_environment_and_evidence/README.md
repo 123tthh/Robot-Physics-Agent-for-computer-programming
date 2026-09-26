@@ -1,6 +1,6 @@
 # 阶段 1：最小物理环境与可信证据
 
-状态：`PARTIAL`。VF-01-T01 离线契约、[T02 单环境物理闭环](PHYSICAL_ENVIRONMENT.md)、[T03 文本/反馈隔离](TEXT_FEEDBACK.md) 和 [T04 的 1/16/64 批环境验收](BATCH_ENVIRONMENT.md) 已交付；下一项为真实桌面与机器人相机复验。共同定义见[接口与证据契约](../COMMON_CONTRACTS.md)，离线证据子集见[实现说明](IMPLEMENTATION.md)。
+状态：`PARTIAL`。VF-01-T01 离线契约、[T02 单环境物理闭环](PHYSICAL_ENVIRONMENT.md)、[T03 文本/反馈隔离](TEXT_FEEDBACK.md) 和 [T04 的 1/16/64 批环境验收](BATCH_ENVIRONMENT.md) 及 [T05 单键真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已交付。多键和真实退格仍需后续验收；下一项为 VF-02-T01 动作映射健康检查。共同定义见[接口与证据契约](../COMMON_CONTRACTS.md)，离线证据子集见[实现说明](IMPLEMENTATION.md)。
 
 ## 范围与研究问题
 
@@ -33,6 +33,7 @@ flowchart LR
 | `SingleHandKeyboardEnv` | `adapters/isaac/learning/single_hand_env.py` | 已有单环境建场、直接关节驱动、逐子步采样 |
 | `BatchPhysicsScene / BatchKeyboardEnv` | `adapters/isaac/learning/batch_scene.py`、`batch_env.py` | 已有 1/16/64 工位克隆、原子批动作、局部 reset 与逐行反馈 |
 | 批量记录与复核 | Isaac `learning/batch_recording.py`、`batch_verify.py`、`batch_runner.py` | 已有完整原始分块、独立逐行验收、时限/显存/吞吐报告 |
+| 相机反馈与复核 | `learning/camera_feedback.py`、Isaac `learning/desktop_*.py` | 已有真实 PTY → 纹理 → 相机 → 有预算 OCR、原始像素及独立复核 |
 | `TextTaskState` | `learning/text_task.py` | 已有事件身份检查、插入/删除、光标、焦点与软件丢失记录 |
 | `FeedbackQueue / ObservationFilter` | `learning/feedback.py` | 已有请求预算、采集/交付时间、过期/缺失处理和白名单观察 |
 | `FeedbackSession / FeedbackEpisode` | `learning/feedback_session.py` | 已有监督记录；物理来源与哈希由 Isaac `feedback_env.py` 绑定 |
@@ -70,7 +71,7 @@ close() -> cleanup_record
 | VF-01-T02 单环境物理闭环 | `DONE`（固定工位单 `a`）：直接关节 reset/step，10 个物理诊断回合，原始记录与独立验收；[说明](PHYSICAL_ENVIRONMENT.md) | 实测拒绝映射错、卡键、管理释放、过期/旧指令；全部键、过力与姿态守卫另有记录回归 |
 | VF-01-T03 文本与反馈隔离 | `DONE`（文本状态机读数）：事件消费、延迟/缺失、预算、策略过滤与单环境物理集成；[说明](TEXT_FEEDBACK.md) | 已覆盖提前泄露、过期读数、失焦/丢失、提前结束和错误读数伪成功；不因暂时无反馈盲目重按 |
 | VF-01-T04 批环境与吞吐 | `DONE`（固定混合负载）：1/16/64 物理工位隔离、局部 reset、吞吐/显存与全部原始行复核；[说明](BATCH_ENVIRONMENT.md) | 检查张量行、事件、RNG、策略状态和请求身份；重置前后邻居数组严格不变；非首键丢样回归 |
-| VF-01-T05 真实桌面复验 | 小样本事件→真实文本框/终端→纹理→机器人相机 | 文本状态机通过但实际应用无效；PTY 文本替代相机 |
+| VF-01-T05 真实桌面复验 | `DONE`（单 `a`）：真实 PTY、屏幕纹理、固定头部 RGB-D、请求式 OCR；[说明](DESKTOP_CAMERA.md) | 两正例通过；失焦、纹理冻结、相机缺失、提前结束均拒绝；跨回合渲染残影已修复 |
 
 测试用手工记录只能标为契约证据。重复物理运行按事件语义、仿真时间与容差比较，UUID/墙钟差异不直接算复现失败。监控全部实体键，至少包含目标邻键；只记录计划键会漏掉误触。
 

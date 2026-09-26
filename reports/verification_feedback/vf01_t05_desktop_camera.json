@@ -1,0 +1,368 @@
+{
+  "schema_version": "vf-desktop-camera-suite/1",
+  "task": "VF-01-T05",
+  "accepted": true,
+  "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294",
+  "process": {
+    "returncode": 0,
+    "timed_out": false,
+    "interrupted": false,
+    "log": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294.log",
+    "wall_s": 140.71146274500643
+  },
+  "cases": [
+    {
+      "schema_version": "vf-desktop-camera-evaluation/1",
+      "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/visible_input",
+      "binding_passed": true,
+      "physical_primitive_passed": true,
+      "desktop_input_correct": true,
+      "camera_confirmation_passed": true,
+      "end_to_end_passed": true,
+      "findings": [],
+      "task_failures": [],
+      "frames": [
+        {
+          "frame_id": "isaac-single-hand-0:visible_input:camera:0",
+          "time_s": 0.03333333333333333,
+          "rgb_sha256": "3f04b6be907c74cd87d1263c84b658cf1195d35760f6b0d847f6615ba54c1bb3",
+          "ocr_text": "a",
+          "confidence": 0.01906662,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.28204719102359377
+        },
+        {
+          "frame_id": "isaac-single-hand-0:visible_input:camera:1",
+          "time_s": 2.1333333333333333,
+          "rgb_sha256": "9879f73f39edc981989aab717046c1a667596f2d4fe7c3046bc463cf65c26c1f",
+          "ocr_text": "a",
+          "confidence": 0.9660579699999999,
+          "displayed_input": "a",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.1957259199989494
+        }
+      ],
+      "learned_policy": false,
+      "real_robot_verified": false,
+      "code_agent_executed": false,
+      "actual_terminal_text": "a",
+      "terminal_pid": 298631,
+      "physical_episode_sha256": "465d6ca2becce88339af8e99fe2d8f6a279aebdd8dbda62a32dd3773ecc8d2c0",
+      "desktop_manifest_sha256": "cafaefa6281a96efd974a413e9b1ab5932b95402137c15ce775163361f721e4d",
+      "verifier_sha256": "121c0c7aaf6bc2e426c875d9c423119ba1c303ec4900645d6bfce6a45893c1a6",
+      "end_time_s": 2.25,
+      "accepted_requests": 2,
+      "verification_wait_s": 0.23333333333333336,
+      "final_feedback": [
+        {
+          "request_id": "isaac-single-hand-0:visible_input:camera:1",
+          "purpose": "final",
+          "capture_time_s": 2.1333333333333333,
+          "arrival_time_s": 2.216666666666667,
+          "age_s": 0.1166666666666667,
+          "status": "readable",
+          "text": "a",
+          "confidence": 0.9660579699999999,
+          "source": "robot_camera_ocr_v1"
+        }
+      ],
+      "case": "visible_input",
+      "expected_end_to_end_passed": true,
+      "acceptance_passed": true
+    },
+    {
+      "schema_version": "vf-desktop-camera-evaluation/1",
+      "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/visible_after_reset",
+      "binding_passed": true,
+      "physical_primitive_passed": true,
+      "desktop_input_correct": true,
+      "camera_confirmation_passed": true,
+      "end_to_end_passed": true,
+      "findings": [],
+      "task_failures": [],
+      "frames": [
+        {
+          "frame_id": "isaac-single-hand-0:visible_after_reset:camera:0",
+          "time_s": 0.03333333333333333,
+          "rgb_sha256": "8077d8712712ddb78948392332beb6c00150e8c597126b86b4bce8e83aa13f19",
+          "ocr_text": null,
+          "confidence": null,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.14619352802401409
+        },
+        {
+          "frame_id": "isaac-single-hand-0:visible_after_reset:camera:1",
+          "time_s": 2.1333333333333333,
+          "rgb_sha256": "1a4c4baa1c5d37e6861a6ab70258e6d4c58a2b55a9d878d863c84411f9cb2dbe",
+          "ocr_text": "a",
+          "confidence": 0.96529945,
+          "displayed_input": "a",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.1444903340016026
+        }
+      ],
+      "learned_policy": false,
+      "real_robot_verified": false,
+      "code_agent_executed": false,
+      "actual_terminal_text": "a",
+      "terminal_pid": 298645,
+      "physical_episode_sha256": "c68335ae81dcddb17a4f9c05ae060b51cce97ac9b530df25b305f7adcf3e8a73",
+      "desktop_manifest_sha256": "8eeb9362ab469f8658394e8d84bdcceff475bbc35980a2ba6fb28c4d6348fb1b",
+      "verifier_sha256": "121c0c7aaf6bc2e426c875d9c423119ba1c303ec4900645d6bfce6a45893c1a6",
+      "end_time_s": 2.25,
+      "accepted_requests": 2,
+      "verification_wait_s": 0.23333333333333336,
+      "final_feedback": [
+        {
+          "request_id": "isaac-single-hand-0:visible_after_reset:camera:1",
+          "purpose": "final",
+          "capture_time_s": 2.1333333333333333,
+          "arrival_time_s": 2.216666666666667,
+          "age_s": 0.1166666666666667,
+          "status": "readable",
+          "text": "a",
+          "confidence": 0.96529945,
+          "source": "robot_camera_ocr_v1"
+        }
+      ],
+      "case": "visible_after_reset",
+      "expected_end_to_end_passed": true,
+      "acceptance_passed": true
+    },
+    {
+      "schema_version": "vf-desktop-camera-evaluation/1",
+      "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/focus_lost",
+      "binding_passed": true,
+      "physical_primitive_passed": true,
+      "desktop_input_correct": false,
+      "camera_confirmation_passed": false,
+      "end_to_end_passed": false,
+      "findings": [],
+      "task_failures": [
+        "DESKTOP_TEXT_INCORRECT",
+        "CAMERA_FINAL_UNCONFIRMED"
+      ],
+      "frames": [
+        {
+          "frame_id": "isaac-single-hand-0:focus_lost:camera:0",
+          "time_s": 0.03333333333333333,
+          "rgb_sha256": "8588bef093a7a724d3b90d0bd2e4f63db7457a9c23c7a94bae9c86eede7103e1",
+          "ocr_text": "gg",
+          "confidence": 0.0,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.1502437510062009
+        },
+        {
+          "frame_id": "isaac-single-hand-0:focus_lost:camera:1",
+          "time_s": 2.1333333333333333,
+          "rgb_sha256": "617d386f844fae2d1782dacfbe72e1639e81c48bdab5ee745b697156cacd4c0a",
+          "ocr_text": "\u2014 od",
+          "confidence": 0.07054787,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.1482281119970139
+        }
+      ],
+      "learned_policy": false,
+      "real_robot_verified": false,
+      "code_agent_executed": false,
+      "actual_terminal_text": "",
+      "terminal_pid": 298667,
+      "physical_episode_sha256": "427cf1961e82a75093066b00353feb3ff6d8035c86be298c1cd749270a9903b2",
+      "desktop_manifest_sha256": "76253d3c5c94486524409fe0ae49cf7aaac56405e716b573a2e8b9259489e696",
+      "verifier_sha256": "121c0c7aaf6bc2e426c875d9c423119ba1c303ec4900645d6bfce6a45893c1a6",
+      "end_time_s": 2.25,
+      "accepted_requests": 2,
+      "verification_wait_s": 0.23333333333333336,
+      "final_feedback": [
+        {
+          "request_id": "isaac-single-hand-0:focus_lost:camera:1",
+          "purpose": "final",
+          "capture_time_s": 2.1333333333333333,
+          "arrival_time_s": 2.216666666666667,
+          "age_s": 0.1166666666666667,
+          "status": "low_confidence",
+          "text": null,
+          "confidence": null,
+          "source": "robot_camera_ocr_v1"
+        }
+      ],
+      "case": "focus_lost",
+      "expected_end_to_end_passed": false,
+      "acceptance_passed": true
+    },
+    {
+      "schema_version": "vf-desktop-camera-evaluation/1",
+      "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/frozen_texture",
+      "binding_passed": true,
+      "physical_primitive_passed": true,
+      "desktop_input_correct": true,
+      "camera_confirmation_passed": false,
+      "end_to_end_passed": false,
+      "findings": [],
+      "task_failures": [
+        "CAMERA_FINAL_UNCONFIRMED",
+        "DISPLAY_TEXTURE_STALE"
+      ],
+      "frames": [
+        {
+          "frame_id": "isaac-single-hand-0:frozen_texture:camera:0",
+          "time_s": 0.03333333333333333,
+          "rgb_sha256": "7d1c96146398c6ed3bb79e2eabf7fca675b02952ea725f8119f0f2b10bd190b1",
+          "ocr_text": "a",
+          "confidence": 0.5170978900000001,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.15015985901118256
+        },
+        {
+          "frame_id": "isaac-single-hand-0:frozen_texture:camera:1",
+          "time_s": 2.1333333333333333,
+          "rgb_sha256": "8d38d4a19b61edc02528be8465ebfcd1492e313fe91900da0680f79d0b3fe772",
+          "ocr_text": "7 as ;",
+          "confidence": 0.11397034,
+          "displayed_input": "",
+          "display_is_current": false,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.14824467900325544
+        }
+      ],
+      "learned_policy": false,
+      "real_robot_verified": false,
+      "code_agent_executed": false,
+      "actual_terminal_text": "a",
+      "terminal_pid": 298676,
+      "physical_episode_sha256": "9de88250b64a1430dfd894968a744fc2ddedd8aed8c9e2fa691aafdb9ffdf875",
+      "desktop_manifest_sha256": "2b85fd6bfed911af77ce16b1f1edba0573fb6428bf07abbb637c0de87595eead",
+      "verifier_sha256": "121c0c7aaf6bc2e426c875d9c423119ba1c303ec4900645d6bfce6a45893c1a6",
+      "end_time_s": 2.25,
+      "accepted_requests": 2,
+      "verification_wait_s": 0.23333333333333336,
+      "final_feedback": [
+        {
+          "request_id": "isaac-single-hand-0:frozen_texture:camera:1",
+          "purpose": "final",
+          "capture_time_s": 2.1333333333333333,
+          "arrival_time_s": 2.216666666666667,
+          "age_s": 0.1166666666666667,
+          "status": "low_confidence",
+          "text": null,
+          "confidence": null,
+          "source": "robot_camera_ocr_v1"
+        }
+      ],
+      "case": "frozen_texture",
+      "expected_end_to_end_passed": false,
+      "acceptance_passed": true
+    },
+    {
+      "schema_version": "vf-desktop-camera-evaluation/1",
+      "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/missing_camera",
+      "binding_passed": true,
+      "physical_primitive_passed": true,
+      "desktop_input_correct": true,
+      "camera_confirmation_passed": false,
+      "end_to_end_passed": false,
+      "findings": [],
+      "task_failures": [
+        "CAMERA_FINAL_UNCONFIRMED"
+      ],
+      "frames": [
+        {
+          "frame_id": "isaac-single-hand-0:missing_camera:camera:0",
+          "time_s": 0.03333333333333333,
+          "rgb_sha256": "f1899d973246b28036b47f2605aba40d4f3fa3cb87d0efe534ddc8f64a1b57e4",
+          "ocr_text": ".",
+          "confidence": 0.43333473,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.14548886098782532
+        }
+      ],
+      "learned_policy": false,
+      "real_robot_verified": false,
+      "code_agent_executed": false,
+      "actual_terminal_text": "a",
+      "terminal_pid": 298698,
+      "physical_episode_sha256": "284b6c6c656a98517a94a336c40e4bb2ba6f96cc874d9d3f2fa7926ce11e8c72",
+      "desktop_manifest_sha256": "18723849b50c023500c7065a104e1e72c7c96cfd5219e4b90170baea5c10f65b",
+      "verifier_sha256": "121c0c7aaf6bc2e426c875d9c423119ba1c303ec4900645d6bfce6a45893c1a6",
+      "end_time_s": 2.25,
+      "accepted_requests": 2,
+      "verification_wait_s": 0.23333333333333336,
+      "final_feedback": [
+        {
+          "request_id": "isaac-single-hand-0:missing_camera:camera:1",
+          "purpose": "final",
+          "capture_time_s": 2.1333333333333333,
+          "arrival_time_s": 2.216666666666667,
+          "age_s": 0.1166666666666667,
+          "status": "missing",
+          "text": null,
+          "confidence": null,
+          "source": "robot_camera_ocr_v1"
+        }
+      ],
+      "case": "missing_camera",
+      "expected_end_to_end_passed": false,
+      "acceptance_passed": true
+    },
+    {
+      "schema_version": "vf-desktop-camera-evaluation/1",
+      "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/finish_before_camera",
+      "binding_passed": true,
+      "physical_primitive_passed": true,
+      "desktop_input_correct": true,
+      "camera_confirmation_passed": false,
+      "end_to_end_passed": false,
+      "findings": [],
+      "task_failures": [
+        "CAMERA_FINAL_UNCONFIRMED"
+      ],
+      "frames": [
+        {
+          "frame_id": "isaac-single-hand-0:finish_before_camera:camera:0",
+          "time_s": 0.03333333333333333,
+          "rgb_sha256": "febce7fec8c309dfa44a804c2a2900d775be1e55e7e73200e023d7ddff30be7a",
+          "ocr_text": null,
+          "confidence": null,
+          "displayed_input": "",
+          "display_is_current": true,
+          "depth_screen_fraction": 1.0,
+          "capture_wall_s": 0.14826720001292415
+        }
+      ],
+      "learned_policy": false,
+      "real_robot_verified": false,
+      "code_agent_executed": false,
+      "actual_terminal_text": "a",
+      "terminal_pid": 298704,
+      "physical_episode_sha256": "572873a70b382291fb85de938bb8a249b19b7ef6cdf159b23697c489af969ad1",
+      "desktop_manifest_sha256": "bbeebbacc3cdf5e2ca815f70b2cbe6414a9d7a893ab6647f05d8185ce5184c95",
+      "verifier_sha256": "121c0c7aaf6bc2e426c875d9c423119ba1c303ec4900645d6bfce6a45893c1a6",
+      "end_time_s": 2.1,
+      "accepted_requests": 2,
+      "verification_wait_s": 0.11666666666666667,
+      "final_feedback": [],
+      "case": "finish_before_camera",
+      "expected_end_to_end_passed": false,
+      "acceptance_passed": true
+    }
+  ],
+  "findings": [],
+  "learned_policy": false,
+  "real_robot_verified": false,
+  "code_agent_executed": false,
+  "scope": "fixed-pelvis direct-joint single a; real PTY terminal; Isaac robot RGB-D camera"
+}

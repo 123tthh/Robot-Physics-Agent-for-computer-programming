@@ -8,7 +8,7 @@
 
 状态：**目标架构与实施规范，尚未完成无 IK 策略训练**。本文是学习路线的总体设计入口；[基础运行时架构](../../ARCHITECTURE.md)解释已有核心组件，[训练调研](DEX5_LEARNING_WITHOUT_IK.md)提供方法依据和实验细节。文中的新模块、接口字段、技能和验收门槛均为待实现设计，除明确标注“已有”外，不代表已接入或已通过测试。
 
-已有工程：VF-01-T01 的版本化记录和离线独立评估、T02 单环境物理 reset/step、T03 文本反馈隔离，以及 [T04 的 1/16/64 批环境验收](../../../verification-feedback-skill-learning/01_environment_and_evidence/BATCH_ENVIRONMENT.md)。入口为 `make demo-learning-evidence`、`make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`；策略训练仍未交付。
+已有工程：VF-01-T01–T04 的版本化记录、单/批物理环境与文本反馈隔离，以及 [T05 真实终端与机器人相机复验](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。入口为 `make demo-learning-evidence`、`make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`；下一项为 VF-02-T01 动作映射健康检查，策略训练仍未交付。
 
 ## 1. 目标与设计决策
 

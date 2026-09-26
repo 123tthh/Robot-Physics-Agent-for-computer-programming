@@ -1,0 +1,38 @@
+{
+  "feedback": {
+    "capture_delay_s": 0.02,
+    "delivery_delay_s": 0.08,
+    "request_timeout_s": 0.3,
+    "maximum_age_s": 0.5,
+    "minimum_confidence": 0.9,
+    "maximum_requests": 3,
+    "maximum_pending": 1,
+    "verification_time_budget_s": 0.9,
+    "horizon_s": 3.0
+  },
+  "input_roi": [
+    436,
+    350,
+    830,
+    370
+  ],
+  "image_size": [
+    1280,
+    720
+  ],
+  "ocr_scale": 4,
+  "render_frames": 8,
+  "ocr_timeout_s": 10.0,
+  "minimum_depth_fraction": 0.95,
+  "mount_position": [
+    0.08,
+    0.0,
+    0.49
+  ],
+  "mount_quaternion": [
+    0.99875026,
+    0.0,
+    0.04997917,
+    0.0
+  ]
+}

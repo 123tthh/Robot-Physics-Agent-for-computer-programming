@@ -6,6 +6,8 @@
 
 T04 已实现 [1/16/64 工位批环境](01_environment_and_evidence/BATCH_ENVIRONMENT.md)，使用 `vf-batch-bundle/1` 原始数组与每回合记录保留环境行、全局物理步、回合代际和局部时间。局部 reset 恢复已记录的稳定缓存、不推进邻居时间；策略接口仍只接受低层批动作和过滤后观察，不是新的 Agent 关节控制接口。
 
+T05 已实现[真实终端与仿真机器人相机](01_environment_and_evidence/DESKTOP_CAMERA.md)的单键复验。独立 `robot_camera_ocr_v1` 来源只由机器人 RGB 裁剪产生，使用实际控制步捕获/交付时间和单独预算队列；PTY、纹理、原始 RGB-D 和最终验证结果不进入策略观察。T03 的模拟读数类型和已验收记录不变。
+
 ## 1. 四条独立通路
 
 | 通路 | 生产者 → 消费者 | 权限 |

@@ -11,6 +11,8 @@
 
 `batch_v1.json` 是 VF-01-T04 的冻结批量诊断配置：1/16/64 工位、3 m 间距、独立种子、144 测量控制周期、有界记录块和明确的 PhysX 接触缓冲容量。入口 `make isaac-learning-batch`、`make verify-learning-batch`；见[批环境与吞吐说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/BATCH_ENVIRONMENT.md)。规模由 runner 逐项覆盖，其余配置保持一致；不是 PPO 训练配置。
 
+`desktop_camera_v1.json` 是 VF-01-T05 的冻结相机复验设置：固定工位输入行 ROI、4 倍放大、8 次渲染、头部安装及相机反馈预算。来源为 Isaac 仿真机器人相机原始 RGB 的 OCR；原始 PTY 文本仅用于监督验收。入口 `make isaac-learning-desktop`、`make verify-learning-desktop`；见[桌面与相机说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。字体、窗口布局或工位改变后必须重新标定，不能直接套用此 ROI。
+
 ```bash
 PYTHONPATH=src python3 -m vskill_os.learning demo \
   --policy configs/learning/verification_feedback/evaluation_v1.json \

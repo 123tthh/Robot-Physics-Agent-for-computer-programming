@@ -1,6 +1,6 @@
 # 面向实体计算机操作的验证反馈驱动技能学习
 
-状态：`PARTIAL`，2026-09-26。VF-01-T01 的离线契约、T02 单键物理闭环、T03 文本反馈隔离及 [T04 的 1/16/64 工位隔离与吞吐](01_environment_and_evidence/BATCH_ENVIRONMENT.md) 已交付。真实桌面复验和学习模块仍待交付。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
+状态：`PARTIAL`，2026-09-26。VF-01-T01 的离线契约、T02 单键物理闭环、T03 文本反馈隔离及 [T04 的 1/16/64 工位隔离与吞吐](01_environment_and_evidence/BATCH_ENVIRONMENT.md) 已交付。[T05 真实终端与机器人相机](01_environment_and_evidence/DESKTOP_CAMERA.md) 的单 `a` 六案例复验也已通过；学习模块仍待交付。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
 
 ## 研究主线
 
@@ -60,9 +60,9 @@ flowchart TB
 ```text
 src/vskill_os/learning/                    已有：记录、文本状态、反馈队列、观察过滤和独立评估
 src/vskill_os/skills/                      现有技能；学习按键、观察与恢复包装待建
-src/vskill_os/adapters/isaac/learning/      已有：单/批环境、物理/反馈诊断；本课题相机适配待建
+src/vskill_os/adapters/isaac/learning/      已有：单/批环境、物理/反馈诊断、真实终端与机器人相机适配
 src/vskill_os/adapters/learning_torch/     拟建：PPO、风险预测器、循环决策与视觉训练
-configs/learning/verification_feedback/   已有：契约、单/批物理及文本反馈配置；训练配置待建
+configs/learning/verification_feedback/   已有：契约、单/批物理、文本与相机反馈配置；训练配置待建
 artifacts/verification_feedback/          已有：合成回放和原始物理记录；权重待训练
 reports/verification_feedback/            已有：契约、物理和反馈验收；学习结果待采集
 ```
@@ -85,7 +85,7 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 | 键程—事件桥 | [keyboard_bridge.py](../src/vskill_os/simulation/keyboard_bridge.py) | 迟滞、防抖、事件与 reason；超时 KeyUp 不等于物理释放 |
 | 规则纠错 | [TypingPlanner.repair](../src/vskill_os/typing.py) | 最长公共前缀的退格/重输计划；需消费同一屏幕估计，不读隐藏真值；Dex5 执行映射另建 |
 | 物理观测验证 | [dex5_typing.py](../src/vskill_os/simulation/dex5_typing.py)、[动作验证](../src/vskill_os/action_graph/runtime.py) | 复用验证语义；适配少量键、恢复与学习执行器，不能直接宣称现有脚本就是学习环境 |
-| 桌面、屏幕、相机 | [virtual_computer.py](../src/vskill_os/adapters/virtual_computer.py)、[virtual_screen.py](../src/vskill_os/adapters/isaac/virtual_screen.py) | 现有特定任务闭环；本课题文本框/相机适配待复验，文本状态机批量隔离不替代桌面证据 |
+| 桌面、屏幕、相机 | [virtual_computer.py](../src/vskill_os/adapters/virtual_computer.py)、[virtual_screen.py](../src/vskill_os/adapters/isaac/virtual_screen.py) | 现有特定任务闭环；本课题单 `a` PTY/机器人相机已复验；固定 ROI 与字体，非任意桌面视觉控制 |
 | 姿态与安全领域 | [control/](../src/vskill_os/control)、[Runtime](../src/vskill_os/runtime.py) | 原守卫可复用；锁内状态重检、持续撤销和统一控制权仍是待加固项 |
 
 研究想法与相关工作名称来自用户提供的方案；本次未重新检索或逐篇核验 RoboPianist、OmniPianist、Reward Machines、主动感知或 T-STAR，不据此声称发表级新颖性。正式写作前应逐篇建立“问题、证据表示、动作、验证成本、恢复、传感器权限”的对照表。
@@ -100,6 +100,8 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 
 **VF-01-T04 已完成固定负载下的批环境验收**：1/16/64 工位动作、事件、反馈、随机数与局部 reset 隔离通过；吞吐约 11.02 / 61.57 / 84.66 环境转移每秒。见[批环境说明](01_environment_and_evidence/BATCH_ENVIRONMENT.md)。
 
-下一项为 **VF-01-T05：真实桌面与机器人相机复验**。本次原语采用手工诊断动作与文本状态机，PPO 和视觉策略尚未交付。
+**VF-01-T05 已完成单键真实终端与仿真机器人相机范围的复验**：两次正常输入通过，失焦、纹理冻结、相机缺失和提前结束四类负例正确拒绝；保留原始 RGB-D 并独立重跑 OCR。见[桌面与相机说明](01_environment_and_evidence/DESKTOP_CAMERA.md)。
+
+下一项为 **VF-02-T01：动作映射健康检查**。当前仍是固定骨盆、人工直接关节诊断；多键、真实退格、PPO 和视觉策略尚未交付。
 
 项目共同约束：[AGENTS.md](../AGENTS.md)、[统一架构](../docs/ARCHITECTURE.md)、[子项目状态](../docs/WORKSTREAMS.md)、[统一路线图](../docs/ROADMAP.md)。
