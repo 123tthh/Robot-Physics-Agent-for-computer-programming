@@ -138,6 +138,19 @@ LEARNING_EVIDENCE_DIR ?= artifacts/verification_feedback/vf01/contracts
 demo-learning-evidence:
 	PYTHONPATH=src python3 -m vskill_os.learning demo --output "$(LEARNING_EVIDENCE_DIR)"
 
+# VF-01-T02 is an opt-in Isaac physics diagnostic, never a PPO benchmark.
+.PHONY: isaac-learning-single-hand verify-learning-single-hand
+LEARNING_PHYSICS_DIR ?= $(CURDIR)/artifacts/verification_feedback/vf01/physics
+LEARNING_PHYSICS_CONFIG ?= $(CURDIR)/configs/learning/verification_feedback/single_hand_physics_v1.json
+LEARNING_PHYSICS_RUN ?=
+
+isaac-learning-single-hand:
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.runner --output-dir "$(LEARNING_PHYSICS_DIR)" --config "$(LEARNING_PHYSICS_CONFIG)"'
+
+verify-learning-single-hand:
+	@test -n "$(LEARNING_PHYSICS_RUN)" || (echo 'Set LEARNING_PHYSICS_RUN to the captured run directory'; exit 2)
+	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.runner --verify-run "$(LEARNING_PHYSICS_RUN)" --config "$(LEARNING_PHYSICS_CONFIG)"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -153,5 +166,6 @@ help:
 	  '  Screen:     make isaac-virtual-computer | make verify-virtual-computer' \
 	  '  Chair:      make chair-plan | make demo-chair (proxy only)' \
 	  '  Dex3/6.0.1: separate worktree; see docs/BRANCHES.md' \
-	  '  Learning:   make demo-learning-evidence (contracts only; no physics/PPO)' \
+	  '  Learning:   make demo-learning-evidence (contracts)' \
+	  '  Single key: make isaac-learning-single-hand | make verify-learning-single-hand' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'

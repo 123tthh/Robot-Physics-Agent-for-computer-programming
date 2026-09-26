@@ -344,6 +344,7 @@ def author_dex5_workstation(
     return {
         "keyboard_cfg": keyboard_cfg,
         "keyboard_path": "/World/Keyboard",
+        "keyboard_root_position": root_position,
         "key_centers": key_centers,
         "key_body_centers": key_body_centers,
         "key_paths": key_paths,

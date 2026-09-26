@@ -165,81 +165,11 @@ class IndependentTypingEvaluator:
             return result()
 
         bindings = {binding.key: binding.character for binding in task.character_keys}
-        permitted_keys = set(bindings) | {task.backspace_key}
 
         def apply_key(text: str, key: str) -> str:
             return text[:-1] if key == task.backspace_key else text + bindings.get(key, "")
 
-        # Independent physical state machine. A digital KeyUp can precede the
-        # end of contact, but a cycle completes only after sustained clearance.
-        states = {key: _KeyState() for key in task.monitored_keys}
-        expected: Counter = Counter()
-        sample_map = {frame.stamp.record_id: frame for frame in observations}
-        for index, frame in enumerate(observations):
-            stamp = frame.stamp
-            if frame.safety_stopped:
-                fail("SAFETY_STOP", "independent safety monitor stopped the episode", stamp.record_id)
-            for sample in frame.keys:
-                state = states[sample.key]
-                clear = not sample.in_contact and sample.travel_m <= policy.release_threshold_m
-                if sample.normal_force_n > policy.maximum_contact_force_n + EPSILON:
-                    fail("EXCESS_FORCE", f"{sample.key} exceeded contact-force limit", stamp.record_id)
-                if index == 0 and not clear:
-                    fail("INITIAL_STATE", f"{sample.key} was not initially released", stamp.record_id)
-                if state.down and sample.travel_m <= policy.release_threshold_m:
-                    expected[(stamp.record_id, sample.key, "keyup", "release_threshold")] += 1
-                    state.down = False
-                elif not state.down and sample.travel_m >= policy.press_threshold_m:
-                    if not sample.in_contact:
-                        fail("NO_CONTACT", f"{sample.key} reached actuation travel without contact", stamp.record_id)
-                    else:
-                        if not state.armed:
-                            fail("INCOMPLETE_RELEASE", f"{sample.key} was pressed before physical rearming", stamp.record_id)
-                        if sample.key not in permitted_keys:
-                            fail("UNEXPECTED_KEY", f"{sample.key} is outside the declared input keys", stamp.record_id)
-                        expected[(stamp.record_id, sample.key, "keydown", "physical_threshold")] += 1
-                        state.down = True
-                        state.pending_cycle = True
-                        state.armed = False
-                if clear:
-                    if state.clear_since is None:
-                        state.clear_since = stamp.capture_time_s
-                    if stamp.capture_time_s - state.clear_since + EPSILON >= policy.release_dwell_s:
-                        state.armed = True
-                        if state.pending_cycle and not state.down:
-                            completed += 1
-                            state.pending_cycle = False
-                else:
-                    state.clear_since = None
-        for key, state in states.items():
-            if (state.down or state.pending_cycle or state.clear_since is None
-                    or episode.end_time_s - state.clear_since + EPSILON < policy.release_dwell_s):
-                fail("STUCK_KEY", f"{key} lacks sustained physical release at the episode boundary")
-
-        # Compare observed events to independently derived crossings, not to the
-        # controller's success flag or the event bridge's internal key state.
-        actual: Counter = Counter()
-        for event in episode.events:
-            ref = event.stamp.record_id
-            if event.reason in {"maximum_hold", "worker_shutdown", "cleanup", "cancelled"}:
-                fail("ADMINISTRATIVE_RELEASE", f"{event.reason} cannot prove a physical press/release cycle", ref)
-                continue
-            if (event.event_type, event.reason) not in {
-                ("keydown", "physical_threshold"), ("keyup", "release_threshold")
-            }:
-                fail("EVENT_MISMATCH", "event reason does not describe a physical threshold crossing", ref)
-            frame = sample_map.get(event.sample_id)
-            if (frame is None or abs(frame.stamp.capture_time_s - event.stamp.capture_time_s) > EPSILON
-                    or event.stamp.arrival_time_s + EPSILON < frame.stamp.arrival_time_s):
-                fail("EVENT_MISMATCH", "event has no simultaneous, causally available raw sample", ref)
-            actual[(event.sample_id, event.key, event.event_type, event.reason)] += 1
-        for signature, count in actual.items():
-            if count > 1:
-                fail("DUPLICATE_EVENT", f"repeated event: {signature[1:]}", str(signature[0]))
-        for signature in expected - actual:
-            fail("MISSING_EVENT", f"unreported physical transition: {signature[1:]}", signature[0])
-        for signature in actual - expected:
-            fail("EVENT_MISMATCH", f"event without matching physical transition: {signature[1:]}", str(signature[0]))
+        completed = check_key_transitions(task, episode, policy, fail)
         if not keydowns:
             fail("MISSING_EVENT", "episode contains no key press")
         for event in keydowns:
@@ -317,3 +247,81 @@ class IndependentTypingEvaluator:
         if episode.termination != "finish_requested":
             fail("INCOMPLETE_EPISODE", f"episode ended with {episode.termination}")
         return result()
+
+
+def check_key_transitions(task: TaskSpec, episode: EpisodeRecord, policy: EvaluationPolicy, fail) -> int:
+    """Shared raw-key checks; callers first validate stream identity and coverage."""
+    observations = episode.observations
+    permitted_keys = {binding.key for binding in task.character_keys} | {task.backspace_key}
+    completed = 0
+    # Independent physical state machine. A digital KeyUp can precede the
+    # end of contact, but a cycle completes only after sustained clearance.
+    states = {key: _KeyState() for key in task.monitored_keys}
+    expected: Counter = Counter()
+    sample_map = {frame.stamp.record_id: frame for frame in observations}
+    for index, frame in enumerate(observations):
+        stamp = frame.stamp
+        if frame.safety_stopped:
+            fail("SAFETY_STOP", "independent safety monitor stopped the episode", stamp.record_id)
+        for sample in frame.keys:
+            state = states[sample.key]
+            clear = not sample.in_contact and sample.travel_m <= policy.release_threshold_m
+            if sample.normal_force_n > policy.maximum_contact_force_n + EPSILON:
+                fail("EXCESS_FORCE", f"{sample.key} exceeded contact-force limit", stamp.record_id)
+            if index == 0 and not clear:
+                fail("INITIAL_STATE", f"{sample.key} was not initially released", stamp.record_id)
+            if state.down and sample.travel_m <= policy.release_threshold_m:
+                expected[(stamp.record_id, sample.key, "keyup", "release_threshold")] += 1
+                state.down = False
+            elif not state.down and sample.travel_m >= policy.press_threshold_m:
+                if not sample.in_contact:
+                    fail("NO_CONTACT", f"{sample.key} reached actuation travel without contact", stamp.record_id)
+                else:
+                    if not state.armed:
+                        fail("INCOMPLETE_RELEASE", f"{sample.key} was pressed before physical rearming", stamp.record_id)
+                    if sample.key not in permitted_keys:
+                        fail("UNEXPECTED_KEY", f"{sample.key} is outside the declared input keys", stamp.record_id)
+                    expected[(stamp.record_id, sample.key, "keydown", "physical_threshold")] += 1
+                    state.down = True
+                    state.pending_cycle = True
+                    state.armed = False
+            if clear:
+                if state.clear_since is None:
+                    state.clear_since = stamp.capture_time_s
+                if stamp.capture_time_s - state.clear_since + EPSILON >= policy.release_dwell_s:
+                    state.armed = True
+                    if state.pending_cycle and not state.down:
+                        completed += 1
+                        state.pending_cycle = False
+            else:
+                state.clear_since = None
+    for key, state in states.items():
+        if (state.down or state.pending_cycle or state.clear_since is None
+                or episode.end_time_s - state.clear_since + EPSILON < policy.release_dwell_s):
+            fail("STUCK_KEY", f"{key} lacks sustained physical release at the episode boundary")
+
+    # Compare observed events to independently derived crossings, not to the
+    # controller's success flag or the event bridge's internal key state.
+    actual: Counter = Counter()
+    for event in episode.events:
+        ref = event.stamp.record_id
+        if event.reason in {"maximum_hold", "worker_shutdown", "cleanup", "cancelled"}:
+            fail("ADMINISTRATIVE_RELEASE", f"{event.reason} cannot prove a physical press/release cycle", ref)
+            continue
+        if (event.event_type, event.reason) not in {
+            ("keydown", "physical_threshold"), ("keyup", "release_threshold")
+        }:
+            fail("EVENT_MISMATCH", "event reason does not describe a physical threshold crossing", ref)
+        frame = sample_map.get(event.sample_id)
+        if (frame is None or abs(frame.stamp.capture_time_s - event.stamp.capture_time_s) > EPSILON
+                or event.stamp.arrival_time_s + EPSILON < frame.stamp.arrival_time_s):
+            fail("EVENT_MISMATCH", "event has no simultaneous, causally available raw sample", ref)
+        actual[(event.sample_id, event.key, event.event_type, event.reason)] += 1
+    for signature, count in actual.items():
+        if count > 1:
+            fail("DUPLICATE_EVENT", f"repeated event: {signature[1:]}", str(signature[0]))
+    for signature in expected - actual:
+        fail("MISSING_EVENT", f"unreported physical transition: {signature[1:]}", signature[0])
+    for signature in actual - expected:
+        fail("EVENT_MISMATCH", f"event without matching physical transition: {signature[1:]}", str(signature[0]))
+    return completed

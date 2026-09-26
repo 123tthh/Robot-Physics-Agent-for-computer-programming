@@ -1,6 +1,6 @@
 # VF-01-T01：任务与离线证据实现
 
-状态：`DONE`，限标准库数据契约和合成回放验收。2026-09-25，起点提交 `e2ec5b8`。阶段 VF-01 整体仍为 `PARTIAL`，未提供物理 reset/step 或策略训练。
+状态：`DONE`，限标准库数据契约和合成回放验收。2026-09-25，起点提交 `e2ec5b8`。此处保留 T01 当时的契约验收；后续 [T02 单环境物理 reset/step](PHYSICAL_ENVIRONMENT.md) 已交付。阶段 VF-01 整体仍为 `PARTIAL`，尚未训练策略。
 
 ## 运行与复核
 
@@ -79,8 +79,8 @@ print(report.contract_passed, report.findings)
 
 所有报告固定 `capability=contract_replay`、`physical_execution_verified=false`。v1 明确拒绝宣称 Isaac/相机/真机的输入，不能靠更改 `source` 或 manifest 标签升级能力。合成屏幕的摘要只指向合成载荷，不代表真实图像已被检查。结构校验失败会提前返回，诊断计数可能不完整，不能把这类记录的计数直接作为方法评测成绩。
 
-## 下一项
+## 后续实现
 
-VF-01-T02：实现单环境物理 `reset/step`，审计直接关节初态与关节控制权，接入真实键程/接触/执行目标，保存失败终态，复用本次负例验证物理 Adapter。需要根据真实采样周期和接触参数另行冻结评估配置，并建立真实来源与原始文件对应检查；不能仅将合成记录改名为物理记录。
+VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现。当前下一项为 VF-01-T03：文本状态与按请求反馈隔离。
 
 返回[阶段 1](README.md)或[研究主线](../README.md)。

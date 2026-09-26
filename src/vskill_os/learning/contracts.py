@@ -212,5 +212,6 @@ class EpisodeRecord(JsonRecord):
         JsonRecord.__post_init__(self)
         _nonempty(self.env_id, self.episode_id, self.clock_domain, self.task_sha256)
         _sha256(self.task_sha256)
-        if self.start_time_s < 0 or self.end_time_s <= self.start_time_s:
-            raise ValueError("episode end must be later than its nonnegative start")
+        if (self.start_time_s < 0 or self.end_time_s < self.start_time_s
+                or (self.end_time_s == self.start_time_s and self.termination not in {"cancelled", "safety_stop"})):
+            raise ValueError("episode end must follow its start; only aborted episodes may have zero duration")

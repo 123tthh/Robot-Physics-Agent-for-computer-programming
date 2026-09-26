@@ -1,0 +1,17 @@
+{
+  "physics_dt_s": 0.004166666666666667,
+  "decimation": 4,
+  "settling_steps": 240,
+  "maximum_target_speed_rad_s": 0.3,
+  "maximum_contact_force_n": 12.0,
+  "maximum_joint_speed_rad_s": 8.0,
+  "support_tolerance_m": 0.03,
+  "enabled_joints": [
+    "left_hand_index_1_joint"
+  ],
+  "pad_radius_m": 0.006,
+  "body_contact_offset_m": 0.001,
+  "key_center_z_m": 0.791,
+  "keyboard_operator_row_x_m": 0.528,
+  "keyboard_left_origin_y_m": 0.17275
+}

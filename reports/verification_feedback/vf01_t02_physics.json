@@ -1,0 +1,432 @@
+{
+  "task": "VF-01-T02",
+  "status": "DONE",
+  "date": "2026-09-26",
+  "capability": "isaac_physx_single_hand_v1",
+  "scope": "Fixed-pelvis, left-hand, single a press and physical release; hand-authored direct-joint diagnostic",
+  "accepted": true,
+  "base_revision": "746dee209ba6edde343b243bde46543039ba02d4",
+  "branch": "codex/vf01-single-hand-env",
+  "recording": "artifacts/verification_feedback/vf01/physics/run-20260926T092016-114661",
+  "runtime": {
+    "isaac_sim": "5.1.0-rc.19+release.26219.9c81211b.gl",
+    "torch": "2.7.0+cu128",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "num_envs": 1
+  },
+  "config": {
+    "physics_dt_s": 0.004166666666666667,
+    "decimation": 4,
+    "settling_steps": 240,
+    "maximum_target_speed_rad_s": 0.3,
+    "maximum_contact_force_n": 12.0,
+    "maximum_joint_speed_rad_s": 8.0,
+    "support_tolerance_m": 0.03,
+    "enabled_joints": [
+      "left_hand_index_1_joint"
+    ],
+    "pad_radius_m": 0.006,
+    "body_contact_offset_m": 0.001,
+    "key_center_z_m": 0.791,
+    "keyboard_operator_row_x_m": 0.528,
+    "keyboard_left_origin_y_m": 0.17275
+  },
+  "fixed_pelvis_xyz_m": [
+    0.0,
+    0.0,
+    0.625
+  ],
+  "joint_audit": {
+    "generalized_joint_count": 69,
+    "fixed_pelvis": true,
+    "body_joint_count": 29,
+    "dex5_coordinate_count": 40,
+    "dex5_active_joint_count": 32
+  },
+  "body_collision_audit": {
+    "active_collider_count": 67,
+    "contact_offset_m": 0.001,
+    "rest_offset_m": 0.0
+  },
+  "mimic_joint_count": 8,
+  "hard_coupling_verified": true,
+  "control_dimension": 23,
+  "monitored_keys": 74,
+  "source_files": {
+    "src/vskill_os/adapters/isaac/learning/provenance.py": "9d2bf39c7bf741461021d5a2aab863607b11651e83ce504097881c997cff48dd",
+    "src/vskill_os/adapters/isaac/learning/single_hand_env.py": "ae6f9a3d7bc867715d2ecdbb8cf4ef57462c3ef0181b3669c2748eb683d87347",
+    "src/vskill_os/adapters/isaac/learning/config.py": "59945941154b551794ce1036c3798dee72ca6380409a96b8bb2e731a8ddd0371",
+    "src/vskill_os/adapters/isaac/learning/smoke.py": "981b8a970c7461ab6ef7ca0bad2d9b8e02f250f2d9c67141414ad1e5ee35f09d",
+    "src/vskill_os/learning/environment.py": "6f33fc3b4ad618acc9dd2e64f4cf17bdb30adc84ab89a3e8f1761583b00e0f25",
+    "src/vskill_os/learning/physical.py": "bf5137b594ce303f7cab7780809862774dad7519ec586398e1353f65e5008191",
+    "src/vskill_os/learning/contracts.py": "6f0c76f08067b90da50c916656ca607500244936b79e6198c71141418a88f574",
+    "src/vskill_os/learning/serialization.py": "27e91f9c896cb57aaca7f87e96517bd2e8fb5a56aba0869ac5e027c27e57004d",
+    "src/vskill_os/adapters/isaac/dex5_scene_geometry.py": "6b3666b9ed45a58ed6f2fce1d87c4ed93398108c1c6b3c02f950e6e8aaf7a53a",
+    "src/vskill_os/adapters/isaac/p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622",
+    "src/vskill_os/simulation/dex5_assets.py": "cf04dbf2fca0eed74da920b17a189a6816b7df29e83912597bc60a2202821c40",
+    "src/vskill_os/simulation/dex5_preflight.py": "75ef96ac0e0220c4497a20fda2c3d42c1eaa94f3fd540a03ae02a94b7cb5d21c",
+    "src/vskill_os/simulation/keyboard_bridge.py": "9a9f3503b93d009b5467713cc70e4cb5819ad8db58da0b46c5bbf3e35b9fc05a"
+  },
+  "source_sha256": "0ec254d3f65f2c0d813450e031e895228e029145ffa95f6c53e227050af36955",
+  "evaluator_sha256": "c3c0ff4f8e7410885d2d0401b5e6d861a32002d0356c1e6b5535a1397fc14ae2",
+  "suite_evaluator_file_sha256": "eeeb4f3643494893c61d9b9bcf2030d67bd35f080b147b15a51c04eef38864cd",
+  "config_sha256": "83f8a4af5920b3cb355511ed168719447a94782494b6a2044babb1a90f1d92eb",
+  "urdf": {
+    "path": "artifacts/verification_feedback/assets/g1_dex5_fixed_pelvis.urdf",
+    "sha256": "553d1ea4454d89035025eef59f31a374c3d40689acc72ecc971bc2746753a3ef"
+  },
+  "scene_sha256": "4abab55fe042b316b9db754755811889e38d3bfc7c7f30f857305d30407a099f",
+  "suite_sha256": "0993fe564ca0536cb6f8e16efb78a2497c4d0edb60525ffbde0a46ad4040d931",
+  "pinned_assets": {
+    "repository": "https://github.com/unitreerobotics/unitree_ros",
+    "commit": "7d6075f7f58588b189b940130e3edab3c839b2df",
+    "license": "BSD-3-Clause",
+    "verified_file_count": 80,
+    "source_bytes": 34962841
+  },
+  "process": {
+    "timed_out": false,
+    "returncode": 0,
+    "log": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf01/physics/run-20260926T092016-114661.log",
+    "wall_time_s": 120.22037493200332
+  },
+  "cases": [
+    {
+      "case": "press_1",
+      "physical_primitive_passed": true,
+      "expected_pass": true,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 1,
+      "text_oracle_matched": true,
+      "maximum_key_travel_m": 0.002615208737552166,
+      "maximum_contact_force_n": 0.920667588710785,
+      "elapsed_sim_s": 2.1,
+      "episode_sha256": "15b2b13054303649b788247c00b2b5471e266bca58de1e6551315ee114cb3d4a",
+      "trace_sha256": "5d097b317c520b290ac90b79703d193ad3cbb6d8a82bd1072a3653864c851d65",
+      "findings": [],
+      "termination": "finish_requested",
+      "events": [
+        {
+          "key": "a",
+          "type": "keydown",
+          "reason": "physical_threshold",
+          "time_s": 0.7791666666666667
+        },
+        {
+          "key": "a",
+          "type": "keyup",
+          "reason": "release_threshold",
+          "time_s": 1.2875
+        }
+      ]
+    },
+    {
+      "case": "press_2",
+      "physical_primitive_passed": true,
+      "expected_pass": true,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 1,
+      "text_oracle_matched": true,
+      "maximum_key_travel_m": 0.002615208737552166,
+      "maximum_contact_force_n": 0.920667588710785,
+      "elapsed_sim_s": 2.1,
+      "episode_sha256": "2e0f7ae69670ba5f740e443a6c2cab950617bf5f2435b1d37ee970d44983c0fe",
+      "trace_sha256": "67ed5a7a1976098e4a9271dd93d3ec673fcf8ba1179ba16a14d32b6b1b4e4162",
+      "findings": [],
+      "termination": "finish_requested",
+      "events": [
+        {
+          "key": "a",
+          "type": "keydown",
+          "reason": "physical_threshold",
+          "time_s": 0.7791666666666667
+        },
+        {
+          "key": "a",
+          "type": "keyup",
+          "reason": "release_threshold",
+          "time_s": 1.2875
+        }
+      ]
+    },
+    {
+      "case": "miss",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": false,
+      "maximum_key_travel_m": 0.0,
+      "maximum_contact_force_n": 0.0,
+      "elapsed_sim_s": 2.1,
+      "episode_sha256": "9310b9a39336c6a01118a57eeeec5a7c2078d8e24ab08f6ca4e5add50f611580",
+      "trace_sha256": "6260f8e81882866faee9d90a6a00ebdf5ea064dab9007d29c59991cf296fdc5f",
+      "findings": [
+        "PRIMITIVE_MISMATCH",
+        "TEXT_ORACLE_MISMATCH"
+      ],
+      "termination": "finish_requested",
+      "events": []
+    },
+    {
+      "case": "stuck",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": true,
+      "maximum_key_travel_m": 0.002615208737552166,
+      "maximum_contact_force_n": 0.920667588710785,
+      "elapsed_sim_s": 1.05,
+      "episode_sha256": "3c2df3b87c0085e8542c0679fc80fa2c8333ca6b52ff2af440178eca4fd44079",
+      "trace_sha256": "0686451bd508126cc71c0fe93dbfb48ba66dde99cf135be6ff3da9eb3809d113",
+      "findings": [
+        "PRIMITIVE_MISMATCH",
+        "STUCK_KEY"
+      ],
+      "termination": "finish_requested",
+      "events": [
+        {
+          "key": "a",
+          "type": "keydown",
+          "reason": "physical_threshold",
+          "time_s": 0.7791666666666667
+        }
+      ]
+    },
+    {
+      "case": "timeout_release",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": true,
+      "maximum_key_travel_m": 0.0026244278997182846,
+      "maximum_contact_force_n": 0.9232699275016786,
+      "elapsed_sim_s": 1.2,
+      "episode_sha256": "475899d5f825cb2dd9ba1ef76126e4cf28edf405983628e24db78e365a068f6e",
+      "trace_sha256": "56d30d5d9303f471de36a06ed57b62b75c767f924ed80827bd2b95205b526146",
+      "findings": [
+        "ADMINISTRATIVE_RELEASE",
+        "PRIMITIVE_MISMATCH",
+        "STUCK_KEY"
+      ],
+      "termination": "finish_requested",
+      "events": [
+        {
+          "key": "a",
+          "type": "keydown",
+          "reason": "physical_threshold",
+          "time_s": 0.7791666666666667
+        },
+        {
+          "key": "a",
+          "type": "keyup",
+          "reason": "maximum_hold",
+          "time_s": 0.9291666666666667
+        }
+      ]
+    },
+    {
+      "case": "press_after_reset",
+      "physical_primitive_passed": true,
+      "expected_pass": true,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 1,
+      "text_oracle_matched": true,
+      "maximum_key_travel_m": 0.002615208737552166,
+      "maximum_contact_force_n": 0.920667588710785,
+      "elapsed_sim_s": 2.1,
+      "episode_sha256": "74740fe02e57289a182d35be9fde3ee2237b58488e1a7f31bff8883ebd01c9ba",
+      "trace_sha256": "0b5b88eeba38236f89004cf0a027c1dae29bc5ac5adbbe77bd10384ddf64a46d",
+      "findings": [],
+      "termination": "finish_requested",
+      "events": [
+        {
+          "key": "a",
+          "type": "keydown",
+          "reason": "physical_threshold",
+          "time_s": 0.7791666666666667
+        },
+        {
+          "key": "a",
+          "type": "keyup",
+          "reason": "release_threshold",
+          "time_s": 1.2875
+        }
+      ]
+    },
+    {
+      "case": "wrong_mapping",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": false,
+      "maximum_key_travel_m": 0.0,
+      "maximum_contact_force_n": 0.0,
+      "elapsed_sim_s": 0.0,
+      "episode_sha256": "c8cfcd525c86d38d21ee8a7e1533133bbdc40edbc6b396b705511dc5cc80b17c",
+      "trace_sha256": "684e3c6675bf484f6f7e54b78a5f7b3c67e23e3e44b6e5c91630d66825251448",
+      "findings": [
+        "INCOMPLETE_EPISODE",
+        "JOINT_MAPPING",
+        "PRIMITIVE_MISMATCH",
+        "STUCK_KEY",
+        "TEXT_ORACLE_MISMATCH"
+      ],
+      "termination": "safety_stop",
+      "events": []
+    },
+    {
+      "case": "stale_owner",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": false,
+      "maximum_key_travel_m": 0.0,
+      "maximum_contact_force_n": 0.0,
+      "elapsed_sim_s": 0.0,
+      "episode_sha256": "9d31eddeb710ad515a97edd277036ed692b729c4fb6707be527de2fd3446e3df",
+      "trace_sha256": "68cd6309390439db1d7263c5f7a7db08018ae908be08abf3c8c946dd24172181",
+      "findings": [
+        "CONTROL_OWNERSHIP",
+        "INCOMPLETE_EPISODE",
+        "PRIMITIVE_MISMATCH",
+        "STUCK_KEY",
+        "TEXT_ORACLE_MISMATCH"
+      ],
+      "termination": "safety_stop",
+      "events": []
+    },
+    {
+      "case": "expired_action",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": false,
+      "maximum_key_travel_m": 0.0,
+      "maximum_contact_force_n": 0.0,
+      "elapsed_sim_s": 0.0,
+      "episode_sha256": "7b38f1fa9e9d7d6480a53f614e82cf8865838440da93a4e9905b3709772e6be4",
+      "trace_sha256": "ee7284599a00af703ba0278a7343f405962793f402158b0ea791e99e77ea82b2",
+      "findings": [
+        "ACTION_EXPIRED",
+        "INCOMPLETE_EPISODE",
+        "PRIMITIVE_MISMATCH",
+        "STUCK_KEY",
+        "TEXT_ORACLE_MISMATCH"
+      ],
+      "termination": "safety_stop",
+      "events": []
+    },
+    {
+      "case": "time_limit",
+      "physical_primitive_passed": false,
+      "expected_pass": false,
+      "expectation_matched": true,
+      "completed_press_release_cycles": 0,
+      "text_oracle_matched": false,
+      "maximum_key_travel_m": 0.0,
+      "maximum_contact_force_n": 0.0,
+      "elapsed_sim_s": 0.05,
+      "episode_sha256": "0354d9ee1e485b46de8a357f81fdfd5f8f463dfb60b3e6e3b97199cc9348bb4f",
+      "trace_sha256": "6abad172bc430b72fda5dfd7dba1b03e99415cc7866d4184c30be242924d91c8",
+      "findings": [
+        "INCOMPLETE_EPISODE",
+        "PRIMITIVE_MISMATCH",
+        "TEXT_ORACLE_MISMATCH"
+      ],
+      "termination": "time_limit",
+      "events": []
+    }
+  ],
+  "reset_tolerances": {
+    "joint_position_rad": 0.0001,
+    "joint_velocity_rad_s": 0.001,
+    "tip_position_m": 0.0001,
+    "event_time_s": 0.004166666666666667
+  },
+  "reset_comparison": [
+    {
+      "case": "press_2",
+      "maximum_joint_position_error_rad": 0.0,
+      "maximum_joint_velocity_error_rad_s": 0.0,
+      "tip_error_m": 0.0,
+      "maximum_event_time_error_s": 0.0,
+      "passed": true
+    },
+    {
+      "case": "press_after_reset",
+      "maximum_joint_position_error_rad": 0.0,
+      "maximum_joint_velocity_error_rad_s": 0.0,
+      "tip_error_m": 0.0,
+      "maximum_event_time_error_s": 0.0,
+      "passed": true
+    }
+  ],
+  "checks": {
+    "make_check": {
+      "tests_run": 196,
+      "passed": 195,
+      "skipped": 1,
+      "skip_reason": "optional pygame/pyte desktop dependencies unavailable"
+    },
+    "make_demo": "succeeded",
+    "make_isaac_learning_single_hand": "passed",
+    "make_verify_learning_single_hand": "passed",
+    "new_cpu_regression_tests": 15
+  },
+  "limitations": {
+    "num_envs": 1,
+    "learned_policy": false,
+    "camera_verified": false,
+    "desktop_verified": false,
+    "free_sitting_verified": false,
+    "multi_key_or_backspace_verified": false,
+    "batch_16_or_64_verified": false,
+    "notes": [
+      "fixed pelvis; frozen seated body PD",
+      "single environment",
+      "approximate mounts and distal coupling",
+      "6 mm distal collision pads",
+      "joint PD plus gravity feedforward",
+      "PhysX contact and text-state oracle; no camera, desktop or learned policy",
+      "content hashes are not sensor authentication",
+      "diagnostic wall time includes reset, recording and serialization; not training throughput"
+    ]
+  },
+  "retained_failed_suites": [
+    {
+      "report": "artifacts/verification_feedback/vf01/physics/run-20260926T090912-791262/suite.json",
+      "original_report_sha256": "8686b25ccb39a56e99a1bf091f1377b30c6d88498901b036610122d289d9593b",
+      "accepted": false,
+      "errors": [
+        "reset or event repeatability exceeded the frozen tolerance"
+      ],
+      "note": "historical capture; changed collector sources require a fresh recording"
+    },
+    {
+      "report": "artifacts/verification_feedback/vf01/physics/run-20260926T091346-797081/suite.json",
+      "original_report_sha256": "28511ff3a21ff7f7a6ef97bd42e3331132282188bf14210b99ebbb1c0b4ed065",
+      "accepted": false,
+      "errors": [
+        "reset or event repeatability exceeded the frozen tolerance"
+      ],
+      "note": "historical capture; changed collector sources require a fresh recording"
+    },
+    {
+      "report": "artifacts/verification_feedback/vf01/physics/run-20260926T091702-217274/suite.json",
+      "original_report_sha256": "9dc9cc40fe7bcc0c3fa9732ae54fa9ff4ec02a808cd8111ceba82c12ae9e308e",
+      "accepted": false,
+      "errors": [
+        "reset or event repeatability exceeded the frozen tolerance"
+      ],
+      "note": "historical capture; changed collector sources require a fresh recording"
+    }
+  ],
+  "next_task": "VF-01-T03: text state and request-driven feedback isolation"
+}

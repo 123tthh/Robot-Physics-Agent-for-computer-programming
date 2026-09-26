@@ -1,6 +1,6 @@
 # 面向实体计算机操作的验证反馈驱动技能学习
 
-状态：`PARTIAL`，2026-09-25。VF-01-T01 已实现[任务与证据记录、独立离线评估及正负回放样例](01_environment_and_evidence/IMPLEMENTATION.md)；物理环境、学习模块和其余指标仍待交付，不表示已经训练或通过物理实验。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
+状态：`PARTIAL`，2026-09-26。VF-01-T01 已交付[离线证据契约](01_environment_and_evidence/IMPLEMENTATION.md)，VF-01-T02 已通过[固定工位单键物理 reset/step 验收](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)；反馈隔离、批环境和学习模块仍待交付。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
 
 ## 研究主线
 
@@ -94,6 +94,8 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 
 **VF-01-T01 已完成契约范围交付**：`make demo-learning-evidence` 导出 10 个案例并独立复核，覆盖正确按下、持续物理释放、管理释放、重复/漏事件、反馈延迟、错误文本及有记录的修复。
 
-下一项为 **VF-01-T02：单环境物理 reset/step**。人工构造样例只证明契约；需要采集同样类型的真实物理记录并验证后端，才进入 PPO。复现方式与限制见[实现说明](01_environment_and_evidence/IMPLEMENTATION.md)，更完整拆分见各阶段文档。
+**VF-01-T02 已完成固定工位单键物理范围交付**：23 维直接关节接口、本次开放单食指，3 个完整触键正例、7 个按预期拒绝的失败/截断回合及同种子重置复现通过。见[物理实现说明](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)。
+
+下一项为 **VF-01-T03：文本状态与反馈隔离**，随后做 1/16/64 环境隔离与吞吐、真实桌面复验。本次原语采用手工诊断动作与文本状态机，PPO 和视觉策略尚未交付。
 
 项目共同约束：[AGENTS.md](../AGENTS.md)、[统一架构](../docs/ARCHITECTURE.md)、[子项目状态](../docs/WORKSTREAMS.md)、[统一路线图](../docs/ROADMAP.md)。

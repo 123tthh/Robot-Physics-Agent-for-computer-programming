@@ -1,6 +1,6 @@
 # 共同接口、证据与模块边界
 
-状态：完整接口蓝图；其中 VF-01-T01 已实现 v1 离线子集，实际字段和限制见[实现说明](01_environment_and_evidence/IMPLEMENTATION.md)与 [contracts.py](../src/vskill_os/learning/contracts.py)。下表未逐项实现，不能整体当作 Python API。各阶段在此约定上扩展，不重复定义另一套任务事实；接入 Runtime 时适配现有 `Evidence`、`SkillContract`、`StateSnapshot` 和 `WorkerMessage`。
+状态：完整接口蓝图；其中 VF-01-T01 已实现 v1 离线子集，VF-01-T02 已实现单环境物理调用契约。实际字段和限制见[离线实现说明](01_environment_and_evidence/IMPLEMENTATION.md)、[物理环境说明](01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)与 [contracts.py](../src/vskill_os/learning/contracts.py)。下表未逐项实现，不能整体当作 Python API。各阶段在此约定上扩展，不重复定义另一套任务事实；接入 Runtime 时适配现有 `Evidence`、`SkillContract`、`StateSnapshot` 和 `WorkerMessage`。
 
 当前 `ObservationFrame` 是监督侧的全量记录，尚没有 actor 可见性过滤；`JointTargetAction`、`DecisionRequest`、`SkillOutcome`、恢复预算和在线反馈队列仍待实现。v1 仅接受明确标注的合成记录，不能将字段存在解释为物理或传感器能力已验证。
 

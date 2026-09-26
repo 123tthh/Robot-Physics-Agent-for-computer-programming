@@ -1,6 +1,6 @@
 # 子项目与证据登记
 
-盘点日期：2026-09-25。本表是跨项目能力状态的统一入口；证据来自本地代码与已有报告，本次整理不等于重新运行 Isaac 或真机验收。Git 所属关系另见[分支登记](BRANCHES.md)。
+盘点日期：2026-09-26。本表是跨项目能力状态的统一入口；本轮新增 VF-01-T02 的 Isaac 单环境实测，其他子项目沿用既有报告，未重新验收。Git 所属关系另见[分支登记](BRANCHES.md)。
 
 ## 状态口径
 
@@ -19,7 +19,7 @@
 | DESKTOP 屏幕与软件任务 | `PARTIAL`：实体 `ls`/Enter → PTY → 机器人 RGB-D/OCR 已有报告 | [屏幕验收](../reports/isaac_continuous_computer/virtual-screen-acceptance.json)、[P3](phases/phase_3_code_agent_loop.md) | 已有本地代码 Agent/测试适配器；真实隔离编程任务失败—修复—复测尚未端到端验收 |
 | D3-6 Dex3 站姿实验 | `PARTIAL`：Isaac 6.0.1 固定站姿双食指 `ak` 两次通过 | [独立工作树与报告位置](BRANCHES.md#3-dex3-站姿工作树) | `afjk` 失败；无自由站立、行走或机器人相机验收；未合入当前树 |
 | CHAIR 机器人—椅子交互 | `PARTIAL`：领域模型、独立轨迹验证、替身、worker 客户端和可选 PPO | [工程接口](research/chair/CHAIR_INTERACTION_ENGINEERING.md)、[研究规划](research/chair/CHAIR_INTERACTION_RESEARCH.md) | 真实载人椅物理 worker、策略训练和主动重定位未验收；自由坐下不证明主动滑椅 |
-| LEARN 验证反馈驱动技能学习 | `PARTIAL`：VF-01-T01 已交付版本化记录、独立离线评估、10 类合成样例；新增 24 个测试通过 | [实现与验收](../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)、[六阶段架构](../verification-feedback-skill-learning/README.md) | 仅契约/纯 Python；物理 reset/step、在线观察过滤、PPO 和机制对照待实现；不代表物理或学习成功 |
+| LEARN 验证反馈驱动技能学习 | `PARTIAL`：T01 离线契约；T02 固定工位单手 `a` 物理 reset/step 与 10 回合正负验收、重置复现通过 | [物理实现与验收](../verification-feedback-skill-learning/01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)、[六阶段架构](../verification-feedback-skill-learning/README.md) | 手工直接关节诊断、固定骨盆和文本状态机；反馈隔离、批环境、PPO、视觉与机制对照待实现 |
 | IMPROVE 受约束自改进 | `PLANNED`：episode、候选档案、晋升与回滚设计 | [RSI 集成设计](research/rsi/RSI_INTEGRATION_PLAN.md) | 不另建 Runtime；无已验证持续改进或 RSI 能力 |
 | NAV / VOICE 导航与语音 | `PARTIAL`：场景、控制端口、工具白名单与规则/loopback 基线 | [P5](phases/phase_5_navigation_and_voice.md)、[语音接口](integrations/VOICE_LLM.md) | 真实导航 rollout、感知和真实模型性能待验收；D3-6 中 velocity 候选不等于行走通过 |
 | REAL 真机与 HIL | `PLANNED`：身份校验与策略兼容性框架 | [P6](phases/phase_6_sim2real_self_improvement.md)、[G1 配置](core/G1_29DOF_5010.md) | 尚无本登记可引用的 HIL/真机通过证据 |

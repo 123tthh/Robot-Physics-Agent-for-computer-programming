@@ -4,7 +4,7 @@
 
 ## 当前研究主线
 
-[验证反馈驱动技能学习](../verification-feedback-skill-learning/README.md)在项目根目录按六个阶段单独组织：环境与证据、直接关节 PPO、输入/验证/恢复决策、严格对照、视觉与双手、自由坐姿交接。共同接口见[证据与数据契约](../verification-feedback-skill-learning/COMMON_CONTRACTS.md)，首批代码与运行方式见[VF-01-T01 实现说明](../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)。代码遵守本仓库的分层和目录约定。
+[验证反馈驱动技能学习](../verification-feedback-skill-learning/README.md)在项目根目录按六个阶段单独组织：环境与证据、直接关节 PPO、输入/验证/恢复决策、严格对照、视觉与双手、自由坐姿交接。共同接口见[证据与数据契约](../verification-feedback-skill-learning/COMMON_CONTRACTS.md)，运行方式见[T01 离线契约](../verification-feedback-skill-learning/01_environment_and_evidence/IMPLEMENTATION.md)和[T02 单环境物理闭环](../verification-feedback-skill-learning/01_environment_and_evidence/PHYSICAL_ENVIRONMENT.md)。代码遵守本仓库的分层和目录约定。
 
 ## 本地目录
 
