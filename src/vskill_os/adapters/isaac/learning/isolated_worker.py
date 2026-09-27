@@ -63,7 +63,7 @@ def main(argv=None):
         raise ValueError('never overwrite a worker launch receipt')
     cache_environment = {name: str(args.cache.resolve()/folder) for name, folder in (
         ('XDG_CACHE_HOME', 'xdg'), ('WARP_CACHE_PATH', 'warp'),
-        ('CUDA_CACHE_PATH', 'cuda'), ('TORCHINDUCTOR_CACHE_DIR', 'torchinductor'))}
+        ('CUDA_CACHE_PATH', 'cuda'), ('TORCHINDUCTOR_CACHE_DIR', 'torchinductor'), ('TMPDIR', 'tmp'))}
     for name, path in cache_environment.items():
         Path(path).mkdir(parents=True, exist_ok=True)
         os.environ[name] = path
