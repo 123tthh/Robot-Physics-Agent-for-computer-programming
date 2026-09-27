@@ -1,0 +1,42 @@
+{
+  "task": "VF-02-T02",
+  "audit": "source byte comparison only; does not rerun prior physical experiments",
+  "passed": true,
+  "cases": [
+    {
+      "task": "VF-01-T02",
+      "manifest": "artifacts/verification_feedback/vf01/physics/run-20260926T092016-114661/press_1/manifest.json",
+      "source_count": 13,
+      "unchanged": true,
+      "mismatches": []
+    },
+    {
+      "task": "VF-01-T03",
+      "manifest": "artifacts/verification_feedback/vf01/feedback_physics/run-20260926T095808-215080/verified_after_wait/feedback_manifest.json",
+      "source_count": 8,
+      "unchanged": true,
+      "mismatches": []
+    },
+    {
+      "task": "VF-01-T04",
+      "manifest": "artifacts/verification_feedback/vf01/batch/run-20260926T140805-229466/n64/manifest.json",
+      "source_count": 26,
+      "unchanged": true,
+      "mismatches": []
+    },
+    {
+      "task": "VF-01-T05",
+      "manifest": "artifacts/verification_feedback/vf01/desktop_camera/run-20260926T150056-770294/visible_input/desktop_manifest.json",
+      "source_count": 22,
+      "unchanged": true,
+      "mismatches": []
+    },
+    {
+      "task": "VF-02-T01",
+      "manifest": "artifacts/verification_feedback/vf02/action_health/run-20260926T220126-196863/d4/normalized_press/action_manifest.json",
+      "source_count": 16,
+      "unchanged": true,
+      "mismatches": []
+    }
+  ]
+}

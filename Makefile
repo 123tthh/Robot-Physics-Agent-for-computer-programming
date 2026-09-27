@@ -201,6 +201,20 @@ verify-learning-action-health:
 	@test -n "$(LEARNING_ACTION_RUN)" || (echo 'Set LEARNING_ACTION_RUN to an exact run directory'; exit 2)
 	PYTHONPATH=src python3 -m vskill_os.adapters.isaac.learning.action_runner --verify-run "$(LEARNING_ACTION_RUN)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --action-scale "$(LEARNING_ACTION_SCALE)"
 
+.PHONY: test-learning-ppo isaac-learning-single-key-ppo verify-learning-single-key-ppo
+LEARNING_PPO_DIR ?= $(CURDIR)/artifacts/verification_feedback/vf02/ppo
+LEARNING_PPO_CONFIG ?= $(CURDIR)/configs/learning/verification_feedback/single_key_ppo_v1.json
+
+test-learning-ppo:
+	PYTHONPATH=src "$(ISAACLAB_PYTHON)" -m unittest discover -s tests -p test_learning_ppo.py -v
+
+isaac-learning-single-key-ppo:
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.ppo_runner --output-dir "$(LEARNING_PPO_DIR)" --config "$(LEARNING_PPO_CONFIG)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --action-scale "$(LEARNING_ACTION_SCALE)"'
+
+verify-learning-single-key-ppo:
+	@test -n "$(LEARNING_PPO_RUN)" || (echo 'Set LEARNING_PPO_RUN to an exact run directory'; exit 2)
+	PYTHONPATH=src "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.ppo_runner --verify-run "$(LEARNING_PPO_RUN)" --config "$(LEARNING_PPO_CONFIG)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --action-scale "$(LEARNING_ACTION_SCALE)"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -222,4 +236,5 @@ help:
 	  '  Batch:      make isaac-learning-batch | make verify-learning-batch (1/16/64)' \
 	  '  Camera:     make isaac-learning-desktop | make verify-learning-desktop' \
 	  '  Actions:    make isaac-learning-action-health | make verify-learning-action-health' \
+	  '  PPO:        make test-learning-ppo | make isaac-learning-single-key-ppo | make verify-learning-single-key-ppo' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'

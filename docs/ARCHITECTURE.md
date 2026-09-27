@@ -102,7 +102,7 @@ flowchart TB
 
 学习系统只产出候选策略和评估材料；RSI 扩展在同一条训练链上增加失败驱动采样、档案、晋升与回滚。两者共用 `learning/` 数据层，已有版本化 `EpisodeRecord`、离线契约评估和具名动作 schema；动作映射位于可选 Adapter，完整策略包及晋升尚待扩展。底层框架留在可选 Adapter，独立评估器不复用训练奖励的成功布尔值，也不直接写入 Runtime 已验证状态。
 
-当前[验证反馈驱动技能学习](../verification-feedback-skill-learning/README.md)在该架构内增加“证据历史 → 输入/验证/恢复决策”的研究策略。其输出仍是有时限的技能请求，低层直接关节策略位于 Adapter；模型信念与已验证状态分开，实际文本真值只用于监督/独立评估，新屏幕观察必须遵守统一验证预算。已实现离线证据契约和固定工位单键物理 reset/step：关节接口只供低层适配器使用，原始记录交给独立评估器，不写入 Runtime 已验证事实。按请求反馈、批环境与真实终端/机器人相机复验也已交付；VF-02-T01 已补充归一化动作、具名掩码与停止恢复映射，策略训练仍待实现。具体证据见[动作映射健康检查](../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md)。
+当前[验证反馈驱动技能学习](../verification-feedback-skill-learning/README.md)在该架构内增加“证据历史 → 输入/验证/恢复决策”的研究策略。其输出仍是有时限的技能请求，低层直接关节策略位于 Adapter；模型信念与已验证状态分开，实际文本真值只用于监督/独立评估，新屏幕观察必须遵守统一验证预算。已实现离线证据契约和固定工位单键物理 reset/step：关节接口只供低层适配器使用，原始记录交给独立评估器，不写入 Runtime 已验证事实。按请求反馈、批环境与真实终端/机器人相机复验也已交付；VF-02-T01 已补充归一化动作、具名掩码与停止恢复映射，T02 已在可选 Torch/Isaac Adapter 中完成单键 PPO 诊断。训练在线计数与独立成功判定分离；冻结权重在原单环境执行，复核器从原始物理记录重算输入和动作，再调用物理 Verifier。候选尚未注册为 Runtime 技能。见[单键 PPO 说明](../verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md)。
 
 ## 7. 渐进迁移边界
 

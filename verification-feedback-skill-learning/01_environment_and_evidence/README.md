@@ -1,6 +1,6 @@
 # 阶段 1：最小物理环境与可信证据
 
-状态：`PARTIAL`。VF-01-T01 离线契约、[T02 单环境物理闭环](PHYSICAL_ENVIRONMENT.md)、[T03 文本/反馈隔离](TEXT_FEEDBACK.md) 和 [T04 的 1/16/64 批环境验收](BATCH_ENVIRONMENT.md) 及 [T05 单键真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已交付。多键和真实退格仍需后续验收；下一项为 VF-02-T02 单键可学性诊断（T01 已通过动作映射验收）。共同定义见[接口与证据契约](../COMMON_CONTRACTS.md)，离线证据子集见[实现说明](IMPLEMENTATION.md)。
+状态：`PARTIAL`。VF-01-T01 离线契约、[T02 单环境物理闭环](PHYSICAL_ENVIRONMENT.md)、[T03 文本/反馈隔离](TEXT_FEEDBACK.md) 和 [T04 的 1/16/64 批环境验收](BATCH_ENVIRONMENT.md) 及 [T05 单键真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已交付。多键和真实退格仍需后续验收；[T02 单键 PPO 诊断](../02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已交付，下一项为 VF-02-T03 单键重复验收。共同定义见[接口与证据契约](../COMMON_CONTRACTS.md)，离线证据子集见[实现说明](IMPLEMENTATION.md)。
 
 ## 范围与研究问题
 

@@ -1,4 +1,4 @@
-# VF-01 配置
+# 验证反馈学习配置
 
 - `single_key_contract_v1.json`：字符键 `a/s/d` 与 Backspace，监控全部 74 键；目标为 `a`。唯一关节为合成字段，没有 G1/Dex5 可达性或控制含义。
 - `evaluation_v1.json`：键程迟滞、释放保持时间、采样完整性、接触力和屏幕新鲜度的固定测试判据。
@@ -12,6 +12,10 @@
 `batch_v1.json` 是 VF-01-T04 的冻结批量诊断配置：1/16/64 工位、3 m 间距、独立种子、144 测量控制周期、有界记录块和明确的 PhysX 接触缓冲容量。入口 `make isaac-learning-batch`、`make verify-learning-batch`；见[批环境与吞吐说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/BATCH_ENVIRONMENT.md)。规模由 runner 逐项覆盖，其余配置保持一致；不是 PPO 训练配置。
 
 `desktop_camera_v1.json` 是 VF-01-T05 的冻结相机复验设置：固定工位输入行 ROI、4 倍放大、8 次渲染、头部安装及相机反馈预算。来源为 Isaac 仿真机器人相机原始 RGB 的 OCR；原始 PTY 文本仅用于监督验收。入口 `make isaac-learning-desktop`、`make verify-learning-desktop`；见[桌面与相机说明](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。字体、窗口布局或工位改变后必须重新标定，不能直接套用此 ROI。
+
+`action_scale_v1.json` 是 VF-02-T01 的 23 维具名归一化动作尺度；参考周期为 1/60 秒。独立限位/限速、活动掩码和控制权仍由物理配置与审计资产约束，见[动作映射](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md)。
+
+`single_key_ppo_v1.json` 是 VF-02-T02 的单键训练协议：种子 7、64 工位、1,000,000 聚合转移、3 秒时限、约 25 万间隔保存、每检查点固定 8 次复验。配合上述物理与动作配置使用；不会修改 VF-01 诊断的配置语义。入口 `make test-learning-ppo`、`make isaac-learning-single-key-ppo`，见[单键可学性诊断](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md)。
 
 ```bash
 PYTHONPATH=src python3 -m vskill_os.learning demo \

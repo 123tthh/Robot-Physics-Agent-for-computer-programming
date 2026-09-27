@@ -2,7 +2,7 @@
 
 让机器人通过实体键盘和屏幕完成计算机任务，由独立 Verifier 判断物理动作、界面变化和软件结果是否成立。Agent 只调用技能；关节控制、安全保护和完成判定分别保留独立边界。
 
-当前研究主线：[面向实体计算机操作的验证反馈驱动技能学习](verification-feedback-skill-learning/README.md)。从单臂单手、少量按键起步，研究何时继续输入、何时验证和如何恢复。已交付单键物理闭环、文本反馈隔离、1/16/64 批环境验收及[真实终端与机器人相机复验](verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)，并完成[直接关节动作映射健康检查](verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md)；下一项为单键 PPO 可学性诊断，策略训练尚未开展。
+当前研究主线：[面向实体计算机操作的验证反馈驱动技能学习](verification-feedback-skill-learning/README.md)。从单臂单手、少量按键起步，研究何时继续输入、何时验证和如何恢复。已交付单键物理闭环、文本反馈隔离、1/16/64 批环境验收及[真实终端与机器人相机复验](verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)，并完成[直接关节动作映射健康检查](verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md)；[单键 PPO 可学性诊断](verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成一训练种子、100 万转移与独立检查点复验。下一项为三种子单键重复验收。
 
 ## 项目入口
 
@@ -45,7 +45,7 @@ PYTHONPATH=src python3 -m vskill_os.cli run --scenario configs/scenarios/mixed_f
 | 连续坐下与打字 | 见[连续演示](docs/experiments/dex5/CONTINUOUS_COMPUTER_DEMO.md) | `make isaac-computer`、`make verify-computer` | 仍使用手部 IK |
 | 虚拟计算机屏幕 | 同上 | `make isaac-virtual-computer`、`make verify-virtual-computer` | 额外桌面依赖与机器人相机 |
 | 椅子研究 | `make chair-plan`、`make demo-chair` | 真实物理 worker 待接入 | demo 为替身；训练入口不等于可用策略 |
-| 验证反馈学习 | `make demo-learning-evidence`、`make demo-learning-feedback` | `make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`、`make isaac-learning-action-health` | 单 `a`、批环境及真实 PTY → 仿真机器人 RGB-D/OCR 及动作映射已验收；尚未训练策略 |
+| 验证反馈学习 | `make demo-learning-evidence`、`make demo-learning-feedback` | `make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`、`make isaac-learning-action-health`、`make isaac-learning-single-key-ppo` | 单 `a`、批环境、真实 PTY → 仿真机器人 RGB-D/OCR、动作映射及单种子 PPO 诊断已验收；学习策略使用特权状态，未做相机复验 |
 | Dex3 站姿 | 见[分支登记](docs/BRANCHES.md) | 在独立工作树运行 | Isaac 6.0.1，固定基座双食指 |
 
 物理入口的资产准备、环境变量和能力限制以对应实验说明为准。`make help` 只展示入口，不启动仿真或训练。

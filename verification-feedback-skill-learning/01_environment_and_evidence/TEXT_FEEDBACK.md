@@ -125,4 +125,4 @@ CPU 演示保存 10 类合成案例：正常等待、软件丢失、焦点丢失
 | 超时 | `a` | `timeout`，无文本 | 无最终确认 |
 | 高置信度错误读数 | 空字符串 | 新鲜但错误的 `a` | 真实文本不正确，拒绝伪成功 |
 
-本 T03 的两个逻辑文本会话测试只证明软件隔离；后续 [T04](BATCH_ENVIRONMENT.md) 已另行完成 1/16/64 个 PhysX 环境实测。[T05](DESKTOP_CAMERA.md) 已另行完成真实 PTY 与机器人相机的单键六案例复验，使用独立相机来源类型。当前下一项为 **VF-02-T02：单键可学性诊断**（[T01 动作映射已验收](../02_joint_ppo_baseline/ACTION_MAPPING.md)）。
+本 T03 的两个逻辑文本会话测试只证明软件隔离；后续 [T04](BATCH_ENVIRONMENT.md) 已另行完成 1/16/64 个 PhysX 环境实测。[T05](DESKTOP_CAMERA.md) 已另行完成真实 PTY 与机器人相机的单键六案例复验，使用独立相机来源类型。[T02 单键 PPO 诊断](../02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已另行交付；当前下一项为 **VF-02-T03：单键重复验收**。

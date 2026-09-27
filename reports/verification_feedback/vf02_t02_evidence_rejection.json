@@ -1,0 +1,50 @@
+{
+  "task": "VF-02-T02",
+  "scope": "copied initial physical evidence; inference file hashes recomputed after each mutation",
+  "original": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf02/ppo/run-20260927T050543-255757/evaluation-000000000/seed-1001",
+  "checkpoint_sha256": "26f6806f1daf088705d29fcb5143a7267909fdb7a8326ec01a2a890d34730334",
+  "evaluator_sha256": "6ea8ee7b12f7f694c12df4fdd311dc63d669bc76d4cbdaee5bb42c8fb23f175f",
+  "passed": true,
+  "cases": [
+    {
+      "mutation": "actor_input",
+      "rejected": true,
+      "expected": "ACTOR_INPUT_NOT_DERIVED_FROM_RAW_PHYSICS",
+      "findings": [
+        "ACTOR_INPUT_NOT_DERIVED_FROM_RAW_PHYSICS"
+      ]
+    },
+    {
+      "mutation": "actor_output",
+      "rejected": true,
+      "expected": "EXECUTED_ACTION_NOT_FROM_CHECKPOINT",
+      "findings": [
+        "EXECUTED_ACTION_NOT_FROM_CHECKPOINT"
+      ]
+    },
+    {
+      "mutation": "missing_prediction",
+      "rejected": true,
+      "expected": "INFERENCE_COVERAGE",
+      "findings": [
+        "INFERENCE_COVERAGE"
+      ]
+    },
+    {
+      "mutation": "changed_source",
+      "rejected": true,
+      "expected": "POLICY_SOURCE_HASH",
+      "findings": [
+        "POLICY_SOURCE_HASH"
+      ]
+    },
+    {
+      "mutation": "nonfinite_prediction",
+      "rejected": true,
+      "expected": "ACTION_SHAPE",
+      "findings": [
+        "ACTION_SHAPE"
+      ]
+    }
+  ]
+}

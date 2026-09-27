@@ -1,6 +1,6 @@
 # 阶段 2：直接关节 PPO 与可复用低层技能
 
-状态：`PARTIAL`。[VF-02-T01 动作映射健康检查](ACTION_MAPPING.md) 已完成：23 维具名 schema、掩码、独立限幅、执行目标反馈、停止恢复与 30/60/120 Hz 五案例物理验收通过。下一项为 VF-02-T02 单键可学性诊断；尚未训练 PPO 或交付冻结低层策略。前置 VF-01 的单环境物理接口、释放判据和数据来源审计已通过。
+状态：`PARTIAL`。[VF-02-T01 动作映射健康检查](ACTION_MAPPING.md) 已完成：23 维具名 schema、掩码、独立限幅、执行目标反馈、停止恢复与 30/60/120 Hz 五案例物理验收通过。[VF-02-T02 单键可学性诊断](SINGLE_KEY_PPO.md) 已完成单种子 100 万转移与五检查点独立复验。下一项为 VF-02-T03 三种子重复验收；通用冻结低层技能包尚未交付。前置 VF-01 的单环境物理接口、释放判据和数据来源审计已通过。
 
 ## 控制范围
 
@@ -29,11 +29,11 @@ flowchart LR
 | `ActionSchema / JointMask`（已实现） | `learning/policy_manifest.py` | 23 维具名动作、子集掩码、周期/尺度与关节顺序 |
 | `JointActionMapper / JointActionSession`（已实现） | `adapters/isaac/learning/joint_action.py` | 从最终执行目标积分、独立限幅、停止/保持/恢复与令牌交接 |
 | `check_mapping_trace`（已实现） | `learning/action_evaluation.py` | 绑定原始物理动作，独立重算映射与生命周期；物理成功另由 VF-01 Verifier 判定 |
-| `TeacherObservationBuilder` | `adapters/isaac/learning/observations.py` | 关节角/速度、上一动作、目标键、指尖相对位姿、键程/接触 |
-| `RewardTerms` | `adapters/isaac/learning/rewards.py` | 完整按下/释放进度与辅助塑形；保留各项曲线 |
-| `PPOTrainer / RolloutBuffer` | `adapters/learning_torch/ppo.py` | 采样、GAE、更新、保存与恢复；Torch 可选依赖 |
-| `LearnedPressKeySkill` | `skills/learned_typing.py` | 以 key 为参数的有时限技能；仅返回声明与证据 |
-| `PrimitiveEvaluator` | `learning/evaluation.py` | 多种子、目标、误触/释放/安全/时间判据 |
+| `teacher_observation`（已实现） | `adapters/isaac/learning/observations.py` | 关节角/速度、上一动作、目标键、指尖相对位姿、键程/接触 |
+| `PressProgress / reward_terms`（已实现） | `adapters/isaac/learning/rewards.py` | 完整按下/释放进度与辅助塑形；保留各项曲线 |
+| `PPOTrainer / rollout 张量`（已实现） | `adapters/learning_torch/ppo.py` | 采样、终态 GAE、更新与检查点；可恢复复验，未保存精确续训环境状态；Torch 可选依赖 |
+| `LearnedPressKeySkill`（待实现） | `skills/learned_typing.py` | 以 key 为参数的有时限技能；仅返回声明与证据 |
+| `ppo_verify / PrimitiveEvaluator`（单种子诊断已实现） | `adapters/isaac/learning/ppo_verify.py`、`learning/evaluation.py` | 权重/输入/动作与原始物理绑定，独立释放/安全/时间判据；多种子验收待做 |
 
 ## 动作与观测
 
@@ -47,7 +47,7 @@ q^{target}_{t+1}=\operatorname{clip}(q^{target}_t+\alpha a_t).
 
 reset 初始目标来自已审计初态和实测关节，不调用 IK，不使用 `dex5_postures.json`、旧 IK 校准轨迹或其导出的标签。FK 可作为仿真观测；利用 FK 读取指尖位置不意味着允许反解关节目标。
 
-第一版是特权状态教师：精确目标键位置、指尖相对位置、接触与键程都需标注特权来源。实际文本可作训练标签/奖励，不作为 actor 输入；不将本阶段称为视觉控制。训练归一化统计只来自训练集，评估时冻结。
+第一版是特权状态教师：精确目标键位置、指尖相对位置、接触与键程都需标注特权来源。实际文本可作训练标签/奖励，不作为 actor 输入；不将本阶段称为视觉控制。T02 采用固定物理单位归一化，无训练或评估统计拟合。若后续引入统计归一化，仅用训练集拟合、评估时冻结。
 
 ## 奖励与终止
 
@@ -62,8 +62,8 @@ GAE 区分物理失败 `terminated` 与时间截断 `truncated`：截断可对�
 | 任务 | 内容 | 门槛 |
 |---|---|---|
 | VF-02-T01 动作映射健康检查 | `DONE`：[实现与证据](ACTION_MAPPING.md)；19 项 CPU 检查、五个物理案例 | 无 IK；独立保护；极限两端属 CPU 证据，物理仅开放左食指 |
-| VF-02-T02 单键可学性 | `READY`：一个训练种子，约 `10^6` 累计环境转移的诊断预算 | 看到完整物理成功的趋势，不以辅助奖励上升代替 |
-| VF-02-T03 单键重复验收 | 三个独立训练种子，各 100 个独立评估回合 | 目标约 95%；逐种子报告成功、区间和失败类型，不只池化平均 |
+| VF-02-T02 单键可学性 | `DONE`：[单种子 PPO 与证据](SINGLE_KEY_PPO.md)；1,000,000 聚合转移、五检查点各 8 次复验 | 初始 0/8；训练后检查点完整物理成功。固定场景诊断，不以辅助奖励代替 |
+| VF-02-T03 单键重复验收 | `READY`：三个独立训练种子，各 100 个独立评估回合 | 目标约 95%；逐种子报告成功、区间和失败类型，不只池化平均 |
 | VF-02-T04 少量键与退格 | 目标条件策略、重复字符、邻键、真实 Backspace、释放技能 | 每个任务键独立通过；退格消费真实按键改变文本 |
 | VF-02-T05 冻结技能包 | 策略、归一化、关节 schema、配置/来源哈希和验收 | 阶段 3/4 各方法使用同一技能版本；修订版本需统一重测 |
 

@@ -8,7 +8,7 @@
 
 状态：**目标架构与实施规范，尚未完成无 IK 策略训练**。本文是学习路线的总体设计入口；[基础运行时架构](../../ARCHITECTURE.md)解释已有核心组件，[训练调研](DEX5_LEARNING_WITHOUT_IK.md)提供方法依据和实验细节。文中的新模块、接口字段、技能和验收门槛均为待实现设计，除明确标注“已有”外，不代表已接入或已通过测试。
 
-已有工程：VF-01-T01–T04 的版本化记录、单/批物理环境与文本反馈隔离，以及 [T05 真实终端与机器人相机复验](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。入口为 `make demo-learning-evidence`、`make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`；[VF-02-T01 动作映射](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md) 也已交付，入口为 `make isaac-learning-action-health`。下一项为 VF-02-T02 单键可学性诊断，策略训练仍未交付。
+已有工程：VF-01-T01–T04 的版本化记录、单/批物理环境与文本反馈隔离，以及 [T05 真实终端与机器人相机复验](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。入口为 `make demo-learning-evidence`、`make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`；[VF-02-T01 动作映射](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md) 也已交付，入口为 `make isaac-learning-action-health`。[VF-02-T02 单键 PPO 诊断](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成一个训练种子、100 万聚合转移和五检查点复验，入口为 `make isaac-learning-single-key-ppo`。下一项为 VF-02-T03 三训练种子重复验收。
 
 ## 1. 目标与设计决策
 
@@ -65,14 +65,14 @@ flowchart TB
 |---|---|---|---|
 | Agent / SkillGraph | 用户任务、已验证事实 → 技能目标 | 任务分解、就绪节点选择、有限重试；不访问电机 | 核心框架已有 |
 | Skill Runtime | 版本化契约、目标 → 声明与原始证据 | 前置条件、资源互斥、超时、取消、调用验证器 | 已有 |
-| 学习技能控制器 | 目标、观测历史 → 策略动作 | 坐下/打字等有限时域闭环；不能自行提交成功状态 | 新无 IK 路径待实现 |
-| Policy Adapter | 策略包、观测 → 有界关节目标 | 推理、动作映射、历史缓存；仅此低层边界接触关节动作 | 已有平衡适配器，新技能待实现 |
+| 学习技能控制器 | 目标、观测历史 → 策略动作 | 坐下/打字等有限时域闭环；不能自行提交成功状态 | 单键无 IK 诊断已有，Runtime 技能包装待交付 |
+| Policy Adapter | 策略包、观测 → 有界关节目标 | 推理、动作映射、历史缓存；仅此低层边界接触关节动作 | 平衡与单键 PPO 诊断适配器已有，通用冻结技能包待交付 |
 | Safety / Control ownership | 动作、实测状态 → 可执行动作或停止 | 单关节单控制者；独立保护和异常记录 | 现有守卫可复用，统一管理待实现 |
-| Physics / Hardware Adapter | 关节驱动 → 带时间戳观测 | 同契约连接 PhysX 或未来真实硬件 | Isaac 场景已有，训练批处理待实现 |
+| Physics / Hardware Adapter | 关节驱动 → 带时间戳观测 | 同契约连接 PhysX 或未来真实硬件 | 单/批 PhysX 与单键 GPU 训练已实现，真机待接入 |
 | 键盘桥与虚拟计算机 | 接触/键程 → 事件 → 画面 | 物理事件唯一入口；PTY、Pygame、显示纹理 | 已有特定任务验收 |
 | Perception Adapter | RGB-D、本体传感器 → 估计与置信度 | 键盘/椅子定位、屏幕识别；不静默使用真值 | RGB-D/OCR 链路已有，视觉控制待训练 |
-| Verifier / Ledger | 原始证据、规则 → 已验证事实 | 物理/GUI/软件分别判定、状态过期、追溯 | 已有；新策略接入待完成 |
-| Training / Evaluation | 环境、数据、种子 → checkpoint、评估报告 | 与在线 Runtime 分离；评估决定策略是否可发布 | 拟建，椅子研究代码不是完整训练后端 |
+| Verifier / Ledger | 原始证据、规则 → 已验证事实 | 物理/GUI/软件分别判定、状态过期、追溯 | 诊断策略已接入独立物理复核，Runtime 发布另验收 |
+| Training / Evaluation | 环境、数据、种子 → checkpoint、评估报告 | 与在线 Runtime 分离；评估决定策略是否可发布 | 单键 PPO 诊断已有；多种子、技能发布与高层学习待完成 |
 
 现有 `ActionGraph` 仍拒绝低层关节命令。学习路线保留其接触、键事件、屏幕门禁及超时语义；不沿用旧版笛卡尔预定位 + DLS 执行链。技能将键号/指法/释放目标交给学习适配器，不将笛卡尔节点解释成隐藏的 IK 调用。此兼容层是待实现工作，现有图配置不能直接标成学习版。
 
@@ -215,4 +215,4 @@ flowchart LR
 
 现有自由坐下采用学习平衡网络与预设高度/躯干指令；现有十指打字仍采用 IK。虚拟屏幕已有实体输入 `ls`/Enter 的闭环记录，但不等于代码 Agent 已完成真实编程任务。具体证据及限制以[连续演示说明](../../experiments/dex5/CONTINUOUS_COMPUTER_DEMO.md)为准。
 
-本次交付是学习路线整体架构文件、文档入口及新 Git 分支。未训练新模型、未替换现有控制器、未新增导航或滑椅能力。后续实现应逐项更新本文件的“已有/待实现”状态，并引用对应评估报告。
+当前新增交付为 VF-02-T02 的直接关节单键 PPO：固定工位、单个活动关节、特权状态、一训练种子，完成 100 万聚合转移及独立物理复验。具体结果以[验收报告](../../../reports/verification_feedback/vf02_t02_single_key_learnability.json)为准。它不替换旧连续演示控制器，不代表视觉、十指、自由坐姿、导航或主动滑椅能力。

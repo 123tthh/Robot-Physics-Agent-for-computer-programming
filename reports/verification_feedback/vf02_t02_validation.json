@@ -1,0 +1,47 @@
+{
+  "task": "VF-02-T02",
+  "passed": true,
+  "checks": {
+    "make_check": {
+      "total": 270,
+      "passed": 269,
+      "skipped": 1
+    },
+    "make_demo": "passed",
+    "optional_torch_tests": {
+      "total": 13,
+      "passed": 13
+    },
+    "copied_evidence_rejections": 5,
+    "prior_source_audit": "vf02_t02_prior_source_audit.json"
+  },
+  "budget_accounting": {
+    "formal_training_transitions": 1000000,
+    "preflight_training_transitions": 16384,
+    "training_transitions_including_preflight": 1016384,
+    "independent_evaluation_transitions": 3520,
+    "evaluation_episodes": 40
+  },
+  "preflight": {
+    "recording": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf02/ppo/preflight-20260927-01",
+    "seed": 7,
+    "transitions": 16384,
+    "wall_s": 24.905293086980237,
+    "totals": {
+      "episodes": 64,
+      "completed_cycles": 0,
+      "mistakes": 0,
+      "safety_stops": 0,
+      "timeouts": 64
+    },
+    "formal_checkpoint_reused": false,
+    "purpose": "setup and throughput check with the same config except the 16,384-transition budget"
+  },
+  "runtime_notes": [
+    "Training overlapped checkpoint evaluation; wall time is not an isolated throughput benchmark.",
+    "Memory fields are PyTorch allocation/reservation and process RSS; not total GPU PhysX memory.",
+    "Raw training transitions are not recorded individually. Full raw trajectories are in independent checkpoint evaluation.",
+    "The eight evaluation seeds repeat one fixed scene. No multi-seed training or geometry generalization claim."
+  ],
+  "local_artifacts": "/home/descfly/humanoid-computer-agent/artifacts/verification_feedback/vf02/ppo/run-20260927T050543-255757"
+}

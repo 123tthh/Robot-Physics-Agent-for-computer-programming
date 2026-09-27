@@ -30,7 +30,7 @@ flowchart LR
 | VF-05 | [视觉与双手](../verification-feedback-skill-learning/05_visual_policy_and_bimanual/README.md) | L2 的多指部分 / 学习 M5，机制成立后展开 |
 | VF-06 | [坐姿交接](../verification-feedback-skill-learning/06_seated_skill_handoff/README.md) | L2 连续交接 / E1 的物理数字部分；软件 C1 随后独立验收 |
 
-**VF-01-T01–T05 已交付各自单键诊断范围**：离线契约、物理闭环、文本反馈、1/16/64 批环境，以及[真实终端与机器人相机](../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。**VF-02-T01 已通过动作映射与停止恢复验收**，见[实现说明](../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md)。下一项为 **VF-02-T02：单键可学性诊断**。当前仍是手工直接关节诊断；PPO、风险预测器、分层决策和视觉学生均未交付。
+**VF-01-T01–T05 已交付各自单键诊断范围**：离线契约、物理闭环、文本反馈、1/16/64 批环境，以及[真实终端与机器人相机](../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。**VF-02-T01 已通过动作映射与停止恢复验收**，见[实现说明](../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md)。**VF-02-T02 单键可学性诊断已交付**，见[单种子 PPO 与独立复验](../verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md)。下一项为 **VF-02-T03：单键重复验收**（三个训练种子，每种子 100 个独立评估回合）。当前 PPO 仅覆盖固定工位单键特权状态；风险预测器、分层决策和视觉学生尚未交付。
 
 ## 2. 原工程里程碑：支持项与后续扩展
 
@@ -50,7 +50,7 @@ flowchart LR
 | X | CHAIR / NAV / VOICE / D3-6，按具体任务启动 | 各自完成物理 worker、失败恢复、稳定/释放/感知门槛后再接 E1 | 独立扩展，不统一宣称完成 |
 | H | REAL；所用技能的仿真门槛通过 | 实际硬件身份、时钟/传感器与控制停止、HIL、小范围真机、对应 Verifier | 未开放为已有能力 |
 
-**研究默认下一项以 VF-02-T02 为准。** G1-01 等运行时加固仍保留为集成门槛。批环境通过不代表完成运行时并发加固或 PPO 训练。站姿 Dex3 继续单独保存其基线和失败记录，不混入 Dex5 动作维度或本课题成绩。
+**研究默认下一项以 VF-02-T03 为准。** G1-01 等运行时加固仍保留为集成门槛。单种子 PPO 诊断不代表完成运行时并发加固、多种子验收或冻结技能发布。站姿 Dex3 继续单独保存其基线和失败记录，不混入 Dex5 动作维度或本课题成绩。
 
 ### G1 的可领取任务
 

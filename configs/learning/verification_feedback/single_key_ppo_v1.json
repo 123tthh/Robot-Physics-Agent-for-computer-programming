@@ -1,0 +1,31 @@
+{
+  "version": "vf-single-key-ppo/1",
+  "seed": 7,
+  "num_envs": 64,
+  "transitions": 1000000,
+  "rollout_steps": 128,
+  "minibatch_size": 2048,
+  "epochs": 4,
+  "hidden_size": 64,
+  "learning_rate": 0.0003,
+  "gamma": 0.99,
+  "gae_lambda": 0.95,
+  "clip_ratio": 0.2,
+  "entropy_coefficient": 0.001,
+  "value_coefficient": 0.5,
+  "max_grad_norm": 0.5,
+  "target_kl": 0.03,
+  "initial_log_std": -0.5,
+  "horizon_s": 3.0,
+  "checkpoint_interval": 250000,
+  "evaluation_seeds": [
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008
+  ]
+}

@@ -1,6 +1,6 @@
 # VF-01-T01：任务与离线证据实现
 
-状态：`DONE`，限标准库数据契约和合成回放验收。2026-09-25，起点提交 `e2ec5b8`。此处保留 T01 当时的契约验收；后续 [T02 单环境物理 reset/step](PHYSICAL_ENVIRONMENT.md) 已交付。阶段 VF-01 整体仍为 `PARTIAL`，尚未训练策略。
+状态：`DONE`，限标准库数据契约和合成回放验收。2026-09-25，起点提交 `e2ec5b8`。此处保留 T01 当时的契约验收；后续 [T02 单环境物理 reset/step](PHYSICAL_ENVIRONMENT.md) 已交付。阶段 VF-01 整体仍为 `PARTIAL`；本 T01 验收未训练策略，后续学习状态见[阶段 2](../02_joint_ppo_baseline/README.md)。
 
 ## 运行与复核
 
@@ -81,6 +81,6 @@ print(report.contract_passed, report.findings)
 
 ## 后续实现
 
-VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现；[T03 文本与反馈隔离](TEXT_FEEDBACK.md) 和 [T04 批环境与吞吐](BATCH_ENVIRONMENT.md) 也已交付。[T05 真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已完成单键六案例范围。当前下一项为 VF-02-T02：单键可学性诊断（T01 已通过动作映射验收）。
+VF-01-T02 已完成：[单环境物理 reset/step 与验收](PHYSICAL_ENVIRONMENT.md)，包含直接关节驱动、真实原始记录、管理释放负例与重置复现；[T03 文本与反馈隔离](TEXT_FEEDBACK.md) 和 [T04 批环境与吞吐](BATCH_ENVIRONMENT.md) 也已交付。[T05 真实终端与机器人相机复验](DESKTOP_CAMERA.md) 已完成单键六案例范围。[T02 单键 PPO 诊断](../02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已另行交付，当前下一项为 VF-02-T03：单键重复验收。
 
 返回[阶段 1](README.md)或[研究主线](../README.md)。

@@ -1,6 +1,6 @@
 # 面向实体计算机操作的验证反馈驱动技能学习
 
-状态：`PARTIAL`，2026-09-26。VF-01-T01 的离线契约、T02 单键物理闭环、T03 文本反馈隔离及 [T04 的 1/16/64 工位隔离与吞吐](01_environment_and_evidence/BATCH_ENVIRONMENT.md) 已交付。[T05 真实终端与机器人相机](01_environment_and_evidence/DESKTOP_CAMERA.md) 的单 `a` 六案例复验也已通过；学习模块仍待交付。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
+状态：`PARTIAL`，2026-09-27。VF-01-T01 的离线契约、T02 单键物理闭环、T03 文本反馈隔离及 [T04 的 1/16/64 工位隔离与吞吐](01_environment_and_evidence/BATCH_ENVIRONMENT.md) 已交付。[T05 真实终端与机器人相机](01_environment_and_evidence/DESKTOP_CAMERA.md) 的单 `a` 六案例复验也已通过；[VF-02-T02 单键 PPO](02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成单种子诊断。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
 
 ## 研究主线
 
@@ -55,16 +55,16 @@ flowchart TB
 
 ## 共同设计与代码位置
 
-先读 [COMMON_CONTRACTS.md](COMMON_CONTRACTS.md)：它统一消息、时间、观察权限、物理释放、结果和版本定义。每个阶段都说明已有实现与拟建模块；已有单环境与反馈诊断入口，尚无本课题的策略训练入口。
+先读 [COMMON_CONTRACTS.md](COMMON_CONTRACTS.md)：它统一消息、时间、观察权限、物理释放、结果和版本定义。每个阶段都说明已有实现与拟建模块；已有单环境、反馈与单键 PPO 入口，跨阶段技能发布仍需后续验收。
 
 ```text
 src/vskill_os/learning/                    已有：记录、文本状态、反馈队列、观察过滤和独立评估
 src/vskill_os/skills/                      现有技能；学习按键、观察与恢复包装待建
 src/vskill_os/adapters/isaac/learning/      已有：单/批环境、物理/反馈诊断、真实终端与机器人相机适配
-src/vskill_os/adapters/learning_torch/     拟建：PPO、风险预测器、循环决策与视觉训练
-configs/learning/verification_feedback/   已有：契约、单/批物理、文本与相机反馈配置；训练配置待建
-artifacts/verification_feedback/          已有：合成回放和原始物理记录；权重待训练
-reports/verification_feedback/            已有：契约、物理和反馈验收；学习结果待采集
+src/vskill_os/adapters/learning_torch/     已有：单键 PPO；风险预测器、循环决策与视觉训练待建
+configs/learning/verification_feedback/   已有：契约、单/批物理、文本、相机、动作与单键 PPO 配置
+artifacts/verification_feedback/          已有：合成回放、原始物理记录与单键 PPO 候选权重
+reports/verification_feedback/            已有：契约、物理、反馈与单种子 PPO 诊断报告
 ```
 
 Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节向量。部署策略仍使用现有 Runtime、资源契约、独立 Verifier 和 Ledger。研究决策器提交的技能请求也必须经过相同门禁。
@@ -104,6 +104,8 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 
 **VF-02-T01 已完成动作映射健康检查**：23 维具名 schema、独立掩码/限幅、执行目标反馈及停止恢复；30/60/120 Hz 五个物理案例与 19 项软件检查通过。见[实现说明](02_joint_ppo_baseline/ACTION_MAPPING.md)。
 
-下一项为 **VF-02-T02：单键可学性诊断**。当前仍是固定骨盆、人工直接关节诊断；多键、真实退格、PPO 和视觉策略尚未交付。
+**VF-02-T02 已完成单键可学性诊断**：一个训练种子、64 工位、100 万聚合转移；五个保存检查点分别在原单环境采集原始证据并独立复核。初始策略为 0/8，训练后的检查点已观察到完整物理周期，见[实现和结果](02_joint_ppo_baseline/SINGLE_KEY_PPO.md)。
+
+下一项为 **VF-02-T03：单键重复验收**。当前学习策略仍是固定骨盆、单活动关节和特权状态；多键、真实退格、视觉策略、通用冻结技能和验证机制学习尚未交付。
 
 项目共同约束：[AGENTS.md](../AGENTS.md)、[统一架构](../docs/ARCHITECTURE.md)、[子项目状态](../docs/WORKSTREAMS.md)、[统一路线图](../docs/ROADMAP.md)。
