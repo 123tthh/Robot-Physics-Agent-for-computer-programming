@@ -19,7 +19,7 @@ from ....learning.ppo_config import PPOConfig
 from .action_runner import run_worker
 from .batch_recording import sha
 from .config import SingleHandConfig
-from .isolated_worker import healthy_gpu, kit_arguments, same_cuda_uuid
+from .isolated_worker import asset_mirror, healthy_gpu, kit_arguments, same_cuda_uuid
 from .ppo_runner import write_launch
 from .ppo_verify import verify_evaluation, verify_training
 from .single_hand_env import ROOT, write_json
@@ -53,14 +53,19 @@ def verify_seed(directory, *, protocol, seed, config, physical, scale):
             ecc = gpu['volatile_uncorrectable_ecc']
             healthy_gpu(receipt['cuda_visible_devices'],
                 f"{gpu['uuid']}, {gpu['physical_index']}, {gpu['name']}, {'N/A' if ecc is None else ecc}")
+            mirrored_assets = receipt.get('asset_mirror')
+            if mirrored_assets is not None and asset_mirror(mirrored_assets['root']) != mirrored_assets:
+                raise ValueError('asset mirror changed after collection')
             if (receipt['version'] != 'vf-isolated-worker/1' or receipt['kind'] != kind
                     or receipt['cuda_probe_passed'] is not True or receipt['launcher_sha256'] != sha(launcher)
                     or not same_cuda_uuid(receipt['cuda_visible_devices'], receipt['cuda_device_uuid'])
-                    or receipt['kit_args'] != kit_arguments(path.with_suffix('.kit'))):
+                    or receipt['kit_args'] != kit_arguments(path.with_suffix('.kit'), mirrored_assets)):
                 raise ValueError('isolated worker launch binding differs')
             receipts.append(receipt)
         if receipts[0]['gpu'] != receipts[1]['gpu']:
             raise ValueError('training/evaluation GPU placement differs')
+        if receipts[0].get('asset_mirror') != receipts[1].get('asset_mirror'):
+            raise ValueError('training/evaluation asset mirror differs')
         report['worker_launches'] = receipts
     except (OSError, ValueError, KeyError, TypeError) as exc:
         report['accepted'] = False

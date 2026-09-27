@@ -2,12 +2,16 @@
 
 import copy
 from dataclasses import replace
+import hashlib
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 from vskill_os.learning.multiseed import MultiseedProtocol, summarize_seed, wilson_reference_interval
 from vskill_os.learning.ppo_config import PPOConfig
 from vskill_os.adapters.isaac.learning.multiseed_runner import aggregate
-from vskill_os.adapters.isaac.learning.isolated_worker import healthy_gpu, same_cuda_uuid
+from vskill_os.adapters.isaac.learning.isolated_worker import asset_mirror, healthy_gpu, kit_arguments, same_cuda_uuid
 
 
 class MultiseedTests(unittest.TestCase):
@@ -99,6 +103,28 @@ class MultiseedTests(unittest.TestCase):
         self.assertTrue(same_cuda_uuid('GPU-'+raw, raw))
         self.assertTrue(same_cuda_uuid('GPU-'+raw, 'GPU-'+raw))
         self.assertFalse(same_cuda_uuid('GPU-'+raw, '8e253e57-aad0-06e2-5ef7-114283a2e092'))
+
+    def test_offline_asset_mirror_rejects_changed_files_and_path_escape(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)/'assets'
+            root.mkdir()
+            asset = root/'ground.usd'
+            asset.write_bytes(b'synthetic asset fixture')
+            item = dict(path='ground.usd', sha256=hashlib.sha256(asset.read_bytes()).hexdigest())
+            manifest = Path(temporary)/'manifest.json'
+            def write():
+                manifest.write_text(json.dumps(dict(version='vf-isaac-asset-mirror/1', files=[item])))
+            write()
+            receipt = asset_mirror(root, manifest)
+            self.assertIn('--/persistent/isaac/asset_root/cloud='+str(root), kit_arguments(root/'kit', receipt))
+            asset.write_bytes(b'changed geometry')
+            with self.assertRaises(ValueError): asset_mirror(root, manifest)
+            outside = Path(temporary)/'outside.usd'
+            outside.write_bytes(b'synthetic asset fixture')
+            item['path'] = '../outside.usd'
+            write()
+            with self.assertRaises(ValueError): asset_mirror(root, manifest)
+            self.assertIsNone(asset_mirror(None))
 
 
 if __name__ == '__main__':

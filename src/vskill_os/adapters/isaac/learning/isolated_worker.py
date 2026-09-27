@@ -8,6 +8,7 @@ the original worker parses an explicit, separate argument list.
 import argparse
 import csv
 import importlib
+import json
 import os
 from pathlib import Path
 import re
@@ -15,7 +16,7 @@ import subprocess
 import sys
 
 from .batch_recording import sha
-from .single_hand_env import write_json
+from .single_hand_env import ROOT, write_json
 
 
 def healthy_gpu(visible, query_output):
@@ -32,12 +33,31 @@ def healthy_gpu(visible, query_output):
                 volatile_uncorrectable_ecc=None if ecc != '0' else 0)
 
 
-def kit_arguments(cache):
-    return ['--portable-root', str(cache.resolve()),
+def asset_mirror(root, manifest_path=None):
+    """Bind an offline copy to the original NVIDIA assets, without editing USD."""
+    if root is None:
+        return None
+    root = Path(root).resolve()
+    manifest_path = manifest_path or ROOT/'configs/learning/verification_feedback/isaac_asset_mirror_v1.json'
+    manifest = json.loads(manifest_path.read_text())
+    if manifest['version'] != 'vf-isaac-asset-mirror/1' or not manifest['files']:
+        raise ValueError('invalid asset mirror manifest')
+    for item in manifest['files']:
+        path = (root/item['path']).resolve()
+        if not path.is_relative_to(root) or not path.is_file() or sha(path) != item['sha256']:
+            raise ValueError('missing or changed mirrored Isaac asset: '+item['path'])
+    return dict(root=str(root), manifest_sha256=sha(manifest_path), files=manifest['files'])
+
+
+def kit_arguments(cache, mirrored_assets=None):
+    result = ['--portable-root', str(cache.resolve()),
         '--/renderer/multiGpu/enabled=false', '--/renderer/multiGpu/autoEnable=false',
         '--/plugins/carb.tasking.plugin/threadCount=8',
         '--/plugins/omni.tbb.globalcontrol/maxThreadCount=8',
         '--/app/settings/persistent=false']
+    if mirrored_assets:
+        result.append('--/persistent/isaac/asset_root/cloud='+mirrored_assets['root'])
+    return result
 
 
 def same_cuda_uuid(visible, observed):
@@ -67,8 +87,10 @@ def main(argv=None):
     for name, path in cache_environment.items():
         Path(path).mkdir(parents=True, exist_ok=True)
         os.environ[name] = path
+    mirrored_assets = asset_mirror(os.environ.get('VF_ISAAC_ASSET_ROOT'))
     receipt = dict(version='vf-isolated-worker/1', kind=args.kind, gpu=gpu,
-        cuda_visible_devices=visible, worker_args=forwarded, kit_args=kit_arguments(args.cache),
+        cuda_visible_devices=visible, worker_args=forwarded, kit_args=kit_arguments(args.cache, mirrored_assets),
+        asset_mirror=mirrored_assets,
         launcher_sha256=sha(Path(__file__)), cache_environment=cache_environment, cuda_probe_passed=False)
     write_json(args.receipt, receipt)
     import torch

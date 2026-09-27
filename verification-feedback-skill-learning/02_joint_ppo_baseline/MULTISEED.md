@@ -27,6 +27,8 @@
 
 节点上可读取 Isaac Lab 2.3.2 和用户环境中的 Isaac Sim 5.1.0、PyTorch 2.7.0+cu128。共享目录的原生库和 Python 文件读取存在明显延迟；运行库缓存与代码工作目录放在节点本地盘，训练结果需归档到持久存储。启动环境需优先选择 Isaac Sim 自带 Warp 1.8.2；不能误用环境中另一份 Warp。缓存原文件，不原地升级已有项目依赖。
 
+节点不能直接读取默认场景的在线地址。可设置 `VF_ISAAC_ASSET_ROOT` 为离线资产根目录，内部保留 `Isaac/Environments/Grid/` 层级。[`isaac_asset_mirror_v1.json`](../../configs/learning/verification_feedback/isaac_asset_mirror_v1.json) 固定原版 USD 及其三张纹理的下载地址和 SHA-256；启动前逐文件校验，通过 Kit 的资产根目录设置加载，不修改 USD、碰撞参数或原有采集代码。训练与评估的启动收据必须使用同一份镜像，独立验收再次检查文件哈希。运行时日志、Kit/Warp/CUDA 缓存及临时目录均按工作进程隔离。
+
 本地部署包、连接信息、完整日志和权重放在 Git 忽略的 `artifacts/verification_feedback/vf02/remote_node29/`。SSH 私钥不复制到远端或仓库。训练根目录、Python 路径和设备选择通过环境配置提供，不写入核心模型。
 
 迁移门槛为：CUDA 运算通过 → 实际 PhysX 步进通过 → T02 冻结策略在新节点复验 → 三个种子正式训练。启动超时不能算训练失败或策略失败，也不能算完成了任何环境转移。
@@ -58,4 +60,4 @@ python -m vskill_os.adapters.isaac.learning.multiseed_runner \
 
 ## 本轮软件验证
 
-`make check`：278 项测试，277 通过、1 项可选桌面测试跳过；`make demo` 通过。28 个 T02 训练/采集来源文件与提交 `43173f8` 逐字节一致。远端 GPU 0 的实际 CUDA 矩阵运算已通过，Python 3.11.16、Torch 2.7.0+cu128，只可见指定卡；完整探测约 9.63 秒。上述结果尚不代表 29 节点已通过物理复验。
+`make check`：279 项测试，278 通过、1 项可选桌面测试跳过；`make demo` 通过。28 个 T02 训练/采集来源文件与提交 `43173f8` 逐字节一致。远端 GPU 0 的实际 CUDA 矩阵运算已通过，Python 3.11.16、Torch 2.7.0+cu128，只可见指定卡；完整探测约 9.63 秒。实际 PhysX 八步检查已通过，含启动约 39.84 秒。完整按键复验仍在进行，基础检查不作为策略成功证据。
