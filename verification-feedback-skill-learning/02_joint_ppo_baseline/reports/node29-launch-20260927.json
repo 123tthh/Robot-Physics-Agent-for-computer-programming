@@ -1,0 +1,540 @@
+{
+  "version": "vf-node29-launch-snapshot/1",
+  "captured_at_utc": "2026-09-27T07:43:56.530964+00:00",
+  "source_commit": "652fade",
+  "migration_gate_passed": true,
+  "formal_training_started": true,
+  "multiseed_accepted": false,
+  "seeds": [
+    {
+      "seed": 7,
+      "gpu_uuid": "GPU-649639b6-99c5-a691-551c-b92df950205b",
+      "source_commit": "652fade",
+      "workspace": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7",
+      "run": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927",
+      "transitions_budget": 1000000,
+      "final_evaluation_episodes": 100,
+      "state": "running",
+      "started_at_utc": "2026-09-27T07:39:09.507225+00:00",
+      "pid": 1324992,
+      "latest_training_metric": {
+        "update": 9,
+        "transitions": 73728,
+        "rollout_steps": 128,
+        "rollout_s": 18.847853007959202,
+        "transitions_per_s": 434.6383641967404,
+        "elapsed_wall_s": 166.41060511599062,
+        "episode_count": 64,
+        "training_completed_cycles": 0,
+        "mistakes": 0,
+        "safety_stops": 4,
+        "timeouts": 60,
+        "mean_episode_return": -0.5557985901832581,
+        "mean_episode_time_s": 2.9705729484558105,
+        "reward_terms": {
+          "completed_cycle": 0.0,
+          "potential": -0.0010466468520462513,
+          "time": -0.00033325148979201913,
+          "action_change": -0.0003370463673491031,
+          "excess_contact": 0.0,
+          "mistake": 0.0,
+          "safety": -0.00244140625
+        },
+        "optimizer": {
+          "loss": 0.03499232232570648,
+          "approximate_kl": 0.0002346100372960791,
+          "gradient_norm": 0.2125215232372284,
+          "optimizer_steps": 16,
+          "kl_early_stop": false,
+          "mean_advantage": -0.053291983902454376,
+          "mean_return": 0.09077724814414978
+        },
+        "totals": {
+          "episodes": 384,
+          "completed_cycles": 0,
+          "mistakes": 0,
+          "safety_stops": 4,
+          "timeouts": 380
+        },
+        "independent_verification": false
+      },
+      "worker_receipt": {
+        "version": "vf-isolated-worker/1",
+        "kind": "train",
+        "gpu": {
+          "uuid": "GPU-649639b6-99c5-a691-551c-b92df950205b",
+          "physical_index": 0,
+          "name": "NVIDIA RTX PRO 5000 72GB Blackwell",
+          "volatile_uncorrectable_ecc": 0
+        },
+        "cuda_visible_devices": "GPU-649639b6-99c5-a691-551c-b92df950205b",
+        "worker_args": [
+          "--output",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927",
+          "--config",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.ppo.json",
+          "--physics-config",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/configs/learning/verification_feedback/single_hand_physics_v1.json",
+          "--action-scale",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/configs/learning/verification_feedback/action_scale_v1.json"
+        ],
+        "kit_args": [
+          "--portable-root",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit",
+          "--/renderer/multiGpu/enabled=false",
+          "--/renderer/multiGpu/autoEnable=false",
+          "--/plugins/carb.tasking.plugin/threadCount=8",
+          "--/plugins/omni.tbb.globalcontrol/maxThreadCount=8",
+          "--/app/settings/persistent=false",
+          "--/persistent/isaac/asset_root/cloud=/home/yuxin/workspace/robot-physics-agent-node29/asset_mirror"
+        ],
+        "asset_mirror": {
+          "root": "/home/yuxin/workspace/robot-physics-agent-node29/asset_mirror",
+          "manifest_sha256": "ac05bdb70fb7beb670157a94dd364fcf02a1bd22f706e3c2e21b131b44e6efa5",
+          "files": [
+            {
+              "path": "Isaac/Environments/Grid/default_environment.usd",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/default_environment.usd",
+              "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a",
+              "bytes": 13622
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png",
+              "sha256": "940b96ee8c8e53bd1acbc770d4ca0ac98bed9c96439ab386d1b27dbc9790cc4e",
+              "bytes": 111895
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png",
+              "sha256": "deab39088eaf39ed7be951966c5e6bd5e58b90ab64743b0cdc8e5579fd5a99d9",
+              "bytes": 436257
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png",
+              "sha256": "44fc0e82007bb0bd94631cd7ec45986a71ed74b9413899fbffac13efe151be4b",
+              "bytes": 1474958
+            }
+          ]
+        },
+        "launcher_sha256": "1a5d4f0ee3ac4e14265c18987730652209bc08ded8448d44a0f3525cb6903fb4",
+        "cache_environment": {
+          "XDG_CACHE_HOME": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/xdg",
+          "WARP_CACHE_PATH": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/warp",
+          "CUDA_CACHE_PATH": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/cuda",
+          "TORCHINDUCTOR_CACHE_DIR": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/torchinductor",
+          "TMPDIR": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-7/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/tmp"
+        },
+        "cuda_probe_passed": true,
+        "torch_version": "2.7.0+cu128",
+        "cuda_device_uuid": "649639b6-99c5-a691-551c-b92df950205b"
+      },
+      "checkpoints": [
+        {
+          "path": "policy-000000000.pt",
+          "sha256": "bc9adde5b5e7316f2c04c771b725977b49c1123cefccd9502672c530cd3c2986",
+          "training_transitions": 0
+        }
+      ]
+    },
+    {
+      "seed": 17,
+      "gpu_uuid": "GPU-8e253e57-aad0-06e2-5ef7-114283a2e092",
+      "source_commit": "652fade",
+      "workspace": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17",
+      "run": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927",
+      "transitions_budget": 1000000,
+      "final_evaluation_episodes": 100,
+      "state": "running",
+      "started_at_utc": "2026-09-27T07:39:09.511190+00:00",
+      "pid": 1324994,
+      "latest_training_metric": {
+        "update": 9,
+        "transitions": 73728,
+        "rollout_steps": 128,
+        "rollout_s": 18.28714230901096,
+        "transitions_per_s": 447.9650161612952,
+        "elapsed_wall_s": 165.330096108024,
+        "episode_count": 64,
+        "training_completed_cycles": 0,
+        "mistakes": 0,
+        "safety_stops": 3,
+        "timeouts": 61,
+        "mean_episode_return": -0.4429122507572174,
+        "mean_episode_time_s": 2.991015911102295,
+        "reward_terms": {
+          "completed_cycle": 0.0,
+          "potential": -0.0026928025763481855,
+          "time": -0.00033324133255518973,
+          "action_change": -0.0003827791952062398,
+          "excess_contact": 0.0,
+          "mistake": 0.0,
+          "safety": -0.0018310546875
+        },
+        "optimizer": {
+          "loss": 0.014898622408509254,
+          "approximate_kl": 0.002089698798954487,
+          "gradient_norm": 0.1687553972005844,
+          "optimizer_steps": 16,
+          "kl_early_stop": false,
+          "mean_advantage": -0.043466005474328995,
+          "mean_return": -0.6116487383842468
+        },
+        "totals": {
+          "episodes": 384,
+          "completed_cycles": 0,
+          "mistakes": 0,
+          "safety_stops": 7,
+          "timeouts": 377
+        },
+        "independent_verification": false
+      },
+      "worker_receipt": {
+        "version": "vf-isolated-worker/1",
+        "kind": "train",
+        "gpu": {
+          "uuid": "GPU-8e253e57-aad0-06e2-5ef7-114283a2e092",
+          "physical_index": 1,
+          "name": "NVIDIA RTX PRO 5000 72GB Blackwell",
+          "volatile_uncorrectable_ecc": 0
+        },
+        "cuda_visible_devices": "GPU-8e253e57-aad0-06e2-5ef7-114283a2e092",
+        "worker_args": [
+          "--output",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927",
+          "--config",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.ppo.json",
+          "--physics-config",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/configs/learning/verification_feedback/single_hand_physics_v1.json",
+          "--action-scale",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/configs/learning/verification_feedback/action_scale_v1.json"
+        ],
+        "kit_args": [
+          "--portable-root",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit",
+          "--/renderer/multiGpu/enabled=false",
+          "--/renderer/multiGpu/autoEnable=false",
+          "--/plugins/carb.tasking.plugin/threadCount=8",
+          "--/plugins/omni.tbb.globalcontrol/maxThreadCount=8",
+          "--/app/settings/persistent=false",
+          "--/persistent/isaac/asset_root/cloud=/home/yuxin/workspace/robot-physics-agent-node29/asset_mirror"
+        ],
+        "asset_mirror": {
+          "root": "/home/yuxin/workspace/robot-physics-agent-node29/asset_mirror",
+          "manifest_sha256": "ac05bdb70fb7beb670157a94dd364fcf02a1bd22f706e3c2e21b131b44e6efa5",
+          "files": [
+            {
+              "path": "Isaac/Environments/Grid/default_environment.usd",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/default_environment.usd",
+              "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a",
+              "bytes": 13622
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png",
+              "sha256": "940b96ee8c8e53bd1acbc770d4ca0ac98bed9c96439ab386d1b27dbc9790cc4e",
+              "bytes": 111895
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png",
+              "sha256": "deab39088eaf39ed7be951966c5e6bd5e58b90ab64743b0cdc8e5579fd5a99d9",
+              "bytes": 436257
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png",
+              "sha256": "44fc0e82007bb0bd94631cd7ec45986a71ed74b9413899fbffac13efe151be4b",
+              "bytes": 1474958
+            }
+          ]
+        },
+        "launcher_sha256": "1a5d4f0ee3ac4e14265c18987730652209bc08ded8448d44a0f3525cb6903fb4",
+        "cache_environment": {
+          "XDG_CACHE_HOME": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/xdg",
+          "WARP_CACHE_PATH": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/warp",
+          "CUDA_CACHE_PATH": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/cuda",
+          "TORCHINDUCTOR_CACHE_DIR": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/torchinductor",
+          "TMPDIR": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-17/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/tmp"
+        },
+        "cuda_probe_passed": true,
+        "torch_version": "2.7.0+cu128",
+        "cuda_device_uuid": "8e253e57-aad0-06e2-5ef7-114283a2e092"
+      },
+      "checkpoints": [
+        {
+          "path": "policy-000000000.pt",
+          "sha256": "a1ca4814fcfcf24a70129abfb393280fed37e3a6e5dfc9caeebb2fba76a04f62",
+          "training_transitions": 0
+        }
+      ]
+    },
+    {
+      "seed": 29,
+      "gpu_uuid": "GPU-d36c5ada-1893-e9d3-0a18-727958bebd63",
+      "source_commit": "652fade",
+      "workspace": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29",
+      "run": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927",
+      "transitions_budget": 1000000,
+      "final_evaluation_episodes": 100,
+      "state": "running",
+      "started_at_utc": "2026-09-27T07:39:09.515667+00:00",
+      "pid": 1324995,
+      "latest_training_metric": {
+        "update": 9,
+        "transitions": 73728,
+        "rollout_steps": 128,
+        "rollout_s": 18.67661850899458,
+        "transitions_per_s": 438.62329768393397,
+        "elapsed_wall_s": 166.54710244300077,
+        "episode_count": 62,
+        "training_completed_cycles": 0,
+        "mistakes": 0,
+        "safety_stops": 5,
+        "timeouts": 57,
+        "mean_episode_return": -0.8074768781661987,
+        "mean_episode_time_s": 2.9555106163024902,
+        "reward_terms": {
+          "completed_cycle": 0.0,
+          "potential": -0.0005773523007519543,
+          "time": -0.0003330277104396373,
+          "action_change": -0.00033256009919568896,
+          "excess_contact": 0.0,
+          "mistake": 0.0,
+          "safety": -0.0030517578125
+        },
+        "optimizer": {
+          "loss": 0.029801901429891586,
+          "approximate_kl": 0.0011053511407226324,
+          "gradient_norm": 0.20763257145881653,
+          "optimizer_steps": 16,
+          "kl_early_stop": false,
+          "mean_advantage": -0.06052292138338089,
+          "mean_return": -0.2919918894767761
+        },
+        "totals": {
+          "episodes": 384,
+          "completed_cycles": 0,
+          "mistakes": 0,
+          "safety_stops": 20,
+          "timeouts": 364
+        },
+        "independent_verification": false
+      },
+      "worker_receipt": {
+        "version": "vf-isolated-worker/1",
+        "kind": "train",
+        "gpu": {
+          "uuid": "GPU-d36c5ada-1893-e9d3-0a18-727958bebd63",
+          "physical_index": 2,
+          "name": "NVIDIA RTX PRO 5000 72GB Blackwell",
+          "volatile_uncorrectable_ecc": 0
+        },
+        "cuda_visible_devices": "GPU-d36c5ada-1893-e9d3-0a18-727958bebd63",
+        "worker_args": [
+          "--output",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927",
+          "--config",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.ppo.json",
+          "--physics-config",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/configs/learning/verification_feedback/single_hand_physics_v1.json",
+          "--action-scale",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/configs/learning/verification_feedback/action_scale_v1.json"
+        ],
+        "kit_args": [
+          "--portable-root",
+          "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit",
+          "--/renderer/multiGpu/enabled=false",
+          "--/renderer/multiGpu/autoEnable=false",
+          "--/plugins/carb.tasking.plugin/threadCount=8",
+          "--/plugins/omni.tbb.globalcontrol/maxThreadCount=8",
+          "--/app/settings/persistent=false",
+          "--/persistent/isaac/asset_root/cloud=/home/yuxin/workspace/robot-physics-agent-node29/asset_mirror"
+        ],
+        "asset_mirror": {
+          "root": "/home/yuxin/workspace/robot-physics-agent-node29/asset_mirror",
+          "manifest_sha256": "ac05bdb70fb7beb670157a94dd364fcf02a1bd22f706e3c2e21b131b44e6efa5",
+          "files": [
+            {
+              "path": "Isaac/Environments/Grid/default_environment.usd",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/default_environment.usd",
+              "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a",
+              "bytes": 13622
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/Wireframe_blue.png",
+              "sha256": "940b96ee8c8e53bd1acbc770d4ca0ac98bed9c96439ab386d1b27dbc9790cc4e",
+              "bytes": 111895
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_basecolor.png",
+              "sha256": "deab39088eaf39ed7be951966c5e6bd5e58b90ab64743b0cdc8e5579fd5a99d9",
+              "bytes": 436257
+            },
+            {
+              "path": "Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png",
+              "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.1/Isaac/Environments/Grid/Materials/Textures/WireframeBlur_blue.png",
+              "sha256": "44fc0e82007bb0bd94631cd7ec45986a71ed74b9413899fbffac13efe151be4b",
+              "bytes": 1474958
+            }
+          ]
+        },
+        "launcher_sha256": "1a5d4f0ee3ac4e14265c18987730652209bc08ded8448d44a0f3525cb6903fb4",
+        "cache_environment": {
+          "XDG_CACHE_HOME": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/xdg",
+          "WARP_CACHE_PATH": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/warp",
+          "CUDA_CACHE_PATH": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/cuda",
+          "TORCHINDUCTOR_CACHE_DIR": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/torchinductor",
+          "TMPDIR": "/home/yuxin/workspace/robot-physics-agent-node29/workspaces/seed-29/artifacts/verification_feedback/vf02/multiseed/run-node29-20260927.kit/tmp"
+        },
+        "cuda_probe_passed": true,
+        "torch_version": "2.7.0+cu128",
+        "cuda_device_uuid": "d36c5ada-1893-e9d3-0a18-727958bebd63"
+      },
+      "checkpoints": [
+        {
+          "path": "policy-000000000.pt",
+          "sha256": "27637a6ce24c0028d2cbc073ed140106afa41cdd46bac5effe5ed24f00be9834",
+          "training_transitions": 0
+        }
+      ]
+    }
+  ],
+  "plan": {
+    "started_at_utc": "2026-09-27T07:39:09.129102+00:00",
+    "source_commit": "652fade",
+    "training_seeds": [
+      7,
+      17,
+      29
+    ],
+    "gpu_uuids": {
+      "7": "GPU-649639b6-99c5-a691-551c-b92df950205b",
+      "17": "GPU-8e253e57-aad0-06e2-5ef7-114283a2e092",
+      "29": "GPU-d36c5ada-1893-e9d3-0a18-727958bebd63"
+    },
+    "transitions_per_seed": 1000000,
+    "evaluation_seeds": [
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026,
+      2027,
+      2028,
+      2029,
+      2030,
+      2031,
+      2032,
+      2033,
+      2034,
+      2035,
+      2036,
+      2037,
+      2038,
+      2039,
+      2040,
+      2041,
+      2042,
+      2043,
+      2044,
+      2045,
+      2046,
+      2047,
+      2048,
+      2049,
+      2050,
+      2051,
+      2052,
+      2053,
+      2054,
+      2055,
+      2056,
+      2057,
+      2058,
+      2059,
+      2060,
+      2061,
+      2062,
+      2063,
+      2064,
+      2065,
+      2066,
+      2067,
+      2068,
+      2069,
+      2070,
+      2071,
+      2072,
+      2073,
+      2074,
+      2075,
+      2076,
+      2077,
+      2078,
+      2079,
+      2080,
+      2081,
+      2082,
+      2083,
+      2084,
+      2085,
+      2086,
+      2087,
+      2088,
+      2089,
+      2090,
+      2091,
+      2092,
+      2093,
+      2094,
+      2095,
+      2096,
+      2097,
+      2098,
+      2099,
+      2100
+    ],
+    "migration_gate": {
+      "evidence_valid": true,
+      "success_count": 8,
+      "episode_count": 8,
+      "findings": []
+    },
+    "excluded_gpu_indices": [
+      6
+    ],
+    "archive_root": "/mnt/workspace/users/yuxin/workspace/robot-physics-agent-node29/multiseed-20260927",
+    "launcher_sha256": "f9804e7110c7119b3856799f40893e441b44f51b7aa0ec4adf574794ce89c254"
+  },
+  "gpu_compute_processes": [
+    "1325032, GPU-649639b6-99c5-a691-551c-b92df950205b, 2869",
+    "1325032, GPU-649639b6-99c5-a691-551c-b92df950205b, 2869",
+    "1325033, GPU-8e253e57-aad0-06e2-5ef7-114283a2e092, 2660",
+    "1325034, GPU-d36c5ada-1893-e9d3-0a18-727958bebd63, 2660"
+  ]
+}

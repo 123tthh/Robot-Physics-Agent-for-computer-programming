@@ -1,6 +1,6 @@
 # VF-02-T03：单键重复验收与远端运行
 
-状态：`PARTIAL`。三种子协议、独立验收入口与单 GPU 启动隔离已实现；29 节点处于运行环境复验阶段，尚无三种子物理验收成绩。此前 T02 的单种子结果仍以 [SINGLE_KEY_PPO.md](SINGLE_KEY_PPO.md) 为准。
+状态：`RUNNING / PARTIAL`。29 节点迁移复验已获独立验证 `8/8` 通过；三个新种子已在 GPU 0、1、2 上实际开始采样和 PPO 更新，尚未完成三种子最终验收。此前 T02 的单种子结果仍以 [SINGLE_KEY_PPO.md](SINGLE_KEY_PPO.md) 为准。
 
 ## 固定实验
 
@@ -23,7 +23,13 @@
 
 ## 29 节点部署
 
-已确认 8 张 RTX PRO 5000 72GB；GPU 6 在接入时有 2762 个 volatile uncorrectable ECC 错误，本项目不使用该卡。计划将三个独立种子放在健康卡上，具体 UUID 由启动前查询确定，不能只依据旧截图。
+已确认 8 张 RTX PRO 5000 72GB；GPU 6 在接入时有 2762 个 volatile uncorrectable ECC 错误，本项目不使用该卡。2026-09-27 07:39 UTC（北京时间 15:39）启动种子 `7 / 17 / 29`，分别绑定 GPU `0 / 1 / 2` 的完整 UUID；启动前重新检查 ECC，实际 CUDA UUID 与指定卡一致。三者各用 64 个工位，已分别记录 73,728 次环境转移和九次 PPO 更新（07:43:56 UTC 快照）；当前约每卡每秒 450 次转移，仅作为启动阶段吞吐快照。
+
+运行代码冻结于 `652fade`，没有从 T02 权重继续训练。三个零转移检查点的 SHA-256 不同，完整 GPU 绑定与启动状态见 [启动快照](reports/node29-launch-20260927.json)。训练计数和训练内成功信号不能替代最终 100 回合的独立验收。
+
+节点本地运行根目录为 `/home/yuxin/workspace/robot-physics-agent-node29`，每种子代码位于 `workspaces/seed-{7,17,29}`，各自运行目录为 `artifacts/verification_feedback/vf02/multiseed/run-node29-20260927`。一次性协调进程在 `tmux` 会话 `vf02-t03-20260927` 中执行；状态与协调日志位于根目录的 `logs/multiseed-20260927/`，每种子训练进度位于运行目录内的 `training_metrics.jsonl`。任务有固定预算及超时，不自动追加预算或重试失败种子。
+
+每个种子训练结束后自动采集最终 100 回合，再由独立验证器重算；随后将完整工作目录压缩归档到 `/mnt/workspace/users/yuxin/workspace/robot-physics-agent-node29/multiseed-20260927/` 并记录哈希。三个种子都结束后重跑汇总。未来成绩以实际生成的 `multiseed.json / suite.json / completion.json` 为准；本次提交只记录启动时状态，未宣称 T03 通过。
 
 节点上可读取 Isaac Lab 2.3.2 和用户环境中的 Isaac Sim 5.1.0、PyTorch 2.7.0+cu128。共享目录的原生库和 Python 文件读取存在明显延迟；运行库缓存与代码工作目录放在节点本地盘，训练结果需归档到持久存储。启动环境需优先选择 Isaac Sim 自带 Warp 1.8.2；不能误用环境中另一份 Warp。缓存原文件，不原地升级已有项目依赖。
 
@@ -60,4 +66,6 @@ python -m vskill_os.adapters.isaac.learning.multiseed_runner \
 
 ## 本轮软件验证
 
-`make check`：279 项测试，278 通过、1 项可选桌面测试跳过；`make demo` 通过。28 个 T02 训练/采集来源文件与提交 `43173f8` 逐字节一致。远端 GPU 0 的实际 CUDA 矩阵运算已通过，Python 3.11.16、Torch 2.7.0+cu128，只可见指定卡；完整探测约 9.63 秒。实际 PhysX 八步检查已通过，含启动约 39.84 秒。完整按键复验仍在进行，基础检查不作为策略成功证据。
+`make check`：279 项测试，278 通过、1 项可选桌面测试跳过；`make demo` 通过。28 个 T02 训练/采集来源文件与提交 `43173f8` 逐字节一致。远端 GPU 0 的实际 CUDA 矩阵运算已通过，Python 3.11.16、Torch 2.7.0+cu128，只可见指定卡；完整探测约 9.63 秒。实际 PhysX 八步检查已通过，含启动约 39.84 秒。
+
+T02 最终策略在节点 29 重新采集种子 1001–1008，独立验证全部通过，每回合完整周期均为 1.0833 秒仿真时间。[迁移报告](reports/node29-migration-20260927.json) 保存结果及证据哈希，原始回合、失败尝试、启动收据和配置已同步回本地 `artifacts/verification_feedback/vf02/remote_node29/preflight-evidence/`，并备份到节点持久存储。此结果是旧策略迁移检查，与三种子新训练的验收分开。

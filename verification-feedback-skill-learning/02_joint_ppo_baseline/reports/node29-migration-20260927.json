@@ -1,0 +1,96 @@
+{
+  "version": "vf-node29-migration/1",
+  "source_commit": "652fade",
+  "frozen_baseline_commit": "43173f8",
+  "cuda_probe": {
+    "python": "3.11.16 (main, Aug 27 2026, 14:44:21) [GCC 14.3.0]",
+    "torch": "2.7.0+cu128",
+    "cuda_count": 1,
+    "gpu": "NVIDIA RTX PRO 5000 72GB Blackwell",
+    "uuid": "649639b6-99c5-a691-551c-b92df950205b",
+    "value": 512.0,
+    "elapsed_s": 9.630693471000995
+  },
+  "physics_probe": {
+    "steps": 8,
+    "gpu": "NVIDIA RTX PRO 5000 72GB Blackwell",
+    "uuid": "649639b6-99c5-a691-551c-b92df950205b",
+    "elapsed_s": 39.836818250012584
+  },
+  "frozen_policy": {
+    "checkpoint_sha256": "46af8e7c3c29a82c78eb2266bacc34a86987a902fb019bf1217f03524b423901",
+    "training_transitions": 1000000,
+    "evidence_valid": true,
+    "success_count": 8,
+    "episode_count": 8,
+    "cases": [
+      {
+        "seed": 1001,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1002,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1003,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1004,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1005,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1006,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1007,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      },
+      {
+        "seed": 1008,
+        "physical_primitive_passed": true,
+        "evidence_valid": true,
+        "elapsed_sim_s": 1.0833333333333333,
+        "task_failures": []
+      }
+    ]
+  },
+  "independent_report_sha256": "8d9402667f07ff1f0eb0b2d3715a3116c26117b57af66253029814b29c09e2a7",
+  "worker_receipt_sha256": "c2fee3fd3c14fed3490ee5099db852d44ddd7df0fbe3b22493e924b3858cceb1",
+  "archive_sha256": "e29f50bd3fb29591912956bce1424737972b0b186a5d0611f269531329282cd6",
+  "local_evidence": "artifacts/verification_feedback/vf02/remote_node29/preflight-evidence",
+  "excluded_gpu_indices": [
+    6
+  ],
+  "camera_verified": false,
+  "real_robot_verified": false,
+  "multiseed_accepted": false,
+  "scope": "T02 frozen policy migration check; fixed scene, fixed pelvis, one joint, key a, privileged observations"
+}
