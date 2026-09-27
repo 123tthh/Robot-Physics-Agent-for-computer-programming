@@ -1,0 +1,148 @@
+{
+  "version": "vf-node29-reverification-summary/1",
+  "task": "VF-02-T03",
+  "accepted": true,
+  "verified_at_utc": "2026-09-27T11:22:49.621058+00:00",
+  "prior_aggregate_accepted": false,
+  "new_training_transitions": 0,
+  "training_transitions": 3000000,
+  "evaluation_episodes": 300,
+  "minimum_seed_success_rate": 1.0,
+  "suite_report": "reports/verification_feedback/vf02_t03_suite.json",
+  "suite_sha256": "0e619511ad1157637bd9cf3fcbf12015bd369a6976c82c8da76e031453e1f1ba",
+  "remote_archive": "/mnt/workspace/users/yuxin/workspace/robot-physics-agent-node29/multiseed-20260927/reverify-20260927T110501Z.tar.gz",
+  "archive_sha256": "f148056991bac17f5ec61626a62519fb768fd0aa3c1dabb655c991f1ec8b96fc",
+  "archive_size_bytes": 210469,
+  "local_evidence": "artifacts/verification_feedback/vf02/remote_node29/reverification-evidence/multiseed-20260927-reverify-20260927T110501Z",
+  "original_archives": [
+    {
+      "training_seed": 7,
+      "archive": "/mnt/workspace/users/yuxin/workspace/robot-physics-agent-node29/multiseed-20260927/seed-7.tar.gz",
+      "sha256": "ab0a5ddd96b497075067e40de90a629f026be7c6f5378f647d7f742f3faa9008",
+      "original_sha256": "ab0a5ddd96b497075067e40de90a629f026be7c6f5378f647d7f742f3faa9008",
+      "unchanged": true
+    },
+    {
+      "training_seed": 17,
+      "archive": "/mnt/workspace/users/yuxin/workspace/robot-physics-agent-node29/multiseed-20260927/seed-17.tar.gz",
+      "sha256": "53822fa0fedc666127afb339329c0c6a7ed952719b34701c5d5fabadde383348",
+      "original_sha256": "53822fa0fedc666127afb339329c0c6a7ed952719b34701c5d5fabadde383348",
+      "unchanged": true
+    },
+    {
+      "training_seed": 29,
+      "archive": "/mnt/workspace/users/yuxin/workspace/robot-physics-agent-node29/multiseed-20260927/seed-29.tar.gz",
+      "sha256": "b00ce44bb770ec5070fe2a419c0d9f901c83d4da639b11b38d688038ad985360",
+      "original_sha256": "b00ce44bb770ec5070fe2a419c0d9f901c83d4da639b11b38d688038ad985360",
+      "unchanged": true
+    }
+  ],
+  "evidence_identity_files_checked": 750,
+  "evidence_identity_unchanged": true,
+  "patch_sha256": "b26df8234798062d26223a03d775114ee2d7ebe3a7b8dc894258c7268fb468c6",
+  "patched_sources": {
+    "src/vskill_os/adapters/isaac/learning/multiseed_runner.py": "ff47aa695b2b7c776dc5d352230579c755012760aab269e997d6fe3c7e164d7c",
+    "src/vskill_os/adapters/isaac/learning/multiseed_replay.py": "29d2c12db19a994a1b9a68a855336370fa0fb09623ddf395e4303c760fe93000"
+  },
+  "frozen_collector_sources_match_local": true,
+  "local_summary_recomputed": true,
+  "local_summary_maximum_mean_roundoff_s": 1.3322676295501878e-15,
+  "physical_replay_location": "original seed workspaces on node 29",
+  "scope": {
+    "fixed_scene": true,
+    "privileged_state": true,
+    "held_out_geometry": false,
+    "camera_verified": false,
+    "real_robot_verified": false,
+    "published_runtime_skill": false
+  },
+  "seeds": [
+    {
+      "statistics": {
+        "training_seed": 7,
+        "evidence_valid": true,
+        "episode_count": 100,
+        "success_count": 100,
+        "success_rate": 1.0,
+        "passed": true,
+        "failure_codes": {},
+        "successful_mean_sim_s": 1.083333333333332,
+        "binomial_iid_95_reference_interval": [
+          0.9630065017930143,
+          1.0
+        ],
+        "interval_scope": "IID binomial reference only; fixed-scene repeats do not establish generalization or independent random resets"
+      },
+      "training_valid": true,
+      "updates": 123,
+      "physics_steps": 62500,
+      "training_wall_s": 2344.4928515040083,
+      "findings": [],
+      "checkpoint_sha256": "d728fe677ab0e5cda3651784d44c8a28f03d477cb87f92b746246a35d1a70073",
+      "gpu": {
+        "uuid": "GPU-649639b6-99c5-a691-551c-b92df950205b",
+        "physical_index": 0,
+        "name": "NVIDIA RTX PRO 5000 72GB Blackwell",
+        "volatile_uncorrectable_ecc": 0
+      }
+    },
+    {
+      "statistics": {
+        "training_seed": 17,
+        "evidence_valid": true,
+        "episode_count": 100,
+        "success_count": 100,
+        "success_rate": 1.0,
+        "passed": true,
+        "failure_codes": {},
+        "successful_mean_sim_s": 1.083333333333332,
+        "binomial_iid_95_reference_interval": [
+          0.9630065017930143,
+          1.0
+        ],
+        "interval_scope": "IID binomial reference only; fixed-scene repeats do not establish generalization or independent random resets"
+      },
+      "training_valid": true,
+      "updates": 123,
+      "physics_steps": 62500,
+      "training_wall_s": 2299.770901677024,
+      "findings": [],
+      "checkpoint_sha256": "6e01be9a8ab217004be447fa54a10629769fb815ed20543fc7d884ea78f8b7b7",
+      "gpu": {
+        "uuid": "GPU-8e253e57-aad0-06e2-5ef7-114283a2e092",
+        "physical_index": 1,
+        "name": "NVIDIA RTX PRO 5000 72GB Blackwell",
+        "volatile_uncorrectable_ecc": 0
+      }
+    },
+    {
+      "statistics": {
+        "training_seed": 29,
+        "evidence_valid": true,
+        "episode_count": 100,
+        "success_count": 100,
+        "success_rate": 1.0,
+        "passed": true,
+        "failure_codes": {},
+        "successful_mean_sim_s": 1.083333333333332,
+        "binomial_iid_95_reference_interval": [
+          0.9630065017930143,
+          1.0
+        ],
+        "interval_scope": "IID binomial reference only; fixed-scene repeats do not establish generalization or independent random resets"
+      },
+      "training_valid": true,
+      "updates": 123,
+      "physics_steps": 62500,
+      "training_wall_s": 2305.062515385973,
+      "findings": [],
+      "checkpoint_sha256": "07a622582f95165f2afe5542e1354c71f2ab5e29d0c4f044360534e2c07d9ef5",
+      "gpu": {
+        "uuid": "GPU-d36c5ada-1893-e9d3-0a18-727958bebd63",
+        "physical_index": 2,
+        "name": "NVIDIA RTX PRO 5000 72GB Blackwell",
+        "volatile_uncorrectable_ecc": 0
+      }
+    }
+  ]
+}

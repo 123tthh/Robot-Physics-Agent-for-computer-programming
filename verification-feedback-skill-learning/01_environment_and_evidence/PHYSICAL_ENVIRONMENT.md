@@ -98,6 +98,6 @@ reset 只在回合边界写入根位姿与关节状态；先保存上一终态�
 
 开发阶段的失败保留在 `artifacts/verification_feedback/vf01/physics-development/`：包括初态与椅面碰撞、无效支撑配置、键盘底座被默认初态移到原点，以及行程不足。另外，`physics/run-20260926T090912-791262`、`run-20260926T091346-797081`、`run-20260926T091702-217274` 的回合判据符合预期，但重置复现失败，原报告保留。定位到凸包碰撞与椅缘重叠后，将固定骨盆和工作面整体上移 15 mm；同时对导入碰撞体取消实例化以落实并审计 1 mm 接触偏移。最终验收仍使用原来的严格复现容差。
 
-本项只验收单环境物理原语；后续 [T03 文本状态与反馈隔离](TEXT_FEEDBACK.md) 和 [T04 批环境与吞吐](BATCH_ENVIRONMENT.md) 已分别交付。[T05 桌面与相机复验](DESKTOP_CAMERA.md) 和 [VF-02-T02 单键 PPO 诊断](../02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已另行交付。当前下一项为 VF-02-T03 三训练种子重复验收；双手和自由坐姿仍有独立门槛。
+本项只验收单环境物理原语；后续 [T03 文本状态与反馈隔离](TEXT_FEEDBACK.md) 和 [T04 批环境与吞吐](BATCH_ENVIRONMENT.md) 已分别交付。[T05 桌面与相机复验](DESKTOP_CAMERA.md) 和 [VF-02-T02 单键 PPO 诊断](../02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已另行交付。[VF-02-T03 三训练种子重复验收](../02_joint_ppo_baseline/MULTISEED.md)已通过，当前下一项为 VF-02-T04 少量键与真实退格；双手和自由坐姿仍有独立门槛。
 
 返回[阶段 1](README.md)或[研究主线](../README.md)。

@@ -1,0 +1,75 @@
+{
+  "version": "vf-archived-usd-workspace-binding/1",
+  "task": "VF-02-T03",
+  "source": "original archives downloaded and matched against historical completion hashes",
+  "evaluated_manifest_count": 300,
+  "all_own_bundles_match": true,
+  "seeds": [
+    {
+      "training_seed": 7,
+      "archive_sha256": "ab0a5ddd96b497075067e40de90a629f026be7c6f5378f647d7f742f3faa9008",
+      "usd_files": {
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_base.usd": "126ef6d500155f3d280e23ea5281f39bc2a261c87801b756698aab53be34c9b7",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_sensor.usd": "adac33f3b1c6fa33d991a758e28ed2fd7bedd3a42163b575043a5536757eb84e",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_robot.usd": "ca68211648af5d75c260361775d192fdd22b32071ce4bac5eaa3f956033df19f",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_physics.usd": "e89836513278749a13dfbbfbc93b2c3cf8e8f07f85291eb66b0c9b19bb0b76d6",
+        "artifacts/verification_feedback/assets/usd/g1_dex5_direct_joint.usd": "2c1301d30ea1b01588074a8fa6a0c8272116b90bae2913d6d8e44fdefffe3fe4"
+      },
+      "evaluation_manifests_checked": 100,
+      "all_match_own_bundle": true
+    },
+    {
+      "training_seed": 17,
+      "archive_sha256": "53822fa0fedc666127afb339329c0c6a7ed952719b34701c5d5fabadde383348",
+      "usd_files": {
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_base.usd": "c58fecae96608adc6460fb3d629efa0d320f631604f5e4ea6c838aba63db2cfe",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_sensor.usd": "adac33f3b1c6fa33d991a758e28ed2fd7bedd3a42163b575043a5536757eb84e",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_robot.usd": "ca68211648af5d75c260361775d192fdd22b32071ce4bac5eaa3f956033df19f",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_physics.usd": "e89836513278749a13dfbbfbc93b2c3cf8e8f07f85291eb66b0c9b19bb0b76d6",
+        "artifacts/verification_feedback/assets/usd/g1_dex5_direct_joint.usd": "2c1301d30ea1b01588074a8fa6a0c8272116b90bae2913d6d8e44fdefffe3fe4"
+      },
+      "evaluation_manifests_checked": 100,
+      "all_match_own_bundle": true
+    },
+    {
+      "training_seed": 29,
+      "archive_sha256": "b00ce44bb770ec5070fe2a419c0d9f901c83d4da639b11b38d688038ad985360",
+      "usd_files": {
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_base.usd": "2e72e73ce59e3ccce272de8406542c7a4601ea4bc3bd80648d70ef86f98a2004",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_sensor.usd": "adac33f3b1c6fa33d991a758e28ed2fd7bedd3a42163b575043a5536757eb84e",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_robot.usd": "ca68211648af5d75c260361775d192fdd22b32071ce4bac5eaa3f956033df19f",
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_physics.usd": "e89836513278749a13dfbbfbc93b2c3cf8e8f07f85291eb66b0c9b19bb0b76d6",
+        "artifacts/verification_feedback/assets/usd/g1_dex5_direct_joint.usd": "2c1301d30ea1b01588074a8fa6a0c8272116b90bae2913d6d8e44fdefffe3fe4"
+      },
+      "evaluation_manifests_checked": 100,
+      "all_match_own_bundle": true
+    }
+  ],
+  "cross_workspace_equal": [
+    {
+      "first_seed": 7,
+      "second_seed": 17,
+      "equal": false,
+      "differing_files": [
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_base.usd"
+      ]
+    },
+    {
+      "first_seed": 7,
+      "second_seed": 29,
+      "equal": false,
+      "differing_files": [
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_base.usd"
+      ]
+    },
+    {
+      "first_seed": 17,
+      "second_seed": 29,
+      "equal": false,
+      "differing_files": [
+        "artifacts/verification_feedback/assets/usd/configuration/g1_dex5_direct_joint_base.usd"
+      ]
+    }
+  ],
+  "scope": "asset binding audit only; physical acceptance is independently replayed in original workspaces"
+}

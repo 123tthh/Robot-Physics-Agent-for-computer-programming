@@ -1,6 +1,6 @@
 # 阶段 2：直接关节 PPO 与可复用低层技能
 
-状态：`PARTIAL`。[VF-02-T01 动作映射健康检查](ACTION_MAPPING.md) 已完成：23 维具名 schema、掩码、独立限幅、执行目标反馈、停止恢复与 30/60/120 Hz 五案例物理验收通过。[VF-02-T02 单键可学性诊断](SINGLE_KEY_PPO.md) 已完成单种子 100 万转移与五检查点独立复验。VF-02-T03 三种子重复验收已在 29 节点启动；通用冻结低层技能包尚未交付。前置 VF-01 的单环境物理接口、释放判据和数据来源审计已通过。
+状态：`PARTIAL`。[VF-02-T01 动作映射健康检查](ACTION_MAPPING.md) 已完成：23 维具名 schema、掩码、独立限幅、执行目标反馈、停止恢复与 30/60/120 Hz 五案例物理验收通过。[VF-02-T02 单键可学性诊断](SINGLE_KEY_PPO.md) 已完成单种子 100 万转移与五检查点独立复验。VF-02-T03 跨目录汇总已修复并在原节点独立重验通过，三种子各 100/100。T04 已交付[离线几何前置检查](FEW_KEY_PREFLIGHT.md)，通用冻结低层技能包尚未交付。前置 VF-01 的单环境物理接口、释放判据和数据来源审计已通过。
 
 ## 控制范围
 
@@ -33,7 +33,7 @@ flowchart LR
 | `PressProgress / reward_terms`（已实现） | `adapters/isaac/learning/rewards.py` | 完整按下/释放进度与辅助塑形；保留各项曲线 |
 | `PPOTrainer / rollout 张量`（已实现） | `adapters/learning_torch/ppo.py` | 采样、终态 GAE、更新与检查点；可恢复复验，未保存精确续训环境状态；Torch 可选依赖 |
 | `LearnedPressKeySkill`（待实现） | `skills/learned_typing.py` | 以 key 为参数的有时限技能；仅返回声明与证据 |
-| `ppo_verify / PrimitiveEvaluator`（单种子诊断已实现） | `adapters/isaac/learning/ppo_verify.py`、`learning/evaluation.py` | 权重/输入/动作与原始物理绑定，独立释放/安全/时间判据；多种子验收待做 |
+| `ppo_verify / PrimitiveEvaluator`（单种子诊断已实现） | `adapters/isaac/learning/ppo_verify.py`、`learning/evaluation.py` | 权重/输入/动作与原始物理绑定，独立释放/安全/时间判据；三种子各 100/100，跨目录重验已通过 |
 
 ## 动作与观测
 
@@ -63,8 +63,8 @@ GAE 区分物理失败 `terminated` 与时间截断 `truncated`：截断可对�
 |---|---|---|
 | VF-02-T01 动作映射健康检查 | `DONE`：[实现与证据](ACTION_MAPPING.md)；19 项 CPU 检查、五个物理案例 | 无 IK；独立保护；极限两端属 CPU 证据，物理仅开放左食指 |
 | VF-02-T02 单键可学性 | `DONE`：[单种子 PPO 与证据](SINGLE_KEY_PPO.md)；1,000,000 聚合转移、五检查点各 8 次复验 | 初始 0/8；训练后检查点完整物理成功。固定场景诊断，不以辅助奖励代替 |
-| VF-02-T03 单键重复验收 | `RUNNING / PARTIAL`：[29 节点迁移 8/8 通过，三种子训练已启动](MULTISEED.md)；最终成绩尚未交付 | 每种子 95/100；逐种子报告成功、参考区间和失败类型，不只池化平均 |
-| VF-02-T04 少量键与退格 | 目标条件策略、重复字符、邻键、真实 Backspace、释放技能 | 每个任务键独立通过；退格消费真实按键改变文本 |
+| VF-02-T03 单键重复验收 | `DONE`：[三种子各 100/100，汇总修复与独立重验通过](MULTISEED.md) | 每种子 95/100；逐种子报告成功、参考区间和失败类型，不只池化平均 |
+| VF-02-T04 少量键与退格 | `PARTIAL`：[离线几何检查](FEW_KEY_PREFLIGHT.md)已完成；目标条件策略、重复字符、真实 Backspace 尚待物理实现 | 每个任务键独立通过；退格消费真实按键改变文本 |
 | VF-02-T05 冻结技能包 | 策略、归一化、关节 schema、配置/来源哈希和验收 | 阶段 3/4 各方法使用同一技能版本；修订版本需统一重测 |
 
 `10^6` 是聚合环境转移数，不是每环境步数，也不是保证收敛的预算。记录环境数、控制/物理步数、训练时间和显存；不预先承诺训练小时数。

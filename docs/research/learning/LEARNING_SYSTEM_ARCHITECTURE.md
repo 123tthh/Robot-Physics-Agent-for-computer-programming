@@ -8,7 +8,7 @@
 
 状态：**目标架构与实施规范，尚未完成无 IK 策略训练**。本文是学习路线的总体设计入口；[基础运行时架构](../../ARCHITECTURE.md)解释已有核心组件，[训练调研](DEX5_LEARNING_WITHOUT_IK.md)提供方法依据和实验细节。文中的新模块、接口字段、技能和验收门槛均为待实现设计，除明确标注“已有”外，不代表已接入或已通过测试。
 
-已有工程：VF-01-T01–T04 的版本化记录、单/批物理环境与文本反馈隔离，以及 [T05 真实终端与机器人相机复验](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。入口为 `make demo-learning-evidence`、`make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`；[VF-02-T01 动作映射](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md) 也已交付，入口为 `make isaac-learning-action-health`。[VF-02-T02 单键 PPO 诊断](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成一个训练种子、100 万聚合转移和五检查点复验，入口为 `make isaac-learning-single-key-ppo`。下一项为 VF-02-T03 三训练种子重复验收。
+已有工程：VF-01-T01–T04 的版本化记录、单/批物理环境与文本反馈隔离，以及 [T05 真实终端与机器人相机复验](../../../verification-feedback-skill-learning/01_environment_and_evidence/DESKTOP_CAMERA.md)。入口为 `make demo-learning-evidence`、`make isaac-learning-single-hand`、`make isaac-learning-feedback`、`make isaac-learning-batch`、`make isaac-learning-desktop`；[VF-02-T01 动作映射](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/ACTION_MAPPING.md) 也已交付，入口为 `make isaac-learning-action-health`。[VF-02-T02 单键 PPO 诊断](../../../verification-feedback-skill-learning/02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成一个训练种子、100 万聚合转移和五检查点复验，入口为 `make isaac-learning-single-key-ppo`。VF-02-T03 跨目录汇总已修复，三个训练种子在原节点独立重验各 100/100；当前进入 T04 少量键与真实退格，已完成离线几何前置检查。
 
 ## 1. 目标与设计决策
 
@@ -72,7 +72,7 @@ flowchart TB
 | 键盘桥与虚拟计算机 | 接触/键程 → 事件 → 画面 | 物理事件唯一入口；PTY、Pygame、显示纹理 | 已有特定任务验收 |
 | Perception Adapter | RGB-D、本体传感器 → 估计与置信度 | 键盘/椅子定位、屏幕识别；不静默使用真值 | RGB-D/OCR 链路已有，视觉控制待训练 |
 | Verifier / Ledger | 原始证据、规则 → 已验证事实 | 物理/GUI/软件分别判定、状态过期、追溯 | 诊断策略已接入独立物理复核，Runtime 发布另验收 |
-| Training / Evaluation | 环境、数据、种子 → checkpoint、评估报告 | 与在线 Runtime 分离；评估决定策略是否可发布 | 单键 PPO 诊断已有；多种子、技能发布与高层学习待完成 |
+| Training / Evaluation | 环境、数据、种子 → checkpoint、评估报告 | 与在线 Runtime 分离；评估决定策略是否可发布 | 单键 PPO 与三种子重复验收已通过；多键、技能发布与高层学习待完成 |
 
 现有 `ActionGraph` 仍拒绝低层关节命令。学习路线保留其接触、键事件、屏幕门禁及超时语义；不沿用旧版笛卡尔预定位 + DLS 执行链。技能将键号/指法/释放目标交给学习适配器，不将笛卡尔节点解释成隐藏的 IK 调用。此兼容层是待实现工作，现有图配置不能直接标成学习版。
 

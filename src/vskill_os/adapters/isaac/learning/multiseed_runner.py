@@ -20,6 +20,7 @@ from .action_runner import run_worker
 from .batch_recording import sha
 from .config import SingleHandConfig
 from .isolated_worker import asset_mirror, healthy_gpu, kit_arguments, same_cuda_uuid
+from .multiseed_replay import replay_runs
 from .ppo_runner import write_launch
 from .ppo_verify import verify_evaluation, verify_training
 from .single_hand_env import ROOT, write_json
@@ -117,18 +118,28 @@ def main(argv=None):
     parser.add_argument('--verify-only', action='store_true')
     parser.add_argument('--training-timeout', type=float, default=10800)
     parser.add_argument('--evaluation-timeout', type=float, default=7200)
+    parser.add_argument('--verification-timeout', type=float, default=7200,
+                        help='maximum seconds per workspace evidence replay')
+    parser.add_argument('--verification-workers', type=int, choices=(1, 2, 3), default=3)
     args = parser.parse_args(argv)
-    if any(not math.isfinite(t) or t <= 0 for t in (args.training_timeout, args.evaluation_timeout)):
+    if any(not math.isfinite(t) or t <= 0 for t in (args.training_timeout, args.evaluation_timeout, args.verification_timeout)):
         parser.error('timeouts must be finite and positive')
     protocol = MultiseedProtocol.read(args.protocol)
     if args.aggregate_runs:
         if args.run or args.seed is not None or not args.report:
             parser.error('--aggregate-runs requires --report and no --run/--seed')
-        physical, scale = SingleHandConfig.read(args.physics_config), ActionScale.read(args.action_scale)
-        reports = [verify_seed(path.resolve(), protocol=protocol, seed=seed,
-            config=protocol.training_config(PPOConfig.read(args.baseline), seed), physical=physical, scale=scale)
-            for path, seed in zip(args.aggregate_runs, protocol.training_seeds, strict=True)]
-        result = aggregate(protocol, reports)
+        reports, replays = replay_runs(args.aggregate_runs, protocol=protocol,
+            inputs={'protocol': args.protocol, 'baseline': args.baseline,
+                    'physics-config': args.physics_config, 'action-scale': args.action_scale},
+            report_path=args.report.resolve(), timeout_s=args.verification_timeout, workers=args.verification_workers)
+        try:
+            if any(report is None for report in reports):
+                raise ValueError('one or more workspace replays did not produce a valid fresh report')
+            result = aggregate(protocol, reports)
+        except (ValueError, KeyError, TypeError) as exc:
+            result = dict(version='vf-single-key-multiseed-suite/1', task='VF-02-T03',
+                          accepted=False, protocol=protocol.to_dict(), findings=[str(exc)])
+        result['workspace_replays'] = replays
         write_json(args.report, result)
         print(json.dumps(result), flush=True)
         return 0 if result['accepted'] else 1
@@ -160,7 +171,8 @@ def main(argv=None):
                 '--physics-config', str(args.physics_config.resolve()), '--action-scale', str(args.action_scale.resolve())]),
                 directory/'evaluation-final', args.evaluation_timeout)
     report = verify_seed(directory, protocol=protocol, seed=args.seed, config=config, physical=physical, scale=scale)
-    write_json(directory/'multiseed.json', report)
+    if not (args.verify_only and args.report):
+        write_json(directory/'multiseed.json', report)
     if args.report:
         write_json(args.report, report)
     print(json.dumps(dict(seed=args.seed, accepted=report['accepted'], findings=report['findings'],

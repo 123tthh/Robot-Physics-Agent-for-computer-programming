@@ -1,0 +1,126 @@
+{
+  "version": "vf-few-key-preflight/1",
+  "task": "VF-02-T04",
+  "stage": "offline_geometry_only",
+  "accepted": false,
+  "physical_reachability_verified": false,
+  "ik_used": false,
+  "policy_trained": false,
+  "urdf_sha256": "553d1ea4454d89035025eef59f31a374c3d40689acc72ecc971bc2746753a3ef",
+  "source_hashes": {
+    "src/vskill_os/adapters/isaac/learning/few_key_preflight.py": "600c8198277ce91b90c251e6551d149ac38b724606afb27d0759de13b0038327",
+    "src/vskill_os/adapters/isaac/learning/config.py": "59945941154b551794ce1036c3798dee72ca6380409a96b8bb2e731a8ddd0371",
+    "src/vskill_os/adapters/isaac/learning/single_hand_env.py": "ae6f9a3d7bc867715d2ecdbb8cf4ef57462c3ef0181b3669c2748eb683d87347",
+    "src/vskill_os/adapters/isaac/dex5_kinematics.py": "da6f073650dd545a5f2dbfc6ad26923f8a8b0d4c799e2004de3235c80bad92fc",
+    "src/vskill_os/adapters/isaac/dex5_scene_geometry.py": "6b3666b9ed45a58ed6f2fce1d87c4ed93398108c1c6b3c02f950e6e8aaf7a53a",
+    "src/vskill_os/adapters/isaac/p1_scene.py": "26034b69622eac2977c0b3646e021589edd4e278a8be9430b393dcd723e17622"
+  },
+  "physical_config": {
+    "physics_dt_s": 0.004166666666666667,
+    "decimation": 4,
+    "settling_steps": 240,
+    "maximum_target_speed_rad_s": 0.3,
+    "maximum_contact_force_n": 12.0,
+    "maximum_joint_speed_rad_s": 8.0,
+    "support_tolerance_m": 0.03,
+    "enabled_joints": [
+      "left_hand_index_1_joint"
+    ],
+    "pad_radius_m": 0.006,
+    "body_contact_offset_m": 0.001,
+    "key_center_z_m": 0.791,
+    "keyboard_operator_row_x_m": 0.528,
+    "keyboard_left_origin_y_m": 0.17275
+  },
+  "initialization": "hand_authored_direct_joint_v1",
+  "sampled_joint": "left_hand_index_1_joint",
+  "sampled_range_rad": [
+    0.0,
+    1.5708
+  ],
+  "samples": 301,
+  "pad_local_xyz_m": [
+    0.026,
+    0.006,
+    0.0
+  ],
+  "pad_radius_m": 0.006,
+  "pad_world_min_xyz_m": [
+    0.474578434767038,
+    0.12711709609849642,
+    0.737535774972563
+  ],
+  "pad_world_max_xyz_m": [
+    0.5682734699447674,
+    0.1519659807798602,
+    0.8142723415843042
+  ],
+  "candidates": [
+    {
+      "key": "a",
+      "key_center_xyz_m": [
+        0.5661,
+        0.1298875,
+        0.791
+      ],
+      "distance_from_a_m": 0.0,
+      "sampled_minimum_pad_box_gap_m": -0.006,
+      "sampled_geometric_overlap": true,
+      "physical_reachability_verified": false
+    },
+    {
+      "key": "s",
+      "key_center_xyz_m": [
+        0.5661,
+        0.11083749999999998,
+        0.791
+      ],
+      "distance_from_a_m": 0.01905000000000001,
+      "sampled_minimum_pad_box_gap_m": 0.006002398169700414,
+      "sampled_geometric_overlap": false,
+      "physical_reachability_verified": false
+    },
+    {
+      "key": "d",
+      "key_center_xyz_m": [
+        0.5661,
+        0.09178749999999998,
+        0.791
+      ],
+      "distance_from_a_m": 0.03810000000000001,
+      "sampled_minimum_pad_box_gap_m": 0.024449425324042796,
+      "sampled_geometric_overlap": false,
+      "physical_reachability_verified": false
+    },
+    {
+      "key": "f",
+      "key_center_xyz_m": [
+        0.5661,
+        0.07273749999999998,
+        0.791
+      ],
+      "distance_from_a_m": 0.057150000000000006,
+      "sampled_minimum_pad_box_gap_m": 0.04291304468136083,
+      "sampled_geometric_overlap": false,
+      "physical_reachability_verified": false
+    },
+    {
+      "key": "backspace",
+      "key_center_xyz_m": [
+        0.6042000000000001,
+        -0.09395,
+        0.791
+      ],
+      "distance_from_a_m": 0.22705690125219713,
+      "sampled_minimum_pad_box_gap_m": 0.19967125133233238,
+      "sampled_geometric_overlap": false,
+      "physical_reachability_verified": false
+    }
+  ],
+  "limitations": [
+    "discrete FK samples are not proof of reachability or unreachability",
+    "no dynamics, key travel, self/table collision, joint tracking or physical release evaluated",
+    "resting keycap boxes and the left index pad only; other contacts are not checked",
+    "no candidate key is approved for training or runtime use by this audit"
+  ]
+}

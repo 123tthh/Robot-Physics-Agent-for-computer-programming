@@ -119,4 +119,4 @@ make verify-learning-single-key-ppo LEARNING_PPO_RUN=/absolute/path/to/run
 
 结论限于一个训练种子、单活动关节和固定初态的可学性。8/8 不是泛化成功率或 95% 门槛验收；本轮未将学习策略接入真实终端、机器人相机或实体机器人。
 
-返回[阶段 2](README.md)。下一项为 VF-02-T03：三个训练种子、每种子独立评估 100 回合，报告种子差异和失败类型。
+返回[阶段 2](README.md)。后续 [VF-02-T03 三种子重复验收](MULTISEED.md)现已通过（三种子各 100/100）；当前推进 [VF-02-T04 少量键与真实退格](FEW_KEY_PREFLIGHT.md)。

@@ -1,6 +1,6 @@
 # 面向实体计算机操作的验证反馈驱动技能学习
 
-状态：`PARTIAL`，2026-09-27。VF-01-T01 的离线契约、T02 单键物理闭环、T03 文本反馈隔离及 [T04 的 1/16/64 工位隔离与吞吐](01_environment_and_evidence/BATCH_ENVIRONMENT.md) 已交付。[T05 真实终端与机器人相机](01_environment_and_evidence/DESKTOP_CAMERA.md) 的单 `a` 六案例复验也已通过；[VF-02-T02 单键 PPO](02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成单种子诊断。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
+状态：`PARTIAL`，2026-09-27。VF-01-T01 的离线契约、T02 单键物理闭环、T03 文本反馈隔离及 [T04 的 1/16/64 工位隔离与吞吐](01_environment_and_evidence/BATCH_ENVIRONMENT.md) 已交付。[T05 真实终端与机器人相机](01_environment_and_evidence/DESKTOP_CAMERA.md) 的单 `a` 六案例复验也已通过；[VF-02-T02 单键 PPO](02_joint_ppo_baseline/SINGLE_KEY_PPO.md) 已完成单种子诊断，[T03 三种子重复验收](02_joint_ppo_baseline/MULTISEED.md)也已通过。本目录是研究实施说明，运行代码按仓库统一架构放入 `src/vskill_os/`，不建立第二套运行时。
 
 ## 研究主线
 
@@ -106,6 +106,6 @@ Isaac/Torch 只进入可选 Adapter；Agent/SkillGraph 不接收或输出关节�
 
 **VF-02-T02 已完成单键可学性诊断**：一个训练种子、64 工位、100 万聚合转移；五个保存检查点分别在原单环境采集原始证据并独立复核。初始策略为 0/8，训练后的检查点已观察到完整物理周期，见[实现和结果](02_joint_ppo_baseline/SINGLE_KEY_PPO.md)。
 
-当前推进 **[VF-02-T03：单键重复验收](02_joint_ppo_baseline/MULTISEED.md)**：29 节点迁移复验 `8/8` 通过，三个新种子已在 GPU 0、1、2 上开始固定预算训练，最终验收尚未完成。当前学习策略仍是固定骨盆、单活动关节和特权状态；多键、真实退格、视觉策略、通用冻结技能和验证机制学习尚未交付。
+**[VF-02-T03：单键重复验收](02_joint_ppo_baseline/MULTISEED.md)已完成**：汇总资产目录问题修复后，在三个原工作目录独立重验均为 `100/100`，套件通过，原证据与历史失败记录保留。当前推进 **VF-02-T04 少量键与真实退格**。[T04 的离线几何前置检查](02_joint_ppo_baseline/FEW_KEY_PREFLIGHT.md)已完成，当前单活动关节配置不足以直接进入多键与退格验收。当前学习策略仍是固定骨盆、单活动关节和特权状态；多键、真实退格、视觉策略、通用冻结技能和验证机制学习尚未交付。
 
 项目共同约束：[AGENTS.md](../AGENTS.md)、[统一架构](../docs/ARCHITECTURE.md)、[子项目状态](../docs/WORKSTREAMS.md)、[统一路线图](../docs/ROADMAP.md)。
