@@ -215,6 +215,19 @@ verify-learning-single-key-ppo:
 	@test -n "$(LEARNING_PPO_RUN)" || (echo 'Set LEARNING_PPO_RUN to an exact run directory'; exit 2)
 	PYTHONPATH=src "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.ppo_runner --verify-run "$(LEARNING_PPO_RUN)" --config "$(LEARNING_PPO_CONFIG)" --physics-config "$(LEARNING_PHYSICS_CONFIG)" --action-scale "$(LEARNING_ACTION_SCALE)"
 
+# Each seed uses a separate code/assets checkout and one healthy GPU UUID.
+.PHONY: isaac-learning-multiseed verify-learning-multiseed
+LEARNING_MULTI_SEED ?=
+LEARNING_MULTI_RUN ?=
+LEARNING_MULTI_ARGS ?=
+
+isaac-learning-multiseed:
+	@test -n "$(LEARNING_MULTI_SEED)" -a -n "$(LEARNING_MULTI_RUN)" || (echo 'Set LEARNING_MULTI_SEED and LEARNING_MULTI_RUN'; exit 2)
+	/bin/bash -c 'source "$(ISAACLAB_ACTIVATE)"; export PYTHONPATH="$(CURDIR)/src:$$PYTHONPATH"; exec "$(ISAACLAB_PYTHON)" -m vskill_os.adapters.isaac.learning.multiseed_runner --seed "$(LEARNING_MULTI_SEED)" --run "$(LEARNING_MULTI_RUN)" $(LEARNING_MULTI_ARGS)'
+
+verify-learning-multiseed:
+	$(MAKE) isaac-learning-multiseed LEARNING_MULTI_ARGS="--verify-only"
+
 # Read-only navigation; leave the historical default target (demo) unchanged.
 .PHONY: help
 help:
@@ -237,4 +250,5 @@ help:
 	  '  Camera:     make isaac-learning-desktop | make verify-learning-desktop' \
 	  '  Actions:    make isaac-learning-action-health | make verify-learning-action-health' \
 	  '  PPO:        make test-learning-ppo | make isaac-learning-single-key-ppo | make verify-learning-single-key-ppo' \
+	  '  Three seeds: make isaac-learning-multiseed | make verify-learning-multiseed (explicit seed/run)' \
 	  'See experiment docs for assets, optional dependencies, and evidence scope.'
